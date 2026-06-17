@@ -62,29 +62,34 @@
   \let\\\@centercr\@rightskip\@flushglue \rightskip\@rightskip
   \leftskip\z@skip}
   
-%  Simple interface for the user  to customize the chapter titles
-\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{-36pt}}
-\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{24pt}}
-\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{14pt}}
+%  Simple interface for the user to customize the chapter titles
+\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{-90pt}}
+\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{16pt}}
+\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{10pt}}
 \ProvideDocumentCommand{\autodot}{}{}
 \ProvideDocumentCommand{\mdtChapapp}{}{}
 \ProvideDocumentCommand{\chapteralign}{}{\centering}
 \ProvideDocumentCommand{\chapterfont}{}{\Large\bfseries}
-\ProvideDocumentCommand{\chaptertitlefont}{}{\large\bfseries}
-\ProvideDocumentCommand{\chapterprefixfont}{}{\large\bfseries}
+\ProvideDocumentCommand{\chaptertitlefont}{}{\Large\bfseries}
+\ProvideDocumentCommand{\chapterprefixfont}{}{\Large\bfseries}
 \ProvideDocumentCommand{\frontmatterheadingfont}{}{\large\bfseries}
-\ProvideDocumentCommand{\sectionheadingfont}{}{\normalfont\large\bfseries}
+\ProvideDocumentCommand{\sectionheadingfont}{}{\normalfont\normalsize\bfseries}
 \ProvideDocumentCommand{\subsectionheadingfont}{}{\normalfont\normalsize\bfseries}
 \ProvideDocumentCommand{\subsubsectionheadingfont}{}{\normalfont\normalsize}
+\renewcommand\@seccntformat[1]{%
+  \ifstrequal{#1}{section}{\csname the#1\endcsname.\quad}{%
+  \ifstrequal{#1}{subsection}{\csname the#1\endcsname.\quad}{%
+  \csname the#1\endcsname\quad}}%
+}
 \ProvideDocumentCommand{\paragraphheadingfont}{}{\normalfont\normalsize}
 \ProvideDocumentCommand{\subparagraphheadingfont}{}{\normalfont\normalsize\itshape}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
   {-3.5ex \@plus -1ex \@minus -.2ex}%
-  {2.3ex \@plus .2ex}%
-  {\sectionheadingfont}}
+  {1.2ex \@plus .2ex}%
+  {\sectionheadingfont\MakeUppercase}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
   {-3.25ex\@plus -1ex \@minus -.2ex}%
-  {1.5ex \@plus .2ex}%
+  {1.0ex \@plus .2ex}%
   {\subsectionheadingfont}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
   {-3.25ex\@plus -1ex \@minus -.2ex}%
@@ -232,6 +237,11 @@
 \patchcmd{\listoffigures}{\MakeUppercase}{\MakeMarkcase}{}{}
 \patchcmd{\listoftables}{\MakeUppercase}{\MakeMarkcase}{}{}
 \patchcmd{\listofalgorithms}{\MakeUppercase}{\MakeMarkcase}{}{}
+\patchcmd{\tableofcontents}{%
+	\@starttoc{toc}%
+}{%
+	\begingroup\emergencystretch=3em\@starttoc{toc}\endgroup%
+}{}{}
 
 % If the option `nolistspacing' is given, the spacing in the different lists is reduced to single spacing. This option is only useful, if the spacing of the document has been changed to onehalfspacing or doublespacing.
 \ifbool{nolistspace}{
@@ -336,21 +346,22 @@
  \def\ttitle{#2}%
 }
 \DeclareDocumentCommand{\author}{m}{\newcommand{\authorname}{{#1}}\renewcommand{\@author}{#1}}
-\NewDocumentCommand{\supervisor}{m}{\newcommand{\supname}{\darkred{#1}}}
-\NewDocumentCommand{\cosupervisor}{m}{\newcommand{\cosupname}{\darkred{#1}}}
+\NewDocumentCommand{\supervisor}{m}{\newcommand{\supname}{#1}}
+\NewDocumentCommand{\cosupervisor}{m}{\newcommand{\cosupname}{#1}}
 \NewDocumentCommand{\examiner}{m}{\newcommand{\examname}{#1}}
 \NewDocumentCommand{\degree}{m}{\newcommand{\degreename}{#1}}
 \NewDocumentCommand{\addresses}{m}{\newcommand{\addressname}{#1}}
 \NewDocumentCommand{\university}{m}{\newcommand{\univname}{#1}}
 \NewDocumentCommand{\bsuniversity}{m}{\newcommand{\bsunivname}{#1}}
 \NewDocumentCommand{\msuniversity}{m}{\newcommand{\msunivname}{#1}}
-\NewDocumentCommand{\department}{m}{\newcommand{\deptname}{\darkred{#1}}}
-\NewDocumentCommand{\group}{m}{\newcommand{\groupname}{\darkred{#1}}}
-\NewDocumentCommand{\faculty}{m}{\newcommand{\facname}{\darkred{#1}}}
+\NewDocumentCommand{\department}{m}{\newcommand{\deptname}{#1}}
+\NewDocumentCommand{\group}{m}{\newcommand{\groupname}{#1}}
+\NewDocumentCommand{\faculty}{m}{\newcommand{\facname}{#1}}
 \NewDocumentCommand{\subject}{m}{\newcommand{\subjectname}{#1}}
 \NewDocumentCommand{\keywords}{m}{\newcommand{\keywordnames}{#1}}
 % \newcommand{\monthyeardate}{\DTMenglishmonthname{\@dtm@month},\@dtm@year}
 \newdateformat{monthyeardate}{\monthname[\THEMONTH], \THEYEAR}
+\providecommand{\submissionmonthyear}{TODO Month Year}
 
 \newcommand{\checktoopen}{% New command to move content to the next page which prints to the next odd page if twosided mode is active  
 	\if@openright\cleardoublepage\else\clearpage\fi
@@ -367,6 +378,17 @@
 \ProvideDocumentCommand{\addchaptertocentry}{ m }{%
 	\addcontentsline{toc}{chapter}{#1}%
 }
+\patchcmd{\l@chapter}{%
+	\setlength\@tempdima{1.5em}%
+}{%
+	\setlength\@tempdima{6.8em}%
+}{}{}
+\patchcmd{\l@chapter}{%
+	#1\nobreak\hfil%
+}{%
+	\renewcommand{\numberline}[1]{\hb@xt@\@tempdima{CHAPTER ##1\hfil}}%
+	#1\nobreak\hfil%
+}{}{}
 
 %----------------------------------------------------------------------------------------
 %	DEFINE CUSTOM NEW COMMAND
@@ -427,17 +449,14 @@
 \RequirePackage[markcase=used]{scrlayer-scrpage}
 \providepairofpagestyles{thesisSimple}{%
 	\clearpairofpagestyles%
-	\automark[chapter]{chapter}
-	\ihead{\headmark}% Inner header
 	\cfoot[\pagemark]{\pagemark}% Centered footer page number, including plain pages
 }
 \pagestyle{thesisSimple}
 \providepairofpagestyles[thesisSimple]{thesis}{%
-	\automark*[section]{}%
 }
 \providepairofpagestyles[thesisSimple]{review}{%
 	\ofoot[\shorttitle/\authorname]{\shorttitle/\authorname}
-	\ifoot[\today]{\today}
+	\ifoot[\submissionmonthyear]{\submissionmonthyear}
 }
 \pagestyle{thesis}
 \ifbool{headsepline}{\KOMAoption{headsepline}{true}}{}
@@ -547,8 +566,8 @@ KOMA-script documentation for details.}]{fancyhdr}
             {\textbf{\authorname} \par}
             \medskip
             {for the degree of \degreename \par}
-            {at The University of Hong Kong \par}
-            {in \monthyeardate\today \par}
+            {at \univname \par}
+            {in \submissionmonthyear \par}
 			\bigskip
 		\end{center}
 	}

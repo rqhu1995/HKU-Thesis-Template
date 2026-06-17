@@ -1,27 +1,32 @@
 \begin{titlepage}
 \thispagestyle{empty}
 \begin{center}
-\vspace*{0.14\textheight}
+\vspace*{0.07\textheight}
 
 {\large\bfseries \ttitle\par}
 
-\vspace{1.2cm}
+\vspace*{0.16\textheight}
 by
 
-\vspace{0.8cm}
-{\large\bfseries \authorname\par}
-B.Eng.; M.Eng.
+\vspace*{0.06\textheight}
+{\bfseries \authorname\par}
+\ifblank{\previousdegrees}{}{%
+	\vspace{0.4\baselineskip}
+	{\previousdegrees\par}%
+}
+
+\vspace*{0.12\textheight}
+\deptname\par
+\univname\par
 
 \vfill
 
-A Thesis Submitted in Partial Fulfilment\\
-of the Requirements for the Degree of\\
-\degreename\\
-\vspace{0.8cm}
-at\\
-\vspace{0.8cm}
-\univname.\\
-\monthyeardate\today
+A thesis submitted in partial fulfilment of the requirements for\par
+the Degree of \degreename\par
+at \univname\par
+
+\vspace*{0.04\textheight}
+\submissionmonthyear\par
 
 \end{center}
 \end{titlepage}

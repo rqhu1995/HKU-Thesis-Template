@@ -1,0 +1,132 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{huRepositioningBikeSharing2025}{article}{}
+      \name{author}{3}{}{%
+        {{hash=2d7e390faecc73eabc1b53f511decea3}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Runqiu},
+           giveni={R\bibinitperiod}}}%
+        {{hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+        {{hash=ce3d200e48885cdbeaca0d76752b5576}{%
+           family={Ho},
+           familyi={H\bibinitperiod},
+           given={Sin\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{f57dbb45869d919f557c82496f344782}
+      \strng{fullhash}{f57dbb45869d919f557c82496f344782}
+      \strng{bibnamehash}{f57dbb45869d919f557c82496f344782}
+      \strng{authorbibnamehash}{f57dbb45869d919f557c82496f344782}
+      \strng{authornamehash}{f57dbb45869d919f557c82496f344782}
+      \strng{authorfullhash}{f57dbb45869d919f557c82496f344782}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part E: Logistics and Transportation Review}
+      \field{title}{Repositioning in bike sharing systems with broken bikes considering on-site repairs}
+      \field{volume}{201}
+      \field{year}{2025}
+      \field{pages}{104155}
+      \range{pages}{1}
+    \endentry
+    \entry{kaspiBikesharingSystemsUser2017}{article}{}
+      \name{author}{3}{}{%
+        {{hash=460bcd185d3364b18483dabb2940cdcb}{%
+           family={Kaspi},
+           familyi={K\bibinitperiod},
+           given={Mor},
+           giveni={M\bibinitperiod}}}%
+        {{hash=c89c1ec00b87d8580fb76a03ad9859d3}{%
+           family={Raviv},
+           familyi={R\bibinitperiod},
+           given={Tal},
+           giveni={T\bibinitperiod}}}%
+        {{hash=c33e57e7dbd7aff854b11b651d584f3a}{%
+           family={Tzur},
+           familyi={T\bibinitperiod},
+           given={Michal},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{964705d449414c6466b815b02aa4202a}
+      \strng{fullhash}{964705d449414c6466b815b02aa4202a}
+      \strng{bibnamehash}{964705d449414c6466b815b02aa4202a}
+      \strng{authorbibnamehash}{964705d449414c6466b815b02aa4202a}
+      \strng{authornamehash}{964705d449414c6466b815b02aa4202a}
+      \strng{authorfullhash}{964705d449414c6466b815b02aa4202a}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IISE Transactions}
+      \field{number}{2}
+      \field{title}{Bike-sharing systems: User dissatisfaction in the presence of unusable bicycles}
+      \field{volume}{49}
+      \field{year}{2017}
+      \field{pages}{144\bibrangedash 158}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1080/0740817X.2016.1224960
+      \endverb
+    \endentry
+    \entry{hoHybridLargeNeighborhood2017}{article}{}
+      \name{author}{2}{}{%
+        {{hash=ce3d200e48885cdbeaca0d76752b5576}{%
+           family={Ho},
+           familyi={H\bibinitperiod},
+           given={Sin\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{066758c432cd496c0a1363bfba5b0082}
+      \strng{fullhash}{066758c432cd496c0a1363bfba5b0082}
+      \strng{bibnamehash}{066758c432cd496c0a1363bfba5b0082}
+      \strng{authorbibnamehash}{066758c432cd496c0a1363bfba5b0082}
+      \strng{authornamehash}{066758c432cd496c0a1363bfba5b0082}
+      \strng{authorfullhash}{066758c432cd496c0a1363bfba5b0082}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{A hybrid large neighborhood search for the static multi-vehicle bike-repositioning problem}
+      \field{volume}{95}
+      \field{year}{2017}
+      \field{pages}{340\bibrangedash 363}
+      \range{pages}{24}
+      \verb{doi}
+      \verb 10.1016/j.trb.2016.11.003
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

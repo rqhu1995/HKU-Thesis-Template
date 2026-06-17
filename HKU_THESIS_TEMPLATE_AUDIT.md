@@ -1,111 +1,193 @@
 # HKU Thesis Template Audit
 
-Date: 2026-06-17  
-Scope: Local LaTeX project only. No web browsing was used. The local 2019 HKU Graduate School guide PDF supplied by the user was inspected for style/sample-page evidence.
+Audit date: 2026-06-17
 
-## Files inspected
+## Files Inspected
 
 - `main.tex`
 - `HKUThesis.cls`
-- `Titlepage/library_titlepage.tex`
-- `Titlepage/titlepage.tex`
 - `Abstract/abstract.tex`
+- `Titlepage/titlepage.tex`
+- `Titlepage/library_titlepage.tex`
 - `Declaration/declaration.tex`
 - `Acknowledgments/acknowledgments.tex`
 - `Abbreviations/abbreviations.tex`
 - `Symbols/symbols.tex`
-- `Chapters/Chapter1.tex` through `Chapters/Chapter6.tex`
-- `Appendices/AppendixA.tex` through `Appendices/AppendixC.tex`
+- `Chapters/Chapter1.tex`
+- `Chapters/Chapter2.tex`
+- `Chapters/Chapter3.tex`
+- `Chapters/Chapter5.tex`
+- `Appendices/AppendixA.tex`
+- `Appendices/AppendixB.tex`
+- `Appendices/AppendixC.tex`
 - `thesis.bib`
 - `README.md`
-- `main.log`, `main.pdf`
-- Local guide PDF: `HKU Graduate School - 2019 - Preparing and Submitting Your Thesis A Guide for MPhil and PhD Students.pdf`
-
-## Files changed
-
-- `HKUThesis.cls`
-  - Made numbered chapter titles bold, centered, and closer to the senior-thesis sample spacing.
-  - Kept `CHAPTER X` on a separate centered line, in uppercase bold text matching the chapter title scale.
-  - Added explicit serif heading hierarchy: section `\large` bold, subsection body-size bold, subsubsection body-size regular, paragraph body-size regular, subparagraph body-size italic.
-  - Replaced oversized/decorative declaration and acknowledgements headings with restrained bold serif front-matter headings.
-  - Reduced `\symboltitle` from `\LARGE` to `\large`.
-  - Forced the final abstract page style to `empty` so multi-page abstracts do not pick up a footer page number.
-- `Titlepage/titlepage.tex`
-  - Rebuilt the formal title page as a single unnumbered `titlepage` using restrained title/name sizing.
-  - Fixed the previous overflow where the date spilled onto a separate numbered roman page.
-- `Abstract/abstract.tex`
-  - Updated the abstract word-count argument from `340` to `341`, matching `texcount`.
-- `HKU_THESIS_TEMPLATE_AUDIT.md`
-  - Removed the stale prior report and regenerated this audit from scratch.
+- `main.log`
+- `main.blg`
 - `main.pdf`
-  - Recompiled output PDF.
 
-## Compilation command used
+## Files Changed
+
+- `main.tex`
+- `HKUThesis.cls`
+- `Abstract/abstract.tex`
+- `Titlepage/titlepage.tex`
+- `Titlepage/library_titlepage.tex`
+- `Declaration/declaration.tex`
+- `Acknowledgments/acknowledgments.tex`
+- `Abbreviations/abbreviations.tex`
+- `Symbols/symbols.tex`
+- `main.pdf`
+- `HKU_THESIS_TEMPLATE_AUDIT.md`
+
+## Summary of Changes
+
+- Set the formal default PDF to `12pt`, `oneside`, A4, one-and-a-half spacing, and symmetric margins: 35 mm left/right and 25 mm top/bottom.
+- Disabled `headsepline` and simplified the formal page style to centered footer page numbers only.
+- Moved page numbering control into `main.tex`: abstract/title pages use gobbled numbering, declaration starts Roman `i`, and Chapter 1 starts Arabic `1`.
+- Added central switches for optional library title page, lists, abbreviations, symbols, and appendices. The library reference page and placeholder appendices are preserved in the repository but disabled by default.
+- Removed visible demo abstract prose, old demo subject/keywords, demo `\nocite`, degree-placeholder text, auto date usage on formal title pages, manual page-counter hacks, and the signature image overlay.
+- Revised the formal title page to a Shui-style block layout: title near the upper page, author block, department/university block, submission statement near the lower page, and month/year at the bottom.
+- Kept previous degrees as an editable `\previousdegrees` macro and printed it only when non-empty.
+- Removed visible acknowledgements placeholder text from the compiled PDF.
+- Replaced declaration wording with a conservative own-work declaration.
+- Kept the Times-like text/math setup via `newtxtext` and `newtxmath`.
+- Set hyperlink, citation, and URL colors to black through the existing `hyperref` setup.
+- Adjusted chapter headings to compact centered bold `\Large` formatting and changed numbered chapter entries in the ToC to `CHAPTER N TITLE`.
+- Revised chapter-opening and section-heading style closer to the Shui Chin Sum 2016 HKU thesis sample: top-anchored centered chapter openings, uppercase bold section headings, and trailing dots after section/subsection numbers.
+
+## Shui-Style Heading Update
+
+- Files changed for this heading-style pass:
+  - `HKUThesis.cls`
+  - `main.pdf`
+  - `HKU_THESIS_TEMPLATE_AUDIT.md`
+- Exact chapter-spacing values now used in `HKUThesis.cls`:
+  - `\abovechapterskip`: `\vspace*{-90pt}`
+  - `\chapterinbetweenskip`: `\vspace*{10pt}`
+  - `\chapterbelowskip`: `\vspace*{16pt}`
+- Chapter heading appearance:
+  - Numbered chapters print as centered `CHAPTER <number>` followed by the centered chapter title below it.
+  - Chapter prefix and chapter title both use bold serif `\Large`.
+  - No `\Huge` chapter heading is used.
+  - The chapter heading block is now anchored close to the upper text area instead of appearing vertically centered.
+- Section heading appearance:
+  - `\section` headings are bold, left-aligned, compact, and uppercased in the body.
+  - `\section` numbers now show a trailing dot, e.g. `2.1.`
+  - `\subsection` numbers now show a trailing dot, e.g. `2.1.1.`
+  - `\subsection` title text remains title case rather than being forced uppercase.
+- ToC chapter entries:
+  - Numbered chapter entries render in `CHAPTER N TITLE` form, e.g. `CHAPTER 2 LITERATURE REVIEW`.
+  - This ToC format was retained; it causes underfull line-break warnings for very long all-caps chapter titles.
+- Visual verification:
+  - Chapter 1, Chapter 2, and long-title chapters including Chapter 5 were inspected from the rebuilt PDF.
+  - The chapter heading blocks are near the top text area, section/body content follows soon after the title, and page numbers remain centered in the footer.
+  - No standalone chapter-outline page or large display-title chapter page is generated.
+- Remaining visual differences from Shui's sample:
+  - The current chapter files are mostly skeletal, so the sample pages have less body text than Shui's completed thesis pages.
+  - Exact line breaks for long chapter titles and ToC entries differ because the current thesis has very long all-caps paper-style chapter titles.
+  - The Shui sample includes final thesis body paragraphs and library-stamped archival pages; this formal template does not reproduce those external archival marks by default.
+
+## Compilation Command Used
 
 ```bash
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-## Compilation result
+## Compilation Result
 
-- Result: pass. `latexmk` completed successfully and produced `main.pdf`.
-- Final PDF: 42 pages.
-- `pdfinfo main.pdf` reports A4 page size: `595.276 x 841.89 pts`.
-- `pdffonts main.pdf` reports embedded Times-like text fonts (`TeXGyreTermes` / `TeXGyreTermesX`) and NewTX math/symbol fonts.
-- `pdftotext main.pdf -` confirms text is extractable; the PDF is searchable/text-embedded, not image-only.
-- No unresolved citations, undefined references, missing files, empty bibliography warning, or biblatex rerun warning remain in the final log.
-- Remaining nonfatal log warnings:
-  - Overfull boxes in the sample abstract content at `Abstract/abstract.tex` lines 7-8 and 19-20.
-  - One overfull table-of-contents line from a very long Chapter 5 title.
-  - One overfull alignment in the sample symbols table.
+- Result: **Success**. `main.pdf` was generated.
+- Remaining LaTeX warnings:
+  - `Empty bibliography` because the current chapter skeleton contains no citation commands after removing the demo-only `\nocite`.
+  - Six underfull ToC hbox warnings caused by very long all-caps chapter titles in the Shui-style `CHAPTER N TITLE` ToC format. No overfull hbox warnings remain.
+- No unresolved citation or undefined reference warnings were reported in the final log.
 
-## Mandatory checks
+## Page Size / Margin Status
 
-| Check | Status | Notes |
-| --- | --- | --- |
-| Page size and margins | Pass | `main.tex` uses A4 paper with `left=3.5cm`, `right=3.6cm`, `bindingoffset=.5cm`, `top=2.5cm`, and `bottom=2.5cm`. In the retained two-sided layout, both physical left and right margins are at least 35 mm. |
-| One-sided or two-sided layout | Pass | Two-sided layout was kept. This is acceptable, and no margin problem was found. |
-| Abstract presence and length | Pass | `Abstract/abstract.tex` exists. `texcount Abstract/abstract.tex -sum -1` reports 341 words, within 200-500. The printed word-count line now says `An abstract of 341 words`. |
-| Abstract placement and numbering | Fixed, with caveat | The formal abstract appears before the formal title page, is not in the table of contents, and no page number appears on its pages. Caveat: a user-requested library-style reference title page currently precedes the abstract. Remove or confirm this page before formal submission. |
-| Abstract required front-page structure | Pass | The abstract heading includes thesis title, author, Doctor of Philosophy, The University of Hong Kong, and month/year from existing macros. |
-| Title page | Fixed | The formal title page follows the abstract, fits on one unnumbered page, and contains title, author, degree, university, and month/year. |
-| Front matter order and pagination | Pass, with caveat | Formal sequence is abstract, formal title page, declaration, acknowledgements, contents, lists, abbreviations/symbols, main text. Declaration starts roman `i`; Chapter 1 starts Arabic `1`; appendices and bibliography continue Arabic numbering. Caveat: the optional reference page before the abstract is outside the strict formal sequence. |
-| Declaration | Pass | Declaration page exists and states that the thesis represents the candidate's own work. It is the first numbered front-matter page. |
-| Table of contents and lists | Pass | TOC excludes abstract and formal title page, includes declaration/acknowledgements/lists and main chapters. Lists of figures/tables/algorithms are present because the template calls them. |
-| Bibliography/reference list | Pass | `biblatex` bibliography appears in the PDF. `\nocite{Gershun1939Light}` keeps a sample bibliography item present while the chapter draft has no real citations. |
-| PDF output | Pass | `pdfinfo`, `pdffonts`, and `pdftotext` checks passed. Fonts are embedded and text is extractable. |
+- Source status: **Pass**.
+  - `main.tex` uses A4 paper, `left=35mm`, `right=35mm`, `top=25mm`, `bottom=25mm`.
+  - `oneside` is enabled and `bindingoffset` is removed.
+- PDF status: **Pass**.
+  - `pdfinfo main.pdf` reports `Page size: 595.276 x 841.89 pts (A4)`.
 
-## Recommended style checks
+## Page Numbering Status
 
-| Check | Status | Notes |
-| --- | --- | --- |
-| Body font | Pass | `newtxtext` provides a Times-like serif body font. |
-| Equation font | Pass | `newtxmath` provides Times-like math fonts for equations and symbols. |
-| Code-style text font | Adjusted earlier | `\ttdefault` is redirected to `\rmdefault`, avoiding a separate monospaced font in the compiled PDF. |
-| Body font size | Pass | Document class uses `12pt`, which is within the guide's readable 10-12 pt range and matches the user's preference. |
-| Line spacing | Pass | `onehalfspacing` is enabled. |
-| Chapter title style | Fixed | Numbered chapter openings now follow the user's senior-thesis sample more closely: uppercase centered `CHAPTER X`, then centered bold chapter title with reduced top whitespace. |
-| Section heading hierarchy | Fixed | Section/subsection/subsubsection/paragraph levels now use explicit Times-like serif sizes. They are slightly more restrained than the earlier guide-sample hierarchy to better match the senior-thesis screenshot. |
-| Front-matter heading style | Fixed | Declaration and acknowledgements headings are no longer oversized/decorative. |
-| Formal title page size | Fixed | Formal title page now uses restrained title/name sizing and fits on one unnumbered page. |
-| Hyperlink appearance | Pass | Hyperlinks remain clickable but print in normal black text. |
-| Decorative material | Uncertain by design | The library-style reference title page is intentionally present for the user's reference. It should be removed or confirmed before formal submission. |
+- Status: **Pass**.
+- Abstract and title page have no visible page numbers and are not counted in Roman front matter.
+- Declaration starts at lower-case Roman `i`.
+- Acknowledgements and contents continue lower-case Roman numbering.
+- The table of contents is included in the Roman-numbered front matter and is listed in itself.
+- Chapter 1 starts at Arabic page `1`.
+- Bibliography continues Arabic numbering after the chapters.
+- Page numbers are in the centered footer; no running header page numbers are used in the formal `thesis` style.
 
-## External submission/workflow items the user must still handle
+## Abstract / Title / Declaration / Front Matter Status
 
-- Notice of intention to submit thesis at least 3 months before expected submission.
-- Originality/self-check before formal submission.
-- Supervisor readiness proforma.
-- Thesis submission form.
-- Examination fee receipt.
-- Dataset submission, where applicable.
-- Bibliography upload during finalized online thesis submission.
-- Final searchable PDF for electronic thesis submission.
+- Abstract: **Structurally pass, content incomplete**.
+  - Abstract appears before the title page.
+  - Abstract is unnumbered and absent from the table of contents.
+  - Opening structure uses thesis title, author, degree, university, and `\submissionmonthyear`.
+  - The body is a visible TODO placeholder; the final abstract must be supplied and checked for 200--500 words.
+- Title page: **Structurally pass, date incomplete**.
+  - Title page follows the abstract, is unnumbered, and is absent from the table of contents.
+  - It follows the requested Shui-style block order and includes the department/university block.
+  - It uses the conservative wording with British spelling `fulfilment`.
+  - Previous degrees are controlled by `\previousdegrees` in `main.tex`; currently this prints `B.Eng.; M.Eng.` with no degree-awarding university names.
+  - `\submissionmonthyear` is currently `TODO Month Year` because no final submission month/year was provided.
+- Declaration: **Pass**.
+  - Manual page-counter commands and signature image overlay were removed.
+  - Declaration is included in the table of contents and uses the conservative own-work wording.
+- Acknowledgements: **Structurally pass, content incomplete**.
+  - Included in the table of contents and numbered as Roman `ii`.
+  - The compiled page has no visible placeholder text; the source contains only a TODO comment.
 
-## Remaining uncertainties
+## ToC / List Status
 
-- The user-requested library-style page before the abstract may be added by the Library in senior students' final records, but this was not verified from the local LaTeX project. Treat it as a removable reference page before formal submission.
-- The abstract currently contains template/sample wording. Replace it with the final thesis abstract, rerun `texcount Abstract/abstract.tex -sum -1`, and update the optional argument in `\begin{abstract}[...]`.
-- The month/year currently comes from `\monthyeardate\today`, producing `June, 2026` at compile time. Confirm whether the final thesis should use the final submission month/year instead of the compile date.
-- Optional files not included in `main.tex`, such as the old decorative cover/dedication/publications pages, were inspected but not treated as part of the compiled thesis. Recheck them if they are re-enabled.
-- The remaining overfull boxes are nonfatal but should be revisited after real chapter/abstract content replaces the current placeholders and long all-caps chapter titles are finalized.
+- Table of contents: **Pass**.
+  - Abstract and title page are not listed.
+  - Declaration, Acknowledgements, TABLE OF CONTENTS, chapters, and Bibliography are listed.
+  - Numbered chapter entries render as `CHAPTER 1 INTRODUCTION` style entries.
+  - No duplicate List of Algorithms entry is present.
+- Lists of figures/tables/algorithms: **Not included by default**.
+  - No `figure`, `table`, or `algorithm` environments were found in the current included chapter files.
+  - Enable `\includeListOfFigurestrue`, `\includeListOfTablestrue`, or `\includeListOfAlgorithmstrue` in `main.tex` when real content requires those lists.
+- Abbreviations and symbols: **Not included by default**.
+  - Demo entries were removed from their files.
+  - Enable `\includeAbbreviationstrue` or `\includeSymbolstrue` in `main.tex` when final content exists.
+- Appendices: **Not included by default**.
+  - The existing appendix files contain placeholder/instructional content and are preserved but disabled via `\includeAppendicesfalse`.
+
+## Bibliography Status
+
+- Status: **Uncertain / content incomplete**.
+- The bibliography heading appears in the PDF and continues Arabic numbering.
+- The previous demo `\nocite{Gershun1939Light}` was removed.
+- The final PDF currently has an empty bibliography because no citation commands are present in the included chapters. Add real citations or intentional bibliography entries before final submission.
+
+## PDF Searchability / Font Embedding Status
+
+- Text extraction: **Pass**.
+  - `pdftotext -layout -f 1 -l 8 main.pdf -` extracted readable text from the PDF.
+- Font embedding: **Pass**.
+  - `pdffonts main.pdf` reports embedded, subsetted TeX Gyre TermesX fonts.
+- Searchable PDF: **Pass** based on successful text extraction.
+
+## Recommended Style Checks
+
+- Body font: **Pass**. `newtxtext` provides a Times-like serif text font.
+- Math font: **Pass**. `newtxmath` provides Times-like math fonts.
+- Body size: **Pass**. `12pt` is enabled.
+- Spacing: **Pass**. `onehalfspacing` is enabled.
+- Chapter headings: **Adjusted**. The formal chapter prefix and title use compact centered bold `\Large` settings.
+- Decorative colors: **Adjusted**. Formal metadata macros no longer wrap supervisor, department, faculty, group, or related values in red. Hyperlinks are black.
+
+## Remaining Uncertainties
+
+- The final submission month/year must replace `TODO Month Year` in `main.tex`.
+- The abstract must be written by the author and checked to be 200--500 words.
+- Acknowledgements content still needs to be supplied if that page is retained.
+- The table of contents uses the requested `CHAPTER N TITLE` format, but very long chapter titles produce underfull line-break warnings. This is a visual/readability warning rather than a compilation failure.
+- Bibliography content is empty until real citations or bibliography entries are added.
+- Optional lists and appendices are disabled by default because the current files do not contain final content. Re-enable only when real content exists.
+- `Publications/publications.tex`, `Covers/cover.tex`, and `Copyrights/copyright.tex` still contain legacy optional template material, but they are not included by the formal default PDF.
+- This audit only checks the local LaTeX source and compiled PDF against the user-provided checklist. It does not verify external university workflow requirements or any rules outside that checklist.
