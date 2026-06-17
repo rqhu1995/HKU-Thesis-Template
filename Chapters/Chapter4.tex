@@ -1,9 +1,1770 @@
 \chapter{STATIC BIKE REPOSITIONING WITH BROKEN BIKES AND ON-SITE REPAIR}
 
-\section{Problem formulation}
+This chapter studies a static bike repositioning problem with broken bikes and on-site repair. In addition to relocating usable and broken bikes by trucks, the problem considers repairers who visit stations and repair broken bikes directly in the system. The resulting planning problem involves two interacting routing decisions and station-level quantity decisions for repairing, loading, and unloading bikes.
 
-\section{Solution method}
+The chapter first presents the mathematical formulation of the problem. It then introduces a hybrid solution algorithm that combines Hybrid Genetic Search with Adaptive Diversity Control and a station-budget-constrained heuristic for determining repairing, loading, and unloading quantities. Computational experiments are conducted to evaluate the performance of the proposed method and to examine the operational value of introducing on-site repairers.
 
-\section{Computational experiments}
+\section{Problem formulation}\label{ch4:sec:problem-formulation}
 
-\section{Conclusions}
+In this chapter, we consider a BSS with one depot and a finite number of stations. Every station has a
+fixed capacity, an initial inventory of usable bikes, and an initial inventory of broken bikes. The
+numbers of usable bikes and empty docks at each station are assumed to be known as the current
+technology of BSSs provides the system operator with this information in real-time. Moreover, the
+number of broken bikes at each station is assumed to be known in this study, as we assume that
+\emph{users report the existence of broken bikes once they know in the daytime,} and we only
+consider a nighttime bike repositioning problem.
+
+A fleet of homogeneous repositioning trucks with the same capacity depart from the depot, then
+travel among selected stations in the system to deliver usable bikes to visited stations or pick up
+the usable bikes from visited stations, collect broken bikes at visited stations, and finally return
+to the depot to drop off usable and broken bikes within a given time budget. Throughout this
+process, the trucks can return to the depot to drop off usable and broken bikes when needed, but the
+number of bikes carried on each truck cannot exceed the truck capacity. Meanwhile, a set of
+repairers also depart from the depot, head to stations with broken bikes to conduct repairs directly
+on-site, and return to the depot within the same time budget. Loading, unloading, and repairing each
+bike take time, with a constant duration for each operation type. For each repositioning truck,
+every station and the depot can be visited multiple times. For each repairer, each station can be
+visited at most once. A station can be visited by at most one repairer. We assume the depot holds an
+infinite inventory of usable bikes and can store an infinite number of usable and broken bikes.
+Moreover, we assume that the repairers only repair broken bikes at stations but do not repair broken
+bikes at the depot. Broken bikes at the depot are repaired by the repairing staff there but these
+bikes have no urgency to be repaired within the repositioning period as we assume we have a
+sufficient number of usable bikes in the system. Furthermore, we assume that the repairing staff at
+the depot and the onsite repairers are hired at fixed daily salary rates. Therefore, the total
+repair staffing cost is constant daily, which is independent of the number of broken bikes repaired
+onsite or sent back to the depot within the repositioning period. In addition, we assume that the
+repositioning process involves no rental or returning behaviors from the users, and the final
+inventories after the repositioning set the starting inventories for the following day.
+Additionally, we assume the repairers travel on electric tricycles that generate no emissions during
+the repositioning process, and the travel speed of the electric tricycle is proportional to that of
+a truck. The objective of the BRP is to minimize the cost consisting of the following components:
+
+\begin{itemize}
+\item
+  The sum of user dissatisfaction at all stations on the following day and;
+\item
+  The CO\textsubscript{2} emissions of the repositioning trucks during the rebalancing process.
+\end{itemize}
+
+Note that the daily repair staffing cost is not included in our optimization objective as it does
+not affect the optimal repositioning decisions.
+
+Figure~\ref{ch4:fig:problem-illustration} illustrates an example of the problem. The BSS consists of one depot (represented by a red
+star and labeled with 0) and ten stations (labeled from 1 to 10). The tables in Figure~\ref{ch4:fig:problem-illustration}
+\textbf{(a)}-\textbf{(d)} show the number of usable and broken bikes loaded onto a truck and
+unloaded from a truck at each node, and the number of bikes repaired by repairers at each node. Two
+trucks (Truck 1 in Figure~\ref{ch4:fig:problem-illustration} \textbf{(a)} and Truck 2 in Figure~\ref{ch4:fig:problem-illustration} \textbf{(b)}) with the identical
+capacity of 25 bikes and two repairers (Repairer 1 in Figure~\ref{ch4:fig:problem-illustration} \textbf{(c)} and Repairer 2 in Figure~\ref{ch4:fig:problem-illustration} \textbf{(d)}) depart from the depot to visit these stations. Specifically, Truck 1 follows the
+route 0--4--6--9--0--2--0, with one intermediate return to the depot to drop off 18 broken bikes and
+pick up three usable bikes. Truck 2 follows the route 0--5--4--0--7--5--9--0, with one intermediate
+return to the depot to drop off eight usable bikes and 13 broken bikes. Repairer 1 follows the route
+0--6--8--0, performing on-site repairs before returning to the depot, while Repairer 2 follows the
+route 0--1--3--0. Node 5 is visited by Truck 2 twice because the total number of broken and surplus
+usable bikes to be loaded at the station (26) is more than the truck capacity (25). To reduce
+vehicle emissions, it is wise to drop off all broken bikes when Truck 2 visits the depot during the
+repositioning process. The travel times between nodes are labeled on the arcs in the figures, and
+the travel times between nodes are not assumed to be symmetric (e.g., the back-and-forth travel
+times for Truck 1 between nodes 0 to 2 are different). Note that Station 10 is not visited by both
+trucks and repairers.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Problem illustration placeholder.}}
+\caption{Problem illustration}
+\label{ch4:fig:problem-illustration}
+\end{figure}
+
+Figure~\ref{ch4:fig:repositioning-repair-process} shows the repositioning and repair process of Truck 1 and Repairer 1 from the example in
+Figure~\ref{ch4:fig:problem-illustration} from a temporal perspective. The repositioning time budget is 7200~s as marked on the time
+axis. The figure shows the routes taken, inventory variations at the stations, and temporal aspects
+of the operations (e.g., loading and repairing times, arrival times). Loading or unloading one bike
+takes 60~s while repairing one broken bike takes 300~s. Note that (\emph{p, b}) \ensuremath{\rightarrow} (\emph{p', b'}) at
+each station represents the variations of usable bike inventory from \emph{p} to \emph{p'} and
+broken bike inventory from \emph{b} to \emph{b'} after the operations of trucks or
+repairers.~\textless~\emph{A}, \emph{B}~\textgreater~on the axis represents the truck inventory of
+\emph{A} usable bikes and \emph{B} broken bikes when it travels between the nodes. The
+round-cornered shapes show the variation of the user dissatisfaction under the inventories before
+and after the operations. Specifically, Truck 1 follows the route 0--4--6--9--0--2--0 as indicated
+above the time axis. It first visits Station 4 to collect two usable bikes and one broken bike, then
+travels to Station 6 to collect five usable and 17 broken bikes, reaching its full capacity of 25
+bikes. Next, the truck travels to Station 9 to unload the seven usable bikes. Following that, it
+returns to the depot to unload all broken bikes, loads three usable bikes, and proceeds to Station 2
+to deliver the three usable bikes and collect nine broken bikes. Finally, it returns to the depot,
+unloading all broken bikes and completing its operations in 7123~s, calculated by adding up the
+arrival time at the depot (6583~s) and the operational time for unloading the nine broken bikes
+(540~s). Meanwhile, Repairer 1 performs on-site repairs along the route 0--6--8--0, repairing four
+broken bikes at Station 6 and 12 at Station 8. It concludes its operations in 7180~s. Note that
+Station 6 is visited by both Truck 1 and Repairer 1, and all 21 broken bikes at the station are
+handled, with four repaired by the repairer before the truck arrives at the station and 17 loaded by
+the truck. The four repaired bikes, together with one usable bike originally at Station 6 and two
+usable bikes at Station 4 are used to partially address the deficit of bikes at Station 9. The
+remaining deficit of eight usable bikes at Station 9 is satisfied by the usable bikes collected by
+Truck 2 from other stations and delivered to the station.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Truck and repairer timeline placeholder.}}
+\caption{The repositioning and repair process of Truck 1 and Repairer 1.}
+\label{ch4:fig:repositioning-repair-process}
+\end{figure}
+
+The first component of the objective function of the problem involves the calculation of user
+dissatisfaction throughout the day following the rebalancing process based on the starting
+inventories resulting from that process. The method proposed by Kaspi et al. (2017) is used for this
+calculation, which is briefly introduced here. Given station \emph{i} with \emph{C\textsubscript{i}}
+docks and a finite period for the following day, at the beginning of that day, there are
+\emph{p\textsubscript{i}} usable bikes and \emph{b\textsubscript{i}} broken bikes present at the
+station. Throughout this timeframe, users intending to rent or return a bike arrive at the station
+based on a stochastic process. When a user's demand for a bike or an available dock is met, the bike
+is rented or returned, subsequently updating the station's inventory level. Conversely, if the
+demand cannot be fulfilled, it is assumed that the user promptly leaves the station, corresponding
+to a failure in renting or returning a bike. The user dissatisfaction at a station is calculated as
+the weighted expected number of occurrences where users are unable to rent or return bikes during
+the specified period, provided that the usable and broken bike inventories at the beginning of the
+period are \emph{p\textsubscript{i}} and \emph{b\textsubscript{i}}, respectively. It is assumed that
+changes in inventory levels are solely caused by users' rental or return actions, with no external
+interventions such as truck repositioning or repairs. An Extended User Dissatisfaction Function
+(EUDF), denoted as \(F_{i}\left( {p_{i},b_{i}} \right)\), is defined to represent the
+dissatisfaction at station \emph{i} given the inventories \emph{p\textsubscript{i}} and
+\emph{b\textsubscript{i}}. The domain of this bivariate function is
+\(\Theta_{i} = \left\{ {\left( {p_{i},b_{i}} \right) \mid p_{i} \geq 0,b_{i} \geq 0,p_{i} + b_{i} \leq C_{i}} \right\}\).
+Kaspi et al. (2017) proposed a method for determining a convex polyhedral function that has nearly
+identical values to the EUDF values in its range, enabling the integration of the EUDF into the
+subsequent linear optimization model. Specifically, for each
+\(\left( {p_{i},b_{i}} \right) \in \Theta_{i},\) a plane
+\(\alpha_{p_{i},b_{i}}^{i} \cdot p_{i} + \beta_{p_{i},b_{i}}^{i} \cdot b_{i} + \gamma_{p_{i},b_{i}}^{i}\)
+that passes as close as possible to \(F_{i}\left( {p_{i},b_{i}} \right)\) can be fitted, where
+\(\alpha_{p_{i},b_{i}}^{i},\beta_{p_{i},b_{i}}^{i},\) and \(\gamma_{p_{i},b_{i}}^{i}\) are the
+coefficients of the plane that can be computed for every
+\(\left( {p_{i},b_{i}} \right) \in \theta_{i}\). The computation details of the coefficients of the
+fitted plane are given in Appendix A. Due to limited space, we omit the lengthy details on
+generating the station EUDF values. Interested readers can consult Kaspi et al. (2017) for
+generating them.
+
+The second component requires the calculation of the CO\textsubscript{2} emissions of a
+repositioning truck as it moves. Wang and Szeto (2021) used the following emission model to
+calculate the amount of CO\textsubscript{2} emissions \emph{e} produced by a truck when it carries
+bikes over a
+distance:\begin{equation}
+\label{ch4:eq:1}
+e = CER \cdot \left( {\rho_{0} + \frac{\rho^{\ast} - \rho_{0}}{Q}\psi} \right) \cdot d
+\end{equation}where
+\emph{CER} is the CO\textsubscript{2} emission rate, \(\rho^{\ast}\) and \(\rho_{0}\) are the fuel
+consumption rates when the vehicle is empty and fully loaded, respectively, \emph{Q} is the vehicle
+capacity, \(\psi\) is the number of bikes carried by the truck, and \emph{d} is the distance
+traveled by the truck. Given the similarities between their and our research context, we chose to
+adopt this emission model for the calculation in the second component.
+
+As aforementioned, each station can be visited by each truck an arbitrary number of times. Hence,
+the classic arc-indexed formulation is not suitable for our problem. As proposed by Raviv et al.
+(2013), the time-indexed formulation requires the whole time budget \emph{T} to be discretized into
+multiple periods with equal length, which allows us to keep track of each visit to a station and the
+inventory of bikes on each truck and at each station during every period, thereby enabling the
+formulation (1) for multiple visits to a station and the depot by vehicles and repairers and (2) to
+decide the pickup quantities of usable bikes by trucks and the repair quantities of broken bikes by
+repairs based on the actual inventory status. Therefore, we formulate our problem based on the
+time-indexed formulation.
+
+\subsection{Notations}\label{ch4:subsec:notations}
+
+\begin{longtable}{@{}ll@{}}
+\caption{Notation used in the problem formulation.}\label{ch4:tab:notations}\\
+\toprule
+\endfirsthead
+\toprule
+\endhead
+\bottomrule
+\endlastfoot
+\multicolumn{2}{@{}l@{}}{%
+\textbf{Sets}} \\
+\emph{S} & The set of stations, indexed by \emph{i~=}~1, \ldots, \textbar{}\emph{S}\textbar{} \\
+\emph{S}\textsubscript{0} & The set of nodes, including the stations and the depot (denoted by 0) \\
+\emph{K} & The set of rebalancing trucks \\
+\emph{R} & The set of repairers \\
+\multicolumn{2}{@{}l@{}}{%
+\textbf{Parameters}} \\
+\emph{p\textsubscript{i}}\textsuperscript{0} & The initial inventory of usable bikes at node
+\(i \in S_{0}\) \\
+\emph{b\textsubscript{i}}\textsuperscript{0} & The initial quantity of broken bikes at node
+\(i \in S_{0}\) \\
+\emph{\(\rho\)}\textsubscript{0} & The empty-load fuel consumption rate of each truck (liters/km) \\
+\emph{\(\rho\)*} & The full-load fuel consumption rate of each truck (liters/km) \\
+\emph{CER} & The CO\textsubscript{2} emission rate (kg/liter) \\
+\emph{Q\textsubscript{k}} & The capacity of truck \emph{k} \\
+\emph{C\textsubscript{i}} & The capacity of node \(i \in S_{0}\) \\
+\(\tau\) & The length of a discretized period (second) \\
+\(t^{\text{load}}\) & Time for loading/unloading a bike (\(t^{\text{load}} < \tau\)) \\
+\(t^{\text{repair}}\) & Time for repairing a bike on-site (\(t^{\text{repair}} < \tau\)) \\
+\emph{T} & Rebalancing time budget (second) \\
+\(t_{\mathit{ij}}^{\text{v}}\) & Travel time for a truck from node \emph{i} to node \emph{j} \\
+\(t_{\mathit{ij}}^{\text{r}}\) & Travel time for a repairer from node \emph{i} to node \emph{j} \\
+\(t_{\mathit{ij}}'\) & The number of periods required by a truck to travel from node \emph{i} to
+node \emph{j}, which is calculated by \(t_{\mathit{ij}}' = \left\{ \begin{array}{lc}
+{\left\lceil t_{\mathit{ij}}^{\text{v}}/\tau \right\rceil,} & {\text{if}\; i \neq j} \\
+{1,} & {\text{if}\; i = j}
+\end{array} \right.\) \\
+\(t_{\mathit{ij}}^{''}\) & The number of periods required by a repairer to travel from node \emph{i}
+to node \emph{j}, which is calculated by \(t_{\mathit{ij}}^{''} = \left\{ \begin{array}{lc}
+{\left\lceil t_{\mathit{ij}}^{\text{r}}/\tau \right\rceil,} & {\text{if}\; i \neq j} \\
+{1,} & {\text{if}\; i = j}
+\end{array} \right.\) \\
+\(d_{\mathit{ij}}\) & The travel distance from node \emph{i} to node \emph{j} (km) \\
+\(\alpha_{p_{i},b_{i}}^{i}\) & The first coefficient of the fitted plane to approximate the EUDF at
+station \emph{i}, given the usable bike inventory level of \emph{p\textsubscript{i}} and the broken
+bike inventory level of \emph{b\textsubscript{i}} \\
+\(\beta_{p_{i},b_{i}}^{i}\) & The second coefficient of the fitted plane to approximate the EUDF at
+station \emph{i}, given the usable bike inventory level of \emph{p\textsubscript{i}} and the broken
+bike inventory level of \emph{b\textsubscript{i}} \\
+\(\gamma_{p_{i},b_{i}}^{i}\) & The third coefficient of the fitted plane to approximate the EUDF at
+station \emph{i}, given the usable bike inventory level of \emph{p\textsubscript{i}} and the broken
+bike inventory level of \emph{b\textsubscript{i}} \\
+\(T'\) & The number of periods in the rebalancing time budget such that
+\(T' = \left\lfloor T/\tau \right\rfloor\) \\
+\(c^{\text{p}}\) & The penalty cost for a user unable to rent/return a bike (CNY) \\
+\(c^{\text{e}}\) & The unit carbon trading cost (CNY/kg) \\
+\multicolumn{2}{@{}l@{}}{%
+\textbf{Decision variables}} \\
+\(x_{i,j,t,k}^{\text{v}}\) & If truck \emph{k} travels directly from node \emph{i} to node \emph{j}
+during period \emph{t}, \(x_{i,j,t,k}^{\text{v}}\)~=~1, 0 otherwise \\
+\(x_{i,j,t,m}^{\text{r}}\) & If repairer \emph{m} travels directly from node \emph{i} to node
+\emph{j} during period \emph{t}, \(x_{i,j,t,m}^{\text{r}}\)~=~1, 0 otherwise \\
+\(p_{i,t}\) & The number of usable bikes at node \emph{i} at the end of period \emph{t} \\
+\(b_{i,t}\) & The number of broken bikes at node \emph{i} at the end of period \emph{t} \\
+\(y_{i,t,k}^{\text{u}^{+}}\) & The number of usable bikes delivered to node \emph{i} by truck
+\emph{k} during period \emph{t} \\
+\(y_{i,t,k}^{\text{u}^{-}}\) & The number of usable bikes collected from node \emph{i} by truck
+\emph{k} during period \emph{t} \\
+\(y_{i,t,k}^{\text{b}^{+}}\) & The number of broken bikes delivered to node \emph{i} by truck
+\emph{k} during period \emph{t} \\
+\(y_{i,t,k}^{\text{b}^{-}}\) & The number of broken bikes collected from node \emph{i} by truck
+\emph{k} during period \emph{t} \\
+\(g_{i,t,m}\) & The number of broken bikes repaired by repairer \emph{m} at node \emph{i} during
+period \emph{t} \\
+\(\psi_{i,j,t,k}^{\text{u}}\) & The number of usable bikes on truck \emph{k} when it departs from
+node \emph{i} to node \emph{j} during period \emph{t} \\
+\(\psi_{i,j,t,k}^{\text{b}}\) & The number of broken bikes on truck \emph{k} when it departs from
+node \emph{i} to node \emph{j} during period \emph{t} \\
+\(e_{i,j,t,k}\) & The CO\textsubscript{2} emissions generated when truck \emph{k} travels from node
+\emph{i} to node \emph{j} during period \emph{t} \\
+\(\partial_{k}^{\text{v}}\) & The period in which truck \emph{k} returns to the depot and remains
+stationary until the rebalancing time budget is used up \\
+\(\partial_{m}^{\text{r}}\) & The period in which repairer \emph{m} returns to the depot and remains
+stationary until the rebalancing time budget is used up \\
+\(\varsigma_{t,k}^{\text{v}}\) & If truck \emph{k} remains stationary at the depot from period \emph{t} to
+the end of the repositioning process, \(\varsigma_{t,k}^{\text{v}} = 1\), 0 otherwise \\
+\(\varsigma_{t,m}^{\text{r}}\) & If repairer \emph{m} remains stationary at the depot from period \emph{t}
+to the end of the repositioning process, \(\varsigma_{t,m}^{\text{r}} = 1\), 0 otherwise \\
+\({\widehat{F}}_{i}\) & The auxiliary variable for the linearization of the EUDF of station
+\emph{i} \\
+\multicolumn{2}{@{}l@{}}{%
+Function} \\
+\(F_{i}\left( {p_{i},b_{i}} \right)\) & The EUDF defined over the usable bike inventory level
+\emph{p\textsubscript{i}} and broken bike inventory level \emph{b\textsubscript{i}} at station
+\emph{i} \\
+\end{longtable}
+
+\subsection{Time-indexed formulation}\label{ch4:subsec:time-indexed-formulation}
+
+The time-indexed formulation of the BRP separating the routes of trucks and repairers is as follows.
+
+\begin{equation}
+\label{ch4:eq:2}
+\begin{array}{l}
+{\text{minimize~}c^{\text{p}}\sum_{i \in S}F_{i}\left( {p_{i,T^{'}},b_{i,T^{'}}} \right) + c^{\text{e}}\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}e_{i,j,t - t_{i,j}^{'}k} +} \\
+{\theta \cdot \left( \begin{array}{l}
+{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}\left( {t_{i,j}^{\text{v}} \cdot x_{i,j,t - t_{i,j}^{'},k}^{\text{v}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}t^{\text{load}} \cdot \left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) +} \\
+{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}\left( {t_{i,j}^{\text{r}} \cdot x_{i,j,t - t_{i,j}^{''},m}^{\text{r}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}t^{\text{repair}} \cdot g_{i,t,m}}
+\end{array} \right)}
+\end{array}
+\end{equation}Subject to
+
+\begin{equation}
+\label{ch4:eq:3}
+p_{i,1} = p_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\text{u}^{-}} + \sum\limits_{k \in K}y_{i,1,k}^{\text{u}^{+}} + \sum\limits_{m \in R}g_{i,1,m},\forall i \in S_{0},
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:4}
+p_{i,t} = p_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\text{u}^{-}} + \sum\limits_{k \in K}y_{i,t,k}^{\text{u}^{+}} + \sum\limits_{m \in R}g_{i,t,m},\forall i \in S_{0},t = 2,...,T',
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:5}
+b_{i,1} = b_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\text{b}^{-}} + \sum\limits_{k \in K}y_{i,1,k}^{\text{b}^{+}} - \sum\limits_{m \in R}g_{i,1,m},\forall i \in S_{0},
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:6}
+b_{i,t} = b_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\text{b}^{-}} + \sum\limits_{k \in K}y_{i,t,k}^{\text{b}^{+}} - \sum\limits_{m \in R}g_{i,t,m},\forall i \in S_{0},t = 2,\ldots,T',
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:7}
+p_{i,t} + b_{i,t} \leq C_{i},\forall i \in S,t = 1,....T',
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:8}
+\sum\limits_{j \in S_{0}}\psi_{0,j,1,k}^{\text{u}} = y_{0,1,k}^{\text{u}^{-}},\forall k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:9}
+\sum\limits_{j \in S_{0}}\psi_{i,j,t,k}^{\text{u}} = \sum\limits_{j \in S_{0},t - t_{j,i}' > 0}\psi_{j,i,t - t_{j,i}',k}^{\text{u}} - y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}},\forall i \in S_{0},t = 2,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:10}
+\psi_{i,j,T',k}^{\text{u}} = 0,\forall i \in S_{0},j \in S_{0},k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:11}
+\psi_{i,j,t,k}^{\text{u}} \leq Q_{k}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},j \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:12}
+\psi_{i,j,1,k}^{\text{b}} = 0,\forall i \in S_{0},j \in S_{0},k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:13}
+\sum\limits_{j \in S_{0}}\psi_{i,j,t,k}^{\text{b}} = \sum\limits_{j \in S_{0},t - t_{j,i}' > 0}\psi_{j,i,t - t_{j,i}',k}^{\text{b}} - y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}},\forall i \in S_{0},t = 2,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:14}
+\psi_{i,j,T',k}^{\text{b}} = 0,\forall i \in S_{0},j \in S_{0},k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:15}
+\psi_{i,j,t,k}^{\text{b}} \leq Q_{k}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},j \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:16}
+\psi_{i,j,t,k}^{\text{u}} + \psi_{i,j,t,k}^{\text{b}} \leq Q_{k},\forall i \in S_{0},j \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:17}
+y_{i,t,k}^{\text{u}^{+}} \leq \min\left\{ {C_{i},Q_{k}} \right\} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:18}
+y_{i,t,k}^{\text{u}^{-}} \leq \min\left\{ {C_{i},Q_{k}} \right\} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:19}
+y_{0,t,k}^{\text{b}^{+}} \leq Q_{k} \cdot \sum\limits_{j \in S_{0}}x_{0,j,t,k}^{\text{v}},\forall t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:20}
+y_{i,t,k}^{\text{b}^{+}} = 0,\forall i \in S,t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:21}
+y_{0,t,k}^{\text{b}^{-}} = 0,\forall t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:22}
+y_{i,t,k}^{\text{b}^{-}} \leq \min\left\{ {b_{i}^{0},Q_{k}} \right\} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}},\forall i \in S,t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:23}
+g_{0,t,m} = 0,\forall t = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:24}
+g_{i,t,m} \leq b_{i}^{0} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,m}^{\text{r}},\forall i \in S,t = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:25}
+\sum\limits_{t = 1}^{T'}{\sum\limits_{k \in K}y_{i,t,k}^{\text{b}^{-}}} + \sum\limits_{t = 1}^{T'}{\sum\limits_{m \in R}g_{i,t,m}} \leq b_{i}^{0},\forall i \in S,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:26}
+\sum\limits_{j \in S_{0}}x_{0,j,1,k}^{\text{v}} = 1,\forall k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:27}
+\sum\limits_{j \in S}x_{0,j,1,m}^{\text{r}} = 1,\forall m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:28}
+\sum\limits_{i \in S_{0}}x_{i,0,T^{'} - t_{i,0}^{'},k}^{\text{v}} = 1,\forall k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:29}
+\sum\limits_{i \in S_{0}}x_{i,0,T^{'} - t_{i,0}^{''},m}^{\text{r}} = 1,\forall m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:30}
+\sum\limits_{j \in S_{0},t - t_{\mathit{ji}}' > 0}x_{j,i,t - t_{\mathit{ji}}',k}^{\text{v}} = \sum\limits_{u \in S_{0}}x_{i,u,t,k}^{\text{v}},\forall i \in S_{0},t = 2,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:31}
+\sum\limits_{j \in S_{0},t - t_{\mathit{ji}}^{''} > 0}x_{j,i,t - t_{\mathit{ji}}^{''},m}^{\text{r}} = \sum\limits_{u \in S_{0}}x_{i,u,t,m}^{\text{r}},\forall i \in S_{0},t = 2,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:32}
+\left. \varsigma_{t,k}^{\text{v}} \geq \left( t - \partial_{k}^{\text{v}} + 1 \right)/T',\forall t = 1,\ldots,T',k \in K, \right.
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:33}
+\left. \varsigma_{t,k}^{\text{v}} \leq \left( t - \partial_{k}^{\text{v}} + 0.5 \right)/T' + 1,\forall t = 1,\ldots,T',k \in K, \right.
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:34}
+\left. \varsigma_{t,m}^{\text{r}} \geq \left( t - \partial_{m}^{\text{r}} + 1 \right)/T',\forall t = 1,\ldots,T',m \in R, \right.
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:35}
+\left. \varsigma_{t,m}^{\text{r}} \leq \left( t - \partial_{m}^{\text{r}} + 0.5 \right)/T' + 1,\forall t = 1,\ldots,T',m \in R, \right.
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:36}
+\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > t_{ij}^{'}}t_{i,j}^{\text{v}} \cdot x_{i,j,t - t_{ij}^{'},k}^{\text{v}} + \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\text{load}}\left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) \leq w \cdot \tau,\forall w = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:37}
+\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > 0}t_{i,j}^{\text{v}} \cdot x_{i,j,t,k}^{\text{v}} + \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\text{load}}\left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) \geq \left( {w - 2} \right) \cdot \tau - \varsigma_{w,k}^{\text{v}}T,\forall w = 1,...,T^{'},k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:38}
+\sum\limits_{i,j \in S_{0}}{\sum\limits_{t \leq w,t > t_{\mathit{ij}}^{''}}t_{i,j}^{\text{r}}} \cdot x_{i,j,t - t_{\mathit{ij}}^{''},m}^{\text{r}} + \sum\limits_{i \in S}{\sum\limits_{t \leq w}{t^{\text{repair}}g_{i,t,m}}} \leq w \cdot \tau,\forall w = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:39}
+\sum\limits_{i,j \in S_{0}}{\sum\limits_{t \leq w,t > 0}t_{i,j}^{\text{r}}} \cdot x_{i,j,t,m}^{\text{r}} + \sum\limits_{i \in S}{\sum\limits_{t \leq w}{t^{\text{repair}}g_{i,t,m}}} \geq \left( {w - 2} \right) \cdot \tau - \varsigma_{w,m}^{\text{r}}T,\forall w = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:40}
+x_{0,0,t,k}^{\text{v}} \leq 1 - \left( \varsigma_{t + 1,k}^{\text{v}} - \varsigma_{t,k}^{\text{v}} \right),\forall t = 1,\ldots,T' - 1,k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:41}
+x_{0,0,t,m}^{\text{r}} \leq 1 - \left( \varsigma_{t + 1,m}^{\text{r}} - \varsigma_{t,m}^{\text{r}} \right),\forall t = 1,\ldots,T' - 1,m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:42}
+x_{i,i,t,k}^{\text{v}} \leq \left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) + \left\lfloor \frac{\tau}{t^{load}} \right\rfloor \varsigma_{t,k}^{\text{v}},\forall i \in S_{0},t = 1,\ldots,T^{'},k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:43}
+x_{i,i,t,m}^{\text{r}} \leq g_{i,t,m} + \left\lfloor \frac{\tau}{t^{\text{repair}}} \right\rfloor \varsigma_{t,m}^{\text{r}},\forall i \in S_{0},t = 1,\ldots,T^{'},m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:44}
+\sum\limits_{i \in S_{0}}{\sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}}} \leq 1,\forall t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:45}
+\sum\limits_{i \in S_{0}}{\sum\limits_{j \in S_{0}}x_{i,j,t,m}^{\text{r}}} \leq 1,\forall t = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:46}
+\sum\limits_{j \in S_{0},j \neq i}{\sum\limits_{t = t_{j,i}^{''} + 1}^{T'}{\sum\limits_{m \in R}x_{j,i,t - t_{j,i}^{''},m}^{\text{r}}}} \leq 1,\forall i \in S_{0},
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:47}
+e_{i,j,t,k} \geq CER \cdot \left\lbrack {\rho_{0} \cdot x_{i,j,t,k}^{\text{v}} + \frac{\rho^{\ast} - \rho_{0}}{Q_{k}} \cdot \left( {\psi_{i,j,t,k}^{\text{u}} + \psi_{i,j,t,k}^{\text{b}}} \right)} \right\rbrack \cdot d_{\mathit{ij}},\mspace{100mu}\mspace{100mu}\forall i,j \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:48}
+x_{i,j,t,k}^{\text{v}} \in \left\{ 0,1 \right\},\forall i,j \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:49}
+x_{i,j,t,m}^{\text{r}} \in \left\{ 0,1 \right\},\forall i,j \in S_{0},t = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:50}
+\varsigma_{t,k}^{\text{v}} \in \left\{ 0,1 \right\},\forall t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:51}
+\varsigma_{t,m}^{\text{r}} \in \left\{ 0,1 \right\},\forall t = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:52}
+p_{i,t} \geq 0,\forall i \in S_{0},t = 1,...,T',
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:53}
+b_{i,t} \geq 0,\forall i \in S_{0},t = 1,...,T',
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:54}
+y_{i,t,k}^{\text{u}^{+}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:55}
+y_{i,t,k}^{\text{u}^{-}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:56}
+y_{i,t,k}^{\text{b}^{+}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:57}
+y_{i,t,k}^{\text{b}^{-}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:58}
+g_{i,t,m} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:59}
+\partial_{k}^{\text{v}} \geq 0,\text{integer},\forall k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:60}
+\partial_{m}^{\text{r}} \geq 0,\text{integer},\forall m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:61}
+\partial_{k}^{\text{v}} \leq T',\text{integer},\forall k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:62}
+\partial_{m}^{\text{r}} \leq T',\text{integer},\forall m \in R,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:63}
+\psi_{i,j,t,k}^{\text{u}} \geq 0,\forall i,\mspace{100mu} j \in S_{0},t = 1,...,T',k \in K,
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:64}
+\psi_{i,j,t,k}^{\text{b}} \geq 0,\forall i,\mspace{100mu} j \in S_{0},t = 1,...,T',k \in K,\quad\mspace{600mu}\text{and}
+\end{equation}
+
+\begin{equation}
+\label{ch4:eq:65}
+e_{i,j,t,k} \geq 0,\forall i,\mspace{100mu} j \in S_{0},t = 1,...,T',k \in K.
+\end{equation}
+
+The objective~\eqref{ch4:eq:2} is to minimize the sum of the penalty cost of the total user dissatisfaction at
+all stations and the cost of the total CO\textsubscript{2} emissions of all the trucks. Note that we
+add a third term to penalize the sum of the total travel time of trucks and repairers, bike
+loading/unloading times for trucks, and repairing times for the repairers. The inclusion of the
+third term helps discourage non-intuitive or redundant operations that, while feasible, may not be
+necessary given the available resources and time. For example, as shown in Figure~\ref{ch4:fig:redundant-operations} \textbf{(a)},
+the first case illustrates a truck loading eight usable bikes at a station in period
+\emph{t}\textsubscript{0} and then unloading two bikes at the same station in the next period
+\emph{t}\textsubscript{0}~+~1. This solution is feasible and could be optimal when the third term in
+the objective was not included, but such an operation is redundant as it can be simplified by
+loading only six bikes at once. The second case in Figure~\ref{ch4:fig:redundant-operations} \textbf{(b)} shows a repairer repairing
+one broken bike at one station, traveling to another station to repair one broken bike, and then
+returning to the original station to repair one additional bike. Again, while feasible, this
+solution is non-intuitive because the unnecessary return visit to the same station can be avoided.
+Overall, the third term in the objective penalizes such operations, ensuring a more straightforward
+and efficient rebalancing process. To avoid introducing unnecessary bias when the experiments
+involve the scenario without repairers, we set the coefficient \emph{\(\theta\)} for this penalty term to be
+1e-8. This ensures that the third term does not affect solution optimality. The largest possible
+value for this term is \(\left( \middle| K \middle| + \middle| R \middle| \right)T\), and under our
+experimental setting, the maximum value of the term is 43,200 (\textbar{}\emph{K}\textbar{} = 2,
+\textbar{}\emph{R}\textbar{} = 2, and \emph{T} = 10800), which is small enough to avoid any
+noticeable impact on results that are rounded to two decimal places.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Redundant operation examples placeholder.}}
+\caption{Examples of using the third component in the objective to avoid redundant operations.}
+\label{ch4:fig:redundant-operations}
+\end{figure}
+
+Constraints~\eqref{ch4:eq:3},~\eqref{ch4:eq:4},~\eqref{ch4:eq:5},~\eqref{ch4:eq:6} keep track of the numbers of usable and broken bikes at each node at
+the end of each period. Constraints~\eqref{ch4:eq:7} stipulate that the total number of usable and broken bikes
+at each station is no more than its capacity. Constraints~\eqref{ch4:eq:8} specify the initial load of usable
+bikes on each truck during the first period. Constraints~\eqref{ch4:eq:9} update the load of usable bikes on each
+truck at each node during each period. Constraints~\eqref{ch4:eq:10} require that each truck holds no usable
+bikes at the end of the last period. Constraints~\eqref{ch4:eq:11} ensure that the quantity of usable bikes
+carried by each truck in any period does not exceed its capacity. Similar constraints for broken
+bikes are provided in constraints~\eqref{ch4:eq:12},~\eqref{ch4:eq:13},~\eqref{ch4:eq:14},~\eqref{ch4:eq:15}. Constraints~\eqref{ch4:eq:16} ensure that the total
+number of usable and broken bikes on each truck during each period is no more than its capacity.
+
+Constraints~\eqref{ch4:eq:17},~\eqref{ch4:eq:18} make sure that the total quantity of usable bikes delivered to or collected
+from a visited station in a period is less than or equal to the minimum of the station capacity and
+the truck capacity. Constraints~\eqref{ch4:eq:19} limit that the number of broken bikes that can be deposited at
+the depot in a period is less than or equal to the truck capacity. Constraints~\eqref{ch4:eq:20} ensure no broken
+bikes are delivered to any station. Constraints~\eqref{ch4:eq:21} enforce that no broken bikes are collected from
+the depot. Constraints~\eqref{ch4:eq:22} make sure that the total quantity of broken bikes collected from a
+visited station in a period is less than or equal to the minimum of the initial broken bike
+inventory at the station and the truck capacity. Constraints~\eqref{ch4:eq:23} guarantee that no broken bike is
+repaired by the on-site repairers at the depot. Constraints~\eqref{ch4:eq:24} limit that the number of broken
+bikes repaired at any station is less than or equal to the initial broken bike inventory at the
+station. Constraints~\eqref{ch4:eq:25} ensure that the total number of broken bikes collected by trucks and
+repaired by repairers at each station does not exceed the initial broken bike inventory.
+
+Constraints~\eqref{ch4:eq:26},~\eqref{ch4:eq:27},~\eqref{ch4:eq:28},~\eqref{ch4:eq:29} require that both trucks and repairers depart from the depot
+initially and return to the depot eventually. Constraints~\eqref{ch4:eq:30},~\eqref{ch4:eq:31} are the
+flow~conservation~conditions for trucks and repairers, respectively. Constraints~\eqref{ch4:eq:32},~\eqref{ch4:eq:33},~\eqref{ch4:eq:34},
+\eqref{ch4:eq:35} relate \(\varsigma_{t,k}^{\text{v}}\)(the variable used to define whether a truck or a repairer stays
+still at the depot from period \emph{t} to the end of the rebalancing process) to
+\(\partial_{k}^{\text{v}}\) (the period of the truck's or repairer's final return to the depot).
+
+Constraints~\eqref{ch4:eq:36},~\eqref{ch4:eq:37},~\eqref{ch4:eq:38},~\eqref{ch4:eq:39} restrict the upper and lower bounds of the operational time, and
+are modified from the study of Liu et al. (2018). Specifically, constraints~\eqref{ch4:eq:36} imply that up to
+each period, the sum of route travel time and the service time at each node cannot exceed the time
+from the start of repositioning to the end of that period, and constraints~\eqref{ch4:eq:37} imply that up to
+each period, the sum of route travel time and the service time at each node cannot be lower than the
+time from the start of repositioning to the end of two periods before that period. Similar
+constraints are also imposed on the repairers in constraints~\eqref{ch4:eq:38},~\eqref{ch4:eq:39}. Note that constraints~\eqref{ch4:eq:37},
+\eqref{ch4:eq:39} are only activated before the period that the truck and the repairer return to the depot for
+the last time, respectively.
+
+Constraints~\eqref{ch4:eq:40},~\eqref{ch4:eq:41} ensure the truck or the repairer stays at the depot after the final return.
+Constraints~\eqref{ch4:eq:42},~\eqref{ch4:eq:43} limit that before the final return to the depot, if the truck or repairer
+stays at the same node for another period, it must conduct at least one loading, unloading, or bike
+repair here. Constraints~\eqref{ch4:eq:44} enforce that a truck can travel between at most one pair of nodes
+within a period. A similar set of constraints for repairers is given in constraints~\eqref{ch4:eq:45}.
+Constraints~\eqref{ch4:eq:46} ensure that each station can be visited at most once by at most one repairer in the
+whole repositioning horizon. Constraints~\eqref{ch4:eq:47} define the carbon emissions of each truck produced in
+each period when traveling between any two nodes. Constraints~\eqref{ch4:eq:48},~\eqref{ch4:eq:49},~\eqref{ch4:eq:50},~\eqref{ch4:eq:51},~\eqref{ch4:eq:52},~\eqref{ch4:eq:53},
+\eqref{ch4:eq:54},~\eqref{ch4:eq:55},~\eqref{ch4:eq:56},~\eqref{ch4:eq:57},~\eqref{ch4:eq:58},~\eqref{ch4:eq:59},~\eqref{ch4:eq:60},~\eqref{ch4:eq:61},~\eqref{ch4:eq:62},~\eqref{ch4:eq:63},~\eqref{ch4:eq:64},~\eqref{ch4:eq:65} are the domain constraints.
+
+Following Kaspi (2015), the EUDF is linearized by introducing a new variable \({\widehat{F}}_{i}\)
+for each station \(i \in S\), and the following linear constraints are added to the
+formulation.\begin{equation}
+\label{ch4:eq:66}
+{\hat{F}}_{i} \geq \alpha_{p_{i},b_{i}}^{i} \cdot p_{i,T^{'}} + \beta_{p_{i},b_{i}}^{i} \cdot b_{i,T^{'}} + \gamma_{p_{i},b_{i}}^{i},\forall\left( {p_{i},b_{i}} \right) \in \left\{ {\left( {p_{i},b_{i}} \right) \in {\mathbb{Z}}^{2} \mid p_{i} \geq 0,b_{i} \geq 0,p_{i} + b_{i} \leq C_{i}} \right\},\forall i \in S.
+\end{equation}
+
+The resultant objective is
+
+\begin{equation}
+\label{ch4:eq:67}
+\begin{array}{l}
+{\text{minimize}\mspace{6mu} c^{\text{p}}\sum\limits_{i \in S}{\hat{F}}_{i} + c^{\text{e}}\sum\limits_{i \in S_{0}}\sum\limits_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum\limits_{k \in K}e_{i,j,t - t_{i,j}^{'},k} +} \\
+{\theta \cdot \left( \begin{array}{l}
+{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}\left( {t_{i,j}^{\text{v}} \cdot x_{i,j,t - t_{i,j}^{'},k}^{\text{v}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}t^{\text{load}} \cdot \left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right)} \\
+{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}\left( {t_{i,j}^{\text{r}} \cdot x_{i,j,t - t_{i,j}^{''},m}^{\text{r}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}t^{\text{repair}} \cdot g_{i,t,m}}
+\end{array} \right)}
+\end{array}.
+\end{equation}
+
+\section{Solution method}\label{ch4:sec:solution-method}
+
+This study developed a hybrid algorithm (HGSADC-SBC) consisting of Hybrid Genetic Search with
+Adaptive Diversity Control (HGSADC) and a Station Budget Constrained (SBC) heuristic to solve the
+proposed model. The HGSADC is the backbone of the algorithm, and the SBC heuristic is encapsulated
+to determine the quantities of loading, unloading, and repairing of bikes for a given route.
+
+\subsection{Solution representation}\label{ch4:subsec:solution-representation}
+
+Each solution is represented by
+\(\phi = \left( {S_{\text{R}},S_{\text{K}},\Omega_{\text{R}},\Omega_{\text{K}}} \right)\), where
+\(S_{\text{R}} = \left( {r_{1},r_{2},...,r_{|R|}} \right)\) denotes the list of repairer routes
+\(r_{i}\mspace{100mu}\mspace{100mu}\left( {i \in R} \right)\), and
+\(S_{\text{K}} = \left( {r_{1}',r_{2}',...,r_{|K|}'} \right)\) denotes the list of truck routes
+\(r_{k}'\mspace{100mu}\left( {k \in K} \right)\). The repairing quantities are represented by
+\(\Omega_{\text{R}} = \left( {G_{1},G_{2},\ldots,G_{|R|}} \right)\), with \emph{G\textsubscript{i}}
+\(\left( {i \in R} \right)\) specifying the repairing quantities associated with the repairer route
+\(r_{i}\mspace{100mu}\mspace{100mu}\left( {i \in R} \right)\). Similarly, the (un)loading quantities
+are represented by \(\Omega_{\text{K}} = \left( {Y_{1},Y_{2},\ldots,Y_{|K|}} \right)\), where
+\emph{Y\textsubscript{k}} \(\left( {k \in K} \right)\) specifies the (un)loading quantities
+associated with the truck route \(r_{k}'\mspace{100mu}\left( {k \in K} \right)\).
+
+The route of each repairer is represented as
+\(r_{i} = \left( {s_{i_{0}},s_{i_{1}},s_{i_{2}},...,s_{i_{|r_{i}{| - 2}}},s_{i_{|r_{i}{| - 1}}}} \right),i \in R\),
+and the route of each truck is represented as
+\(r_{k}' = \left( {s_{k_{0}}',s_{k_{1}}',s_{k_{2}}',...,s_{k_{{|r_{k}'|} - 2}}',s_{k_{{|r_{k}'|} - 1}}'} \right),k \in K,\)
+where \(s_{i_{j}} \in S_{0}\) and \(s_{k_{l}}' \in S_{0}\)
+\(\left( {0 \leq j \leq \left| r_{i} \right| - 1,0 \leq l \leq \left| r_{k}' \right| - 1} \right)\),
+and the subscripts \emph{j} and \emph{l} are used to define the order of nodes being visited. Every
+route comprises a permutation of visited nodes, with the first and last being the depot, labeled
+with 0, i.e.,
+\(s_{i_{0}} = s_{i_{|r_{i}{| - 1}}} = 0\mspace{100mu}\mspace{100mu}\mspace{100mu}\left( {i \in R} \right)\)
+and
+\(s_{k_{0}}' = s_{k_{|r_{k}'{| - 1}}}' = 0\mspace{100mu}\mspace{100mu}\left( {k \in K} \right)\).
+For any of the two routes in \emph{S}\textsubscript{R}, no common stations are allowed between the
+initial and ending depot.
+
+For repairer \emph{i} \(\left( {i \in R} \right)\), the repairing quantities associated with route
+\(r_{i}\) are represented as
+\(G_{i} = \left( {g_{s_{i_{0}},i},g_{s_{i_{1}},i},\ldots,g_{s_{i_{|r_{i}{| - 1}}},i}} \right)\),
+where \(g_{s_{i_{j}},i}\) denotes the number of broken bikes repaired at node \(s_{i_{j}}\) in
+\(r_{i}\) \(\left( {0 \leq j \leq \left| r_{i} \right| - 1} \right)\). Similarly, for truck \emph{k}
+\(\left( {k \in K} \right)\), the (un)loading quantities associated with route \(r_{k}'\) are
+denoted by
+\(Y_{k} = \left( {\left( {y_{0,k}^{\text{u}^{+}},y_{0,k}^{\text{u}^{-}},y_{0,k}^{\text{b}^{+}},y_{0,k}^{\text{b}^{-}}} \right),\left( {y_{1,k}^{\text{u}^{+}},y_{1,k}^{\text{u}^{-}},y_{1,k}^{\text{b}^{+}},y_{1,k}^{\text{b}^{-}}} \right),\ldots,\left( {y_{{|r_{k}'|} - 1,k}^{\text{u}^{+}},y_{{|r_{k}'|} - 1,k}^{\text{u}^{-}},y_{{|r_{k}'|} - 1,k}^{\text{b}^{+}},y_{{|r_{k}'|} - 1,k}^{\text{b}^{-}}} \right)} \right)\),
+where \(y_{l,k}^{\text{u}^{+}}\) and \(y_{l,k}^{\text{u}^{-}}\) denote the number of usable bikes
+unloaded and loaded at node \(s_{k_{l}}\) respectively, and \(y_{l,k}^{\text{b}^{+}}\) and
+\(y_{l,k}^{\text{b}^{-}}\) represent the number of broken bikes unloaded and loaded at \(s_{k_{l}}\)
+\(\left( {0 \leq l \leq \left| r_{k}' \right| - 1} \right)\) respectively.
+
+The solution that corresponds to the one shown in Figure~\ref{ch4:fig:problem-illustration} in a network with ten stations and one
+depot with two repairers and two trucks can be represented
+as\[\phi = \left( {S_{\text{R}},S_{\text{K}},\Omega_{\text{R}},\Omega_{\text{K}}} \right) = \left( {\left( {r_{1},r_{2}} \right),\left( {r_{1}',r_{2}'} \right),\left( {G_{1},G_{2}} \right),\left( {Y_{1},Y_{2}} \right)} \right)\]where:
+
+\begin{itemize}
+\item
+  \emph{r}\textsubscript{1} = (0, 6, 8, 0) and \emph{G}\textsubscript{1} = (0, 4, 12, 0);
+\item
+  \emph{r}\textsubscript{2} = (0, 1, 3, 0) and \emph{G}\textsubscript{2} = (0, 3, 2, 0);
+\item
+  \emph{r'}\textsubscript{1} = (0, 4, 6, 9, 0, 2, 0) and \emph{Y}\textsubscript{1} = ((0, 0, 0, 0),
+  (0, 2, 0, 1), (0, 5, 0, 17), (7, 0, 0, 0), (0, 3, 18, 0), (3, 0, 0, 9), (0, 0, 9, 0);
+\item
+  \emph{r'}\textsubscript{2} = (0, 5, 4, 0, 7, 5, 9, 0) and \emph{Y}\textsubscript{2} = ((0, 0, 0,
+  0), (0, 12, 0, 10), (0, 0, 0, 3), (8, 0, 13, 0), (0, 3, 0, 2), (0, 1, 0, 3), (8, 0, 0, 0), (0, 0,
+  5, 0)).
+\end{itemize}
+
+Note that the zeros at the beginning and end of each route are included solely for representation
+purposes. In the implementation, these zeros are excluded during operations at each step, with only
+the sequence of the visited nodes in between being retained to enhance computational efficiency.
+
+\subsection{Overall algorithmic procedure}\label{ch4:subsec:overall-algorithmic-procedure}
+
+The algorithmic procedure for HGSADC-SBC is given in Table~\ref{ch4:tab:hgsadc-sbc-procedure}. The algorithm starts with
+the initialization of a population \emph{Pop} consisting of a feasible subpopulation
+\emph{Pop}\textsubscript{f} and an infeasible subpopulation \emph{Pop}\textsubscript{i} (Line 1).
+Then, the population of individuals iteratively evolves through successive operations (Line 3 to
+Line 29). The best fitness value and its corresponding solution up to each iteration are kept with
+\emph{current\_best\_value} and \emph{current\_best\_sol}, respectively. The algorithm terminates
+and returns the best known solution and fitness value when the number of iterations without
+improvement (denoted as \emph{iter\_no\_imp}) reaches the limit \emph{It}\textsubscript{NI}, or the
+running time (denoted as \emph{cpu\_time}) reaches the limit \emph{T}\textsubscript{max}. A
+diversification process is activated every \emph{It}\textsubscript{div} iterations without
+improvement to maintain a high level of diversity among individuals (Line 26 to Line 28).
+
+\begin{longtable}{@{}lll@{}}
+\caption{Algorithmic procedure for HGSADC-SBC.}\label{ch4:tab:hgsadc-sbc-procedure}\\
+\toprule
+\multicolumn{3}{@{}l@{}}{%
+\textbf{Algorithm 1: HGSADC-SBC}} \\
+\midrule
+\endfirsthead
+\toprule
+\multicolumn{3}{@{}l@{}}{%
+\textbf{Algorithm 1: HGSADC-SBC}} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\textbf{1} & & Initialization: Generate a population \emph{Pop} consisting of a feasible
+subpopulation \emph{Pop}\textsubscript{f} and an infeasible subpopulation
+\emph{Pop}\textsubscript{i} \\
+\textbf{2} & & Set \emph{iter\_no\_imp~=}~0 and \emph{current\_best\_value} = +\ensuremath{\infty} \\
+\textbf{3} & & \textbf{while} \emph{iter\_no\_imp}~\textless~\emph{It}\textsubscript{NI} and
+\emph{cpu\_time~\textless~T}\textsubscript{max} \textbf{do} \\
+\textbf{4} & & Randomly select two individuals \emph{Ind}\textsubscript{1} and
+\emph{Ind}\textsubscript{2} from \emph{Pop} \\
+\textbf{5} & & Generate the routes of offspring \emph{C}\textsubscript{1} and
+\emph{C}\textsubscript{2} using ordered crossover on the routes of \emph{Ind}\textsubscript{1} and
+\emph{Ind}\textsubscript{2}, then apply the SBC heuristic on the routes to determine the (un)loading
+and repairing quantities for \emph{C}\textsubscript{1} and \emph{C}\textsubscript{2} \\
+\textbf{6} & & Educate on both \emph{C}\textsubscript{1} and \emph{C}\textsubscript{2} by applying
+local search procedures to generate new routes and using the SBC heuristic to determine the
+(un)loading and repairing quantities \\
+\textbf{7} & & \textbf{if} \emph{C\textsubscript{i}} (\emph{i}~=~1, 2) is feasible \textbf{then} \\
+\textbf{8} & & ~Add \emph{C\textsubscript{i}} to the feasible subpopulation
+\emph{Pop}\textsubscript{f} \\
+\textbf{9} & & \textbf{else} \\
+\textbf{10} & & ~Add \emph{C\textsubscript{i}} to the infeasible subpopulation
+\emph{Pop}\textsubscript{i} and repair \emph{C\textsubscript{i}} with the probability
+\emph{P}\textsubscript{repair} using local search procedures and the SBC heuristic \\
+\textbf{11} & & \textbf{end if} \\
+\textbf{12} & & \textbf{if} the individuals become feasible after repairs \textbf{then} \\
+\textbf{13} & & ~The repaired individuals are added to the feasible subpopulation
+\emph{Pop}\textsubscript{f} \\
+\textbf{14} & & \textbf{else} \\
+\textbf{15} & & ~The repaired individuals are discarded, and the original infeasible solution is
+kept in the infeasible subpopulation \emph{Pop}\textsubscript{i} \\
+\textbf{16} & & \textbf{end if} \\
+\textbf{17} & & \textbf{if} the size of \emph{Pop}\textsubscript{f} or \emph{Pop}\textsubscript{i}
+reaches the maximum subpopulation size \textbf{then} \\
+\textbf{18} & & ~Select survivors from the corresponding subpopulation \\
+\textbf{19} & & \textbf{end if} \\
+\textbf{20} & & Set \emph{bs}~=~the solution with the best fitness value from
+\emph{Pop}\textsubscript{f} and set \emph{bv}~=~the fitness value of \emph{bs} \\
+\textbf{21} & & \textbf{if} \emph{bv} \(\geq\) \emph{current\_best\_value} \textbf{then} \\
+\textbf{22} & & ~Set \emph{iter\_no\_imp}~=~\emph{iter\_no\_imp}~+~1 \\
+\textbf{23} & & \textbf{Else} \\
+\textbf{24} & & ~Set \emph{current\_best\_value}~=~\emph{bv}, \emph{current\_best\_sol}~=~\emph{bs},
+and \emph{iter\_no\_imp}~=~0 \\
+\textbf{25} & & \textbf{end if} \\
+\textbf{26} & & \textbf{if} \emph{iter\_no\_imp} \(\geq It_{\text{div}}\) \textbf{then} \\
+\textbf{27} & & ~Diversify the population consisting of \emph{Pop}\textsubscript{f} and
+\emph{Pop}\textsubscript{i} and adjust the penalty parameter \\
+\textbf{28} & & \textbf{end if} \\
+\textbf{29} & & \textbf{end while} \\
+\textbf{30} & & \textbf{return} \emph{current\_best\_sol}, \emph{current\_best\_value} \\
+\end{longtable}
+
+The algorithm structure follows the one given by Vidal et al., 2012, Vidal et al., 2013, Vidal et
+al., 2014). The route representation, crossover operator, and education operator are based on the
+study by Li et al. (2016) with some modifications, mostly on extending their methods to address the
+scenario of multiple routes for multiple trucks and repairers from the scenario of a single route
+for only one truck. Moreover, in this algorithm, the crossover and local search operations in
+education and the repair process are applied to the routes of the solutions. Once new routes are
+generated through these operations, the SBC heuristic is subsequently applied to determine the
+loading, unloading, and repair quantities, completing each solution with both routes and associated
+quantities. The SBC heuristic is developed based on a novel station budget concept, and is detailed
+in Section~\ref{ch4:subsec:sbc-heuristic}.
+
+\subsection{Population initialization}\label{ch4:subsec:population-initialization}
+
+To initialize a population, we generate solutions one by one until a specified population size is
+reached. The generation of each solution requires initializing routes for both repairers and trucks,
+followed by applying the SBC heuristic to determine the associated (un)loading and repairing
+quantities. Each solution then undergoes a feasibility check (as detailed in Section~\ref{ch4:subsec:feasibility-check-and-solution-evaluation}) and is
+added to the feasible or infeasible subpopulation based on its feasibility.
+
+To initialize a route, the depot is set as the first node. Then, new nodes are iteratively added to
+the route based on the last node of the current route, denoted as \emph{n}\textsubscript{last}.
+Specifically, we first find the set of nodes that allow the truck/repairer to reach there from
+\emph{n}\textsubscript{last}, conduct at least one loading/unloading/repairing there, and return to
+the depot within the time budget. The set is defined as the \emph{reachable list} of
+\emph{n}\textsubscript{last}. Note that \emph{n}\textsubscript{last} itself is not included in the
+set. We randomly choose one node from the \emph{reachable list} and append it to the end of the
+route. The procedure repeats until the reachable list of \emph{n}\textsubscript{last} is empty, and
+we finally append the depot at the end. Other routes are generated in the same manner. Note that the
+routes are generated one by one, in the order of repairers first and trucks second to make the best
+use of the repairers to repair broken bikes before truck arrivals. It should also be noted that any
+station that has already been visited by a repairer is not considered when generating routes for
+other repairers.
+
+\subsection{Station budget constrained (SBC) heuristic for quantity determination}\label{ch4:subsec:sbc-heuristic}
+
+For each route of a truck or repairer, we have to determine the quantities of bikes loaded,
+unloaded, and repaired at designated stations to form complete solutions and calculate their fitness
+values. To determine these quantities, an SBC heuristic is proposed. Some notations and
+terminologies are defined first to better describe the SBC heuristic:
+
+\begin{itemize}
+\item
+  \(q_{s}\) represents the target usable inventory level at station \emph{s}
+  \(\left( {s \in S} \right)\), which is determined as the usable bike inventory at station \emph{s}
+  that corresponds to the lowest EUDF value. It together with the initial inventory of usable bikes
+  \(p_{s}^{0}\) can be used to define the station type. A station is categorized into a deficit
+  station, a surplus station, and a balanced station if \(p_{s}^{0} < q_{s}\),
+  \(p_{s}^{0} > q_{s}\), and \(p_{s}^{0} = q_{s}\) hold, respectively.
+\item
+  \(p_{s}\) and \(b_{s}\) are used to track the inventory of usable and broken bikes at station
+  \emph{s} (\(s \in S\)), respectively. At the beginning of the SBC heuristic, they are assigned to
+  the initial inventories before the repositioning starts. During the procedure of the heuristic,
+  they are updated when bikes are loaded or unloaded from the trucks or when repairers conduct
+  repairs.
+\item
+  \(\psi_{l,k}^{\text{u}}\) and \(\psi_{l,k}^{\text{b}}\) are used to track the inventory of usable
+  and broken bikes on truck \emph{k} (\(k \in K\)) when it leaves the \emph{l}-th visited node
+  \(s_{k_{l}}'\left( {l = 0,...,\left| r_{k}' \right| - 1} \right)\).
+\item
+  \(\mathit{maxTim}e_{s,i}^{\text{r}}\) represents the station repairing budget assigned to station
+  \(s \in S\) for repairer \(i \in R\).
+\item
+  \(\mathit{maxTim}e_{s,k}^{\text{t}}\) represents the station (un)loading budget assigned to
+  station \(s \in S\) for truck \(k \in K\).
+\item
+  \(\mathit{maxTimeRemai}n_{s,k}^{\text{t}}\) represents the remaining station (un)loading budget
+  assigned to station \(s \in S\) for truck \(k \in K\).
+\item
+  \(\mathit{unsa}t_{s,k}^{\text{load,u}}\) represents the number of usable bikes not loaded onto
+  truck \emph{k} due to the limited station loading budget at station \(s \in S\).
+\item
+  \(\mathit{unsa}t_{s,k}^{\text{unload,u}}\) represents the number of usable bikes not unloaded to
+  station \(s \in S\) from truck \emph{k} due to the limited station unloading budget.
+\item
+  \(\mathit{unsa}t_{s,k}^{\text{load},\text{b}}\) represents the number of broken bikes not loaded
+  onto truck \emph{k} due to the limited station loading budget at station \(s \in S\).
+\item
+  \(\mathit{maxTimeIni}t_{s,k}^{\text{t}}\) represents the initial station time budget assigned to
+  station \(s \in S\) for truck \emph{k} before determining truck loading quantities.
+\item
+  \(\mathit{maxTimeNe}w_{s,k}^{\text{t}}\) represents the updated station time budget assigned to
+  station \(s \in S\) for truck \emph{k} after adjustment.
+\end{itemize}
+
+We point out that the variables presented above are global variables that are shared across all
+subsequent algorithms, which means any changes to these variables are effective in all algorithms.
+For the sake of brevity, we directly use and assign values to these variables within the algorithms
+without redefining them or including them as arguments in each algorithmic procedure. In addition,
+in the following algorithm description, we use a notation where a variable is enclosed in
+parentheses and subscripted by its index domains to represent a list of variables indexed by the
+subscripts. For example, \(\left( {\mathit{maxTim}e_{s,i}^{\text{r}}} \right)_{s \in S}\) represents
+a one-dimensional list that stores the station budget at each station in route \(r_{i}\) for
+repairer \emph{i.}
+
+The SBC heuristic procedure is formed by the following steps:
+
+\begin{itemize}
+\item
+  \textbf{Step 1: Initialization}. Set initial values for station inventories.
+\item
+  \textbf{Step 2: Assign repairing quantities for repairers.} For each repairer, conduct the
+  following three subprocedures:
+\item
+  Assign a station repair budget to each visited station in the repairer's route.
+\item
+  Determine the number of bike repairs to be conducted at each station, constrained by the
+  quantities allowed to be handled under the assigned station budget, the broken bike inventory at
+  the station, and the deviation of the usable bike inventory to the station target.
+\item
+  Update the station\textquotesingle s usable and broken bike inventories to reflect the completed
+  repairs.
+\item
+  \textbf{Step 3: First-round truck loading and unloading assignment.} For each truck, conduct the
+  following three subprocedures:
+\item
+  Allocate a station (un)loading budget for each station in the truck's route.
+\item
+  Assign the initial quantities for loading and unloading usable and broken bikes at each station,
+  based on station status (surplus or deficit) and station budget.
+\item
+  Update truck and station inventories accordingly.
+\item
+  \textbf{Step 4: Adjust station budgets based on unused time.} Adjust the station (un)loading
+  budgets to redistribute any unused time to stations where demand remains unmet.
+\item
+  \textbf{Step 5: Second-round truck loading and unloading assignment.} Revert station inventories
+  to their values before the first round of loading/unloading assignment, and reassign the
+  quantities for the second round using the adjusted station budgets obtained from \textbf{Step 4}.
+\item
+  \textbf{Step 6: Final amendments to routes and quantities.} Make final adjustments to the truck
+  and repairer routes, along with their associated loading, unloading, and repairing quantities, to
+  optimize the use of any time budget left.
+\end{itemize}
+
+For the detailed procedure of the SBC heuristic, readers can refer to \textbf{Algorithm 2 in}
+\textbf{Appendix B}.
+
+In the following subsections, we delve into the details of each component of the algorithm,
+including station budget assignment in Steps 2.1 and 3.1 (Section~\ref{ch4:subsubsec:station-budget-allocation}), repairer repairing
+quantity assignment in Step 2.2 and truck (un)loading quantity assignment in Step 3.2
+(Section~\ref{ch4:subsubsec:quantity-assignment}), station (un)loading budget and truck (un)loading quantity adjustments in Steps 4 and 5
+respectively (Section~\ref{ch4:subsubsec:budget-quantity-adjustments}), and the final amendments to the routes, repairing, and (un)loading
+quantities in Step 6 (Section~\ref{ch4:subsubsec:route-quantity-amendments}).
+
+\subsubsection{Station budget allocation}\label{ch4:subsubsec:station-budget-allocation}
+
+The SBC heuristic allocates truck (un)loading time and repairer repairing time at stations by
+leveraging the EUDF to define a Benefit-Cost Ratio Function (BCRF). The EUDF captures user
+dissatisfaction as a function of station inventories, offering a convex framework for assessing the
+impact of inventory adjustments. The BCRF builds upon the EUDF by quantifying the effectiveness of
+resource allocation at each station to reduce user dissatisfaction per unit of time spent.
+Specifically, the BCRF for a station is computed as the change in EUDF value---reflecting the
+benefit of truck (un)loading or repairs---divided by the operational time required to achieve that
+change.
+
+Given the usable bike inventory \emph{p}, the broken bike inventory \emph{b}, and the target usable
+bike inventory \emph{q} at station \emph{s}, the BCRF value for a truck at that station (denoted as
+\(\mathit{BCR}F_{s}^{\text{t}}\left( {p,b} \right)\)) is defined
+as\begin{equation}
+\label{ch4:eq:68}
+\mathit{BCR}F_{s}^{\text{t}}\left( {p,b} \right) = \left\{ \begin{array}{lc}
+{0,} & {p = q,b = 0;} \\
+{\frac{F_{s}\left( {p,b} \right) - F_{s}\left( {q,0} \right)}{t^{\text{load}} \cdot \left( \left| q - p \middle| + b \right. \right)},} & {\text{Otherwise}\text{.}}
+\end{array} \right.
+\end{equation}
+
+For balanced stations without broken bikes, the BCRF value for a truck at that station is defined as
+zero, as indicated in the first condition of the piecewise function. In the second condition, the
+denominator is the time required to handle the usable and broken bikes at the station to achieve the
+target inventory and is considered to be a cost, assuming the value of time is fixed. The numerator
+is the penalty reduction and is considered to be a benefit. \(F_{s}\left( {q,0} \right)\) is the
+minimum EUDF value so the numerator is always non-negative.
+
+Figure~\ref{ch4:fig:bcrf-eudf} shows an example illustrating the calculation of the values of the BCRF for trucks based on
+the EUDF. The three columns in this illustration represent Stations 1, 2, and 3, respectively.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering BCRF and EUDF illustration placeholder.}}
+\caption{An illustration of calculating the BCRF values of three stations based on the EUDF values.}
+\label{ch4:fig:bcrf-eudf}
+\end{figure}
+
+In the first row, the bar charts display the current inventory of usable bikes, the target inventory
+for usable bikes, and the current inventory of broken bikes at each station. Arrows indicate the
+deviations of the current inventories of usable bikes from the corresponding target inventory
+levels. The second row contains heat maps showing the EUDF values for various combinations of usable
+and broken bike inventories at each station. Darker colors correspond to higher dissatisfaction, as
+captured by the EUDF. The red dots represent the current inventory levels, and the green dots
+indicate the target inventory levels. The arrows between these points show how the current inventory
+can be adjusted to match the target, specifying how many usable and broken bikes need to be loaded
+and unloaded.
+
+For Station 3, the change in color between the current and target inventory levels is subtle,
+suggesting that spending time at this station has little effect on reducing the EUDF value. In
+contrast, Station 2 shows a significant color shift, indicating a large potential for reducing
+dissatisfaction by adjusting the inventory level.
+
+The observations in the last paragraph are further quantified in the BCRF values on the last row,
+which are calculated by dividing the reduction in EUDF value by the time required to adjust the
+inventory from the current to the target level. Station 2's BCRF value is nearly ten times greater
+than that of Station 3, emphasizing that more time should be spent on Station 2 to maximize the
+reduction in user dissatisfaction per unit of time.
+
+Similarly, for each repairer, we also have \(\mathit{BCR}F_{s}^{\text{r}}\left( {p,b} \right)\)
+defined as\begin{equation}
+\label{ch4:eq:69}
+\mathit{BCR}F_{s}^{\text{r}}\left( {p,b} \right) = \left\{ \begin{array}{lc}
+{0,} & {p \geq q,b = 0;} \\
+{\frac{F_{s}\left( {p,b} \right) - F_{s}\left( {p + \min\left\{ {b,\max\left\{ {q - p,0} \right\}} \right\},0} \right)}{t^{\text{repair}} \cdot \min\left\{ {b,\max\left\{ {q - p,0} \right\}} \right\}},} & {\text{Otherwise}\text{.}}
+\end{array} \right.
+\end{equation}
+
+For balanced and surplus stations without broken bikes, the BCRF value for a truck at that station
+is defined as zero, as indicated in the first condition of the piecewise function. In the second
+condition, the denominator \(\min\left\{ {b,\max\left\{ {q - p,0} \right\}} \right\}\) is the
+maximum number of broken bikes repaired at the concerned station, which cannot be larger than the
+number of usable bikes required at that station because the repaired bikes become usable. That is
+why the repaired bikes are also included in the second term of the numerator.
+
+The station repair budget is allocated based on the calculated \emph{BCRF}\textsuperscript{r} for
+each station, which is determined by prioritizing those with higher BCRF values that reflect a
+greater reduction in user dissatisfaction per unit of time. Specifically, the available repair time
+is distributed proportionally across stations according to the \emph{BCRF}\textsuperscript{r} of the
+station, ensuring a balanced allocation of resources while preventing excessive time spent at any
+single station. To make the best use of the time budget, any overly allocated time is redistributed
+to unsatisfied stations with unmet repair needs following the descending order of
+\emph{BCRF}\textsuperscript{r}. The detailed algorithm for this is presented in \textbf{Algorithm 3}
+in Appendix C. The station (un)loading budget allocation algorithm for trucks is similar to the one
+for repairers, as presented in \textbf{Algorithm 4} in Appendix C, except that it considers the
+truck's loading and unloading operations instead of repair operations. To illustrate the main idea
+with a simple example, consider a route consisting of the above three stations 0--1-2--3-0, where 0
+is the depot. After accounting for the route's travel time, the remaining time for bike loading and
+unloading is distributed proportionally across the stations based on their BCRF values. The results
+of this distribution are depicted in Figure~\ref{ch4:fig:bcrf-time-allocation}, which are calculated as follows:\[\begin{array}{l}
+{\text{Station 1:}\frac{0.0103}{0.0103 + 0.0344 + 0.0032} = 21.5\%,} \\
+{\text{Station 2:}\frac{0.0344}{0.0103 + 0.0344 + 0.0032} = 71.8\%,\;\text{and}} \\
+{\text{Station 3:}\frac{0.0032}{0.0103 + 0.0344 + 0.0032} = 6.7\%.}
+\end{array}\]
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering BCRF-based time allocation placeholder.}}
+\caption{Proportion of operational time allocated to each station based on their BCRF values.}
+\label{ch4:fig:bcrf-time-allocation}
+\end{figure}
+
+\subsubsection{Loading, unloading, and repairing quantity assignment}\label{ch4:subsubsec:quantity-assignment}
+
+With the station (un)loading budgets determined, we proceed to assign the quantities of usable bikes
+to be loaded or unloaded by trucks, broken bikes to be loaded by trucks, and broken bikes to be
+repaired by repairers. To improve the clarity of the main text, the detailed algorithms for these
+assignments (from \textbf{Algorithm 5} to \textbf{Algorithm 9}) are provided in Appendix D.
+Different from the traditional greedy heuristic, which assigns quantities based solely on the
+truck's inventory and the station's demand, our heuristic incorporates the station budget as an
+additional factor. The budget limits the maximum time a truck or repairer can spend at a station for
+operations. By considering this factor, we prevent excessive time consumption at early stations that
+may not necessarily justify such a large time investment, and ensure a more balanced and efficient
+allocation of resources across all stations.
+
+\subsubsection{Station (un)loading budget and truck (un)loading quantity adjustments}\label{ch4:subsubsec:budget-quantity-adjustments}
+
+In \textbf{Algorithm 2} in Appendix B, after the assignment of loading and unloading quantities, it
+is observed that some stations may still have a loading budget unused while others encounter a
+shortfall. To make use of the extra time, an adjustment to the station (un)loading budget
+allocations for trucks is necessary. The adjustment aims to redistribute the unused station
+(un)loading budgets from stations where the allocated time budget exceeds the actual loading and
+unloading time requirements to those stations where the budget is insufficient. The algorithm is
+given in Appendix E.
+
+\subsubsection{Amendments to the routes and assigned quantities for trucks and repairers}\label{ch4:subsubsec:route-quantity-amendments}
+
+When assigning repair, loading, and unloading quantities, a conservative rounding-down strategy is
+applied (e.g., Line 3 in Algorithm 6 in Appendix D). This can lead to the availability of unused
+time budgets, which can be utilized for more bike repairs and loading. Therefore, this section
+provides amendments to the routes and assigned quantities for trucks and repairers.
+
+The amendment procedure begins by removing stations that are not assigned with any loading,
+unloading, and repairing quantities, then calculating the leftover time for each truck and repairer
+based on the outputs from \textbf{Algorithm 2}. It then focuses on the stations which are still not
+balanced. For each repairer at every station, the amendment procedure explores the possible broken
+bike repairing quantity that ranges from zero to the maximum allowed by the extra time. It selects
+the repairing quantity that results in the lowest \(\mathit{BCR}F_{s}^{\text{r}}\). Meanwhile, each
+truck checks the surplus stations and redistributes as many surplus bikes as possible to deficit
+stations. The choice of the surplus and deficit stations prioritizes those with the highest
+\(\mathit{BCR}F_{s}^{\text{t}}\). For each surplus station checked by the truck, the candidate
+destinations are set as the stations between the current station and the next depot along the
+truck's route, with surplus bikes unloaded to the next depot if unloading at any candidate station
+would violate station or truck capacity constraints. After checking all surplus stations, if extra
+time remains, supplementary loadings of broken bikes are conducted similarly, with the distinction
+that broken bikes can only be unloaded at the depot.
+
+\subsection{Feasibility check and solution evaluation}\label{ch4:subsec:feasibility-check-and-solution-evaluation}
+
+After determining the loading, unloading, and repairing quantities, we can evaluate solution
+\(\phi\) by\begin{equation}
+\label{ch4:eq:70}
+Z(\phi) = f(\phi) + \eta\varepsilon(\phi)
+\end{equation}where \(f(\phi)\) is the sum of the
+penalty costs of the total user dissatisfaction at all stations in the network and the total cost of
+carbon emissions during the rebalancing process. \(\varepsilon(\phi)\) is related to the penalties
+for solution infeasibility and \(\eta\) is the penalty coefficient of \(\varepsilon(\phi)\). If
+\(\varepsilon(\phi)\) is 0, then solution \(\phi\) is feasible.
+
+The infeasibility we consider here originates from the fact that the heuristic proposed in Section
+4.4 determines the quantities route by route separately, without considering the interdependencies
+between different routes and their effects on station inventories. This strategy is used to make the
+decision-making process more straightforward and easier to implement. It assumes that the arrival
+times at stations follow the visiting order of stations in the route, with all visits by trucks with
+lower indices occurring before any visits by trucks with higher indices. This assumption, however,
+can lead to invalid quantities being assigned.
+
+Consider a problem where two trucks perform the repositioning task in a network with one depot. For
+simplicity, we assume there are no repairers in this example. The route for Truck 1 is
+(0--1--3--5--0), and the route for Truck 2 is (0--2--5--0). We notice that Station 5 is visited by
+both trucks. It is unclear which truck would arrive first at Station 5 when the arrival times at
+stations, which depend on quantity assignment and travel times, are not calculated. The method
+proposed in Section~\ref{ch4:subsec:sbc-heuristic} presumed that the first truck arrived at Station 5 ahead of the second
+truck, updating the inventories and assigning the repositioning quantities accordingly, which can
+lead to an invalid assignment. For example, as shown in Figure~\ref{ch4:fig:quantity-infeasibility} \textbf{(a)}, suppose the capacity
+of the station is 20, with a usable bike inventory of 3, a broken bike inventory of 10, and a target
+usable bike inventory of 13. If Truck 1 arrives at Station 5 from Station 3 with a truckload of 0
+usable bikes and 0 broken bikes, according to the strategy in Section~\ref{ch4:subsec:sbc-heuristic}, it collects 10 broken
+bikes (provided the remaining time is enough) at Station 5, and thus the broken bike inventory of
+Station 5 is updated to 0. Then, for Truck 2, if it arrives at Station 5 with 12 usable bikes, it
+delivers 10 usable bikes to achieve the target usable bike inventory. However, if Truck 1 actually
+arrives at Station 5 later than Truck 2, the decision to deliver 10 usable bikes by Truck 2 results
+in a total inventory of usable and broken bikes of 23 (3~+~10~+~10), which exceeds the station
+capacity (see Figure~\ref{ch4:fig:quantity-infeasibility} \textbf{(b)}). The scenario could become more complicated if the repairers
+also conduct repairs at the station. Therefore, we need to validate the feasibility of the solution
+by examining the inventories of the multiple visited stations after the operation of each visited
+truck or repairer.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Quantity-assignment infeasibility placeholder.}}
+\caption{An example of solution infeasibility in the quantity assignment.}
+\label{ch4:fig:quantity-infeasibility}
+\end{figure}
+
+After the operations at a node, the usable or broken bike inventory may be below 0, or the total
+inventory of usable and broken bikes may be over the capacity of the station. We set
+\(\varepsilon(\phi)\) to the total number of bikes that exceeds the capacity or is below 0, which is
+calculated following the procedure below:
+
+\begin{itemize}
+\item
+  \textbf{Step 1:} Calculate the arrival time \emph{ar\textsubscript{s}} for every station
+  \(s \in S\) visited by each repairer and truck according to solution \(\phi\) and the quantities
+  determined in Section~\ref{ch4:subsec:sbc-heuristic}, and record the results as a list of tuples
+  \(\left( {n,s,y_{s}^{\text{b}^{-}},y_{s}^{\text{u}^{+}},y_{s}^{\text{u}^{-}},g_{s},ar_{s}} \right)\),
+  where \emph{n} represents the index of the repairer or truck operating at station \emph{s}, and
+  the number of loaded broken bikes, loaded usable bikes, unloaded usable bikes, and repaired broken
+  bikes are represented as \(y_{s}^{\text{b}^{-}},y_{s}^{\text{u}^{-}},y_{s}^{\text{u}^{+}}\), and
+  \(g_{s}\), respectively.
+\item
+  \textbf{Step 2:} Sort the list of tuples according to the arrival time \(ar_{s}\).
+\item
+  \textbf{Step 3:} Select the nodes in the list one by one in the ascending order of arrival time
+  and perform the loading/unloading/repairing to update the inventory of usable and broken bikes.
+  Update \(\varepsilon(\phi)\) if, after the operations at some node, the usable bike inventory
+  \(p_{s}\) or the broken bike inventory \(b_{s}\) is below 0, or the total inventory of usable and
+  broken bikes exceeds the capacity of the station \(C_{s}\) by
+\end{itemize}
+
+\[\left. \varepsilon(\phi)\leftarrow\varepsilon(\phi) - \left( {\min\left\{ {p_{s},0} \right\} + \min\left\{ {b_{s},0} \right\} + \min\left\{ {C_{s} - p_{s} - b_{s},0} \right\}} \right). \right.\]
+
+Next, we define the biased fitness value of a solution to consider the diversity in each
+subpopulation, which is calculated
+with\begin{equation}
+\label{ch4:eq:71}
+BF(\phi) = rank_{\text{fit}}(\phi) + \left( {1 - \frac{N_{\text{elite}}}{N_{\text{indiv}}}} \right)rank_{\text{sim}}(\phi)
+\end{equation}where
+\emph{N\textsubscript{elite}}~is the number of elite individuals that survive to the next
+generation, and~\emph{N\textsubscript{indiv}}~is the actual number of individuals in the
+subpopulation. \(\mathit{ran}k_{\text{fit}}(\phi)\) is the rank of solution \(\phi\) in its
+subpopulation regarding \(Z(\phi)\) sorted in the ascending order, and
+\(\mathit{ran}k_{\text{sim}}(\phi)\) is the rank of solution \(\phi\) regarding the similarity with
+other solutions in the subpopulation.
+
+In our problem, for each solution \(\phi\), we gather the arc set of all truck routes in \(\phi\) to
+the set \(TA_{\phi}\), and the arc set of all repairer routes in \(\phi\) to a set \(RA_{\phi}\).
+Let \(\chi\) be the subpopulation that \(\phi\) belongs to. Depending on the feasibility of
+\(\phi\), \(\chi = Pop_{\text{f}}\) if \(\phi\) is feasible, and \(\chi = Pop_{\text{i}}\)
+otherwise. Then, the similarity of \(\phi\) with respect to the subpopulation \(\chi\) it belongs to
+is defined
+as\begin{equation}
+\label{ch4:eq:72}
+\left| {TA_{\phi} \cap \left( {\bigcup\limits_{\phi' \in \chi \smallsetminus {\{\phi\}}}{TA_{\phi'}}} \right)} \right| + \left| {RA_{\phi} \cap \left( {\bigcup\limits_{\phi' \in \chi \smallsetminus {\{\phi\}}}{RA_{\phi'}}} \right)} \right|.
+\end{equation}which
+is the sum of the number of common arcs between the truck routes in the solution and the union of
+truck routes from every other solution in the corresponding subpopulation and the number of common
+arcs between repairer routes in the solution and the union of repairer routes from every other
+solution in the corresponding subpopulation.
+
+\subsection{Selection, crossover, education, and repairing}\label{ch4:subsec:selection-crossover-education-repairing}
+
+In each iteration, two individuals are selected using a binary tournament, which randomly picks two
+individuals from the population and reserves the one with a better-biased fitness value. The
+crossover and local search strategies for routes in education and repair are basically the same as
+those proposed by Li et al. (2016). Therefore, we omit the details here. The only difference is that
+in our solution, there can be multiple truck routes and multiple repairer routes. Hence, for each
+solution, the crossover, education, and repair are carried out route by route. For cases with more
+than one truck or repairer, we only consider the crossover of the routes with the same index. For
+example, the route of the first repairer in solution \(\phi_{1}\) only makes a crossover with the
+route of the first repairer in solution \(\phi_{2}\). The repair operation follows the method by
+Vidal (2022) except that the SBC heuristic is used after each new route is generated.
+
+\subsection{Population management and search guidance}\label{ch4:subsec:population-management-search-guidance}
+
+The population management mechanism works with selection, crossover, and education operators to help
+propagate the characteristics of excellent solutions, increase population diversity, and provide
+guidance for a more efficient search. At the beginning of the algorithm, \(4\mu\) individuals are
+initialized (Li et al., 2016), where \(\mu\) is the minimum subpopulation size. Each of them
+directly goes through an education process using local search procedures and the SBC heuristic, and
+then falls into a feasible or infeasible subpopulation based on the feasibility of the solution. The
+repair operation is activated for infeasible individuals with a probability of
+\emph{P}\textsubscript{repair}. The repair operation runs local search procedures and the SBC
+heuristic under a penalty factor of 10 times the original one, aiming to convert an infeasible
+solution into a feasible one (Vidal, 2022). If the repair is successful, the resulting individual is
+added to the feasible subpopulation. Otherwise, the infeasible one before repair is preserved in the
+infeasible subpopulation. The algorithm keeps generating new individuals under the process of
+selection, crossover, education, and repair until the time limit or the maximum number of iterations
+without improvement is reached.
+
+During the above process, individuals generated through crossover, education, or repair are added to
+the corresponding subpopulation based on their feasibility. If the size of either subpopulation
+reaches \(\mu + \lambda\), where \(\lambda\) is the number of offspring in a generation, survivor
+selection is conducted to remove the \(\lambda\) solutions with the highest biased fitness values to
+ensure that the size equals \(\mu\).
+
+As in the study of Li et al. (2016), the penalty coefficient \(\eta\) in equation~\eqref{ch4:eq:70} is modified every
+100 iterations to adjust the proportion of feasible solutions. Let \(\xi^{\text{REF}}\) be the
+target proportion of feasible individuals. If the proportion of feasible individuals with respect to
+\(\varepsilon(\phi)\) is less than \(\xi^{\text{REF}} - 5\%\) or greater than
+\(\xi^{\text{REF}} + 5\%\), then we change \(\eta\) to \(1.2\eta\) or \(0.85\eta\), respectively (Li
+et al., 2016).
+
+The diversification operation is triggered if the best solution has not been improved for
+\emph{It}\textsubscript{div} iterations. In the diversification, the best \(\frac{\mu}{3}\)
+solutions of each subpopulation are preserved (Li et al., 2016), and \(4\mu\) new individuals are
+generated, followed by the survivor selection to adjust the size of each subpopulation to \(\mu\).
+
+\section{Computational experiments}\label{ch4:sec:computational-experiments}
+
+The proposed model was implemented in Python 3.11 using Gurobi Python API (Gurobi Optimization, LLC,
+2023). The hybrid algorithm HGSADC-SBC was implemented with C++. All numerical experiments were
+conducted on a computer equipped with an Intel Core i9-12900 processor (12 cores, 24 threads) and
+64~GB of physical memory.
+
+In Section~\ref{ch4:subsec:parameter-tuning-setting}, we introduce the parameter tuning and setting for HGSADC-SBC. In Section~\ref{ch4:subsec:small-network-comparison}, we
+demonstrate the effectiveness of the proposed algorithm by presenting results and running times for
+small instances involving a single truck and repairer. In Section~\ref{ch4:subsec:large-network-comparison}, we evaluate the algorithm's
+performance on larger networks with multiple trucks and repairers. Section~\ref{ch4:subsec:repairer-cost-effectiveness} focuses on the impact
+of varying repair times on the cost-effectiveness of including a repairer through experiments on
+different proportions of broken bikes.
+
+The parameters regarding the network are from the dataset used by Ho and Szeto (2017), which is
+available at https://www.dropbox.com/s/jbsfefi2wqsssrr/hlns-set3.zip?dl=0. The dataset contains the
+travel times between nodes, the capacity of each station, and the initial inventory of usable bikes
+at each station. The travel times used in the experiments are also from the dataset above, in which
+the asymmetric travel times (in seconds) between the stations were obtained from the Open Source
+Routing Machine project (https://project-osrm.org/) on the travel times of trucks between stations.
+However, since the project does not provide travel times for electric tricycles (the vehicle assumed
+to be used by repairers in this study), we assume the speed of the electric tricycles is
+proportional to that of the trucks. The proportionality constant is determined based on values from
+the existing literature that provide relevant speed information for both vehicles (see Table~\ref{ch4:tab:numerical-parameters}).
+As a result, the travel times for repairers between nodes can be calculated accordingly based on the
+constant.
+
+\begin{longtable}{@{}llll@{}}
+\caption{Parameter setting of the numerical experiments.}\label{ch4:tab:numerical-parameters}\\
+\toprule
+\multicolumn{2}{@{}l}{%
+Parameter} & Value & References \\
+\midrule
+\endfirsthead
+\toprule
+\multicolumn{2}{@{}l}{%
+Parameter} & Value & References \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\emph{\(\rho\)}\textsubscript{0} & The empty-load fuel consumption rate of each truck (liters/km) & 0.252 &
+Franceschetti et al., 2013, Shui and Szeto, 2018 \\
+\emph{\(\rho\)*} & The full-load fuel consumption rate of each truck (liters/km) & 0.258 & Franceschetti et
+al., 2013, Shui and Szeto, 2018 \\
+\emph{CER} & The CO\textsubscript{2} emission rate (kg/liter) & 2.61 & Wang and Szeto (2018) \\
+\(Q_{k}\) & The capacity of truck \emph{k} (bikes) & 25 & Ho and Szeto (2017) \\
+\(t^{\text{load}}\) & Time for loading/unloading a bike (seconds) & 60 & Liu et al. (2018) \\
+\(t^{\text{repair}}\) & Time for repairing a bike on-site (seconds) & 300 & Jin et al. (2022) \\
+\(\frac{v^{\text{t}}}{v^{\text{m}}}\) & The ratio of speed between a truck and an electric tricycle
+& 1.68 & Wu, 2021, Fang et al., 2019 \\
+\(c^{\text{p}}\) & The penalty cost for a user unable to rent/return a bike (CNY) & 2 & Chen et al.
+(2020) \\
+\(c^{\text{e}}\) & The unit carbon trading cost (CNY/kg) & 0.06 & Y. Jia et al. (2020) \\
+\(\theta\) & The penalty coefficient used to eliminate unnecessary loading or unloading operations &
+1e-8 & -- \\
+\end{longtable}
+
+The EUDF value of each station was calculated based on the historical data of Citi Bike, which
+consists of the number of bike rentals and returns at each station, recorded every 15~min from 6:00
+a.m. to 12:00p.m., over the course of a single day.
+
+All instances used in this section were generated by randomly selecting a certain number of stations
+from the 518-station dataset. Specifically, in parameter tuning in Section~\ref{ch4:subsec:parameter-tuning-setting}, a 60-station network
+was generated. In the experiment in Section~\ref{ch4:subsec:small-network-comparison}, five different instances were generated for each
+network size (6, 10, and 15 stations). In the experiment in Section~\ref{ch4:subsec:large-network-comparison}, instances with network
+sizes ranging from 60 to 500 stations were created, with one instance generated for each size. In
+the experiment in Section~\ref{ch4:subsec:repairer-cost-effectiveness}, one of the 15-station networks generated in Section~\ref{ch4:subsec:small-network-comparison} was used. As
+the dataset provides no information on the initial inventory of broken bikes, we set the initial
+quantity of broken bikes \(b_{i}^{0}\) at station \emph{i} as follows: in the experiments in
+Sections~\ref{ch4:subsec:parameter-tuning-setting},~\ref{ch4:subsec:small-network-comparison},
+and~\ref{ch4:subsec:large-network-comparison}, \(b_{i}^{0}\) was
+assigned a pre-generated random value within the range
+\(\left\lbrack {0,C_{i} - p_{i}^{0}} \right\rbrack\), while in the experiment in Section~\ref{ch4:subsec:repairer-cost-effectiveness}, it was
+set proportional to the residual capacity \(C_{i} - p_{i}^{0}\). Note that the time-indexed
+formulation for the MILP converts all travel times into integer intervals by dividing the actual
+travel time by \emph{\(\tau\)} and rounding up to the nearest integer, which can lead to an inflated time
+representation caused by such an approximation. Consequently, the lower bounds obtained from Gurobi
+in this section may not be the accurate bounds for the actual (continuous-time) problem.
+
+The setting for other parameters of the experiments is listed in Table~\ref{ch4:tab:numerical-parameters}. Note that except for the
+experiment in Section~\ref{ch4:subsec:large-network-comparison}, in which we vary the number of trucks and repairers on larger networks,
+we fixed the number of trucks and repairers to one. For the repositioning time budget, we uniformly
+set it to two hours in the experiments in
+Sections~\ref{ch4:subsec:parameter-tuning-setting},~\ref{ch4:subsec:small-network-comparison},
+and~\ref{ch4:subsec:repairer-cost-effectiveness}. In Section~\ref{ch4:subsec:large-network-comparison}, for larger instances,
+experiments were conducted under both two-hour and three-hour time budgets. In the time
+discretization, we used 600~s as the length of each period \emph{\(\tau\)} for most experiments, except in
+Section~\ref{ch4:subsec:repairer-cost-effectiveness}, where repair times vary between 300 and 1200~s. To accommodate the largest repair time
+in these settings, in Section~\ref{ch4:subsec:repairer-cost-effectiveness}, we set the length of each period \emph{\(\tau\)} to 1200~s, ensuring
+that repair times do not exceed the period as defined in the parameter table in Table~\ref{ch4:tab:notations}. The codes
+and the generated datasets used in the experiments are available at
+https://github.com/rqhu1995/brpwr.
+
+\subsection{Parameter tuning and setting for the algorithm}\label{ch4:subsec:parameter-tuning-setting}
+
+The parameter setting mostly follows that of Li et al. (2016), who referred to the research
+conducted by Vidal et al., 2012, Vidal et al., 2013, Vidal et al., 2014). The only parameter that
+differs from theirs and requires tuning is \emph{\(\eta\)}, the one related to the penalty of infeasible
+solutions. \emph{\(\eta\)} was set to take values from the set \{10, 50, 100, 150, 200, 300, 400, 500\}. We
+ran the algorithm, setting \(\eta\) to be each value from the candidate set. The result of the
+average objective value in 20 runs under different values of \(\eta\) is given in Figure~\ref{ch4:fig:parameter-tuning}, and 100
+was chosen because it yields the best average result within a shorter CPU time. The detailed
+parameter setting is summarized in Table~\ref{ch4:tab:hgsadc-sbc-parameters}.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Parameter tuning plot placeholder.}}
+\caption{Parameter tuning results for the penalty coefficient \(\eta\) (\(|S|=60\), \(T=2\) h, \(|K|=|R|=1\)).}
+\label{ch4:fig:parameter-tuning}
+\end{figure}
+
+\begin{longtable}{@{}ll@{}}
+\caption{Parameter setting for HGSADC-SBC.}\label{ch4:tab:hgsadc-sbc-parameters}\\
+\toprule
+Parameter & Value \\
+\midrule
+\endfirsthead
+\toprule
+Parameter & Value \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+The minimum subpopulation size \(\mu\) & 25 \\
+The number of offspring in a generation \(\lambda\) & 40 \\
+The target proportion of feasible individuals \emph{\(\xi\)}\textsuperscript{REF} & 0.2 \\
+The maximum number of iterations without improvement \emph{It}\textsubscript{NI} & 5000 \\
+The number of successive iterations that triggers the diversification operation
+\emph{It}\textsubscript{div} & 200 (0.4\emph{It}\textsubscript{NI}) \\
+The time limit for executing the algorithm \emph{T}\textsubscript{max} & 7200~s \\
+Probability for repairing an infeasible solution \emph{P}\textsubscript{repair} & 0.5 \\
+The number of elite individuals that survive to the next generation \emph{N}\textsubscript{elite} &
+10 \\
+Penalty coefficient for solution infeasibility \(\eta\) & 100 \\
+\end{longtable}
+
+\subsection{Comparison of the results between HGSADC-SBC and Gurobi}\label{ch4:subsec:small-network-comparison}
+
+This section aims to compare the results obtained from HGSADC-SBC with the optimal solutions
+obtained by Gurobi for small network instances. Across all instances, the optimal solutions could be
+found using both the solver and the heuristic for all the tested instances, and when applied with
+different random seeds 20 times to a single instance, the heuristic consistently found the optimal
+solution. Therefore, we only report the CPU times using Gurobi and the average CPU times over 20
+runs with HGSADC-SBC in Table~\ref{ch4:tab:small-network-cpu}.
+
+\begin{longtable}{@{}llll@{}}
+\caption{Comparison between the CPU times (s) of Gurobi and HGSADC-SBC on small networks (repositioning time budget $T=2$ h, $|K|=|R|=1$, $\tau=600$ s).}\label{ch4:tab:small-network-cpu}\\
+\toprule
+\textbar{}\emph{S}\textbar{} & instance & Gurobi & HGSADC-SBC \\
+\midrule
+\endfirsthead
+\toprule
+\textbar{}\emph{S}\textbar{} & instance & Gurobi & HGSADC-SBC \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\multirow{5}{*}{6} & 1 & 13.41 & 6.29 \\
+& 2 & 13.85 & 5.75 \\
+& 3 & 66.97 & 6.22 \\
+& 4 & 2.29 & 3.63 \\
+& 5 & 22.29 & 4.84 \\
+\multirow{5}{*}{10} & 1 & 928.50 & 3.87 \\
+& 2 & 1409.89 & 5.27 \\
+& 3 & 13768.72 & 3.02 \\
+& 4 & 2404.03 & 5.16 \\
+& 5 & 4172.75 & 4.17 \\
+\multirow{5}{*}{15} & 1 & 2602.24 & 7.80 \\
+& 2 & 4209.67 & 4.89 \\
+& 3 & 6283.58 & 4.72 \\
+& 4 & 3374.38 & 5.32 \\
+& 5 & 2371.40 & 5.08 \\
+\end{longtable}
+
+In most instances, HGSADC-SBC outperformed Gurobi in terms of CPU times, producing optimal solutions
+in significantly less time. Noticeably, in one of the 10-station instances (instance 3), HGSADC-SBC
+completed the computations in as little as 3.02~s on average, whereas Gurobi required over 13,000~s
+(nearly four hours) for the same instance. However, in a smaller 6-station instance (instance 4),
+Gurobi required slightly less CPU time than HGSADC-SBC. This is likely because a significant portion
+of the computing time of the heuristic was spent on the time required to check the convergence.
+Despite this, the overall computational benefits of HGSADC-SBC are evident as the network size
+increases, making it a more efficient choice for large-scale problems. It is also worth noting that
+the time-index formulation can make the model computationally hard, even for instances comprising
+just a small number of stations, further showing the necessity of using heuristics to solve the
+problem efficiently.
+
+\subsection{Comparison of results from HGSADC-SBC and Gurobi on larger networks}\label{ch4:subsec:large-network-comparison}
+
+In this section, we proceed to compare the results obtained from HGSADC-SBC with the best feasible
+solutions found by Gurobi for larger network instances with different numbers of trucks and
+repairers. Gurobi was given a two-hour time limit for computation in all instances in this section.
+In some cases, Gurobi terminated earlier due to running out of memory. Hence, no CPU times are
+reported for those instances (marked as N/A). The results are reported in Table~\ref{ch4:tab:large-network-2h}.
+
+\begin{longtable}{@{}lllllllllllll@{}}
+\caption{Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=2$ h, $\tau=600$ s).}\label{ch4:tab:large-network-2h}\\
+\toprule
+\multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
+\multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
+Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+& & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
+\textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
+\midrule
+\endfirsthead
+\toprule
+\multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
+\multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
+Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+& & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
+\textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\multirow{4}{*}{60} & 1 & 1 & 2604.63 & 2517.12 & 7200.00 & & 2581.29 & 2579.82 & 0.86 & 6.37 & &
+0.90 \\
+& 1 & 2 & 2533.44 & 2420.32 & 7200.00 & & 2494.24 & 2486.32 & 4.09 & 9.20 & & 1.55 \\
+& 2 & 1 & 3581.80 & 2284.28 & 7200.00 & & 2400.65 & 2379.21 & 10.18 & 9.87 & & 32.98 \\
+& 2 & 2 & 3517.71 & 2202.55 & 7200.00 & & 2324.50 & 2302.98 & 11.76 & 10.90 & & 33.92 \\
+\multirow{4}{*}{90} & 1 & 1 & 4510.58 & 3893.04 & 7200.00 & & 4038.28 & 4014.71 & 13.59 & 8.81 & &
+10.47 \\
+& 1 & 2 & 4159.43 & 3782.32 & 7200.00 & & 3941.78 & 3915.27 & 14.03 & 13.40 & & 5.23 \\
+& 2 & 1 & 4510.58 & 3656.81 & 7200.00 & & 3862.44 & 3829.09 & 19.77 & 9.56 & & 14.37 \\
+& 2 & 2 & 4488.64 & 3557.92 & 7200.00 & & 3768.58 & 3733.90 & 21.59 & 13.28 & & 16.04 \\
+\multirow{4}{*}{120} & 1 & 1 & 5113.72 & 4247.68 & 7200.00 & & 4303.05 & 4293.75 & 3.58 & 9.13 & &
+15.85 \\
+& 1 & 2 & 5103.87 & 4169.64 & 7200.00 & & 4237.52 & 4226.39 & 4.17 & 14.96 & & 16.97 \\
+& 2 & 1 & 5113.72 & 4024.31 & 7200.00 & & 4167.75 & 4129.41 & 16.19 & 11.45 & & 18.50 \\
+& 2 & 2 & 5103.87 & 3951.26 & 7200.00 & & 4097.19 & 4071.74 & 11.87 & 15.98 & & 19.72 \\
+\multirow{4}{*}{200} & 1 & 1 & 8657.30 & 2919.70 & 7200.00 & & 7821.12 & 7793.53 & 19.35 & 12.36 & &
+9.66 \\
+& 1 & 2 & 8657.30 & 7563.69 & 7200.00 & & 7719.58 & 7694.50 & 12.08 & 23.96 & & 10.83 \\
+& 2 & 1 & 8657.30 & 7378.11 & 7200.00 & & 7641.82 & 7573.84 & 28.23 & 14.19 & & 11.73 \\
+& 2 & 2 & 8657.30 & 7286.86 & 7200.00 & & 7561.16 & 7511.34 & 22.96 & 23.90 & & 12.66 \\
+\multirow{4}{*}{300} & 1 & 1 & 11717.13 & 10898.80 & 7200.00 & & 11169.22 & 11134.10 & 15.16 & 16.55
+& & 4.68 \\
+& 1 & 2 & 11716.99 & 10757.43 & 7200.00 & & 11057.76 & 10990.90 & 19.38 & 25.67 & & 5.63 \\
+& 2 & 1 & 11717.13 & 10561.75 & 7200.00 & & 10989.39 & 10953.90 & 19.84 & 19.59 & & 6.21 \\
+& 2 & 2 & 11716.99 & 10442.63 & 7200.00 & & 10888.38 & 10848.40 & 20.63 & 33.70 & & 7.07 \\
+\multirow{4}{*}{400} & 1 & 1 & 15068.74 & 6026.88 & 7200.00 & & 14280.67 & 14267.10 & 5.89 & 25.27 &
+& 5.23 \\
+& 1 & 2 & 15060.58 & 6026.88 & 7200.00 & & 14178.63 & 14149.00 & 12.33 & 34.05 & & 5.86 \\
+& 2 & 1 & 15068.74 & 6026.59 & 7200.00 & & 14169.14 & 14104.30 & 21.84 & 25.92 & & 5.97 \\
+& 2 & 2 & 15060.58 & 6026.59 & 7200.00 & & 14059.18 & 14033.60 & 15.29 & 43.77 & & 6.65 \\
+\multirow{4}{*}{500} & 1 & 1 & 19793.68 & 7716.08 & 7200.00 & & 18961.58 & 18927.40 & 18.77 & 27.36
+& & 4.20 \\
+& 1 & 2 & 19785.07 & 7716.08 & 7200.00 & & 18793.14 & 18734.00 & 22.68 & 41.60 & & 5.01 \\
+& 2 & 1 & 19793.68 & 7715.69 & N/A & & 18752.12 & 18618.10 & 50.56 & 33.65 & & 5.26 \\
+& 2 & 2 & 19785.07 & N/A & N/A & & 18612.62 & 18505.40 & 37.57 & 51.13 & & 5.93 \\
+\end{longtable}
+
+\begin{description}
+\item[1]
+the average objective value for each instance in 20 runs.
+\item[2]
+the best objective value for each instance in 20 runs.
+\item[3]
+the standard deviation of the objective value for each instance in 20 runs.
+\item[4]
+average computational time for each instance in 20 runs in seconds.
+\item[5]
+(UB -- Obj. Avg) / UB.
+\end{description}
+
+As shown in both Table~\ref{ch4:tab:large-network-2h} and Table~\ref{ch4:tab:large-network-3h}, Gurobi was unable to find optimal solutions within the
+two-hour CPU time limit in any of the instances. For all instances where memory did not run out,
+Gurobi used the entire two-hour time limit to provide the best feasible solution (UB). The
+difficulty in solving these larger instances again highlights the computational complexity of the
+problem.
+
+\begin{longtable}{@{}lllllllllllll@{}}
+\caption{Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=3$ h, $\tau=600$ s).}\label{ch4:tab:large-network-3h}\\
+\toprule
+\multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
+\multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
+Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+& & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
+\textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
+\midrule
+\endfirsthead
+\toprule
+\multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
+\multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
+Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+& & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
+\textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\multirow{4}{*}{60} & 1 & 1 & 3553.62 & 2337.38 & 7200.00 & & 2433.29 & 2412.09 & 3.14 & 10.50 & &
+31.53 \\
+& 1 & 2 & 3507.20 & 2221.33 & 7200.00 & & 2364.56 & 2352.33 & 5.67 & 12.33 & & 32.58 \\
+& 2 & 1 & 3581.80 & 2035.17 & 7200.00 & & 2264.57 & 2248.72 & 8.76 & 13.65 & & 36.78 \\
+& 2 & 2 & 3507.20 & 1930.24 & 7200.00 & & 2214.40 & 2196.06 & 6.44 & 12.99 & & 36.86 \\
+\multirow{4}{*}{90} & 1 & 1 & 4503.66 & 3705.60 & 7200.00 & & 3903.04 & 3865.03 & 16.13 & 10.06 & &
+13.34 \\
+& 1 & 2 & 4481.06 & 3563.25 & 7200.00 & & 3778.54 & 3735.60 & 20.69 & 14.04 & & 15.68 \\
+& 2 & 1 & 4503.66 & 3398.88 & 7200.00 & & 3705.04 & 3652.58 & 20.54 & 15.00 & & 17.73 \\
+& 2 & 2 & 4481.06 & 3264.80 & 7200.00 & & 3606.92 & 3563.30 & 21.66 & 19.82 & & 19.51 \\
+\multirow{4}{*}{120} & 1 & 1 & 5113.72 & 4085.94 & 7200.00 & & 4203.49 & 4180.03 & 9.81 & 8.84 & &
+17.80 \\
+& 1 & 2 & 5103.87 & 3982.62 & 7200.00 & & 4106.56 & 4087.78 & 8.83 & 18.28 & & 19.54 \\
+& 2 & 1 & 5113.72 & 3784.05 & 7200.00 & & 4023.59 & 4007.56 & 10.96 & 13.59 & & 21.32 \\
+& 2 & 2 & 5103.87 & 3685.32 & 7200.00 & & 3952.46 & 3909.70 & 17.55 & 17.09 & & 22.56 \\
+\multirow{4}{*}{200} & 1 & 1 & 8657.30 & 7457.23 & 7200.00 & & 7695.07 & 7636.22 & 22.75 & 14.47 & &
+11.11 \\
+& 1 & 2 & 8657.30 & 7322.35 & 7200.00 & & 7575.25 & 7539.85 & 14.29 & 25.61 & & 12.50 \\
+& 2 & 1 & 8657.30 & 2916.37 & 7200.00 & & 7471.22 & 7406.93 & 32.94 & 19.45 & & 13.70 \\
+& 2 & 2 & 8657.30 & 2916.37 & 7200.00 & & 7393.52 & 7333.03 & 30.51 & 27.84 & & 14.60 \\
+\multirow{4}{*}{300} & 1 & 1 & 11715.76 & 4568.18 & 7200.00 & & 11024.28 & 10973.30 & 21.87 & 18.06
+& & 5.90 \\
+& 1 & 2 & 11715.62 & 10462.88 & 7200.00 & & 10901.05 & 10858.60 & 16.88 & 38.59 & & 6.95 \\
+& 2 & 1 & 11715.76 & 4568.16 & 7200.00 & & 10830.35 & 10756.00 & 23.79 & 27.03 & & 7.56 \\
+& 2 & 2 & 11715.62 & 4568.16 & 7200.00 & & 10692.76 & 10638.50 & 25.19 & 44.10 & & 8.73 \\
+\multirow{4}{*}{400} & 1 & 1 & 15068.74 & 6026.59 & 7200.00 & & 14137.72 & 14090.00 & 20.16 & 21.88
+& & 6.18 \\
+& 1 & 2 & 15060.58 & 6026.59 & 7200.00 & & 14009.58 & 13974.40 & 15.25 & 45.86 & & 6.98 \\
+& 2 & 1 & 15068.74 & 6026.58 & N/A & & 13968.64 & 13926.70 & 21.06 & 32.79 & & 7.30 \\
+& 2 & 2 & 15060.58 & N/A & N/A & & 13851.78 & 13822.50 & 12.96 & 55.96 & & 8.03 \\
+\multirow{4}{*}{500} & 1 & 1 & 19793.68 & 7715.71 & 7200.00 & & 18818.29 & 18716.10 & 37.12 & 21.88
+& & 4.93 \\
+& 1 & 2 & 19785.07 & N/A & N/A & & 18596.33 & 18539.40 & 26.59 & 56.24 & & 6.01 \\
+& 2 & 1 & 19793.68 & N/A & N/A & & 18572.48 & 18493.30 & 38.87 & 35.34 & & 6.17 \\
+& 2 & 2 & 19785.07 & N/A & N/A & & 18407.06 & 18250.20 & 44.37 & 62.35 & & 6.96 \\
+\end{longtable}
+
+\begin{description}
+\item[1]
+the average objective value for each instance in 20 runs.
+\item[2]
+the best objective value for each instance in 20 runs.
+\item[3]
+the standard deviation of the objective value for each instance in 20 runs.
+\item[4]
+average computational time for each instance in 20 runs in seconds.
+\item[5]
+(UB -- Obj. Avg) / UB.
+\end{description}
+
+On the other hand, HGSADC-SBC consistently outperformed Gurobi by finding better feasible solutions
+(as reflected by a positive gap) in significantly less time. As the repositioning time budget
+increased from two hours to three hours in the model, the performance gap between HGSADC-SBC and
+Gurobi widened, especially for instances comprising 60 stations. For example, in the 60-station
+instance with one truck and two repairers, the gap increased from 1.55~\% under the two-hour budget
+to 32.58~\% under the three-hour budget. This indicates that the increased complexity of the model
+with longer time budgets makes it more difficult for Gurobi to find better solutions, while
+HGSADC-SBC is still efficient in obtaining better solutions. Additionally, we notice that the
+computation for some very large instances (\textbar{}\emph{S}\textbar{} = 400 and 500) used up the
+64~GB memory of the computer before the two-hour time limit was reached. This suggests that as
+network size increases and resources become a limitation for Gurobi, HGSADC-SBC shows an additional
+advantage by requiring less memory and less CPU time, making it more suitable for real-world BRP
+with large networks.
+
+\subsection{Cost-effectiveness of introducing a repairer under varying repair times and broken bike inventory levels}\label{ch4:subsec:repairer-cost-effectiveness}
+
+In this section, we analyze the cost-effectiveness of involving a repairer under different repair
+times and broken bike quantities. The experiment was conducted on a fixed 15-station network, with
+the number of broken bikes at each station being proportional to the station's residual capacity
+with a proportional coefficient denoted by \(\ell\). The initial broken bike quantity at station
+\emph{i} was set to
+\(b_{i}^{0} = \left\lfloor {\ell \cdot \left( {C_{i} - p_{i}^{0}} \right)} \right\rfloor\). \(\ell\)
+ranges from 10~\% to 100~\% in an increment of 10~\%. For each value of \(\ell\), the repair time
+per bike varies from 300~s to 1200~s, with a step size of 100~s. The length of period \emph{\(\tau\)} is
+set to 1200~s in this section to guarantee \emph{t}\textsuperscript{repair}~\emph{\textless~\(\tau\)}.
+
+To capture the cost-effectiveness of a repairer, an indicator \(\nu\) is introduced, which is
+defined as the ratio of the reduction cost in user dissatisfaction (when a repairer is introduced)
+to the wage paid to the repairer, which is calculated
+as\begin{equation}
+\label{ch4:eq:73}
+\nu = \frac{c^{\text{p}}\sum_{i \in S}\left( {{\widehat{F}}_{i} - {\widehat{F}}_{i}'} \right)}{\left. \varpi \cdot T/3600 \right.}
+\end{equation}where
+\({\widehat{F}}_{i}\) and \({\widehat{F}}_{i}'\) are the user dissatisfaction after the
+repositioning at station \emph{i} with and without a repairer, respectively, \(c^{\text{p}}\) is the
+unit cost of the dissatisfaction, \(\varpi\) is the hourly wage of a repairer, and \emph{T} is the
+time budget for the repositioning in seconds. The division by 3600 converts the time from seconds to
+hours, ensuring consistency with the wage unit in CNY/h. The numerator is the reduction in the
+dissatisfaction cost, while the denominator is the cost paid to the repairer. Note that the
+dissatisfaction after the repositioning with no repairers \({\widehat{F}}_{i}'\) was calculated by
+setting \textbar{}\emph{R}\textbar{} = 0 in the optimization model. The hourly wage was determined
+based on a piece of online job-hunting information and was set to 33.33 CNY/h.
+
+For each setting of \(\ell\), experiments under varying repair times were conducted, and the results
+of the variations in \(\nu\) over repair times are plotted in Figure~\ref{ch4:fig:repair-cost-effectiveness}. The results show a clear
+trend across all instances: As repair time increases, the cost-effectiveness ratio decreases
+consistently, meaning that on-site repairs become less cost-effective. This implies that a longer
+repair time leads to a smaller reduction in user dissatisfaction, as fewer repairs can be completed
+by the repairer within the available time. In the extreme case, when the repair time exceeds a
+certain threshold, introducing on-site repairs is cost-ineffective.
+
+\begin{figure}[htbp]
+\centering
+\fbox{\parbox{0.86\linewidth}{\centering Repairer cost-effectiveness plot placeholder.}}
+\caption{Variations in the cost-effectiveness ratio over repair times under different broken bike inventories.}
+\label{ch4:fig:repair-cost-effectiveness}
+\end{figure}
+
+One key observation is the existence of a critical point at which the cost-effectiveness ratio
+\emph{\(\nu\)} equals 1.0 at some level of broken bikes. For lower levels of broken bikes (10\%\ensuremath{\leq} \(\ell\) \ensuremath{\leq}
+20\%), this ratio remains below 1.0 regardless of the repair times, indicating that the cost of
+employing a repairer outweighs the benefits. In such cases, the system can still be effectively
+managed by trucks alone for repositioning, as the low number of broken bikes does not justify the
+additional cost of involving a repairer. However, for systems with higher levels of broken bikes
+(\(\ell\)\ensuremath{\geq}30\%), a turning point emerges where the cost-effectiveness ratio shifts from above to below 1.0.
+This signifies that as the proportion of broken bikes increases, the benefit of reducing user
+dissatisfaction gradually begins to outweigh the cost of employing a repairer at lower ranges of
+repair times. Larger proportions of broken bikes shift the incorporation of a repairer from being
+cost-ineffective to cost-effective at lower ranges of repair times, reflecting the growing necessity
+for on-site repairs as the average damage level within the system rises. The changes in the
+cost-effectiveness ratio over the broken bike inventory levels suggest the necessity for a dynamic
+assignment of repairers based on the actual level of damage within the system, which includes
+varying the number of repairers in response to the dynamic change in the broken bike levels in the
+system to ensure the cost-effectiveness. Specifically, part-time repairer scheduling can serve as a
+flexible strategy to further enhance resource allocation, allowing systems to adjust the input for
+repairs dynamically.
+
+Another important observation is the shift in the repair time at which the cost-effectiveness ratio
+\(\nu\) equals 1.0. As the level of broken bikes increases, this critical point moves toward longer
+repair times. For example, when the broken bike inventory reaches 50~\%, the point at which
+\(\nu\)~=~1.0 occurs at approximately 492~s, whereas for the 90~\% level, it occurs at around 580~s.
+This suggests that with a higher number of broken bikes, longer repair times can still yield a
+favorable cost-effectiveness ratio before the repairer's cost outweighs the benefit. However, once
+repair times exceed around 645~s, employing a repairer becomes less cost-effective across all
+instances, regardless of the level of broken bike inventory. Although our model assumes the same
+repair time for all bikes, this can be viewed as an average repair time, representing the overall
+damage level of the system. Hence, such a relatively long repair time suggests that the system is
+experiencing significant damage. Therefore, it may be more effective to shift resources from
+reactive repairs to preventive maintenance. This strategy can be adapted based on the system's
+changing damage degrees, helping to reduce the number of broken bikes and the average repair time
+over time and preventing the system from reaching a state where repairs become less cost-effective.
+
+\section{Conclusions}\label{ch4:sec:conclusions}
+
+We investigate a new and practical static BRP with broken bikes and on-site repairers. The problem
+is to find the best routes and loading/unloading instructions of both usable and broken bikes for
+the repositioning trucks while determining the best routes for on-site repairers and the number of
+broken bikes repaired by each repairer at each station. The goal is to reduce the sum of the penalty
+costs of user dissatisfaction and the cost of total CO\textsubscript{2} emissions. The problem is
+formulated as a time-index Mixed Integer Linear Programming (MILP) model. A hybrid algorithm
+HGSADC-SBC is proposed to solve the problem efficiently for large instances. The algorithm relies on
+a novel concept of station budget, which utilizes the Benefit-Cost Ratio Function (BCRF) to
+determine (un)loading and repair quantities at stations, ensuring that time is spent effectively
+across the network.
+
+Numerical experiments on small networks of up to 15 stations demonstrated that HGSADC-SBC
+consistently achieves optimal solutions, matching Gurobi's results while requiring significantly
+less computational time in most cases. For larger networks, ranging from 60 to 500 stations,
+HGSADC-SBC outperformed Gurobi in finding a feasible solution obtained under a two-hour time limit,
+demonstrating the algorithm's computational efficiency. Additionally, we analyzed the
+cost-effectiveness of introducing a repairer under varying repair times and broken bike inventory
+levels. The findings show that long repair times reduce cost-effectiveness. In the extreme case,
+when the repair time exceeds a certain level, introducing on-site repairs is cost-ineffective.
+Moreover, when the number of broken bikes in the system is small, introducing on-site repairs can
+become detrimental. The results also underscore the need for a dynamic repairer allocation strategy
+based on the system's actual damage level and suggest that preventive maintenance strategies can
+reduce the average number of broken bikes in the system and the average repair time over time.
+
+It is worth noting that we conducted additional experiments comparing a full station set with a
+reduced station set, where stations with no broken bicycles and inventory levels that (nearly)
+minimize the EUDF were removed. The results showed no statistically significant difference in terms
+of objective values or CPU times between the two approaches. This indicates that the
+heuristic\textquotesingle s natural allocation of negligible station budgets to such stations
+achieves a similar effect to explicitly removing them from the problem, supporting the efficiency
+and robustness of the current approach. Since the manuscript is already lengthy, we omit the
+detailed experimental results in the manuscript.
+
+While this study addresses key aspects of the problem, two limitations must be acknowledged to
+provide a comprehensive perspective on the findings. The time-indexed formulation, although
+necessary for the MILP model to handle multiple visits to stations by both trucks and repairers,
+introduces a discrepancy between the discrete and continuous-time problems by approximating travel
+times through integer conversion, limiting the accuracy of the model in reflecting the
+continuous-time problem. Additionally, the SBC heuristic assumes that bicycles are (un)loaded or
+repaired directly at their respective stations without intermediate stops or second-time transfers.
+This simplification streamlines implementation but restricts the heuristic from leveraging potential
+efficiency gains through temporary inventories, which could yield better solutions. Future research
+will develop methodologies to address these limitations.

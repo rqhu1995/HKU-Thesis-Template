@@ -1,7 +1,183 @@
-% Appendix Template
+% Appendix C imported from Paper1.tex
 
-\chapter{Appendix Title Here} % Main appendix title
+\chapter{Assignment Algorithms for Station Repairing Budget and Station (Un)loading Budget}
+\label{AppendixC}
+\label{app:ch4-station-budget-assignment-algorithms}
 
-\label{AppendixC} % For referencing this appendix elsewhere, use \ref{AppendixC}
+\begin{longtable}{@{}llll@{}}
+\toprule
+\multicolumn{4}{@{}l@{}}{%
+\textbf{Algorithm 3:} \(\mathit{allocateRepairBudget}\left( r_{i} \right)\)} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\textbf{1} & \multicolumn{3}{l@{}}{%
+Initialization:\(\mathit{maxTim}e_{s,i}^{\text{r}} = 0,\forall s \in S\)} \\
+\textbf{2} & \multicolumn{3}{l@{}}{%
+\(T^{\text{op}} = T - \sum\limits_{j = 0}^{|r_{i}{| - 1}}t_{s_{i_{j}},s_{i_{j + 1}}}^{\text{r}}\)//
+total time budget left for repairing bikes} \\
+\textbf{3} & \multicolumn{3}{l@{}}{%
+\textbf{while} \(T^{\text{op}} < t^{\text{repair}}\) \textbf{do}} \\
+& & \multicolumn{2}{l@{}}{%
+// remove the station with the lowest benefit-cost ratio function value from the route} \\
+\textbf{4} & & \multicolumn{2}{l@{}}{%
+Remove station \(s' = \arg\min_{s \in S}BCRF_{s}^{\text{r}}\) from \(r_{i}\)} \\
+\textbf{5} & & \multicolumn{2}{l@{}}{%
+\(T^{\text{op}} = T - \sum\limits_{j = 0}^{|r_{i}{| - 1}}t_{s_{i_{j}},s_{i_{j + 1}}}^{\text{r}}\)} \\
+\textbf{6} & \multicolumn{3}{l@{}}{%
+\textbf{end while}} \\
+& \multicolumn{3}{l@{}}{%
+/* the set \(\mathit{unsat}\) stores the stations where broken bikes cannot be all repaired due to
+insufficient station repairing budget */} \\
+\textbf{7} & \multicolumn{3}{l@{}}{%
+\(\mathit{unsat} = \varnothing\)} \\
+& \multicolumn{3}{l@{}}{%
+// record the overly assigned station repairing budget} \\
+\textbf{8} & \multicolumn{3}{l@{}}{%
+\(\mathit{extraTime} = 0\)} \\
+& \multicolumn{3}{l@{}}{%
+// lines 9 to 18: assign the maximum repairing quantity at each station
+(\(1 \leq j \leq \left| r_{i} \right| - 1\))} \\
+\textbf{9} & \multicolumn{3}{l@{}}{%
+\textbf{for} \emph{j} \textbf{in} 1 to \(\left| r_{i} \right| - 2\) \textbf{do}} \\
+& & \multicolumn{2}{l@{}}{%
+// distribute the total station repairing budget using the ratio of the \emph{BCRF} value of each
+station} \\
+\textbf{10} & & \multicolumn{2}{l@{}}{%
+\(\mathit{maxTim}e_{s_{i_{j}},i}^{\text{r}} = \frac{T^{\text{op}} \times BCRF_{s_{i_{j}}}^{\text{r}}\left( {p_{s_{i_{j}}},b_{s_{i_{j}}}} \right)}{\sum_{j' = 1}^{|r_{i}{| - 2}}{\mathit{BCR}F_{s_{i_{j'}}}^{\text{r}}\left( {p_{s_{i_{j'}}},b_{s_{i_{j'}}}} \right)}}\)} \\
+\textbf{11} & & \multicolumn{2}{l@{}}{%
+\(\mathit{repai}r_{s_{i_{j}}}^{\max} = \min\left\{ {\max\left\{ {q_{s_{i_{j}}} - p_{s_{i_{j}}},0} \right\},b_{s_{i_{j}}}} \right\}\)//
+maximum repairing quantity} \\
+\textbf{12} & & \multicolumn{2}{l@{}}{%
+\textbf{if}
+\(\mathit{maxTim}e_{s_{i_{j}}}^{\text{r}} < repair_{s_{i_{j}}}^{\max} \cdot t^{\text{repair}}\)
+\textbf{then}} \\
+ & & & // record stations with insufficient repairing budgets to repair all broken
+bikes \\
+\textbf{13} & & & \(\mathit{unsat} = unsat \cup \left\{ s_{i_{j}} \right\}\) \\
+\textbf{14} & & \multicolumn{2}{l@{}}{%
+\textbf{else}} \\
+ & & & // gather the excess repairing budget and adjust the repairing budget \\
+\textbf{15} & & &
+\(\mathit{extraTime} = extraTime + maxTime_{s_{i_{j}},i}^{\text{r}} - repair_{s_{i_{j}}}^{\max} \cdot t^{\text{repair}}\) \\
+\textbf{16} & & &
+\(\mathit{maxTim}e_{s_{i_{j}}}^{\text{r}} = repair_{s_{i_{j}}}^{\max} \cdot t^{\text{repair}}\) \\
+\textbf{17} & & \multicolumn{2}{l@{}}{%
+\textbf{end if}} \\
+\textbf{18} & \multicolumn{3}{l@{}}{%
+\textbf{end for}} \\
+& \multicolumn{3}{l@{}}{%
+// lines 19 to 25: reassign the total excess time to nodes with insufficient budgets} \\
+\textbf{19} & \multicolumn{3}{l@{}}{%
+\textbf{while} \(\mathit{extraTime} > t^{\text{repair}}\) \textbf{and}
+\(\mathit{unsat} \neq \varnothing\) \textbf{do}} \\
+\textbf{20} & & \multicolumn{2}{l@{}}{%
+\(\widehat{s} =\) The node in \(\mathit{unsat}\) with the highest \(\mathit{BCR}F_{s}^{\text{r}}\)
+(break ties by choosing the smallest \(\widehat{s}\))} \\
+\textbf{21} & & \multicolumn{2}{l@{}}{%
+\emph{added}
+=\(\min\left\{ {\mathit{extraTime},repair_{\widehat{s}}^{\max} \cdot t^{\text{repair}} - maxTime_{\widehat{s},i}^{\text{r}}} \right\}\)} \\
+\textbf{22} & & \multicolumn{2}{l@{}}{%
+\(\mathit{maxTim}e_{\widehat{s},i}^{\text{r}} = maxTime_{\widehat{s},i}^{\text{r}} + added\)} \\
+\textbf{23} & & \multicolumn{2}{l@{}}{%
+\(\mathit{extraTime} = extraTime - added\)} \\
+\textbf{24} & & \multicolumn{2}{l@{}}{%
+\(\mathit{unsat} = unsat \smallsetminus \left\{ \widehat{s} \right\}\)} \\
+\textbf{25} & \multicolumn{3}{l@{}}{%
+\textbf{end while}} \\
+\textbf{26} & \multicolumn{3}{l@{}}{%
+\textbf{return} \(\left( {\mathit{maxTim}e_{s,i}^{\text{r}}} \right)_{s \in S}\)} \\
+\end{longtable}
 
-Write your Appendix content here.
+The algorithm begins by computing the total time available for repairs \(T^{\text{op}}\) by
+deducting travel time between stations from the total time budget \emph{T} (Line 2). It then
+conducts a feasibility check and route pruning to ensure that \(T^{\text{op}}\) is sufficient for at
+least one repair (Line 3 to Line 6). Then, the algorithm assigns the total time available to each
+station based on \(\mathit{BCR}F_{s}^{\text{r}}\), and determines the maximum possible number of
+repairs within the allocated time. Stations where the time is insufficient are added to
+\(\mathit{unsat}\), while the excess time budget is added to \(\mathit{extraTime}\)(Line 7 to Line
+18). If there is extra time left (i.e., \(\mathit{extraTime} > 0\)) and \(\mathit{unsat}\) is not
+empty, the algorithm redistributes the extra time to stations in \(\mathit{unsat}\), prioritizing
+those with the highest \(\mathit{BCR}F_{s}^{\text{r}}\) until all \(\mathit{extraTime}\) is
+allocated or \(\mathit{unsat}\) is empty (Line 19 to Line 25). Finally, the algorithm returns the
+station repairing budget for each station.
+
+\begin{longtable}{@{}llll@{}}
+\toprule
+\multicolumn{4}{@{}l@{}}{%
+\textbf{Algorithm 4:} \(allocateLoadingBudget\left( r_{k}' \right)\)} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\textbf{1} & \multicolumn{3}{l@{}}{%
+Initialization:\(\mathit{maxTim}e_{s,k}^{\text{t}} = 0,\forall s \in S\)} \\
+\textbf{2} & \multicolumn{3}{l@{}}{%
+\(T^{\text{op}} = T - \sum\limits_{l = 0}^{{|r_{k}'|} - 1}t_{s_{k_{l}}',s_{k_{l + 1}}'}^{\text{t}}\)//
+The total time budget left for truck \emph{k} to load and unload bikes} \\
+\textbf{3} & \multicolumn{3}{l@{}}{%
+\textbf{while} \(T^{\text{op}} < 2t^{\text{load}}\) \textbf{do}} \\
+& & \multicolumn{2}{l@{}}{%
+// remove the station with the lowest benefit-cost ratio function value from the route} \\
+\textbf{4} & & \multicolumn{2}{l@{}}{%
+Remove station \(s' = \arg\min_{s \in S}BCRF_{s}^{\text{t}}\) from \(r_{k}'\)} \\
+\textbf{5} & & \multicolumn{2}{l@{}}{%
+\(T^{\text{op}} = T - \sum\limits_{l = 0}^{{|r_{k}'|} - 1}t_{s_{k_{l}}',s_{k_{l + 1}}'}^{\text{t}}\)} \\
+\textbf{6} & \multicolumn{3}{l@{}}{%
+\textbf{end while}} \\
+\textbf{7} & \multicolumn{3}{l@{}}{%
+\(\mathit{unsat} = \varnothing\)} \\
+\textbf{8} & \multicolumn{3}{l@{}}{%
+\(\mathit{extraTime} = 0\)} \\
+\textbf{9} & \multicolumn{3}{l@{}}{%
+\(\mathit{NS} = {\text{The set of stations in}\mspace{6mu}}r_{k}'\)} \\
+\textbf{10} & \multicolumn{3}{l@{}}{%
+\textbf{for} \emph{s} \textbf{in} \emph{NS} \textbf{do}} \\
+\textbf{11} & & \multicolumn{2}{l@{}}{%
+\(\mathit{maxTim}e_{s,k}^{\text{t}} = \frac{T^{\text{op}} \times BCRF_{s}^{\text{t}}\left( {p_{s},b_{s}} \right)}{\sum_{s' \in NS}{\mathit{BCR}F_{s'}^{\text{t}}\left( {p_{s'},b_{s'}} \right)}}\)} \\
+\textbf{12} & & \multicolumn{2}{l@{}}{%
+\(\mathit{loa}d_{s}^{\max} = \left| {p_{s} - q_{s}} \right| + b_{s}\)} \\
+\textbf{13} & & \multicolumn{2}{l@{}}{%
+\textbf{if} \(\mathit{maxTim}e_{s,k}^{\text{t}} < 2t^{\text{load}} \cdot load_{s}^{\max}\)
+\textbf{then}} \\
+\textbf{14} & & & \(\mathit{unsat} = unsat \cup \left\{ s \right\}\) \\
+\textbf{15} & & \multicolumn{2}{l@{}}{%
+\textbf{else}} \\
+\textbf{16} & & &
+\(\mathit{extraTime} = extraTime + maxTime_{s,k}^{\text{t}} - 2t^{\text{load}} \cdot load_{s}^{\max}\) \\
+\textbf{17} & & & \(\mathit{maxTim}e_{s,k}^{\text{t}} = 2t^{\text{load}} \cdot load_{s}^{\max}\) \\
+\textbf{18} & & \multicolumn{2}{l@{}}{%
+\textbf{end if}} \\
+\textbf{19} & \multicolumn{3}{l@{}}{%
+\textbf{end for}} \\
+\textbf{20} & \multicolumn{3}{l@{}}{%
+\textbf{while} \(\mathit{extraTime} > 2t^{\text{load}}\) \textbf{and}
+\(\mathit{unsat} \neq \varnothing\) \textbf{do}} \\
+\textbf{21} & & \multicolumn{2}{l@{}}{%
+\(\widehat{s} =\) The node in \(\mathit{unsat}\) with the highest
+\(\mathit{BCR}F_{s}^{\text{t}}\)} \\
+\textbf{22} & & \multicolumn{2}{l@{}}{%
+\(\mathit{added} = \min\left\{ {\mathit{extraTime},2t^{\text{load}} \cdot load_{\widehat{s}}^{\max} - maxTime_{\widehat{s},k}^{\text{t}}} \right\}\)} \\
+\textbf{23} & & \multicolumn{2}{l@{}}{%
+\(\mathit{maxTim}e_{\widehat{s},k}^{\text{t}} = maxTime_{\widehat{s},k}^{\text{t}} + added\)} \\
+\textbf{24} & & \multicolumn{2}{l@{}}{%
+\(\mathit{extraTime} = extraTime - added\)} \\
+\textbf{25} & & \multicolumn{2}{l@{}}{%
+\(\mathit{unsat} = unsat \smallsetminus \left\{ \widehat{s} \right\}\)} \\
+\textbf{26} & \multicolumn{3}{l@{}}{%
+\textbf{end while}} \\
+\textbf{27} & \multicolumn{3}{l@{}}{%
+\textbf{return} \(\left( {\mathit{maxTim}e_{s,k}^{\text{t}}} \right)_{s \in S}\)} \\
+\end{longtable}
+
+Note that for a visited surplus station, we must consider that each bike loaded onto the truck also
+needs to be unloaded at another node (either the depot or a deficit station). Consequently, we set
+the station (un)loading budget as twice the loading time for each bike at this station. For a
+visited deficit station, at the current stage, we assume that all bikes being unloaded are
+additionally loaded from the depot. Therefore, we also set the station (un)loading budget as twice
+the loading time for each bike at this station. It is obvious that this approach leads to an
+overestimation, as it double-counts the time for bikes that are simply being transferred from
+surplus to deficit stations. To correct this, we make appropriate adjustments to the station
+(un)loading budgets during the detailed station-by-station assignment process, as outlined in
+\textbf{Algorithms 6, 7}, and \textbf{8} in subsequent sections.

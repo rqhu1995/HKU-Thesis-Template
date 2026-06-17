@@ -1,15 +1,2179 @@
 \chapter{EXTENDED-USER-DISSATISFACTION-AWARE CLUSTER-FIRST, ROUTE-SECOND DECOMPOSITION FOR THE STATIC BIKE REPOSITIONING PROBLEM WITH BROKEN BIKES AND ON-SITE REPAIR}
 
-\section{Problem formulation}
+This chapter extends the cluster-first, route-second idea to the static bike repositioning problem with broken bikes and on-site repair. The problem setting combines the operational features introduced in Chapter 4 with the scalability motivation of Chapter 3. The resulting framework aims to partition a large-scale system into clusters while accounting for the expected change in user dissatisfaction caused by repositioning, repair, and station-level inventory changes.
 
-\section{EUDF-aware cluster-first, route-second framework}
+The chapter first presents the EUDF-based formulation of the static bike repositioning problem with broken bikes and on-site repair. It then develops an EUDF-aware cluster-first, route-second framework, an Extended Activated Transfer Selection procedure for evaluating clustering decisions, and a Hybrid Genetic Search for solving the clustering problem. Cluster-level planning and computational experiments are then presented to assess the effectiveness and scalability of the proposed framework.
 
-\section{Extended Activated Transfer Selection}
+\section{Problem formulation}\label{ch5:sec:problem-formulation}\label{ch5:sec:problem}
 
-\section{Hybrid Genetic Search for Extended-UDF Clustering}
+\subsection{Problem setting}
 
-\section{Cluster-level planning}
+This section presents the Bike Repositioning Problem with Broken Bikes and
+On-Site Repair (BRP-BR-OSR), which is used as the reference problem in the
+subsequent methodology. The problem is adapted from
+\citet{huRepositioningBikeSharing2025}: it retains the operational setting and
+feasibility constraints of that model, removes the emission component, and
+evaluates a repositioning plan by the total user dissatisfaction at all stations
+on the following day.
 
-\section{Computational experiments}
+The problem considers a BSS with one depot and a finite set of stations over an
+overnight rebalancing horizon. Each station has a fixed capacity, an initial
+usable-bike inventory, and an initial broken-bike inventory, all of which are
+assumed to be known at the beginning of the horizon. Usable bikes can be rented
+by users after repositioning, whereas broken bikes cannot be rented and continue
+to occupy docks until they are collected or repaired.
 
-\section{Conclusions}
+A fleet of repositioning trucks and a set of repairers operate within the same
+time budget. Trucks depart from the depot, travel among stations, deliver or
+collect usable bikes, collect broken bikes, may return intermediately to the
+depot to load or unload bikes, and finally return to the depot. Repairers also
+depart from the depot, visit stations with broken bikes, repair broken bikes
+on site, and return to the depot. Each loading, unloading, or on-site repair
+activity has a fixed processing time per bike. Trucks may visit stations and the
+depot multiple times, while each station can be visited by at most one repairer.
+
+The depot is assumed to have sufficient usable-bike inventory and sufficient
+storage capacity for usable and broken bikes. Repairers only perform repairs
+on-site at stations; the model does not decide how broken bikes returned to the
+depot are repaired afterward. During the rebalancing horizon, no rental or return
+demand occurs, and the inventories after repositioning become the starting
+inventories for the following day. Following
+\citet{huRepositioningBikeSharing2025}, we assume that repairers working at
+stations and any repair staff at the depot are paid fixed daily salaries.
+Therefore, total repair staffing cost is constant for the day and independent of
+the number of broken bikes repaired on site or sent back to the depot during the
+repositioning period; it is not included in the objective.
+
+The objective of the BRP-BR-OSR is to determine truck routes, repairer routes,
+truck loading and unloading quantities, and on-site repair quantities that
+minimize total user dissatisfaction at all stations on the following day, subject
+to inventory, capacity, routing, and time-budget constraints.
+
+\subsection{Notation}\label{ch5:sec:notation}
+
+The following notation is used throughout the formulation. The model keeps the
+time-indexed representation of truck movements, repairer movements, station
+inventories, truck loads, and station-level actions from
+\citet{huRepositioningBikeSharing2025}, but omits all emission-related
+parameters, variables, and objective terms. Table~\ref{ch5:tab:notation} lists the
+sets, parameters, and decision variables retained in the formulation.
+
+{\vspace{0.8\baselineskip}
+\renewcommand{\baselinestretch}{1}\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\LTpre}{0.4\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\refstepcounter{table}\label{ch5:tab:notation}
+\noindent\textbf{Table~\thetable}\\
+\noindent Notation for the BRP-BR-OSR formulation.
+
+\medskip
+\noindent\textit{Sets and indices}
+\smallskip
+\begin{longtable}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
+\toprule
+Symbol & Description \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Description \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+$S=\{1,\ldots,|S|\}$ & The set of stations. \\
+$S_0=S\cup\{0\}$ & The set of nodes, including depot $0$. \\
+$K$ & The set of rebalancing trucks. \\
+$R$ & The set of repairers. \\
+$i,j$ & The node indices; $i,j\in S$ for station-only quantities and $i,j\in S_0$ for routing quantities. \\
+$k$ & The truck index, $k\in K$. \\
+$m$ & The repairer index, $m\in R$. \\
+$t,w$ & The time-period indices, $t,w=1,\ldots,T'$. \\
+\end{longtable}
+
+\medskip
+\noindent\textit{Parameters}
+\smallskip
+\begin{longtable}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
+\toprule
+Symbol & Description \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Description \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+$p_i^0$ & The initial number of usable bikes at node $i$. \\
+$b_i^0$ & The initial number of broken bikes at node $i$. \\
+$C_i$ & The capacity of node $i$. \\
+$Q_k$ & The capacity of truck $k$. \\
+$T$ & The rebalancing time budget. \\
+$\tau$ & The length of one discretized time period. \\
+$T'$ & The number of periods in the rebalancing horizon, $T'=\lfloor T/\tau\rfloor$. \\
+$t_{ij}^{\mathrm{v}}$ & The travel time for a truck from node $i$ to node $j$. \\
+$t_{ij}^{\mathrm{r}}$ & The travel time for a repairer from node $i$ to node $j$. \\
+$t'_{ij}$ & The number of periods required by a truck to travel from node $i$ to node $j$. \\
+$t''_{ij}$ & The number of periods required by a repairer to travel from node $i$ to node $j$. \\
+$t^{\mathrm{load}}$ & The time required to load or unload one bike. \\
+$t^{\mathrm{repair}}$ & The time required to repair one broken bike on site. \\
+$F_i(p_i,b_i)$ & The Extended User Dissatisfaction Function (EUDF) value at station $i$ when its usable-bike and broken-bike inventories are $p_i$ and $b_i$. \\
+$\Theta_i$ & The set of feasible bivariate inventory states at station $i$. \\
+$\alpha^i_{p_i,b_i},\beta^i_{p_i,b_i},\gamma^i_{p_i,b_i}$ & The coefficients of the fitted plane associated with state $(p_i,b_i)$ in the EUDF linearization for station $i$. \\
+\end{longtable}
+
+\medskip
+\noindent\textit{Decision variables}
+\smallskip
+\begin{longtable}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
+\toprule
+Symbol & Description \\
+\midrule
+\endfirsthead
+\toprule
+Symbol & Description \\
+\midrule
+\endhead
+\midrule
+\multicolumn{2}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+$x_{i,j,t,k}^{\mathrm{v}}$ & The binary variable equal to 1 if truck $k$ departs from node $i$ to node $j$ in period $t$, and 0 otherwise. \\
+$x_{i,j,t,m}^{\mathrm{r}}$ & The binary variable equal to 1 if repairer $m$ departs from node $i$ to node $j$ in period $t$, and 0 otherwise. \\
+$p_{i,t}$ & The number of usable bikes at node $i$ at the end of period $t$. \\
+$b_{i,t}$ & The number of broken bikes at node $i$ at the end of period $t$. \\
+$y_{i,t,k}^{\mathrm{u}^{+}}$ & The number of usable bikes delivered to node $i$ by truck $k$ during period $t$. \\
+$y_{i,t,k}^{\mathrm{u}^{-}}$ & The number of usable bikes collected from node $i$ by truck $k$ during period $t$. \\
+$y_{i,t,k}^{\mathrm{b}^{+}}$ & The number of broken bikes delivered to node $i$ by truck $k$ during period $t$. \\
+$y_{i,t,k}^{\mathrm{b}^{-}}$ & The number of broken bikes collected from node $i$ by truck $k$ during period $t$. \\
+$g_{i,t,m}$ & The number of broken bikes repaired by repairer $m$ at node $i$ during period $t$. \\
+$\psi_{i,j,t,k}^{\mathrm{u}}$ & The number of usable bikes on truck $k$ when it departs from node $i$ to node $j$ during period $t$. \\
+$\psi_{i,j,t,k}^{\mathrm{b}}$ & The number of broken bikes on truck $k$ when it departs from node $i$ to node $j$ during period $t$. \\
+$\partial_k^{\mathrm{v}}$ & The period in which truck $k$ returns to the depot and stays there until the end of the horizon. \\
+$\partial_m^{\mathrm{r}}$ & The period in which repairer $m$ returns to the depot and stays there until the end of the horizon. \\
+$\varsigma_{t,k}^{\mathrm{v}}$ & The binary variable equal to 1 if truck $k$ stays at the depot from period $t$ to the end of the horizon, and 0 otherwise. \\
+$\varsigma_{t,m}^{\mathrm{r}}$ & The binary variable equal to 1 if repairer $m$ stays at the depot from period $t$ to the end of the horizon, and 0 otherwise. \\
+$\hat F_i$ & The auxiliary variable representing the linearized EUDF value at station $i$. \\
+\end{longtable}
+}
+
+Travel times and the rebalancing budget $T$ are measured in the same units.
+To use them in the time-indexed formulation, we divide the horizon into periods
+of equal length $\tau$ and convert truck and repairer travel times into discrete
+period counts as follows:
+\begin{align}
+&t'_{ij} =
+\begin{cases}
+\left\lceil t_{ij}^{\mathrm{v}}/\tau \right\rceil, & i\ne j,\\
+1, & i=j,
+\end{cases}
+\quad &&\forall i,j\in S_0, \label{ch5:eq:truck-periods}\\
+&t''_{ij} =
+\begin{cases}
+\left\lceil t_{ij}^{\mathrm{r}}/\tau \right\rceil, & i\ne j,\\
+1, & i=j,
+\end{cases}
+\quad &&\forall i,j\in S_0, \label{ch5:eq:repairer-periods}\\
+&T' = \left\lfloor T/\tau \right\rfloor. && \label{ch5:eq:num-periods}
+\end{align}
+The binary route variables use a departure-period convention. If
+$x_{i,j,t,k}^{\mathrm{v}}=1$, truck $k$ leaves node $i$ in period $t$ and can
+next depart from node $j$ only after $t'_{ij}$ periods; repairer movements use
+the same convention with $t''_{ij}$. These period counts maintain the discrete
+route sequence. Original travel times and processing times are checked
+separately by the cumulative time constraints in~\eqref{ch5:eq:time-feasibility}.
+The ceiling operation in~\eqref{ch5:eq:truck-periods}--\eqref{ch5:eq:repairer-periods}
+can overstate travel time within the time-expanded route; the remaining period
+slack can absorb loading, unloading, and repair activities subject to the
+cumulative time bounds. This time-indexed representation is used because trucks
+may visit the same station or the depot multiple times, so the formulation must
+track resource locations, station inventories, and truck loads over the
+discretized horizon.
+
+\subsection{EUDF-based objective}\label{ch5:sec:bivariate-udf}
+
+Following \citet{kaspiBikesharingSystemsUser2017}, the EUDF value
+$F_i(p_i,b_i)$ represents the weighted expected user dissatisfaction at station
+$i$ over a day, given that $p_i$ usable bikes and $b_i$ broken bikes are present
+at the station at the beginning of that day. In the BRP-BR-OSR, the overnight
+repositioning plan determines the inventories after repositioning, which are used
+as the starting inventories for the following day.
+
+The feasible bivariate inventory states at station $i$ are
+\begin{equation}
+\Theta_i=\{(p_i,b_i)\in\mathbb{Z}_+^2:p_i+b_i\le C_i\}.
+\label{ch5:eq:eudf-domain}
+\end{equation}
+The EUDF values are precomputed for all states in $\Theta_i$ and are treated as
+model inputs. For the detailed calculation of these values, readers can refer to
+\citet{kaspiBikesharingSystemsUser2017}.
+
+\citet{kaspiBikesharingSystemsUser2017} also proposed a method for determining
+a convex polyhedral function that closely approximates the EUDF values, enabling
+the integration of the EUDF into the subsequent linear optimization model.
+Specifically, for each $(p_i,b_i)\in\Theta_i$, a plane
+$\alpha^i_{p_i,b_i}p_i+\beta^i_{p_i,b_i}b_i+\gamma^i_{p_i,b_i}$ can be fitted
+as close as possible to $F_i(p_i,b_i)$, where
+$\alpha^i_{p_i,b_i}$, $\beta^i_{p_i,b_i}$, and $\gamma^i_{p_i,b_i}$ are the
+coefficients of the fitted plane for state $(p_i,b_i)$. These fitted-plane
+coefficients are precomputed and used in the time-indexed MILP below.
+
+\subsection{Time-indexed mixed-integer formulation}\label{ch5:sec:milp}
+
+The time-indexed MILP for the BRP-BR-OSR is given as follows:
+\begin{align}
+\min \quad & \sum_{i\in S}\hat F_i \label{ch5:eq:milp-objective}\\
+\text{s.t.}\quad
+&\hat F_i\ge
+\alpha^i_{p_i,b_i}p_{i,T'}
++\beta^i_{p_i,b_i}b_{i,T'}
++\gamma^i_{p_i,b_i},
+&&\forall (p_i,b_i)\in\Theta_i,\ i\in S.
+\label{ch5:eq:eudf-linearization}
+\end{align}
+
+\begin{subequations}\label{ch5:eq:usable-inventory}
+\begin{align}
+&p_{i,1}
+=p_i^0-\sum_{k\in K}y_{i,1,k}^{\mathrm{u}^{-}}
++\sum_{k\in K}y_{i,1,k}^{\mathrm{u}^{+}}
++\sum_{m\in R}g_{i,1,m},
+&&\forall i\in S_0, \label{ch5:eq:usable-inventory-first}\\
+&p_{i,t}
+=p_{i,t-1}-\sum_{k\in K}y_{i,t,k}^{\mathrm{u}^{-}}
++\sum_{k\in K}y_{i,t,k}^{\mathrm{u}^{+}}
++\sum_{m\in R}g_{i,t,m},
+&&\forall i\in S_0,\ t=2,\ldots,T'. \label{ch5:eq:usable-inventory-recursive}
+\end{align}
+\end{subequations}
+\begin{subequations}\label{ch5:eq:broken-inventory}
+\begin{align}
+&b_{i,1}
+=b_i^0-\sum_{k\in K}y_{i,1,k}^{\mathrm{b}^{-}}
++\sum_{k\in K}y_{i,1,k}^{\mathrm{b}^{+}}
+-\sum_{m\in R}g_{i,1,m},
+&&\forall i\in S_0, \label{ch5:eq:broken-inventory-first}\\
+&b_{i,t}
+=b_{i,t-1}-\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{-}}
++\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{+}}
+-\sum_{m\in R}g_{i,t,m},
+&&\forall i\in S_0,\ t=2,\ldots,T'. \label{ch5:eq:broken-inventory-recursive}
+\end{align}
+\end{subequations}
+\begin{equation}
+p_{i,t}+b_{i,t}\le C_i,
+\quad \forall i\in S,\ t=1,\ldots,T'.
+\label{ch5:eq:station-capacity}
+\end{equation}
+\begin{subequations}\label{ch5:eq:usable-load}
+\begin{align}
+&\sum_{j\in S_0}\psi_{0,j,1,k}^{\mathrm{u}}
+=y_{0,1,k}^{\mathrm{u}^{-}},
+&&\forall k\in K, \label{ch5:eq:usable-load-initial}\\
+&\sum_{j\in S_0}\psi_{i,j,t,k}^{\mathrm{u}}
+=\sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
+\psi_{j,i,t-t'_{j,i},k}^{\mathrm{u}}
+-y_{i,t,k}^{\mathrm{u}^{+}}
++y_{i,t,k}^{\mathrm{u}^{-}},
+&&\forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:usable-load-balance}\\
+&\psi_{i,j,T',k}^{\mathrm{u}}
+=0,
+&&\forall i,j\in S_0,\ k\in K, \label{ch5:eq:usable-load-final}\\
+&\psi_{i,j,t,k}^{\mathrm{u}}
+\le Q_k x_{i,j,t,k}^{\mathrm{v}},
+&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:usable-load-link}
+\end{align}
+\end{subequations}
+\begin{subequations}\label{ch5:eq:broken-load}
+\begin{align}
+&\psi_{i,j,1,k}^{\mathrm{b}}
+=0,
+&&\forall i,j\in S_0,\ k\in K, \label{ch5:eq:broken-load-initial}\\
+&\sum_{j\in S_0}\psi_{i,j,t,k}^{\mathrm{b}}
+=\sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
+\psi_{j,i,t-t'_{j,i},k}^{\mathrm{b}}
+-y_{i,t,k}^{\mathrm{b}^{+}}
++y_{i,t,k}^{\mathrm{b}^{-}},
+&&\forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:broken-load-balance}\\
+&\psi_{i,j,T',k}^{\mathrm{b}}
+=0,
+&&\forall i,j\in S_0,\ k\in K, \label{ch5:eq:broken-load-final}\\
+&\psi_{i,j,t,k}^{\mathrm{b}}
+\le Q_k x_{i,j,t,k}^{\mathrm{v}},
+&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:broken-load-link}
+\end{align}
+\end{subequations}
+\begin{equation}
+\psi_{i,j,t,k}^{\mathrm{u}}+\psi_{i,j,t,k}^{\mathrm{b}}\le Q_k,
+\quad \forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K.
+\label{ch5:eq:truck-capacity}
+\end{equation}
+\begin{subequations}\label{ch5:eq:truck-action-linking}
+\begin{align}
+&y_{i,t,k}^{\mathrm{u}^{+}}
+\le \min\{C_i,Q_k\}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}},
+&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:usable-delivery-link}\\
+&y_{i,t,k}^{\mathrm{u}^{-}}
+\le \min\{C_i,Q_k\}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}},
+&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:usable-pickup-link}
+\end{align}
+\end{subequations}
+\begin{subequations}\label{ch5:eq:broken-bike-rules}
+\begin{align}
+&y_{0,t,k}^{\mathrm{b}^{+}}
+\le Q_k\sum_{j\in S_0}x_{0,j,t,k}^{\mathrm{v}},
+&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:broken-depot-delivery-link}\\
+&y_{i,t,k}^{\mathrm{b}^{+}}
+=0,
+&&\forall i\in S,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:no-broken-station-delivery}\\
+&y_{0,t,k}^{\mathrm{b}^{-}}
+=0,
+&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:no-broken-depot-pickup}\\
+&y_{i,t,k}^{\mathrm{b}^{-}}
+\le \min\{b_i^0,Q_k\}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}},
+&&\forall i\in S,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:broken-station-pickup-link}
+\end{align}
+\end{subequations}
+\begin{subequations}\label{ch5:eq:repair-rules}
+\begin{align}
+&g_{0,t,m}
+=0,
+&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:no-depot-repair}\\
+&g_{i,t,m}
+\le b_i^0\sum_{j\in S_0}x_{i,j,t,m}^{\mathrm{r}},
+&&\forall i\in S,\ t=1,\ldots,T',\ m\in R. \label{ch5:eq:repair-visit-link}
+\end{align}
+\end{subequations}
+\begin{equation}
+\sum_{t=1}^{T'}\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{-}}
++\sum_{t=1}^{T'}\sum_{m\in R}g_{i,t,m}
+\le b_i^0,
+\quad \forall i\in S.
+\label{ch5:eq:broken-handling-limit}
+\end{equation}
+\begin{subequations}\label{ch5:eq:start-return}
+\begin{align}
+&\sum_{j\in S_0}x_{0,j,1,k}^{\mathrm{v}}
+=1,
+&&\forall k\in K, \label{ch5:eq:truck-start}\\
+&\sum_{j\in S}x_{0,j,1,m}^{\mathrm{r}}
+=1,
+&&\forall m\in R, \label{ch5:eq:repairer-start}\\
+&\sum_{i\in S_0}x_{i,0,T'-t'_{i,0},k}^{\mathrm{v}}
+=1,
+&&\forall k\in K, \label{ch5:eq:truck-return}\\
+&\sum_{i\in S_0}x_{i,0,T'-t''_{i,0},m}^{\mathrm{r}}
+=1,
+&&\forall m\in R. \label{ch5:eq:repairer-return}
+\end{align}
+\end{subequations}
+\begin{subequations}\label{ch5:eq:flow-conservation}
+\begin{align}
+&\sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
+x_{j,i,t-t'_{j,i},k}^{\mathrm{v}}
+=\sum_{u\in S_0}x_{i,u,t,k}^{\mathrm{v}},
+&&\forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:truck-flow}\\
+&\sum_{\substack{j\in S_0:\\ t>t''_{j,i}}}
+x_{j,i,t-t''_{j,i},m}^{\mathrm{r}}
+=\sum_{u\in S_0}x_{i,u,t,m}^{\mathrm{r}},
+&&\forall i\in S_0,\ t=2,\ldots,T',\ m\in R. \label{ch5:eq:repairer-flow}
+\end{align}
+\end{subequations}
+\begin{subequations}\label{ch5:eq:depot-stay}
+\begin{align}
+&\varsigma_{t,k}^{\mathrm{v}}
+\ge (t-\partial_k^{\mathrm{v}}+1)/T',
+&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-lower}\\
+&\varsigma_{t,k}^{\mathrm{v}}
+\le (t-\partial_k^{\mathrm{v}}+0.5)/T'+1,
+&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-upper}\\
+&\varsigma_{t,m}^{\mathrm{r}}
+\ge (t-\partial_m^{\mathrm{r}}+1)/T',
+&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-stay-lower}\\
+&\varsigma_{t,m}^{\mathrm{r}}
+\le (t-\partial_m^{\mathrm{r}}+0.5)/T'+1,
+&&\forall t=1,\ldots,T',\ m\in R. \label{ch5:eq:repairer-stay-upper}
+\end{align}
+\end{subequations}
+\begingroup
+\small
+\newlength{\timefeasdomainwidth}
+\settowidth{\timefeasdomainwidth}{$\displaystyle
+\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
+t_{ij}^{\mathrm{r}}x_{i,j,t,m}^{\mathrm{r}}
++\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}
+\ge (w-2)\tau-\varsigma_{w,m}^{\mathrm{r}}T$}
+\begin{subequations}\label{ch5:eq:time-feasibility}
+\begin{equation}
+\begin{array}{@{}l@{}}
+\displaystyle
+\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t'_{ij}}}
+t_{ij}^{\mathrm{v}}x_{i,j,t-t'_{ij},k}^{\mathrm{v}}
++\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
+\left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
++y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right)
+\le w\tau,\\[0.4ex]
+\mathmakebox[\timefeasdomainwidth][l]{}
+\quad \forall w=1,\ldots,T',\ k\in K,
+\end{array}
+\label{ch5:eq:truck-time-upper}
+\end{equation}
+\begin{equation}
+\begin{array}{@{}l@{}}
+\displaystyle
+\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
+t_{ij}^{\mathrm{v}}x_{i,j,t,k}^{\mathrm{v}}
++\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
+\left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
++y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right)
+\ge (w-2)\tau-\varsigma_{w,k}^{\mathrm{v}}T,\\[0.4ex]
+\mathmakebox[\timefeasdomainwidth][l]{}
+\quad \forall w=1,\ldots,T',\ k\in K,
+\end{array}
+\label{ch5:eq:truck-time-lower}
+\end{equation}
+\begin{equation}
+\mathmakebox[\timefeasdomainwidth][l]{\displaystyle
+\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t''_{ij}}}
+t_{ij}^{\mathrm{r}}x_{i,j,t-t''_{ij},m}^{\mathrm{r}}
++\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}
+\le w\tau,}
+\quad \forall w=1,\ldots,T',\ m\in R,
+\label{ch5:eq:repairer-time-upper}
+\end{equation}
+\begin{equation}
+\mathmakebox[\timefeasdomainwidth][l]{\displaystyle
+\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
+t_{ij}^{\mathrm{r}}x_{i,j,t,m}^{\mathrm{r}}
++\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}
+\ge (w-2)\tau-\varsigma_{w,m}^{\mathrm{r}}T,}
+\quad \forall w=1,\ldots,T',\ m\in R.
+\label{ch5:eq:repairer-time-lower}
+\end{equation}
+\end{subequations}
+\endgroup
+\begin{subequations}\label{ch5:eq:waiting-self-loops}
+\begin{align}
+&x_{0,0,t,k}^{\mathrm{v}}
+\le 1-\left(\varsigma_{t+1,k}^{\mathrm{v}}-\varsigma_{t,k}^{\mathrm{v}}\right),
+&&\forall t=1,\ldots,T'-1,\ k\in K, \label{ch5:eq:truck-depot-wait}\\
+&x_{0,0,t,m}^{\mathrm{r}}
+\le 1-\left(\varsigma_{t+1,m}^{\mathrm{r}}-\varsigma_{t,m}^{\mathrm{r}}\right),
+&&\forall t=1,\ldots,T'-1,\ m\in R, \label{ch5:eq:repairer-depot-wait}\\
+&x_{i,i,t,k}^{\mathrm{v}}
+\le y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
++y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}
++\left\lfloor \tau/t^{\mathrm{load}}\right\rfloor\varsigma_{t,k}^{\mathrm{v}},
+&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-self-loop}\\
+&x_{i,i,t,m}^{\mathrm{r}}
+\le g_{i,t,m}
++\left\lfloor \tau/t^{\mathrm{repair}}\right\rfloor\varsigma_{t,m}^{\mathrm{r}},
+&&\forall i\in S_0,\ t=1,\ldots,T',\ m\in R. \label{ch5:eq:repairer-self-loop}
+\end{align}
+\end{subequations}
+\begin{subequations}\label{ch5:eq:movement-visit-limits}
+\begin{align}
+&\sum_{i\in S_0}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}}
+\le 1,
+&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-one-action}\\
+&\sum_{i\in S_0}\sum_{j\in S_0}x_{i,j,t,m}^{\mathrm{r}}
+\le 1,
+&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-one-action}\\
+&\sum_{\substack{j\in S_0:\\ j\ne i}}
+\sum_{t=t''_{j,i}+1}^{T'}
+\sum_{m\in R}x_{j,i,t-t''_{j,i},m}^{\mathrm{r}}
+\le 1,
+&&\forall i\in S_0. \label{ch5:eq:single-repairer-visit}
+\end{align}
+\end{subequations}
+
+\begin{subequations}\label{ch5:eq:domains}
+\begin{align}
+&x_{i,j,t,k}^{\mathrm{v}}
+\in\{0,1\},
+&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-route-domain}\\
+&x_{i,j,t,m}^{\mathrm{r}}
+\in\{0,1\},
+&&\forall i,j\in S_0,\ t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-route-domain}\\
+&\varsigma_{t,k}^{\mathrm{v}}
+\in\{0,1\},
+&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-domain}\\
+&\varsigma_{t,m}^{\mathrm{r}}
+\in\{0,1\},
+&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-stay-domain}\\
+&p_{i,t},b_{i,t}
+\ge 0,
+&&\forall i\in S_0,\ t=1,\ldots,T', \label{ch5:eq:inventory-domain}\\
+&y_{i,t,k}^{\mathrm{u}^{+}},y_{i,t,k}^{\mathrm{u}^{-}},
+y_{i,t,k}^{\mathrm{b}^{+}},y_{i,t,k}^{\mathrm{b}^{-}}
+\in\mathbb{Z}_+,
+&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:action-domain}\\
+&g_{i,t,m}
+\in\mathbb{Z}_+,
+&&\forall i\in S_0,\ t=1,\ldots,T',\ m\in R, \label{ch5:eq:repair-domain}\\
+&\partial_k^{\mathrm{v}}
+\in\mathbb{Z}_+,\quad 0\le\partial_k^{\mathrm{v}}\le T',
+&&\forall k\in K, \label{ch5:eq:truck-return-domain}\\
+&\partial_m^{\mathrm{r}}
+\in\mathbb{Z}_+,\quad 0\le\partial_m^{\mathrm{r}}\le T',
+&&\forall m\in R, \label{ch5:eq:repairer-return-domain}\\
+&\psi_{i,j,t,k}^{\mathrm{u}},\psi_{i,j,t,k}^{\mathrm{b}}
+\ge 0,
+&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:load-domain}\\
+&\hat F_i
+\ge 0,
+&&\forall i\in S. \label{ch5:eq:eudf-domain-variable}
+\end{align}
+\end{subequations}
+
+The objective in~\eqref{ch5:eq:milp-objective} minimizes total user dissatisfaction
+at all stations on the following day. Constraints~\eqref{ch5:eq:eudf-linearization}
+introduce the auxiliary variable $\hat F_i$ for each station $i$ and ensure that
+it is no smaller than every fitted plane used to approximate the EUDF value at
+the inventories after repositioning.
+
+Constraints~\eqref{ch5:eq:usable-inventory-first} and
+\eqref{ch5:eq:usable-inventory-recursive} keep track of the number of usable bikes at
+each node at the end of each period. Usable-bike inventory decreases when trucks
+collect usable bikes, increases when trucks deliver usable bikes, and also
+increases when broken bikes are repaired on site. Constraints
+\eqref{ch5:eq:broken-inventory-first} and~\eqref{ch5:eq:broken-inventory-recursive} keep
+track of the number of broken bikes at each node at the end of each period.
+Broken-bike inventory decreases when trucks collect broken bikes or repairers
+repair broken bikes on site, and it increases when trucks unload broken bikes.
+Constraints~\eqref{ch5:eq:station-capacity} stipulate that the total number of
+usable and broken bikes at each station is no more than its capacity.
+
+Constraints~\eqref{ch5:eq:usable-load-initial} specify the initial load of usable
+bikes on each truck during the first period. Constraints
+\eqref{ch5:eq:usable-load-balance} update the load of usable bikes on each truck at
+each node during each period. Constraints~\eqref{ch5:eq:usable-load-final} require
+that each truck carries no usable bikes at the end of the last period.
+Constraints~\eqref{ch5:eq:usable-load-link} ensure that usable bikes can be carried
+only on arcs traveled by trucks and that the usable-bike load does not exceed the
+truck capacity. Similar constraints for broken bikes are provided in
+constraints~\eqref{ch5:eq:broken-load-initial}--\eqref{ch5:eq:broken-load-link}.
+Constraints~\eqref{ch5:eq:truck-capacity} ensure that the total number of usable and
+broken bikes on each truck during each period is no more than its capacity.
+
+Constraints~\eqref{ch5:eq:usable-delivery-link} and
+\eqref{ch5:eq:usable-pickup-link} make sure that the quantity of usable bikes
+delivered to or collected from a visited node in a period is no more than the
+minimum of the node capacity and the truck capacity. Constraints
+\eqref{ch5:eq:broken-depot-delivery-link} limit the number of broken bikes that can
+be deposited at the depot in a period by a truck. Constraints
+\eqref{ch5:eq:no-broken-station-delivery} ensure that no broken bikes are delivered
+to stations. Constraints~\eqref{ch5:eq:no-broken-depot-pickup} enforce that no
+broken bikes are collected from the depot. Constraints
+\eqref{ch5:eq:broken-station-pickup-link} make sure that the number of broken bikes
+collected from a visited station in a period is no more than the minimum of that
+station's initial broken-bike inventory and the truck capacity.
+
+Constraints~\eqref{ch5:eq:no-depot-repair} guarantee that no broken bikes are
+repaired by repairers at the depot. Constraints~\eqref{ch5:eq:repair-visit-link}
+limit the number of broken bikes repaired at a station by a repairer in a period
+and link on-site repair quantities to repairer visits. Constraints
+\eqref{ch5:eq:broken-handling-limit} ensure that the total number of broken bikes
+collected by trucks and repaired by repairers at each station does not exceed
+that station's initial broken-bike inventory.
+
+Constraints~\eqref{ch5:eq:truck-start} and~\eqref{ch5:eq:repairer-start} require all
+trucks and repairers to depart from the depot initially. Constraints
+\eqref{ch5:eq:truck-return} and~\eqref{ch5:eq:repairer-return} require all trucks and
+repairers to return to the depot by the end of the rebalancing horizon.
+Constraints~\eqref{ch5:eq:truck-flow} and~\eqref{ch5:eq:repairer-flow} are the flow
+conservation conditions for trucks and repairers, respectively, and account for
+the discrete travel duration on each arc. Constraints
+\eqref{ch5:eq:truck-stay-lower}--\eqref{ch5:eq:repairer-stay-upper} relate
+$\varsigma_{t,k}^{\mathrm{v}}$ and $\varsigma_{t,m}^{\mathrm{r}}$ to
+$\partial_k^{\mathrm{v}}$ and $\partial_m^{\mathrm{r}}$, respectively, thereby
+identifying the periods after a truck or repairer has made its final return to
+the depot and remains there.
+
+Constraints~\eqref{ch5:eq:truck-time-upper} and~\eqref{ch5:eq:truck-time-lower}
+restrict the upper and lower bounds of the cumulative operational time for each
+truck. Specifically, constraints~\eqref{ch5:eq:truck-time-upper} imply that, up to
+each period, the sum of truck travel time and loading or unloading time cannot
+exceed the time elapsed from the start of repositioning to the end of that
+period. Constraints~\eqref{ch5:eq:truck-time-lower} imply that, up to each period
+before the truck enters its final depot-stay portion, the same cumulative time
+cannot be lower than the time elapsed to the end of two periods before that
+period. Similar constraints are imposed on repairers in
+constraints~\eqref{ch5:eq:repairer-time-upper} and~\eqref{ch5:eq:repairer-time-lower},
+where cumulative operational time includes repairer travel time and on-site
+repair time.
+
+Constraints~\eqref{ch5:eq:truck-depot-wait} and
+\eqref{ch5:eq:repairer-depot-wait} ensure that a truck or repairer stays at the
+depot after its final return. Constraints~\eqref{ch5:eq:truck-self-loop} and
+\eqref{ch5:eq:repairer-self-loop} require that, before the final return to the
+depot, a truck or repairer that stays at the same node for another period must
+conduct at least one loading, unloading, or repair activity there. Constraints
+\eqref{ch5:eq:truck-one-action} enforce that each truck can travel between at most
+one pair of nodes in a period. Similar constraints for repairers are given in
+constraints~\eqref{ch5:eq:repairer-one-action}. Constraints
+\eqref{ch5:eq:single-repairer-visit} ensure that each station can be visited at most
+once by at most one repairer during the whole rebalancing horizon.
+
+Constraints~\eqref{ch5:eq:truck-route-domain} and
+\eqref{ch5:eq:repairer-route-domain} define the binary route variables for trucks
+and repairers. Constraints~\eqref{ch5:eq:truck-stay-domain} and
+\eqref{ch5:eq:repairer-stay-domain} define the binary depot-stay variables.
+Constraints~\eqref{ch5:eq:inventory-domain} define the nonnegative inventory
+variables. Constraints~\eqref{ch5:eq:action-domain} and~\eqref{ch5:eq:repair-domain}
+define the nonnegative integer loading, unloading, collection, delivery, and
+repair variables. Constraints~\eqref{ch5:eq:truck-return-domain} and
+\eqref{ch5:eq:repairer-return-domain} define the return-period variables and their
+bounds. Constraints~\eqref{ch5:eq:load-domain} define the nonnegative truck-load
+variables, and constraints~\eqref{ch5:eq:eudf-domain-variable} define the
+nonnegative auxiliary EUDF variables.
+
+The formulation specifies the BRP-BR-OSR feasible set and the EUDF-based
+objective on inventories after repositioning used as the reference problem in the
+remainder of this chapter.
+
+
+\section{EUDF-aware cluster-first, route-second framework}\label{ch5:sec:eudf-aware-cfrs-framework}\label{ch5:sec:methodology}\label{ch5:sec:framework}\label{ch5:sec:cfrs-framework}
+
+This section presents the cluster-first route-second (CFRS) solution method for
+large-scale BRP-BR-OSR instances. CFRS decomposes the original network into two
+connected layers. In the clustering phase, the station set is partitioned into clusters whose
+internal inventory-adjustment potential is high. In the cluster-level planning
+phase, each selected cluster is converted into a cluster-level BRP-BR-OSR instance and solved with the
+HGSADC-SBC algorithm of \citet{huRepositioningBikeSharing2025}.
+
+The partition is the interface between the two layers. The partition search
+evaluates candidate partitions by Extended Activated Transfer Selection (EATS),
+a fast surrogate that estimates the EUDF reduction obtainable inside each
+cluster. The cluster-level planning phase receives the best-found partition and produces the
+cluster-level on-site repair and repositioning routes. The framework is specified through the station partition representation, the EATS cluster evaluator, the HGS-EUC partition search, and the cluster-level planning interface.
+
+\subsection{Station partition representation}\label{ch5:sec:hgs-euc-representation}
+
+Let $S$ be the set of stations and let node $0$ denote the depot. HGS-EUC
+represents a solution as a partition
+\begin{equation}
+\Pi=\{B_1,\ldots,B_M\},
+\qquad
+B_m\subseteq S,
+\quad
+B_m\cap B_{m'}=\emptyset\ (m\ne m'),
+\quad
+\bigcup_{m=1}^{M}B_m=S.
+\label{ch5:eq:cfrs-partition}
+\end{equation}
+Each block $B_m$ is a station cluster. The solution stores the cluster
+membership of every station and one representative station, called the medoid,
+for each non-empty cluster. The medoid is an auxiliary representative of the
+cluster, not an additional decision variable of the original BRP-BR-OSR model.
+The initial bivariate station states $(p_i^0,b_i^0)$ are fixed instance data and
+are not part of the solution representation.
+
+The partition must satisfy cluster-size bounds
+\begin{equation}
+L\le |B_m|\le U,
+\qquad m=1,\ldots,M,
+\label{ch5:eq:partition-size-bounds}
+\end{equation}
+where $L$ and $U$ are the lower and upper bounds on the number of stations in a
+cluster.
+
+
+\section{Extended Activated Transfer Selection}\label{ch5:sec:eats}\label{ch5:sec:hgs-euc-evaluation}
+
+For a partition $\Pi=\{B_1,\ldots,B_M\}$, the search uses the score
+\begin{equation}
+S_{\mathrm{part}}(\Pi)=\sum_{m=1}^{M}G(B_m),
+\label{ch5:eq:partition-score}
+\end{equation}
+where $G(B_m)$ is the EATS value of cluster $B_m$. A larger
+$S_{\mathrm{part}}(\Pi)$ indicates a partition with larger estimated EUDF
+reduction under the cluster-level approximation.
+
+EATS evaluates one cluster without constructing detailed vehicle or repairer
+routes. Its core idea is to greedily activate local inventory-changing operations
+that provide positive EUDF reduction per unit of proxy time, while maintaining
+inventory feasibility and a cluster time budget. The accepted operations define
+aggregate bivariate state changes, and the cluster value is the resulting EUDF
+reduction.
+
+The operation records considered by EATS have three types: a usable-bike transfer
+from station $i$ to station $j$, a broken-bike pickup at station $i$ by a truck,
+and an on-site repair at station $i$ by a repairer. An accepted record contains
+the operation type and an accepted quantity $q$. These records imply aggregate
+state changes $(\delta_i^p,\delta_i^b)$. A usable-bike transfer from $i$ to $j$
+decreases $\delta_i^p$ by $q$ and increases $\delta_j^p$ by $q$. A broken-bike
+pickup at $i$ decreases $\delta_i^b$ by $q$. An on-site repair at $i$ increases
+$\delta_i^p$ by $q$ and decreases $\delta_i^b$ by $q$. After the accepted records
+are fixed, the cluster value is
+\begin{equation}
+G(B)=
+\sum_{i\in B}
+\left[
+F_i(p_i^0,b_i^0)
+-F_i(p_i^0+\delta_i^p,b_i^0+\delta_i^b)
+\right].
+\label{ch5:eq:cluster-eats-value}
+\end{equation}
+
+The single-unit scores measure marginal EUDF reduction per unit of proxy
+operation time. At a working state $(p_i,b_i)$, the marginal EUDF reduction from
+removing one usable bike from station $i$ is
+\begin{equation}
+\Delta_i^{-}(p_i,b_i)=F_i(p_i,b_i)-F_i(p_i-1,b_i),
+\label{ch5:eq:eats-remove-usable-marginal}
+\end{equation}
+and the marginal EUDF reduction from adding one usable bike to station $i$ is
+\begin{equation}
+\Delta_i^{+}(p_i,b_i)=F_i(p_i,b_i)-F_i(p_i+1,b_i).
+\label{ch5:eq:eats-add-usable-marginal}
+\end{equation}
+For a usable-bike transfer from $i$ to $j$, the single-unit score is
+\begin{equation}
+\sigma_{ij}^{\mathrm U}
+=\frac{\Delta_i^{-}(p_i,b_i)+\Delta_j^{+}(p_j,b_j)}
+{2t^{\mathrm{load}}}.
+\label{ch5:eq:eats-usable-score}
+\end{equation}
+For a broken-bike pickup at station $i$, the single-unit score is
+\begin{equation}
+\sigma_i^{\mathrm B}
+=\frac{F_i(p_i,b_i)-F_i(p_i,b_i-1)}{2t^{\mathrm{load}}}.
+\label{ch5:eq:eats-broken-pickup-score}
+\end{equation}
+For an on-site repair at station $i$, the single-unit score is
+\begin{equation}
+\sigma_i^{\mathrm R}
+=\frac{F_i(p_i,b_i)-F_i(p_i+1,b_i-1)}{t^{\mathrm{repair}}}.
+\label{ch5:eq:eats-repair-score}
+\end{equation}
+Candidate operations are generated only when the resulting bivariate state is
+feasible and the corresponding score is positive.
+
+The time proxy separates truck work and repairer work into two parallel streams.
+Let $A_T$ be the set of stations activated by accepted usable-bike transfers or
+broken-bike pickups, and let $A_R$ be the set of stations activated by accepted
+on-site repairs. Let $Q_U$, $Q_B$, and $Q_R$ be the accepted quantities of
+usable-bike transfers, broken-bike pickups, and on-site repairs, respectively.
+The cluster time proxy is
+\begin{equation}
+\widehat T(B)=\max\{\widehat T_T(B),\widehat T_R(B)\},
+\label{ch5:eq:eats-cluster-time}
+\end{equation}
+where
+\begin{equation}
+\widehat T_T(B)
+=\operatorname{MSS}(A_T)
++2\operatorname{Depot}(A_T)
++2t^{\mathrm{load}}(Q_U+Q_B),
+\label{ch5:eq:eats-truck-time}
+\end{equation}
+and
+\begin{equation}
+\widehat T_R(B)
+=\rho\left[
+\operatorname{MSS}(A_R)+2\operatorname{Depot}(A_R)
+\right]
++t^{\mathrm{repair}}Q_R.
+\label{ch5:eq:eats-repairer-time}
+\end{equation}
+For any active set $A\subseteq B$, define
+\begin{equation}
+\bar t_{ij}=\max\{t_{ij}^{\mathrm v},t_{ji}^{\mathrm v}\},
+\qquad i,j\in S_0,
+\label{ch5:eq:eats-symmetric-time}
+\end{equation}
+and
+\begin{align}
+\operatorname{MSS}(A)
+&=\max_{h\in A}\sum_{i\in A\setminus\{h\}}\bar t_{hi},
+\label{ch5:eq:eats-mss}\\
+\operatorname{Depot}(A)
+&=\max_{i\in A}\max\{t_{0i}^{\mathrm v},t_{i0}^{\mathrm v}\}.
+\label{ch5:eq:eats-depot-bound}
+\end{align}
+For $A=\emptyset$, both terms are set to zero. A candidate batch is admissible
+only if the updated active sets and accepted quantities satisfy
+\begin{equation}
+\widehat T(B)\le T.
+\label{ch5:eq:eats-time-budget}
+\end{equation}
+
+Algorithm~\ref{ch5:alg:eats} gives the complete EATS evaluation routine.
+
+\begin{algorithm}[htbp]
+\caption{EATS evaluation of a cluster}
+\label{ch5:alg:eats}
+\footnotesize
+\KwIn{Cluster $B$, initial states $(p_i^0,b_i^0)$, EUDF functions $F_i(\cdot)$, travel-time data, time budget $T$, loading time $t^{\mathrm{load}}$, repair time $t^{\mathrm{repair}}$, and repairer travel-time multiplier $\rho$}
+\KwOut{Cluster value $G(B)$ and accepted operation records $\mathcal R_B$}
+\textbf{Step 0. Initialization}\;
+Set $(p_i,b_i)\gets(p_i^0,b_i^0)$ and $(\delta_i^p,\delta_i^b)\gets(0,0)$ for all $i\in B$\;
+Set $\mathcal R_B\gets\emptyset$, $A_T\gets\emptyset$, $A_R\gets\emptyset$, and $Q_U,Q_B,Q_R\gets0$\;
+Initialize station-role flags and residual inventory counters\;
+\textbf{Step 1. Candidate generation and scoring}\;
+Generate feasible usable-bike transfer, broken-bike pickup, and on-site repair candidates under the current working state\;
+Compute their single-unit scores by \eqref{ch5:eq:eats-usable-score}--\eqref{ch5:eq:eats-repair-score}\;
+Insert positive-score candidates into a unified priority queue\;
+\textbf{Step 2. Greedy activation}\;
+\While{the priority queue is non-empty}{
+    Pop the candidate with the largest stored score\;
+    Recheck feasibility under the current working state and station-role flags\;
+    Recompute its single-unit score if the working state has changed\;
+    \If{the recomputed score is positive}{
+        Find the largest admissible batch quantity $q$ that respects residual inventory, station-role consistency, and \eqref{ch5:eq:eats-time-budget}\;
+        \If{$q>0$}{
+            Accept the batch, append the operation record to $\mathcal R_B$, and update $(p_i,b_i)$ and $(\delta_i^p,\delta_i^b)$ at affected stations\;
+            Update $A_T$, $A_R$, $Q_U$, $Q_B$, $Q_R$, residual inventory counters, and affected candidate scores\;
+        }
+    }
+}
+\textbf{Step 3. Residual improvement}\;
+\While{a positive-score usable-bike transfer or on-site repair is feasible}{
+    Select the best remaining candidate after lazy re-evaluation\;
+    Accept the largest admissible batch quantity and update all affected states, records, active sets, quantities, and candidate scores\;
+}
+\textbf{Step 4. Cluster valuation}\;
+Compute $G(B)$ by \eqref{ch5:eq:cluster-eats-value}\;
+\Return{$G(B)$ and $\mathcal R_B$}\;
+\end{algorithm}
+
+During EATS evaluation, station-level consistency is enforced throughout the two
+selection phases. Usable-bike export and import roles are controlled by the
+$p$-direction state of a station. Broken-bike pickup and on-site repair draw
+from the same station-level broken-bike inventory, so their accepted quantities
+at a station are jointly bounded by the available broken bikes. This keeps
+\eqref{ch5:eq:cluster-eats-value} consistent with the aggregate bivariate state
+changes returned by Algorithm~\ref{ch5:alg:eats}.
+
+
+\section{Hybrid Genetic Search for Extended-UDF Clustering}\label{ch5:sec:hgs-euc}
+
+HGS-EUC is a hybrid genetic search for EUDF-guided clustering. It maintains a
+population of partition solutions, generates offspring through cluster-based
+crossover, restores cluster-size feasibility, improves solutions through local
+search education, and manages the population according to objective quality and
+partition diversity. Algorithm~\ref{ch5:alg:hgs-euc} summarizes the procedure. The
+station partition representation and EATS evaluation routine are defined in
+Sections~\ref{ch5:sec:eudf-aware-cfrs-framework} and~\ref{ch5:sec:eats},
+while the construction method, search operators, and population management rules
+are defined in the following subsections.
+
+\begin{algorithm}[htbp]
+\caption{HGS-EUC partition search}
+\label{ch5:alg:hgs-euc}
+\footnotesize
+\KwIn{Station set $S$, number of clusters $M$, construction dissimilarity $d^{\mathrm{con}}$, EATS value $G(\cdot)$, and HGS parameters}
+\KwOut{Best-found partition $\Pi^\star$}
+$\mathcal P\gets\emptyset$; $\Pi^\star\gets\emptyset$; $it_{\mathrm{noimp}}\gets 0$\;
+\While{$|\mathcal P|<4\mu$}{
+    Construct a k-medoids solution $\Pi$ using $d^{\mathrm{con}}$\;
+    Repair cluster sizes, educate $\Pi$, evaluate $S_{\mathrm{part}}(\Pi)$, and insert $\Pi$ into $\mathcal P$\;
+    Update $\Pi^\star$\;
+}
+\While{the stopping criteria are unsatisfied}{
+    Select two parents from $\mathcal P$ by tournament on biased fitness\;
+    Generate two offspring by cluster-based crossover with swapped parent order\;
+    \ForEach{offspring $\Omega$}{
+        Repair cluster sizes, educate $\Omega$, evaluate $S_{\mathrm{part}}(\Omega)$, and insert $\Omega$ into $\mathcal P$\;
+    }
+    \If{$|\mathcal P|>\mu+\lambda$}{
+        Apply survivor selection based on biased fitness\;
+    }
+    Update $\Pi^\star$ and $it_{\mathrm{noimp}}$\;
+    \If{the diversification interval is reached}{
+        Retain elite solutions and regenerate additional solutions\;
+    }
+}
+\Return{$\Pi^\star$}\;
+\end{algorithm}
+
+\subsection{Solution construction}\label{ch5:sec:hgs-euc-construction}
+
+Initial and regenerated solutions are produced by a k-medoids-style construction.
+The construction uses an auxiliary station-to-station dissimilarity matrix. For
+two stations $i,j\in S$, let $\hat t_{ij}$ be the normalized symmetric truck
+travel time and let $\hat P_{ij}$ be the normalized bilateral usable-transfer
+potential computed from the initial bivariate states. The construction
+dissimilarity is
+\begin{equation}
+d_{ij}^{\mathrm{con}}
+=\alpha \hat t_{ij}+(1-\alpha)(1-\hat P_{ij}),
+\qquad i,j\in S,
+\label{ch5:eq:construction-dissimilarity}
+\end{equation}
+where $0\le \alpha\le 1$. A larger $\alpha$ gives more weight to travel-time
+proximity, whereas a smaller $\alpha$ gives more weight to usable-transfer
+potential.
+
+The first medoid is selected randomly. Subsequent medoids are sampled with
+probability increasing in each station's dissimilarity to its nearest current
+medoid. After medoids are initialized, each station is assigned to the nearest
+medoid, medoids are recomputed from the assigned clusters, and the assignment and
+medoid-update steps are repeated until the medoids stabilize or an iteration cap
+is reached. The constructed solution is then processed according to the
+initialization and diversification steps in Algorithm~\ref{ch5:alg:hgs-euc}.
+
+\subsection{Cluster-based crossover}\label{ch5:sec:hgs-euc-crossover}
+
+Given two parents $\Pi^{(1)}=\{B_1^{(1)},\ldots,B_M^{(1)}\}$ and
+$\Pi^{(2)}=\{B_1^{(2)},\ldots,B_M^{(2)}\}$, crossover copies a randomly selected
+half of the clusters from $\Pi^{(1)}$ into the offspring. For each station that
+remains unassigned, the operator reads its cluster assignment in $\Pi^{(2)}$. If
+that cluster is not already affected by the inherited clusters from
+$\Pi^{(1)}$, the station follows its assignment in $\Pi^{(2)}$. Otherwise, the
+station is assigned to the inherited cluster with the nearest medoid under
+$d^{\mathrm{con}}$. Empty clusters are reseeded and medoids are recomputed at the
+end of the operator. Each mating event is applied with both parent orders, which
+produces two offspring.
+
+\subsection{Cluster-size repair and education}\label{ch5:sec:hgs-euc-repair-education}
+
+Cluster-size repair is applied before education in both population initialization
+and the evolutionary loop. Oversized clusters are reduced by relocating stations
+to clusters with available capacity, and undersized clusters are filled by
+pulling stations from clusters above the lower bound. Medoids are updated after
+repair.
+
+Education improves a repaired solution through local search. The education
+module contains six operators: relocating one station, swapping two stations,
+merge-splitting two clusters, relocating a pair of stations, swapping a pair for
+a single station, and swapping one pair of stations for another pair. The
+operators compare candidate moves by recomputing the EATS scores of the affected
+clusters. In first-improvement mode, the operator order is randomized and the
+procedure stops after the first improving move. In exhaustive mode, the operator
+sequence is repeated until no operator yields further improvement.
+
+\subsection{Population management and diversification}\label{ch5:sec:hgs-euc-population}
+
+Population management balances objective value and partition diversity. Since
+the search maximizes $S_{\mathrm{part}}(\Pi)$, objective ranks are assigned in
+descending order of this score. Diversity is measured by pairwise same-cluster
+disagreement. For two solutions $\Pi$ and $\Pi'$, define
+\begin{equation}
+D(\Pi,\Pi')=
+\frac{2}{|S|(|S|-1)}
+\sum_{\{i,j\}\subseteq S}
+\left|\chi_{ij}(\Pi)-\chi_{ij}(\Pi')\right|,
+\label{ch5:eq:partition-disagreement}
+\end{equation}
+where
+\begin{equation}
+\chi_{ij}(\Pi)=
+\begin{cases}
+1, & \text{if stations } i \text{ and } j \text{ are in the same cluster in } \Pi,\\
+0, & \text{otherwise.}
+\end{cases}
+\label{ch5:eq:same-cluster-indicator}
+\end{equation}
+The diversity rank is computed from the average disagreement to the
+$n_{\mathrm{close}}$ closest solutions in the population. The biased fitness of a
+solution is
+\begin{equation}
+BF(\Pi)=\operatorname{rank}_{\mathrm{obj}}(\Pi)+
+\left(1-\frac{n_{\mathrm{elite}}}{|\mathcal P|}\right)
+\operatorname{rank}_{\mathrm{div}}(\Pi).
+\label{ch5:eq:biased-fitness-hgs-euc}
+\end{equation}
+Lower biased fitness is preferred in parent selection and survivor selection.
+When the population size exceeds $\mu+\lambda$, solutions with the worst biased
+fitness values are removed. Diversification is triggered after a prescribed
+number of consecutive non-improving iterations: an elite subset is retained, and
+additional solutions are generated by the construction procedure to restore
+population diversity. HGS-EUC terminates when the no-improvement limit,
+wall-clock limit, or maximum iteration limit is reached.
+
+
+\section{Cluster-level planning}\label{ch5:sec:cluster-level-planning}\label{ch5:sec:routing-interface}
+
+The cluster-level planning phase receives the best-found partition
+$\Pi^\star=\{B_1^\star,\ldots,B_M^\star\}$. For each selected cluster
+$B_m^\star$, the adapter constructs the cluster-level node set
+\begin{equation}
+V_m^0=B_m^\star\cup\{0\},
+\label{ch5:eq:cfrs-cluster-node-set}
+\end{equation}
+where node $0$ is the shared depot of the original network. The adapter reindexes
+the stations in $B_m^\star$ as local station nodes, extracts the corresponding
+travel-time, station-state, capacity, and EUDF data from the full instance, and
+forms an independent cluster-level BRP-BR-OSR instance.
+
+Each cluster-level instance is solved with HGSADC-SBC following
+\citet{huRepositioningBikeSharing2025}. Let $Z^{\mathrm{dissat}}(B_m^\star)$
+be the total user dissatisfaction returned for cluster $B_m^\star$. The CFRS
+cluster-level planning dissatisfaction is
+\begin{equation}
+Z_{\mathrm{CFRS}}^{\mathrm{dissat}}
+=\sum_{m=1}^{M}Z^{\mathrm{dissat}}(B_m^\star).
+\label{ch5:eq:cfrs-total-dissat}
+\end{equation}
+This value reports the outcome of the complete CFRS solution after the
+cluster-level planning instances have been solved.
+
+
+\section{Computational experiments}\label{ch5:sec:computational-experiments}\label{ch5:sec:experiments}
+
+The proposed CFRS method was implemented in C++20 and controlled by a Python
+orchestrator. The experiments were carried out on two Linux workstations: a 13th
+Gen Intel Core i9-13900 workstation with 32 logical cores and 62~GiB RAM, and a
+12th Gen Intel Core i9-12900 workstation with 24 logical cores and 62~GiB RAM.
+Method~A uses Gurobi~13.0 to solve the time-indexed formulation in
+Section~\ref{ch5:sec:milp}; Methods~B and~C use the HGSADC-SBC implementation of
+\citet{huRepositioningBikeSharing2025}, with Method~C applying the CFRS
+decomposition proposed in Section~\ref{ch5:sec:methodology} before solving the
+cluster-level planning instances.
+
+The test instances were prepared as follows. For network sizes up to 500
+stations, we use the instances of \citet{huRepositioningBikeSharing2025}, which
+are derived from the Citi Bike instances of \citet{hoHybridLargeNeighborhood2017}.
+For the 800-, 1000-, and 2000-station instances, we generate additional
+instances by sampling stations from a 2117-station Citi Bike pool covering
+Manhattan and Brooklyn and by recomputing asymmetric station-to-station travel
+times with OSRM driving routes. In all instances, the station capacities,
+initial usable-bike inventories, initial broken-bike inventories, truck travel
+times, and EUDF values are treated as input data. The EUDF values are computed
+from historical rental and return rates following
+\citet{kaspiBikesharingSystemsUser2017}.
+
+The computational study uses one 60-station calibration instance and three
+instance groups. The calibration instance is used only for parameter tuning.
+Set~2 contains five instances at each of the 60-, 200-, and 300-station scales
+and is used for the three-method benchmark. Set~3 contains five instances at
+each of the 400-, 500-, 800-, 1000-, and 2000-station scales and is used for the
+large-scale comparison. Set~4 contains additional configurations generated from
+the Set~3 instances by varying one input parameter at a time: truck capacity,
+operational time budget, target cluster size, and broken-bike rate.
+
+Unless otherwise stated, the truck capacity is $Q=25$ bikes, the loading or
+unloading time is $t^{\mathrm{load}}=60$~s per bike, the on-site repair time is
+$t^{\mathrm{repair}}=300$~s per bike, and the operational time budget is
+$T=7200$~s. All method runs are given a 600~s computational limit. Each
+heuristic cell is replicated with 20 independent random seeds. For Method~A, we
+report Gurobi's lower bound, upper bound, and MIP gap. For Methods~B and~C, we
+report the average and best objective values over the 20 seeds. All objectives
+are total user dissatisfaction values and are minimized. CPU time is therefore
+not included as a comparison column.
+
+The gap columns compare feasible objective values. Their definitions are given
+in the table notes. A positive gap means that Method~C obtains a lower average
+objective than the reference method.
+
+\subsection{Parameter tuning}\label{ch5:sec:exp-tuning}
+
+The HGS-EUC parameters in the clustering phase were tuned on the 60-station calibration
+instance. We used a sequential fixed-budget tuning protocol. In each phase, one
+parameter was varied while the previously selected parameters were held fixed;
+each candidate was evaluated over 20 independent seeds. The selection rule was
+mean objective first, mean paired rank second, and mean wall time third.
+Figure~\ref{ch5:fig:tuning-result} shows the tuning results, and
+Table~\ref{ch5:tab:hgs-euc-params} lists the parameter values used in all subsequent
+experiments.
+
+\begin{figure}[t]
+  \centering
+  \fbox{%
+    \begin{minipage}[c][0.28\textheight][c]{0.9\linewidth}
+      \centering
+      Figure placeholder for the sequential tuning results of the HGS-EUC parameters
+    \end{minipage}%
+  }
+  \caption{Sequential tuning of the HGS-EUC parameters on the 60-station
+  calibration instance. The selected value in each panel is marked by a red
+  circle.}
+  \label{ch5:fig:tuning-result}
+\end{figure}
+
+\begin{table}[t]
+  \centering
+  \caption{Selected HGS-EUC parameters used in the computational experiments.}
+  \label{ch5:tab:hgs-euc-params}
+  \begin{tabular}{lll}
+    \toprule
+    Parameter & Meaning & Value \\
+    \midrule
+    $T_A$ & Clustering-phase wall-clock limit (s) & 120 \\
+    $\mu$ & Population size & 30 \\
+    $\lambda$ & Number of offspring per generation & 30 \\
+    $n_{\mathrm{elite}}$ & Number of elite solutions retained & 8 \\
+    $n_{\mathrm{close}}$ & Number of close solutions used for diversity ranking & 7 \\
+    $\alpha$ & Weight of travel-time proximity in the construction dissimilarity & 0.6 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The selected values are $T_A=120$, $\mu=30$, $\lambda=30$,
+$n_{\mathrm{elite}}=8$, $n_{\mathrm{close}}=7$, and $\alpha=0.6$. These values
+are fixed in the remainder of the computational study.
+
+\subsection{Benchmark comparison on small instances}\label{ch5:sec:exp-small-benchmark}\label{ch5:sec:exp-w2}
+
+This subsection compares three methods on Set~2. Method~A solves the
+time-indexed MILP with Gurobi. Method~B applies the HGSADC-SBC heuristic of
+\citet{huRepositioningBikeSharing2025} directly to the full instance. Method~C
+is the proposed CFRS method: HGS-EUC first partitions the station set, and
+HGSADC-SBC then solves the cluster-level planning instances.
+
+{\vspace{0.8\baselineskip}
+\renewcommand{\baselinestretch}{1}\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTpre}{0.4\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.11\linewidth}*{9}{>{\raggedleft\arraybackslash}p{0.081\linewidth}}@{}}
+\caption{Small-scale benchmark comparison. Method~A is Gurobi applied to the time-indexed MILP; Methods~B and~C are the monolithic HGSADC-SBC and the proposed CFRS method, respectively.}\label{ch5:tab:small-benchmark}\\
+\toprule
+& \multicolumn{3}{c}{Method~A (Gurobi)} & \multicolumn{2}{c}{Method~B} & \multicolumn{4}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-10}
+Instance & LB\textsuperscript{a} & UB\textsuperscript{b} & MIP gap\textsuperscript{c} & Obj. Avg\textsuperscript{d} & Obj. Best\textsuperscript{e} & Obj. Avg\textsuperscript{d} & Obj. Best\textsuperscript{e} & $\text{Gap}_A$\textsuperscript{f} & $\text{Gap}_B$\textsuperscript{g} \\
+& & & (\%) & & & & & (\%) & (\%) \\
+\midrule
+\endfirsthead
+\multicolumn{10}{@{}l}{\textbf{Table~\thetable} (continued)}\\
+\toprule
+& \multicolumn{3}{c}{Method~A (Gurobi)} & \multicolumn{2}{c}{Method~B} & \multicolumn{4}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}\cmidrule(lr){7-10}
+Instance & LB\textsuperscript{a} & UB\textsuperscript{b} & MIP gap\textsuperscript{c} & Obj. Avg\textsuperscript{d} & Obj. Best\textsuperscript{e} & Obj. Avg\textsuperscript{d} & Obj. Best\textsuperscript{e} & $\text{Gap}_A$\textsuperscript{f} & $\text{Gap}_B$\textsuperscript{g} \\
+& & & (\%) & & & & & (\%) & (\%) \\
+\midrule
+\endhead
+\midrule
+\multicolumn{10}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+60\_1 & 10.53 & 218.00 & 95.17 & 96.59 & 90.07 & 83.15 & 79.30 & 61.86 & 13.91 \\
+60\_2 & 37.63 & 367.55 & 89.76 & 225.80 & 218.10 & 214.68 & 204.66 & 41.59 & 4.93 \\
+60\_3 & 28.68 & 397.09 & 92.78 & 204.85 & 192.00 & 180.98 & 175.88 & 54.42 & 11.65 \\
+60\_4 & 68.40 & 434.88 & 84.27 & 293.52 & 276.18 & 268.27 & 260.67 & 38.31 & 8.60 \\
+60\_5 & 19.68 & 212.69 & 90.75 & 125.02 & 116.26 & 113.27 & 110.45 & 46.74 & 9.40 \\
+200\_1 & 48.52 & 1066.71 & 95.45 & 861.26 & 836.34 & 817.15 & 795.57 & 23.39 & 5.12 \\
+200\_2 & 143.13 & 1407.38 & 89.83 & 1060.66 & 1046.52 & 1011.61 & 994.17 & 28.12 & 4.62 \\
+200\_3 & 70.14 & 1195.02 & 94.13 & 840.61 & 816.88 & 800.38 & 783.98 & 33.02 & 4.79 \\
+200\_4 & 113.95 & 1074.83 & 89.40 & 823.57 & 807.91 & 788.57 & 774.96 & 26.63 & 4.25 \\
+200\_5 & 103.35 & 1013.39 & 89.80 & 787.52 & 775.05 & 742.45 & 728.31 & 26.74 & 5.72 \\
+300\_1 & 82.39 & 1393.50 & 94.09 & 1144.48 & 1120.99 & 1054.79 & 1018.28 & 24.31 & 7.84 \\
+300\_2 & 175.24 & 2040.34 & 91.41 & 1753.99 & 1733.60 & 1642.37 & 1622.58 & 19.51 & 6.36 \\
+300\_3 & 99.65 & 1178.50 & 91.54 & 1029.25 & 1010.58 & 950.99 & 935.87 & 19.31 & 7.60 \\
+300\_4 & 171.65 & 1960.64 & 91.25 & 1601.16 & 1572.52 & 1489.48 & 1463.77 & 24.03 & 6.97 \\
+300\_5 & 152.90 & 1743.50 & 91.23 & 1384.85 & 1353.40 & 1286.88 & 1266.94 & 26.19 & 7.07 \\
+\end{longtable}
+\vspace{-0.3\baselineskip}
+\noindent\begin{tabular}{@{}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.92\linewidth}@{}}
+\textsuperscript{a} & LB is Gurobi's final lower bound.\\
+\textsuperscript{b} & UB is Gurobi's final upper bound.\\
+\textsuperscript{c} & MIP gap is Gurobi's final MIP gap.\\
+\textsuperscript{d} & Obj. Avg is the average objective value over 20 independent runs.\\
+\textsuperscript{e} & Obj. Best is the best objective value over 20 independent runs.\\
+\textsuperscript{f} & $\text{Gap}_A=(\mathrm{UB}_A-\overline Z_C)/\mathrm{UB}_A$.\\
+\textsuperscript{g} & $\text{Gap}_B=(\overline Z_B-\overline Z_C)/\overline Z_B$. Positive gaps indicate lower average objectives for Method~C.
+\end{tabular}
+\vspace{0.4\baselineskip}
+}
+
+Table~\ref{ch5:tab:small-benchmark} shows that Gurobi does not close the MIP gap
+within the 600~s limit on these instances. The average MIP gap is 91.39\%.
+Method~C obtains a lower average feasible objective than both the Gurobi upper
+bound and Method~B in all 15 instances. The average improvement of Method~C over
+the Gurobi upper bound is 32.94\%, and the average improvement over Method~B is
+7.26\%.
+
+\subsection{Comparison on large instances}\label{ch5:sec:exp-large-benchmark}
+
+For larger networks, the time-indexed MILP is no longer used as a computational
+benchmark. The comparison therefore focuses on Methods~B and~C, both of which
+are run on Set~3 with the same computational budget and the same 20 random
+seeds.
+
+{\vspace{0.8\baselineskip}
+\renewcommand{\baselinestretch}{1}\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTpre}{0.4\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}*{5}{>{\raggedleft\arraybackslash}p{0.155\linewidth}}@{}}
+\caption{Large-scale comparison between Method~B and Method~C.}\label{ch5:tab:large-benchmark}\\
+\toprule
+& \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}
+Instance & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endfirsthead
+\multicolumn{6}{@{}l}{\textbf{Table~\thetable} (continued)}\\
+\toprule
+& \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}
+Instance & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+400\_1 & 2022.80 & 1983.87 & 1870.30 & 1846.87 & 7.54 \\
+400\_2 & 1713.69 & 1705.29 & 1575.77 & 1561.58 & 8.05 \\
+400\_3 & 2090.49 & 2053.35 & 1973.52 & 1961.06 & 5.60 \\
+400\_4 & 2120.33 & 2099.38 & 1966.92 & 1956.64 & 7.24 \\
+400\_5 & 1918.34 & 1902.06 & 1776.22 & 1766.06 & 7.41 \\
+500\_1 & 2409.88 & 2365.99 & 2191.53 & 2178.43 & 9.06 \\
+500\_2 & 2798.26 & 2790.33 & 2561.41 & 2535.51 & 8.46 \\
+500\_3 & 2076.70 & 2031.93 & 1914.42 & 1891.98 & 7.81 \\
+500\_4 & 2415.63 & 2391.20 & 2180.17 & 2153.61 & 9.75 \\
+500\_5 & 2553.49 & 2518.15 & 2375.26 & 2350.38 & 6.98 \\
+800\_1 & 3460.09 & 3449.64 & 3188.80 & 3156.45 & 7.84 \\
+800\_2 & 4032.11 & 3990.51 & 3625.44 & 3596.43 & 10.09 \\
+800\_3 & 4013.71 & 3992.52 & 3656.68 & 3619.33 & 8.90 \\
+800\_4 & 3820.65 & 3744.37 & 3544.29 & 3476.61 & 7.23 \\
+800\_5 & 3528.83 & 3514.34 & 3215.21 & 3195.54 & 8.89 \\
+1000\_1 & 4328.55 & 4298.80 & 3930.07 & 3906.01 & 9.21 \\
+1000\_2 & 5211.50 & 5186.77 & 4787.90 & 4715.01 & 8.13 \\
+1000\_3 & 4805.44 & 4783.74 & 4364.95 & 4334.91 & 9.17 \\
+1000\_4 & 4622.22 & 4588.71 & 4264.53 & 4237.72 & 7.74 \\
+1000\_5 & 4920.69 & 4906.12 & 4592.36 & 4556.58 & 6.67 \\
+2000\_1 & 9659.61 & 9551.43 & 8741.95 & 8694.27 & 9.50 \\
+2000\_2 & 10597.14 & 10542.07 & 9323.29 & 9139.02 & 12.02 \\
+2000\_3 & 10247.37 & 10143.42 & 8890.51 & 8844.98 & 13.24 \\
+2000\_4 & 10276.37 & 10267.57 & 9025.16 & 8968.67 & 12.18 \\
+2000\_5 & 10742.77 & 10634.74 & 9495.00 & 9400.45 & 11.61 \\
+\end{longtable}
+\vspace{-0.3\baselineskip}
+\noindent\begin{tabular}{@{}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.92\linewidth}@{}}
+\textsuperscript{a} & $\text{Gap}_B=(\overline Z_B-\overline Z_C)/\overline Z_B$. Positive values indicate lower average objectives for Method~C.
+\end{tabular}
+\vspace{0.4\baselineskip}
+}
+
+Table~\ref{ch5:tab:large-benchmark} shows that Method~C obtains a lower average
+objective than Method~B in every large instance. The average improvement over
+Method~B is 8.81\% across all 25 instances and 11.71\% across the five
+2000-station instances. These results indicate that the cluster-first
+decomposition improves the feasible solutions obtained by the routing heuristic
+at the larger scales tested here.
+
+\subsection{Comparison under varied instance configurations}\label{ch5:sec:exp-configurations}\label{ch5:sec:exp-sens}
+
+The following experiments are additional instance-configuration tests rather
+than a sensitivity analysis intended to derive operational prescriptions. Each
+test varies one input parameter while keeping the same comparison structure:
+Method~B is applied to the full instance, Method~C applies CFRS, and both methods
+are evaluated using the same computational budget. The purpose is to examine
+whether the advantage of Method~C persists across different configurations of
+the benchmark instances.
+
+\subsubsection{Vehicle-capacity configurations}\label{ch5:sec:exp-config-Q}\label{ch5:sec:exp-sens-Q}
+
+Truck capacity is varied over $Q\in\{15,20,25,30,35\}$ bikes. The remaining
+parameters are kept at their default values.
+
+{\vspace{0.8\baselineskip}
+\renewcommand{\baselinestretch}{1}\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTpre}{0.4\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedleft\arraybackslash}p{0.16\linewidth}*{5}{>{\raggedleft\arraybackslash}p{0.118\linewidth}}@{}}
+\caption{Comparison under vehicle-capacity configurations.}\label{ch5:tab:config-Q}\\
+\toprule
+Instance & $Q$ & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endfirsthead
+\multicolumn{7}{@{}l}{\textbf{Table~\thetable} (continued)}\\
+\toprule
+Instance & $Q$ & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+400\_1 & 15 & 2050.52 & 2035.29 & 1940.12 & 1918.93 & 5.38 \\
+ & 20 & 2027.33 & 1999.33 & 1896.80 & 1861.56 & 6.44 \\
+ & 25 & 2022.80 & 1983.87 & 1870.30 & 1846.87 & 7.54 \\
+ & 30 & 2000.07 & 1976.68 & 1870.30 & 1820.26 & 6.49 \\
+ & 35 & 1978.66 & 1956.82 & 1859.69 & 1820.26 & 6.01 \\
+\midrule
+400\_2 & 15 & 1736.56 & 1726.75 & 1611.73 & 1586.85 & 7.19 \\
+ & 20 & 1719.42 & 1708.60 & 1588.61 & 1563.74 & 7.61 \\
+ & 25 & 1713.69 & 1705.29 & 1575.77 & 1561.58 & 8.05 \\
+ & 30 & 1707.80 & 1696.48 & 1564.24 & 1550.97 & 8.41 \\
+ & 35 & 1696.29 & 1688.29 & 1554.54 & 1544.74 & 8.36 \\
+\midrule
+400\_3 & 15 & 2145.10 & 2124.06 & 1999.58 & 1968.71 & 6.78 \\
+ & 20 & 2115.40 & 2112.41 & 1985.18 & 1968.71 & 6.16 \\
+ & 25 & 2090.49 & 2053.35 & 1973.52 & 1961.06 & 5.60 \\
+ & 30 & 2068.76 & 2032.23 & 1961.95 & 1953.18 & 5.16 \\
+ & 35 & 2068.76 & 2032.23 & 1951.61 & 1931.54 & 5.66 \\
+\midrule
+400\_4 & 15 & 2151.88 & 2124.61 & 2002.57 & 1989.61 & 6.94 \\
+ & 20 & 2138.02 & 2124.61 & 1983.96 & 1963.67 & 7.21 \\
+ & 25 & 2120.33 & 2099.38 & 1966.92 & 1956.64 & 7.24 \\
+ & 30 & 2120.33 & 2088.97 & 1952.94 & 1936.35 & 7.89 \\
+ & 35 & 2108.38 & 2088.88 & 1943.24 & 1919.65 & 7.83 \\
+\midrule
+400\_5 & 15 & 1941.67 & 1926.85 & 1817.96 & 1804.00 & 6.37 \\
+ & 20 & 1935.43 & 1902.06 & 1794.02 & 1778.25 & 7.31 \\
+ & 25 & 1918.34 & 1902.06 & 1776.22 & 1766.06 & 7.41 \\
+ & 30 & 1916.99 & 1897.45 & 1775.29 & 1762.34 & 7.39 \\
+ & 35 & 1900.08 & 1881.05 & 1775.20 & 1762.34 & 6.57 \\
+\midrule
+500\_1 & 15 & 2452.88 & 2431.00 & 2267.25 & 2250.17 & 7.57 \\
+ & 20 & 2434.52 & 2408.26 & 2224.77 & 2213.42 & 8.62 \\
+ & 25 & 2409.88 & 2365.99 & 2191.53 & 2178.43 & 9.06 \\
+ & 30 & 2409.88 & 2365.99 & 2191.53 & 2178.43 & 9.06 \\
+ & 35 & 2409.88 & 2365.99 & 2189.98 & 2178.43 & 9.12 \\
+\midrule
+500\_2 & 15 & 2818.51 & 2797.67 & 2604.74 & 2578.16 & 7.58 \\
+ & 20 & 2811.89 & 2797.67 & 2604.74 & 2578.16 & 7.37 \\
+ & 25 & 2798.26 & 2790.33 & 2561.41 & 2535.51 & 8.46 \\
+ & 30 & 2772.85 & 2751.99 & 2545.39 & 2523.18 & 8.20 \\
+ & 35 & 2772.85 & 2751.99 & 2545.39 & 2520.97 & 8.20 \\
+\midrule
+500\_3 & 15 & 2129.27 & 2106.20 & 1967.43 & 1947.29 & 7.60 \\
+ & 20 & 2112.51 & 2104.23 & 1945.45 & 1928.97 & 7.91 \\
+ & 25 & 2076.70 & 2031.93 & 1914.42 & 1891.98 & 7.81 \\
+ & 30 & 2074.35 & 2031.93 & 1911.15 & 1891.98 & 7.87 \\
+ & 35 & 2074.35 & 2031.93 & 1903.82 & 1884.88 & 8.22 \\
+\midrule
+500\_4 & 15 & 2464.13 & 2450.83 & 2270.99 & 2247.42 & 7.84 \\
+ & 20 & 2420.85 & 2405.24 & 2214.63 & 2196.32 & 8.52 \\
+ & 25 & 2415.63 & 2391.20 & 2180.17 & 2153.61 & 9.75 \\
+ & 30 & 2402.50 & 2378.46 & 2180.17 & 2153.61 & 9.25 \\
+ & 35 & 2382.60 & 2355.12 & 2163.75 & 2148.69 & 9.19 \\
+\midrule
+500\_5 & 15 & 2607.35 & 2595.00 & 2445.96 & 2425.57 & 6.19 \\
+ & 20 & 2588.18 & 2570.74 & 2425.16 & 2369.22 & 6.30 \\
+ & 25 & 2553.49 & 2518.15 & 2375.26 & 2350.38 & 6.98 \\
+ & 30 & 2553.49 & 2518.15 & 2375.26 & 2350.38 & 6.98 \\
+ & 35 & 2553.49 & 2518.15 & 2375.26 & 2350.38 & 6.98 \\
+\midrule
+800\_1 & 15 & 3492.04 & 3472.37 & 3253.01 & 3244.30 & 6.84 \\
+ & 20 & 3469.23 & 3449.64 & 3231.18 & 3200.12 & 6.86 \\
+ & 25 & 3460.09 & 3449.64 & 3188.80 & 3156.45 & 7.84 \\
+ & 30 & 3458.97 & 3442.31 & 3188.80 & 3156.45 & 7.81 \\
+ & 35 & 3444.26 & 3433.92 & 3170.20 & 3131.65 & 7.96 \\
+\midrule
+800\_2 & 15 & 4109.32 & 4078.84 & 3743.69 & 3704.46 & 8.90 \\
+ & 20 & 4078.20 & 4038.43 & 3696.98 & 3670.77 & 9.35 \\
+ & 25 & 4032.11 & 3990.51 & 3625.44 & 3596.43 & 10.09 \\
+ & 30 & 4032.11 & 3990.51 & 3625.44 & 3596.43 & 10.09 \\
+ & 35 & 4032.11 & 3990.51 & 3613.25 & 3580.40 & 10.39 \\
+\midrule
+800\_3 & 15 & 4073.09 & 4066.69 & 3742.33 & 3716.65 & 8.12 \\
+ & 20 & 4045.57 & 4033.86 & 3668.18 & 3627.45 & 9.33 \\
+ & 25 & 4013.71 & 3992.52 & 3656.68 & 3619.33 & 8.90 \\
+ & 30 & 4011.14 & 3967.06 & 3628.45 & 3582.50 & 9.54 \\
+ & 35 & 4006.22 & 3967.06 & 3628.45 & 3567.36 & 9.43 \\
+\midrule
+800\_4 & 15 & 3866.17 & 3827.27 & 3591.97 & 3545.69 & 7.09 \\
+ & 20 & 3847.96 & 3799.04 & 3591.97 & 3545.69 & 6.65 \\
+ & 25 & 3820.65 & 3744.37 & 3544.29 & 3476.61 & 7.23 \\
+ & 30 & 3820.65 & 3744.37 & 3533.05 & 3476.61 & 7.53 \\
+ & 35 & 3820.65 & 3744.37 & 3510.43 & 3476.61 & 8.12 \\
+\midrule
+800\_5 & 15 & 3583.42 & 3570.71 & 3267.76 & 3246.57 & 8.81 \\
+ & 20 & 3548.84 & 3529.98 & 3267.76 & 3231.20 & 7.92 \\
+ & 25 & 3528.83 & 3514.34 & 3215.21 & 3195.54 & 8.89 \\
+ & 30 & 3516.66 & 3509.76 & 3210.93 & 3186.22 & 8.69 \\
+ & 35 & 3502.38 & 3482.74 & 3182.75 & 3148.97 & 9.13 \\
+\midrule
+1000\_1 & 15 & 4425.99 & 4405.27 & 4010.42 & 3981.73 & 9.39 \\
+ & 20 & 4373.76 & 4364.55 & 3969.82 & 3945.95 & 9.24 \\
+ & 25 & 4328.55 & 4298.80 & 3930.07 & 3906.01 & 9.21 \\
+ & 30 & 4328.55 & 4298.80 & 3918.82 & 3864.00 & 9.47 \\
+ & 35 & 4328.55 & 4298.80 & 3916.46 & 3864.00 & 9.52 \\
+\midrule
+1000\_2 & 15 & 5277.42 & 5255.57 & 4949.27 & 4897.99 & 6.22 \\
+ & 20 & 5227.69 & 5209.61 & 4929.98 & 4897.99 & 5.69 \\
+ & 25 & 5211.50 & 5186.77 & 4787.90 & 4715.01 & 8.13 \\
+ & 30 & 5209.22 & 5174.49 & 4787.90 & 4715.01 & 8.09 \\
+ & 35 & 5180.54 & 5119.82 & 4787.90 & 4715.01 & 7.58 \\
+\midrule
+1000\_3 & 15 & 4841.94 & 4822.34 & 4504.46 & 4451.68 & 6.97 \\
+ & 20 & 4833.95 & 4818.08 & 4441.06 & 4424.52 & 8.13 \\
+ & 25 & 4805.44 & 4783.74 & 4364.95 & 4334.91 & 9.17 \\
+ & 30 & 4762.84 & 4710.22 & 4360.69 & 4278.97 & 8.44 \\
+ & 35 & 4745.25 & 4683.10 & 4329.85 & 4278.97 & 8.75 \\
+\midrule
+1000\_4 & 15 & 4718.10 & 4708.23 & 4388.04 & 4371.89 & 7.00 \\
+ & 20 & 4670.84 & 4589.52 & 4353.27 & 4288.04 & 6.80 \\
+ & 25 & 4622.22 & 4588.71 & 4264.53 & 4237.72 & 7.74 \\
+ & 30 & 4618.56 & 4588.71 & 4258.20 & 4237.58 & 7.80 \\
+ & 35 & 4603.15 & 4561.84 & 4258.20 & 4206.97 & 7.49 \\
+\midrule
+1000\_5 & 15 & 4984.93 & 4941.86 & 4671.52 & 4631.41 & 6.29 \\
+ & 20 & 4946.44 & 4916.01 & 4629.44 & 4613.82 & 6.41 \\
+ & 25 & 4920.69 & 4906.12 & 4592.36 & 4556.58 & 6.67 \\
+ & 30 & 4895.01 & 4854.54 & 4550.16 & 4495.00 & 7.04 \\
+ & 35 & 4892.22 & 4854.54 & 4550.16 & 4495.00 & 6.99 \\
+\midrule
+2000\_1 & 15 & 10054.25 & 9890.36 & 8933.20 & 8893.66 & 11.15 \\
+ & 20 & 9955.45 & 9823.04 & 8757.81 & 8694.27 & 12.03 \\
+ & 25 & 9659.61 & 9551.43 & 8741.95 & 8694.27 & 9.50 \\
+ & 30 & 9659.61 & 9551.43 & 8667.99 & 8640.72 & 10.27 \\
+ & 35 & 9659.61 & 9551.43 & 8667.99 & 8615.80 & 10.27 \\
+\midrule
+2000\_2 & 15 & 10961.22 & 10766.11 & 9473.78 & 9429.74 & 13.57 \\
+ & 20 & 10727.63 & 10565.64 & 9357.71 & 9268.38 & 12.77 \\
+ & 25 & 10597.14 & 10542.07 & 9323.29 & 9139.02 & 12.02 \\
+ & 30 & 10596.89 & 10538.27 & 9252.03 & 9139.02 & 12.69 \\
+ & 35 & 10596.89 & 10536.82 & 9192.77 & 9128.02 & 13.25 \\
+\midrule
+2000\_3 & 15 & 10423.65 & 10268.34 & 9137.37 & 9086.59 & 12.34 \\
+ & 20 & 10247.37 & 10247.37 & 9004.63 & 8935.21 & 12.13 \\
+ & 25 & 10247.37 & 10143.42 & 8890.51 & 8844.98 & 13.24 \\
+ & 30 & 10232.00 & 10143.42 & 8886.76 & 8844.98 & 13.15 \\
+ & 35 & 10229.71 & 10143.42 & 8853.63 & 8746.22 & 13.45 \\
+\midrule
+2000\_4 & 15 & 10508.61 & 10318.40 & 9096.25 & 9025.45 & 13.44 \\
+ & 20 & 10372.33 & 10267.57 & 9035.34 & 8968.67 & 12.89 \\
+ & 25 & 10276.37 & 10267.57 & 9025.16 & 8968.67 & 12.18 \\
+ & 30 & 10146.97 & 9952.14 & 8963.83 & 8873.62 & 11.66 \\
+ & 35 & 10146.97 & 9952.14 & 8922.17 & 8815.42 & 12.07 \\
+\midrule
+2000\_5 & 15 & 11089.73 & 10933.37 & 9645.85 & 9501.20 & 13.02 \\
+ & 20 & 10845.13 & 10634.74 & 9556.73 & 9473.16 & 11.88 \\
+ & 25 & 10742.77 & 10634.74 & 9495.00 & 9400.45 & 11.61 \\
+ & 30 & 10742.77 & 10634.74 & 9495.00 & 9400.45 & 11.61 \\
+ & 35 & 10742.77 & 10634.74 & 9454.01 & 9319.16 & 12.00 \\
+\end{longtable}
+\vspace{-0.3\baselineskip}
+\noindent\begin{tabular}{@{}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.92\linewidth}@{}}
+\textsuperscript{a} & $\text{Gap}_B=(\overline Z_B-\overline Z_C)/\overline Z_B$. Positive values indicate lower average objectives for Method~C.
+\end{tabular}
+\vspace{0.4\baselineskip}
+}
+
+Table~\ref{ch5:tab:config-Q} shows that Method~C obtains a lower average objective
+than Method~B for every vehicle-capacity configuration. The average $\text{Gap}_B$ is
+8.67\% over all rows of the table, and the average gap remains between 8.34\%
+and 8.90\% at each tested value of $Q$.
+
+\subsubsection{Time-budget configurations}\label{ch5:sec:exp-config-T}\label{ch5:sec:exp-sens-T}
+
+The operational time budget is varied over
+$T\in\{3600,5400,7200,9000,10800\}$~s. The remaining parameters are kept at
+their default values.
+
+{\vspace{0.8\baselineskip}
+\renewcommand{\baselinestretch}{1}\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTpre}{0.4\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedleft\arraybackslash}p{0.16\linewidth}*{5}{>{\raggedleft\arraybackslash}p{0.118\linewidth}}@{}}
+\caption{Comparison under time-budget configurations.}\label{ch5:tab:config-T}\\
+\toprule
+Instance & $T$ (s) & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endfirsthead
+\multicolumn{7}{@{}l}{\textbf{Table~\thetable} (continued)}\\
+\toprule
+Instance & $T$ (s) & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+400\_1 & 3600 & 2135.89 & 2113.57 & 2088.25 & 2073.37 & 2.23 \\
+ & 5400 & 2055.10 & 2028.70 & 1947.32 & 1926.27 & 5.24 \\
+ & 7200 & 2022.80 & 1983.87 & 1870.30 & 1846.87 & 7.54 \\
+ & 9000 & 1969.97 & 1944.50 & 1812.78 & 1791.60 & 7.98 \\
+ & 10800 & 1958.52 & 1944.50 & 1743.51 & 1710.14 & 10.98 \\
+\midrule
+400\_2 & 3600 & 1803.03 & 1792.58 & 1744.26 & 1730.41 & 3.26 \\
+ & 5400 & 1746.81 & 1731.66 & 1641.34 & 1625.43 & 6.04 \\
+ & 7200 & 1713.69 & 1705.29 & 1575.77 & 1561.58 & 8.05 \\
+ & 9000 & 1678.92 & 1675.83 & 1520.60 & 1514.28 & 9.43 \\
+ & 10800 & 1638.51 & 1618.89 & 1483.44 & 1480.92 & 9.46 \\
+\midrule
+400\_3 & 3600 & 2257.68 & 2238.08 & 2194.85 & 2182.75 & 2.78 \\
+ & 5400 & 2155.52 & 2128.97 & 2047.08 & 2024.85 & 5.03 \\
+ & 7200 & 2090.49 & 2053.35 & 1973.52 & 1961.06 & 5.60 \\
+ & 9000 & 2066.76 & 2053.35 & 1887.76 & 1872.97 & 8.66 \\
+ & 10800 & 2011.15 & 1991.58 & 1840.55 & 1828.50 & 8.48 \\
+\midrule
+400\_4 & 3600 & 2226.03 & 2216.40 & 2160.20 & 2135.11 & 2.96 \\
+ & 5400 & 2164.43 & 2157.78 & 2039.31 & 2019.69 & 5.78 \\
+ & 7200 & 2120.33 & 2099.38 & 1966.92 & 1956.64 & 7.24 \\
+ & 9000 & 2097.95 & 2082.52 & 1898.39 & 1886.77 & 9.51 \\
+ & 10800 & 2054.83 & 2034.69 & 1803.37 & 1759.65 & 12.24 \\
+\midrule
+400\_5 & 3600 & 2017.28 & 2006.29 & 1967.52 & 1947.23 & 2.47 \\
+ & 5400 & 1957.63 & 1944.47 & 1864.52 & 1852.01 & 4.76 \\
+ & 7200 & 1918.34 & 1902.06 & 1776.22 & 1766.06 & 7.41 \\
+ & 9000 & 1893.21 & 1872.77 & 1723.99 & 1705.78 & 8.94 \\
+ & 10800 & 1847.76 & 1824.11 & 1651.90 & 1612.03 & 10.60 \\
+\midrule
+500\_1 & 3600 & 2557.72 & 2540.33 & 2464.80 & 2442.30 & 3.63 \\
+ & 5400 & 2483.97 & 2466.06 & 2305.71 & 2293.40 & 7.18 \\
+ & 7200 & 2409.88 & 2365.99 & 2191.53 & 2178.43 & 9.06 \\
+ & 9000 & 2389.16 & 2365.99 & 2130.21 & 2097.87 & 10.84 \\
+ & 10800 & 2320.00 & 2279.03 & 2050.34 & 2033.00 & 11.62 \\
+\midrule
+500\_2 & 3600 & 2957.35 & 2924.98 & 2861.51 & 2851.86 & 3.24 \\
+ & 5400 & 2859.37 & 2841.85 & 2694.11 & 2685.88 & 5.78 \\
+ & 7200 & 2798.26 & 2790.33 & 2561.41 & 2535.51 & 8.46 \\
+ & 9000 & 2741.41 & 2726.88 & 2467.84 & 2454.63 & 9.98 \\
+ & 10800 & 2659.08 & 2630.20 & 2392.08 & 2376.47 & 10.04 \\
+\midrule
+500\_3 & 3600 & 2223.89 & 2214.53 & 2128.61 & 2109.12 & 4.28 \\
+ & 5400 & 2132.26 & 2123.10 & 1988.88 & 1971.66 & 6.72 \\
+ & 7200 & 2076.70 & 2031.93 & 1914.42 & 1891.98 & 7.81 \\
+ & 9000 & 2049.66 & 2016.75 & 1837.09 & 1820.55 & 10.37 \\
+ & 10800 & 2007.66 & 1968.89 & 1771.13 & 1758.44 & 11.78 \\
+\midrule
+500\_4 & 3600 & 2528.21 & 2511.37 & 2433.00 & 2416.63 & 3.77 \\
+ & 5400 & 2443.96 & 2421.80 & 2280.61 & 2267.75 & 6.68 \\
+ & 7200 & 2415.63 & 2391.20 & 2180.17 & 2153.61 & 9.75 \\
+ & 9000 & 2346.04 & 2297.77 & 2111.44 & 2094.94 & 10.00 \\
+ & 10800 & 2318.94 & 2278.65 & 2029.88 & 2005.42 & 12.47 \\
+\midrule
+500\_5 & 3600 & 2697.00 & 2691.78 & 2621.52 & 2596.47 & 2.80 \\
+ & 5400 & 2607.90 & 2595.86 & 2457.67 & 2438.14 & 5.76 \\
+ & 7200 & 2553.49 & 2518.15 & 2375.26 & 2350.38 & 6.98 \\
+ & 9000 & 2547.63 & 2515.98 & 2306.11 & 2288.41 & 9.48 \\
+ & 10800 & 2501.98 & 2480.47 & 2224.39 & 2209.62 & 11.09 \\
+\midrule
+800\_1 & 3600 & 3622.09 & 3604.93 & 3489.16 & 3459.52 & 3.67 \\
+ & 5400 & 3525.30 & 3503.02 & 3313.53 & 3272.31 & 6.01 \\
+ & 7200 & 3460.09 & 3449.64 & 3188.80 & 3156.45 & 7.84 \\
+ & 9000 & 3384.86 & 3339.37 & 3084.92 & 3049.90 & 8.86 \\
+ & 10800 & 3329.90 & 3289.60 & 2975.31 & 2923.61 & 10.65 \\
+\midrule
+800\_2 & 3600 & 4233.43 & 4217.27 & 4044.47 & 4032.77 & 4.46 \\
+ & 5400 & 4134.07 & 4112.83 & 3817.36 & 3782.04 & 7.66 \\
+ & 7200 & 4032.11 & 3990.51 & 3625.44 & 3596.43 & 10.09 \\
+ & 9000 & 3995.22 & 3986.96 & 3534.33 & 3488.31 & 11.54 \\
+ & 10800 & 3922.09 & 3880.94 & 3435.27 & 3402.85 & 12.41 \\
+\midrule
+800\_3 & 3600 & 4187.22 & 4132.05 & 4059.29 & 4035.62 & 3.06 \\
+ & 5400 & 4082.67 & 4040.74 & 3810.00 & 3787.65 & 6.68 \\
+ & 7200 & 4013.71 & 3992.52 & 3656.68 & 3619.33 & 8.90 \\
+ & 9000 & 3972.79 & 3938.23 & 3510.91 & 3474.31 & 11.63 \\
+ & 10800 & 3861.50 & 3845.57 & 3389.02 & 3343.05 & 12.24 \\
+\midrule
+800\_4 & 3600 & 4054.61 & 4045.89 & 3896.88 & 3872.37 & 3.89 \\
+ & 5400 & 3926.90 & 3867.29 & 3712.69 & 3672.46 & 5.45 \\
+ & 7200 & 3820.65 & 3744.37 & 3544.29 & 3476.61 & 7.23 \\
+ & 9000 & 3753.96 & 3727.15 & 3439.14 & 3395.75 & 8.39 \\
+ & 10800 & 3678.48 & 3649.48 & 3311.39 & 3293.25 & 9.98 \\
+\midrule
+800\_5 & 3600 & 3684.86 & 3647.53 & 3544.39 & 3524.32 & 3.81 \\
+ & 5400 & 3581.32 & 3531.78 & 3339.87 & 3319.27 & 6.74 \\
+ & 7200 & 3528.83 & 3514.34 & 3215.21 & 3195.54 & 8.89 \\
+ & 9000 & 3493.35 & 3482.81 & 3122.69 & 3090.75 & 10.61 \\
+ & 10800 & 3398.40 & 3380.45 & 3015.27 & 2978.82 & 11.27 \\
+\midrule
+1000\_1 & 3600 & 4581.99 & 4567.86 & 4334.05 & 4307.33 & 5.41 \\
+ & 5400 & 4402.96 & 4381.09 & 4070.45 & 4045.66 & 7.55 \\
+ & 7200 & 4328.55 & 4298.80 & 3930.07 & 3906.01 & 9.21 \\
+ & 9000 & 4248.63 & 4216.09 & 3715.60 & 3667.60 & 12.55 \\
+ & 10800 & 4141.95 & 4075.56 & 3601.45 & 3553.40 & 13.05 \\
+\midrule
+1000\_2 & 3600 & 5472.11 & 5451.57 & 5287.26 & 5248.41 & 3.38 \\
+ & 5400 & 5327.43 & 5293.58 & 5000.94 & 4979.61 & 6.13 \\
+ & 7200 & 5211.50 & 5186.77 & 4787.90 & 4715.01 & 8.13 \\
+ & 9000 & 5110.56 & 5076.78 & 4663.04 & 4644.27 & 8.76 \\
+ & 10800 & 5027.02 & 5011.78 & 4542.38 & 4500.55 & 9.64 \\
+\midrule
+1000\_3 & 3600 & 5056.03 & 5038.13 & 4810.55 & 4790.36 & 4.86 \\
+ & 5400 & 4897.56 & 4852.39 & 4545.50 & 4521.16 & 7.19 \\
+ & 7200 & 4805.44 & 4783.74 & 4364.95 & 4334.91 & 9.17 \\
+ & 9000 & 4700.38 & 4667.38 & 4235.45 & 4219.90 & 9.89 \\
+ & 10800 & 4575.79 & 4557.58 & 4104.73 & 4031.45 & 10.29 \\
+\midrule
+1000\_4 & 3600 & 4874.38 & 4859.73 & 4702.11 & 4680.79 & 3.53 \\
+ & 5400 & 4732.15 & 4702.24 & 4430.36 & 4401.94 & 6.38 \\
+ & 7200 & 4622.22 & 4588.71 & 4264.53 & 4237.72 & 7.74 \\
+ & 9000 & 4570.92 & 4539.94 & 4088.87 & 4009.57 & 10.55 \\
+ & 10800 & 4460.78 & 4409.42 & 3972.46 & 3929.86 & 10.95 \\
+\midrule
+1000\_5 & 3600 & 5222.83 & 5189.28 & 4997.04 & 4967.14 & 4.32 \\
+ & 5400 & 5050.09 & 5030.73 & 4742.41 & 4713.79 & 6.09 \\
+ & 7200 & 4920.69 & 4906.12 & 4592.36 & 4556.58 & 6.67 \\
+ & 9000 & 4834.43 & 4822.52 & 4409.06 & 4372.05 & 8.80 \\
+ & 10800 & 4728.96 & 4706.61 & 4286.71 & 4237.62 & 9.35 \\
+\midrule
+2000\_1 & 3600 & 10231.42 & 10121.58 & 9552.02 & 9485.73 & 6.64 \\
+ & 5400 & 10129.33 & 9992.59 & 9061.70 & 8999.43 & 10.54 \\
+ & 7200 & 9659.61 & 9551.43 & 8741.95 & 8694.27 & 9.50 \\
+ & 9000 & 9659.61 & 9551.43 & 8419.51 & 8385.01 & 12.84 \\
+ & 10800 & 9659.61 & 9551.43 & 8205.63 & 8111.02 & 15.05 \\
+\midrule
+2000\_2 & 3600 & 10901.06 & 10874.86 & 10128.89 & 10099.85 & 7.08 \\
+ & 5400 & 10679.85 & 10679.85 & 9622.80 & 9589.41 & 9.90 \\
+ & 7200 & 10597.14 & 10542.07 & 9323.29 & 9139.02 & 12.02 \\
+ & 9000 & 10521.20 & 10462.33 & 9041.62 & 8921.74 & 14.06 \\
+ & 10800 & 10377.16 & 10269.67 & 8732.92 & 8630.75 & 15.84 \\
+\midrule
+2000\_3 & 3600 & 10501.65 & 10501.65 & 9742.18 & 9722.08 & 7.23 \\
+ & 5400 & 10295.80 & 10143.42 & 9236.36 & 9180.79 & 10.29 \\
+ & 7200 & 10247.37 & 10143.42 & 8890.51 & 8844.98 & 13.24 \\
+ & 9000 & 10145.08 & 10091.75 & 8649.49 & 8572.69 & 14.74 \\
+ & 10800 & 10000.27 & 9894.68 & 8335.96 & 8297.65 & 16.64 \\
+\midrule
+2000\_4 & 3600 & 10497.62 & 10389.15 & 9789.32 & 9762.83 & 6.75 \\
+ & 5400 & 10442.54 & 10318.27 & 9262.53 & 9181.11 & 11.30 \\
+ & 7200 & 10276.37 & 10267.57 & 9025.16 & 8968.67 & 12.18 \\
+ & 9000 & 10181.32 & 10166.95 & 8679.15 & 8499.59 & 14.75 \\
+ & 10800 & 10120.12 & 10061.47 & 8439.24 & 8373.58 & 16.61 \\
+\midrule
+2000\_5 & 3600 & 11037.30 & 10969.20 & 10322.48 & 10281.23 & 6.48 \\
+ & 5400 & 10800.54 & 10684.97 & 9866.29 & 9808.57 & 8.65 \\
+ & 7200 & 10742.77 & 10634.74 & 9495.00 & 9400.45 & 11.61 \\
+ & 9000 & 10699.24 & 10575.86 & 9145.91 & 9091.90 & 14.52 \\
+ & 10800 & 10573.62 & 10455.51 & 8939.68 & 8825.90 & 15.45 \\
+\end{longtable}
+\vspace{-0.3\baselineskip}
+\noindent\begin{tabular}{@{}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.92\linewidth}@{}}
+\textsuperscript{a} & $\text{Gap}_B=(\overline Z_B-\overline Z_C)/\overline Z_B$. Positive values indicate lower average objectives for Method~C.
+\end{tabular}
+\vspace{0.4\baselineskip}
+}
+
+Table~\ref{ch5:tab:config-T} shows that Method~C obtains a lower average objective
+than Method~B for every time-budget configuration. The average $\text{Gap}_B$ increases
+from 4.24\% at $T=3600$~s to 11.93\% at $T=10800$~s, showing that the relative
+advantage of the CFRS decomposition is maintained throughout the tested time
+budgets.
+
+\subsubsection{Target-cluster-size configurations}\label{ch5:sec:exp-config-cluster-size}\label{ch5:sec:exp-sens-cs}
+
+The target cluster size is varied over $\{50,75,100,125,150\}$ stations. This
+parameter belongs only to Method~C, because Method~B solves the full instance
+without a clustering phase.
+
+{\vspace{0.8\baselineskip}
+\renewcommand{\baselinestretch}{1}\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTpre}{0.4\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedleft\arraybackslash}p{0.16\linewidth}*{5}{>{\raggedleft\arraybackslash}p{0.118\linewidth}}@{}}
+\caption{Comparison under target-cluster-size configurations. Method~B has no cluster-size parameter; therefore its objective values are shown once within each instance block.}\label{ch5:tab:config-cluster-size}\\
+\toprule
+Instance & Target size & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endfirsthead
+\multicolumn{7}{@{}l}{\textbf{Table~\thetable} (continued)}\\
+\toprule
+Instance & Target size & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+400\_1 & 50 & 2022.80 & 1983.87 & 1007.91 & 999.32 & 50.17 \\
+ & 75 &  &  & 1139.68 & 1127.81 & 43.66 \\
+ & 100 &  &  & 1870.30 & 1846.87 & 7.54 \\
+ & 125 &  &  & 1297.38 & 1289.11 & 35.86 \\
+ & 150 &  &  & 1370.05 & 1344.09 & 32.27 \\
+\midrule
+400\_2 & 50 & 1713.69 & 1705.29 & 1380.45 & 1366.01 & 19.45 \\
+ & 75 &  &  & 1515.48 & 1491.33 & 11.57 \\
+ & 100 &  &  & 1575.77 & 1561.58 & 8.05 \\
+ & 125 &  &  & 1690.78 & 1665.67 & 1.34 \\
+ & 150 &  &  & 1706.48 & 1698.31 & 0.42 \\
+\midrule
+400\_3 & 50 & 2090.49 & 2053.35 & 1672.66 & 1616.70 & 19.99 \\
+ & 75 &  &  & 1834.90 & 1809.01 & 12.23 \\
+ & 100 &  &  & 1973.52 & 1961.06 & 5.60 \\
+ & 125 &  &  & 2016.84 & 1985.68 & 3.52 \\
+ & 150 &  &  & 2039.63 & 2030.08 & 2.43 \\
+\midrule
+400\_4 & 50 & 2120.33 & 2099.38 & 1574.16 & 1534.39 & 25.76 \\
+ & 75 &  &  & 1713.63 & 1704.52 & 19.18 \\
+ & 100 &  &  & 1966.92 & 1956.64 & 7.24 \\
+ & 125 &  &  & 1895.87 & 1862.23 & 10.59 \\
+ & 150 &  &  & 1993.54 & 1966.72 & 5.98 \\
+\midrule
+400\_5 & 50 & 1918.34 & 1902.06 & 1283.04 & 1263.78 & 33.12 \\
+ & 75 &  &  & 1418.22 & 1401.82 & 26.07 \\
+ & 100 &  &  & 1776.22 & 1766.06 & 7.41 \\
+ & 125 &  &  & 1599.26 & 1591.16 & 16.63 \\
+ & 150 &  &  & 1670.09 & 1651.69 & 12.94 \\
+\midrule
+500\_1 & 50 & 2409.88 & 2365.99 & 1449.19 & 1416.08 & 39.86 \\
+ & 75 &  &  & 1665.64 & 1643.90 & 30.88 \\
+ & 100 &  &  & 2191.53 & 2178.43 & 9.06 \\
+ & 125 &  &  & 1923.10 & 1912.73 & 20.20 \\
+ & 150 &  &  & 1921.45 & 1907.27 & 20.27 \\
+\midrule
+500\_2 & 50 & 2798.26 & 2790.33 & 1636.47 & 1617.14 & 41.52 \\
+ & 75 &  &  & 1826.32 & 1798.02 & 34.73 \\
+ & 100 &  &  & 2561.41 & 2535.51 & 8.46 \\
+ & 125 &  &  & 2069.93 & 2056.14 & 26.03 \\
+ & 150 &  &  & 2075.03 & 2039.77 & 25.85 \\
+\midrule
+500\_3 & 50 & 2076.70 & 2031.93 & 1803.60 & 1773.67 & 13.15 \\
+ & 75 &  &  & 1989.47 & 1969.61 & 4.20 \\
+ & 100 &  &  & 1914.42 & 1891.98 & 7.81 \\
+ & 125 &  &  & 2027.16 & 2003.31 & 2.39 \\
+ & 150 &  &  & 2051.95 & 2025.66 & 1.19 \\
+\midrule
+500\_4 & 50 & 2415.63 & 2391.20 & 1923.71 & 1891.82 & 20.36 \\
+ & 75 &  &  & 2159.06 & 2129.77 & 10.62 \\
+ & 100 &  &  & 2180.17 & 2153.61 & 9.75 \\
+ & 125 &  &  & 2244.92 & 2228.54 & 7.07 \\
+ & 150 &  &  & 2259.54 & 2242.93 & 6.46 \\
+\midrule
+500\_5 & 50 & 2553.49 & 2518.15 & 1565.91 & 1548.62 & 38.68 \\
+ & 75 &  &  & 1765.11 & 1735.64 & 30.87 \\
+ & 100 &  &  & 2375.26 & 2350.38 & 6.98 \\
+ & 125 &  &  & 2012.35 & 2000.84 & 21.19 \\
+ & 150 &  &  & 2017.83 & 1998.54 & 20.98 \\
+\midrule
+800\_1 & 50 & 3460.09 & 3449.64 & 2817.92 & 2740.43 & 18.56 \\
+ & 75 &  &  & 3230.09 & 3182.40 & 6.65 \\
+ & 100 &  &  & 3188.80 & 3156.45 & 7.84 \\
+ & 125 &  &  & 3344.32 & 3321.12 & 3.35 \\
+ & 150 &  &  & 3389.65 & 3325.31 & 2.04 \\
+\midrule
+800\_2 & 50 & 4032.11 & 3990.51 & 2695.49 & 2670.32 & 33.15 \\
+ & 75 &  &  & 2986.28 & 2965.62 & 25.94 \\
+ & 100 &  &  & 3625.44 & 3596.43 & 10.09 \\
+ & 125 &  &  & 3264.81 & 3238.21 & 19.03 \\
+ & 150 &  &  & 3372.68 & 3349.80 & 16.35 \\
+\midrule
+800\_3 & 50 & 4013.71 & 3992.52 & 3064.21 & 3034.94 & 23.66 \\
+ & 75 &  &  & 3444.57 & 3416.41 & 14.18 \\
+ & 100 &  &  & 3656.68 & 3619.33 & 8.90 \\
+ & 125 &  &  & 3753.87 & 3727.24 & 6.47 \\
+ & 150 &  &  & 3858.12 & 3826.07 & 3.88 \\
+\midrule
+800\_4 & 50 & 3820.65 & 3744.37 & 3063.71 & 3017.19 & 19.81 \\
+ & 75 &  &  & 3394.11 & 3331.82 & 11.16 \\
+ & 100 &  &  & 3544.29 & 3476.61 & 7.23 \\
+ & 125 &  &  & 3765.07 & 3716.98 & 1.45 \\
+ & 150 &  &  & 3801.39 & 3744.62 & 0.50 \\
+\midrule
+800\_5 & 50 & 3528.83 & 3514.34 & 3005.16 & 2955.83 & 14.84 \\
+ & 75 &  &  & 3347.69 & 3314.77 & 5.13 \\
+ & 100 &  &  & 3215.21 & 3195.54 & 8.89 \\
+ & 125 &  &  & 3474.97 & 3427.12 & 1.53 \\
+ & 150 &  &  & 3449.16 & 3438.88 & 2.26 \\
+\midrule
+1000\_1 & 50 & 4328.55 & 4298.80 & 3147.26 & 3071.89 & 27.29 \\
+ & 75 &  &  & 3589.50 & 3554.51 & 17.07 \\
+ & 100 &  &  & 3930.07 & 3906.01 & 9.21 \\
+ & 125 &  &  & 4142.95 & 4057.49 & 4.29 \\
+ & 150 &  &  & 4168.62 & 4118.20 & 3.69 \\
+\midrule
+1000\_2 & 50 & 5211.50 & 5186.77 & 3441.82 & 3410.79 & 33.96 \\
+ & 75 &  &  & 3904.20 & 3786.69 & 25.08 \\
+ & 100 &  &  & 4787.90 & 4715.01 & 8.13 \\
+ & 125 &  &  & 4327.05 & 4275.41 & 16.97 \\
+ & 150 &  &  & 4445.31 & 4386.41 & 14.70 \\
+\midrule
+1000\_3 & 50 & 4805.44 & 4783.74 & 4047.16 & 4022.68 & 15.78 \\
+ & 75 &  &  & 4573.96 & 4511.39 & 4.82 \\
+ & 100 &  &  & 4364.95 & 4334.91 & 9.17 \\
+ & 125 &  &  & 4709.19 & 4618.60 & 2.00 \\
+ & 150 &  &  & 4799.57 & 4733.08 & 0.12 \\
+\midrule
+1000\_4 & 50 & 4622.22 & 4588.71 & 3718.44 & 3696.03 & 19.55 \\
+ & 75 &  &  & 4122.92 & 4083.54 & 10.80 \\
+ & 100 &  &  & 4264.53 & 4237.72 & 7.74 \\
+ & 125 &  &  & 4460.99 & 4383.11 & 3.49 \\
+ & 150 &  &  & 4425.38 & 4290.54 & 4.26 \\
+\midrule
+1000\_5 & 50 & 4920.69 & 4906.12 & 3646.94 & 3590.14 & 25.89 \\
+ & 75 &  &  & 4003.04 & 3939.36 & 18.65 \\
+ & 100 &  &  & 4592.36 & 4556.58 & 6.67 \\
+ & 125 &  &  & 4541.63 & 4508.07 & 7.70 \\
+ & 150 &  &  & 4631.29 & 4595.34 & 5.88 \\
+\midrule
+2000\_1 & 50 & 9659.61 & 9551.43 & 7443.86 & 7250.44 & 22.94 \\
+ & 75 &  &  & 8191.41 & 8115.42 & 15.20 \\
+ & 100 &  &  & 8741.95 & 8694.27 & 9.50 \\
+ & 125 &  &  & 9087.45 & 9051.66 & 5.92 \\
+ & 150 &  &  & 9273.45 & 9238.11 & 4.00 \\
+\midrule
+2000\_2 & 50 & 10597.14 & 10542.07 & 7902.37 & 7795.12 & 25.43 \\
+ & 75 &  &  & 8688.31 & 8621.67 & 18.01 \\
+ & 100 &  &  & 9323.29 & 9139.02 & 12.02 \\
+ & 125 &  &  & 9748.27 & 9692.06 & 8.01 \\
+ & 150 &  &  & 9901.57 & 9824.65 & 6.56 \\
+\midrule
+2000\_3 & 50 & 10247.37 & 10143.42 & 7513.66 & 7445.21 & 26.68 \\
+ & 75 &  &  & 8387.31 & 8220.24 & 18.15 \\
+ & 100 &  &  & 8890.51 & 8844.98 & 13.24 \\
+ & 125 &  &  & 9306.14 & 9205.07 & 9.19 \\
+ & 150 &  &  & 9426.57 & 9306.30 & 8.01 \\
+\midrule
+2000\_4 & 50 & 10276.37 & 10267.57 & 7748.81 & 7650.43 & 24.60 \\
+ & 75 &  &  & 8505.06 & 8425.14 & 17.24 \\
+ & 100 &  &  & 9025.16 & 8968.67 & 12.18 \\
+ & 125 &  &  & 9326.73 & 9282.82 & 9.24 \\
+ & 150 &  &  & 9478.20 & 9339.21 & 7.77 \\
+\midrule
+2000\_5 & 50 & 10742.77 & 10634.74 & 8078.27 & 7880.65 & 24.80 \\
+ & 75 &  &  & 8928.28 & 8854.37 & 16.89 \\
+ & 100 &  &  & 9495.00 & 9400.45 & 11.61 \\
+ & 125 &  &  & 9849.64 & 9788.57 & 8.31 \\
+ & 150 &  &  & 9977.00 & 9917.27 & 7.13 \\
+\end{longtable}
+\vspace{-0.3\baselineskip}
+\noindent\begin{tabular}{@{}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.92\linewidth}@{}}
+\textsuperscript{a} & $\text{Gap}_B=(\overline Z_B-\overline Z_C)/\overline Z_B$. Positive values indicate lower average objectives for Method~C.
+\end{tabular}
+\vspace{0.4\baselineskip}
+}
+
+Table~\ref{ch5:tab:config-cluster-size} shows that the target cluster size directly
+affects the performance of Method~C. Method~C has the largest average advantage
+when the target cluster size is 50 stations, where the average $\text{Gap}_B$ is 26.36\%.
+The average $\text{Gap}_B$ decreases to 17.96\% at 75 stations and 8.81\% at 100
+stations; it remains positive at 10.07\% and 8.64\% for target sizes 125 and
+150, respectively. Thus, smaller cluster sizes generally perform better in these
+tests, but Method~C maintains a positive average advantage over Method~B for all
+tested target sizes. This is consistent with the role of the target cluster size
+in CFRS: it determines the sizes of the cluster-level planning subproblems passed
+to HGSADC-SBC.
+
+\subsubsection{Broken-bike-rate configurations}\label{ch5:sec:exp-config-broken-rate}\label{ch5:sec:exp-sens-broken}
+
+The broken-bike rate is varied over
+$\{0.00,0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00\}$. The remaining parameters are kept at
+their default values.
+
+{\vspace{0.8\baselineskip}
+\renewcommand{\baselinestretch}{1}\small
+\renewcommand{\arraystretch}{1.0}
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTpre}{0.4\baselineskip}
+\setlength{\LTpost}{0.4\baselineskip}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedleft\arraybackslash}p{0.16\linewidth}*{5}{>{\raggedleft\arraybackslash}p{0.118\linewidth}}@{}}
+\caption{Comparison under broken-bike-rate configurations.}\label{ch5:tab:config-broken-rate}\\
+\toprule
+Instance & Broken-bike rate & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endfirsthead
+\multicolumn{7}{@{}l}{\textbf{Table~\thetable} (continued)}\\
+\toprule
+Instance & Broken-bike rate & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Method~C (CFRS)} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}
+& & Obj. Avg & Obj. Best & Obj. Avg & Obj. Best & $\text{Gap}_B$\textsuperscript{a} (\%) \\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+400\_1 & 0.00 & 692.01 & 676.13 & 600.15 & 586.16 & 13.27 \\
+ & 0.25 & 647.56 & 641.64 & 536.98 & 528.98 & 17.08 \\
+ & 0.50 & 649.65 & 646.29 & 561.51 & 554.35 & 13.57 \\
+ & 0.75 & 675.39 & 663.29 & 601.44 & 587.08 & 10.95 \\
+ & 1.00 & 706.54 & 684.20 & 634.21 & 630.70 & 10.24 \\
+ & 1.25 & 773.35 & 748.11 & 704.63 & 694.24 & 8.89 \\
+ & 1.50 & 890.86 & 870.11 & 822.87 & 814.29 & 7.63 \\
+ & 1.75 & 1173.46 & 1153.25 & 1070.37 & 1045.80 & 8.79 \\
+ & 2.00 & 1606.63 & 1561.56 & 1378.15 & 1356.37 & 14.22 \\
+\midrule
+400\_2 & 0.00 & 1010.86 & 1005.92 & 921.86 & 917.20 & 8.80 \\
+ & 0.25 & 941.08 & 931.31 & 866.62 & 855.97 & 7.91 \\
+ & 0.50 & 952.63 & 943.20 & 880.89 & 871.01 & 7.53 \\
+ & 0.75 & 1000.53 & 995.47 & 932.79 & 924.35 & 6.77 \\
+ & 1.00 & 1064.49 & 1056.12 & 997.52 & 993.79 & 6.29 \\
+ & 1.25 & 1148.45 & 1135.65 & 1099.80 & 1090.84 & 4.24 \\
+ & 1.50 & 1356.59 & 1333.18 & 1294.55 & 1275.18 & 4.57 \\
+ & 1.75 & 1855.25 & 1818.82 & 1674.51 & 1658.93 & 9.74 \\
+ & 2.00 & 2491.75 & 2462.31 & 2209.84 & 2185.77 & 11.31 \\
+\midrule
+400\_3 & 0.00 & 1106.91 & 1092.90 & 983.10 & 973.17 & 11.19 \\
+ & 0.25 & 1053.46 & 1044.37 & 931.56 & 919.52 & 11.57 \\
+ & 0.50 & 1053.92 & 1038.07 & 947.96 & 933.72 & 10.05 \\
+ & 0.75 & 1094.41 & 1086.10 & 993.67 & 986.05 & 9.21 \\
+ & 1.00 & 1145.09 & 1132.11 & 1049.36 & 1033.42 & 8.36 \\
+ & 1.25 & 1230.97 & 1224.26 & 1129.35 & 1119.21 & 8.25 \\
+ & 1.50 & 1400.39 & 1387.56 & 1297.07 & 1265.05 & 7.38 \\
+ & 1.75 & 1759.68 & 1735.34 & 1622.23 & 1583.05 & 7.81 \\
+ & 2.00 & 2307.40 & 2255.47 & 2131.36 & 2072.77 & 7.63 \\
+\midrule
+400\_4 & 0.00 & 988.26 & 967.63 & 878.91 & 863.97 & 11.06 \\
+ & 0.25 & 923.63 & 918.42 & 831.61 & 819.89 & 9.96 \\
+ & 0.50 & 939.39 & 931.02 & 862.89 & 853.35 & 8.14 \\
+ & 0.75 & 975.84 & 972.05 & 916.70 & 908.34 & 6.06 \\
+ & 1.00 & 1023.59 & 1010.54 & 955.37 & 940.52 & 6.67 \\
+ & 1.25 & 1089.45 & 1072.95 & 1038.49 & 1028.15 & 4.68 \\
+ & 1.50 & 1239.62 & 1226.40 & 1178.67 & 1163.59 & 4.92 \\
+ & 1.75 & 1571.78 & 1560.81 & 1466.44 & 1426.79 & 6.70 \\
+ & 2.00 & 2119.05 & 2073.95 & 1939.81 & 1921.21 & 8.46 \\
+\midrule
+400\_5 & 0.00 & 862.42 & 854.09 & 768.80 & 759.48 & 10.86 \\
+ & 0.25 & 804.29 & 795.42 & 710.35 & 698.12 & 11.68 \\
+ & 0.50 & 819.72 & 806.25 & 733.85 & 722.79 & 10.48 \\
+ & 0.75 & 864.77 & 846.57 & 777.70 & 770.85 & 10.07 \\
+ & 1.00 & 901.77 & 883.83 & 811.20 & 801.76 & 10.04 \\
+ & 1.25 & 980.31 & 966.83 & 890.21 & 883.67 & 9.19 \\
+ & 1.50 & 1144.59 & 1120.66 & 1040.69 & 1019.99 & 9.08 \\
+ & 1.75 & 1481.30 & 1430.28 & 1338.15 & 1303.97 & 9.66 \\
+ & 2.00 & 2070.01 & 2016.33 & 1776.64 & 1743.36 & 14.17 \\
+\midrule
+500\_1 & 0.00 & 1067.63 & 1049.61 & 918.92 & 913.95 & 13.93 \\
+ & 0.25 & 974.36 & 961.00 & 839.94 & 827.27 & 13.80 \\
+ & 0.50 & 981.00 & 969.67 & 863.98 & 856.18 & 11.93 \\
+ & 0.75 & 1015.75 & 996.49 & 909.31 & 902.58 & 10.48 \\
+ & 1.00 & 1064.32 & 1048.43 & 973.94 & 963.18 & 8.49 \\
+ & 1.25 & 1140.51 & 1119.02 & 1045.29 & 1028.97 & 8.35 \\
+ & 1.50 & 1362.53 & 1296.69 & 1246.67 & 1223.81 & 8.50 \\
+ & 1.75 & 1878.53 & 1853.95 & 1676.37 & 1624.87 & 10.76 \\
+ & 2.00 & 2606.81 & 2491.64 & 2217.78 & 2141.65 & 14.92 \\
+\midrule
+500\_2 & 0.00 & 1137.36 & 1118.45 & 1020.84 & 1003.32 & 10.24 \\
+ & 0.25 & 1076.63 & 1068.27 & 970.11 & 955.95 & 9.89 \\
+ & 0.50 & 1085.91 & 1076.22 & 989.42 & 980.15 & 8.89 \\
+ & 0.75 & 1114.40 & 1085.40 & 1037.48 & 1028.72 & 6.90 \\
+ & 1.00 & 1175.26 & 1166.80 & 1086.23 & 1074.60 & 7.57 \\
+ & 1.25 & 1258.70 & 1236.60 & 1156.31 & 1143.39 & 8.13 \\
+ & 1.50 & 1412.74 & 1398.04 & 1313.88 & 1310.12 & 7.00 \\
+ & 1.75 & 1727.76 & 1683.51 & 1606.66 & 1589.04 & 7.01 \\
+ & 2.00 & 2249.77 & 2210.15 & 2050.54 & 2009.48 & 8.86 \\
+\midrule
+500\_3 & 0.00 & 1195.65 & 1185.44 & 1035.97 & 1024.83 & 13.35 \\
+ & 0.25 & 1117.78 & 1096.82 & 967.93 & 960.46 & 13.41 \\
+ & 0.50 & 1135.12 & 1127.09 & 999.33 & 992.10 & 11.96 \\
+ & 0.75 & 1171.31 & 1157.65 & 1046.03 & 1034.36 & 10.70 \\
+ & 1.00 & 1215.62 & 1204.70 & 1109.32 & 1091.79 & 8.74 \\
+ & 1.25 & 1314.14 & 1297.73 & 1194.63 & 1170.19 & 9.09 \\
+ & 1.50 & 1498.16 & 1486.32 & 1366.95 & 1356.58 & 8.76 \\
+ & 1.75 & 1925.71 & 1887.99 & 1699.10 & 1691.86 & 11.77 \\
+ & 2.00 & 2437.37 & 2408.37 & 2156.67 & 2147.46 & 11.52 \\
+\midrule
+500\_4 & 0.00 & 1236.14 & 1229.51 & 1079.68 & 1067.06 & 12.66 \\
+ & 0.25 & 1167.07 & 1151.23 & 1024.82 & 1013.99 & 12.19 \\
+ & 0.50 & 1172.29 & 1164.65 & 1055.55 & 1035.71 & 9.96 \\
+ & 0.75 & 1189.09 & 1153.31 & 1099.16 & 1092.79 & 7.56 \\
+ & 1.00 & 1263.56 & 1252.78 & 1179.11 & 1159.14 & 6.68 \\
+ & 1.25 & 1370.35 & 1355.40 & 1250.81 & 1237.49 & 8.72 \\
+ & 1.50 & 1511.71 & 1473.05 & 1424.32 & 1399.18 & 5.78 \\
+ & 1.75 & 1919.47 & 1885.05 & 1769.36 & 1728.34 & 7.82 \\
+ & 2.00 & 2565.07 & 2524.15 & 2286.86 & 2266.89 & 10.85 \\
+\midrule
+500\_5 & 0.00 & 1048.96 & 1044.55 & 921.04 & 904.45 & 12.20 \\
+ & 0.25 & 965.78 & 943.73 & 832.58 & 816.60 & 13.79 \\
+ & 0.50 & 969.51 & 952.77 & 863.76 & 855.84 & 10.91 \\
+ & 0.75 & 998.33 & 974.65 & 909.46 & 900.96 & 8.90 \\
+ & 1.00 & 1058.62 & 1040.42 & 967.59 & 949.63 & 8.60 \\
+ & 1.25 & 1134.67 & 1092.63 & 1045.83 & 1036.46 & 7.83 \\
+ & 1.50 & 1332.10 & 1304.30 & 1225.23 & 1210.71 & 8.02 \\
+ & 1.75 & 1761.28 & 1714.49 & 1568.29 & 1550.42 & 10.96 \\
+ & 2.00 & 2270.34 & 2237.06 & 2002.63 & 1983.15 & 11.79 \\
+\midrule
+800\_1 & 0.00 & 1629.51 & 1617.56 & 1362.63 & 1335.38 & 16.38 \\
+ & 0.25 & 1481.58 & 1464.16 & 1253.35 & 1234.88 & 15.40 \\
+ & 0.50 & 1479.30 & 1466.90 & 1288.00 & 1264.42 & 12.93 \\
+ & 0.75 & 1528.86 & 1513.97 & 1380.00 & 1369.55 & 9.74 \\
+ & 1.00 & 1622.06 & 1601.61 & 1474.98 & 1446.84 & 9.07 \\
+ & 1.25 & 1746.93 & 1717.39 & 1600.10 & 1581.88 & 8.40 \\
+ & 1.50 & 2037.14 & 1986.48 & 1845.49 & 1813.52 & 9.41 \\
+ & 1.75 & 2635.03 & 2598.26 & 2354.19 & 2304.40 & 10.66 \\
+ & 2.00 & 3575.40 & 3517.88 & 3003.78 & 2965.33 & 15.99 \\
+\midrule
+800\_2 & 0.00 & 1847.04 & 1839.08 & 1583.46 & 1572.12 & 14.27 \\
+ & 0.25 & 1691.64 & 1675.17 & 1475.98 & 1464.04 & 12.75 \\
+ & 0.50 & 1721.59 & 1691.96 & 1524.46 & 1514.09 & 11.45 \\
+ & 0.75 & 1773.71 & 1755.82 & 1584.41 & 1568.54 & 10.67 \\
+ & 1.00 & 1856.81 & 1848.81 & 1695.86 & 1678.79 & 8.67 \\
+ & 1.25 & 1981.01 & 1973.41 & 1803.99 & 1790.64 & 8.94 \\
+ & 1.50 & 2223.58 & 2193.55 & 2026.28 & 1997.92 & 8.87 \\
+ & 1.75 & 2764.09 & 2738.46 & 2520.97 & 2499.29 & 8.80 \\
+ & 2.00 & 3717.08 & 3650.97 & 3211.52 & 3166.07 & 13.60 \\
+\midrule
+800\_3 & 0.00 & 2125.71 & 2112.55 & 1812.46 & 1798.61 & 14.74 \\
+ & 0.25 & 1963.54 & 1947.57 & 1721.85 & 1697.27 & 12.31 \\
+ & 0.50 & 1976.59 & 1956.01 & 1791.15 & 1772.25 & 9.38 \\
+ & 0.75 & 2045.18 & 2015.40 & 1875.11 & 1853.33 & 8.32 \\
+ & 1.00 & 2160.26 & 2132.02 & 1966.58 & 1930.98 & 8.97 \\
+ & 1.25 & 2309.83 & 2276.46 & 2133.07 & 2114.50 & 7.65 \\
+ & 1.50 & 2655.98 & 2622.47 & 2515.45 & 2470.32 & 5.29 \\
+ & 1.75 & 3379.46 & 3323.52 & 3065.43 & 3030.16 & 9.29 \\
+ & 2.00 & 4340.94 & 4223.64 & 3855.29 & 3838.26 & 11.19 \\
+\midrule
+800\_4 & 0.00 & 2070.19 & 2022.56 & 1771.63 & 1740.92 & 14.42 \\
+ & 0.25 & 1886.97 & 1875.43 & 1647.44 & 1637.04 & 12.69 \\
+ & 0.50 & 1904.22 & 1897.74 & 1723.77 & 1708.53 & 9.48 \\
+ & 0.75 & 2000.95 & 1987.97 & 1816.93 & 1799.06 & 9.20 \\
+ & 1.00 & 2106.90 & 2065.98 & 1917.13 & 1907.02 & 9.01 \\
+ & 1.25 & 2274.95 & 2236.98 & 2077.89 & 2055.49 & 8.66 \\
+ & 1.50 & 2618.37 & 2595.38 & 2405.59 & 2373.23 & 8.13 \\
+ & 1.75 & 3348.50 & 3313.07 & 3090.13 & 3075.52 & 7.72 \\
+ & 2.00 & 4544.51 & 4467.46 & 3999.49 & 3928.45 & 11.99 \\
+\midrule
+800\_5 & 0.00 & 2043.55 & 2034.58 & 1764.98 & 1759.99 & 13.63 \\
+ & 0.25 & 1858.46 & 1847.46 & 1644.39 & 1616.07 & 11.52 \\
+ & 0.50 & 1881.47 & 1865.62 & 1704.51 & 1688.39 & 9.41 \\
+ & 0.75 & 1954.39 & 1931.69 & 1809.81 & 1796.45 & 7.40 \\
+ & 1.00 & 2060.26 & 2027.74 & 1907.18 & 1894.97 & 7.43 \\
+ & 1.25 & 2211.05 & 2188.66 & 2072.02 & 2058.46 & 6.29 \\
+ & 1.50 & 2595.15 & 2565.01 & 2448.12 & 2426.16 & 5.67 \\
+ & 1.75 & 3447.31 & 3418.57 & 3118.34 & 3066.18 & 9.54 \\
+ & 2.00 & 4683.08 & 4613.77 & 4143.13 & 4081.36 & 11.53 \\
+\midrule
+1000\_1 & 0.00 & 2331.78 & 2306.41 & 1953.46 & 1906.28 & 16.22 \\
+ & 0.25 & 2120.95 & 2108.25 & 1830.08 & 1822.19 & 13.71 \\
+ & 0.50 & 2129.36 & 2120.39 & 1870.25 & 1826.45 & 12.17 \\
+ & 0.75 & 2223.88 & 2203.77 & 1962.36 & 1945.91 & 11.76 \\
+ & 1.00 & 2313.62 & 2291.42 & 2104.03 & 2081.05 & 9.06 \\
+ & 1.25 & 2488.17 & 2472.00 & 2270.79 & 2250.47 & 8.74 \\
+ & 1.50 & 2926.11 & 2859.25 & 2653.95 & 2601.69 & 9.30 \\
+ & 1.75 & 3880.86 & 3811.41 & 3415.02 & 3387.24 & 12.00 \\
+ & 2.00 & 5285.49 & 5114.75 & 4439.23 & 4383.81 & 16.01 \\
+\midrule
+1000\_2 & 0.00 & 2499.78 & 2491.56 & 2144.86 & 2123.06 & 14.20 \\
+ & 0.25 & 2276.77 & 2262.73 & 1988.71 & 1974.85 & 12.65 \\
+ & 0.50 & 2291.92 & 2270.43 & 2052.48 & 2024.22 & 10.45 \\
+ & 0.75 & 2399.40 & 2371.12 & 2155.57 & 2133.53 & 10.16 \\
+ & 1.00 & 2519.41 & 2500.90 & 2324.96 & 2284.38 & 7.72 \\
+ & 1.25 & 2708.33 & 2688.19 & 2504.92 & 2479.98 & 7.51 \\
+ & 1.50 & 3150.31 & 3095.20 & 2977.57 & 2925.75 & 5.48 \\
+ & 1.75 & 4074.75 & 4032.93 & 3696.45 & 3659.04 & 9.28 \\
+ & 2.00 & 5441.59 & 5260.69 & 4797.06 & 4699.46 & 11.84 \\
+\midrule
+1000\_3 & 0.00 & 2884.38 & 2877.54 & 2478.87 & 2450.24 & 14.06 \\
+ & 0.25 & 2648.95 & 2629.11 & 2345.59 & 2301.98 & 11.45 \\
+ & 0.50 & 2699.49 & 2665.07 & 2395.80 & 2366.22 & 11.25 \\
+ & 0.75 & 2806.40 & 2800.08 & 2534.55 & 2516.27 & 9.69 \\
+ & 1.00 & 2931.29 & 2887.41 & 2693.54 & 2675.99 & 8.11 \\
+ & 1.25 & 3186.10 & 3151.65 & 2913.72 & 2897.53 & 8.55 \\
+ & 1.50 & 3760.28 & 3733.38 & 3434.07 & 3354.27 & 8.68 \\
+ & 1.75 & 4802.99 & 4708.91 & 4345.25 & 4307.82 & 9.53 \\
+ & 2.00 & 6195.23 & 6082.96 & 5444.79 & 5386.25 & 12.11 \\
+\midrule
+1000\_4 & 0.00 & 2554.14 & 2551.20 & 2159.99 & 2150.72 & 15.43 \\
+ & 0.25 & 2368.17 & 2361.46 & 2046.43 & 2001.36 & 13.59 \\
+ & 0.50 & 2377.79 & 2366.13 & 2108.29 & 2095.39 & 11.33 \\
+ & 0.75 & 2467.00 & 2435.60 & 2216.14 & 2193.65 & 10.17 \\
+ & 1.00 & 2566.22 & 2535.48 & 2364.37 & 2337.27 & 7.87 \\
+ & 1.25 & 2727.94 & 2672.47 & 2575.08 & 2538.15 & 5.60 \\
+ & 1.50 & 3091.31 & 3056.61 & 2883.31 & 2853.38 & 6.73 \\
+ & 1.75 & 3935.80 & 3905.66 & 3526.74 & 3510.51 & 10.39 \\
+ & 2.00 & 5074.16 & 4973.89 & 4466.93 & 4427.19 & 11.97 \\
+\midrule
+1000\_5 & 0.00 & 2633.78 & 2564.83 & 2181.31 & 2156.94 & 17.18 \\
+ & 0.25 & 2402.49 & 2385.55 & 2071.43 & 2044.69 & 13.78 \\
+ & 0.50 & 2418.81 & 2388.55 & 2149.31 & 2093.14 & 11.14 \\
+ & 0.75 & 2512.79 & 2491.62 & 2239.90 & 2201.91 & 10.86 \\
+ & 1.00 & 2623.01 & 2593.90 & 2363.52 & 2337.36 & 9.89 \\
+ & 1.25 & 2799.35 & 2792.18 & 2556.49 & 2531.33 & 8.68 \\
+ & 1.50 & 3289.37 & 3271.48 & 3018.21 & 2949.09 & 8.24 \\
+ & 1.75 & 4195.22 & 4118.38 & 3786.66 & 3727.17 & 9.74 \\
+ & 2.00 & 5692.91 & 5576.82 & 4939.20 & 4899.86 & 13.24 \\
+\midrule
+2000\_1 & 0.00 & 5083.35 & 5055.55 & 4132.11 & 4116.52 & 18.71 \\
+ & 0.25 & 4834.07 & 4681.22 & 3922.18 & 3876.06 & 18.86 \\
+ & 0.50 & 4894.39 & 4762.76 & 4016.83 & 3942.64 & 17.93 \\
+ & 0.75 & 5096.52 & 5013.49 & 4249.77 & 4221.37 & 16.61 \\
+ & 1.00 & 5305.84 & 5277.84 & 4560.48 & 4511.25 & 14.05 \\
+ & 1.25 & 5818.97 & 5783.23 & 5016.99 & 4974.75 & 13.78 \\
+ & 1.50 & 6997.48 & 6842.58 & 5888.97 & 5850.29 & 15.84 \\
+ & 1.75 & 8980.51 & 8807.12 & 7419.30 & 7374.32 & 17.38 \\
+ & 2.00 & 11363.16 & 11224.53 & 9391.65 & 9311.69 & 17.35 \\
+\midrule
+2000\_2 & 0.00 & 5505.27 & 5458.02 & 4545.47 & 4503.65 & 17.43 \\
+ & 0.25 & 5245.50 & 5116.10 & 4285.65 & 4264.73 & 18.30 \\
+ & 0.50 & 5309.18 & 5159.93 & 4404.73 & 4364.09 & 17.04 \\
+ & 0.75 & 5567.91 & 5529.40 & 4683.90 & 4653.75 & 15.88 \\
+ & 1.00 & 5794.53 & 5675.85 & 4976.86 & 4950.36 & 14.11 \\
+ & 1.25 & 6344.17 & 6270.50 & 5487.57 & 5460.43 & 13.50 \\
+ & 1.50 & 7666.30 & 7577.89 & 6395.32 & 6352.77 & 16.58 \\
+ & 1.75 & 10284.16 & 10095.96 & 8169.74 & 8082.39 & 20.56 \\
+ & 2.00 & 14309.97 & 14198.60 & 10499.37 & 10269.13 & 26.63 \\
+\midrule
+2000\_3 & 0.00 & 5108.21 & 5026.63 & 4119.53 & 4098.52 & 19.35 \\
+ & 0.25 & 4769.59 & 4673.51 & 3863.54 & 3810.04 & 19.00 \\
+ & 0.50 & 4953.44 & 4919.71 & 3997.04 & 3970.84 & 19.31 \\
+ & 0.75 & 5059.43 & 4975.39 & 4202.60 & 4175.54 & 16.94 \\
+ & 1.00 & 5294.46 & 5229.26 & 4511.70 & 4450.19 & 14.78 \\
+ & 1.25 & 5731.57 & 5653.44 & 4922.83 & 4884.72 & 14.11 \\
+ & 1.50 & 6637.68 & 6544.52 & 5640.54 & 5586.19 & 15.02 \\
+ & 1.75 & 8372.46 & 8279.53 & 7004.40 & 6926.96 & 16.34 \\
+ & 2.00 & 10920.81 & 10731.88 & 9032.60 & 8912.98 & 17.29 \\
+\midrule
+2000\_4 & 0.00 & 5116.89 & 5060.75 & 4177.00 & 4145.10 & 18.37 \\
+ & 0.25 & 4841.44 & 4693.09 & 3941.47 & 3918.73 & 18.59 \\
+ & 0.50 & 4932.45 & 4893.61 & 4079.22 & 4032.13 & 17.30 \\
+ & 0.75 & 5077.64 & 5004.31 & 4332.91 & 4282.86 & 14.67 \\
+ & 1.00 & 5284.89 & 5206.45 & 4586.41 & 4550.86 & 13.22 \\
+ & 1.25 & 5732.80 & 5674.35 & 5034.27 & 4995.65 & 12.18 \\
+ & 1.50 & 6753.00 & 6671.95 & 5823.93 & 5783.38 & 13.76 \\
+ & 1.75 & 8547.36 & 8323.60 & 7096.71 & 6994.24 & 16.97 \\
+ & 2.00 & 10430.03 & 10317.39 & 9033.45 & 8873.78 & 13.39 \\
+\midrule
+2000\_5 & 0.00 & 5664.75 & 5625.34 & 4677.39 & 4654.86 & 17.43 \\
+ & 0.25 & 5397.70 & 5252.52 & 4434.76 & 4416.04 & 17.84 \\
+ & 0.50 & 5541.82 & 5513.89 & 4551.93 & 4527.96 & 17.86 \\
+ & 0.75 & 5666.34 & 5565.73 & 4807.66 & 4736.91 & 15.15 \\
+ & 1.00 & 5931.91 & 5872.64 & 5135.48 & 5096.11 & 13.43 \\
+ & 1.25 & 6519.05 & 6488.38 & 5620.10 & 5561.61 & 13.79 \\
+ & 1.50 & 7694.57 & 7613.75 & 6637.71 & 6592.03 & 13.74 \\
+ & 1.75 & 10131.48 & 9972.53 & 8354.15 & 8231.81 & 17.54 \\
+ & 2.00 & 13476.75 & 12623.03 & 10640.71 & 10574.31 & 21.04 \\
+\end{longtable}
+\vspace{-0.3\baselineskip}
+\noindent\begin{tabular}{@{}l@{\hspace{0.7em}}>{\raggedright\arraybackslash}p{0.92\linewidth}@{}}
+\textsuperscript{a} & $\text{Gap}_B=(\overline Z_B-\overline Z_C)/\overline Z_B$. Positive values indicate lower average objectives for Method~C.
+\end{tabular}
+\vspace{0.4\baselineskip}
+}
+
+Table~\ref{ch5:tab:config-broken-rate} shows that Method~C obtains a lower average
+objective than Method~B for every broken-bike-rate configuration. The average
+$\text{Gap}_B$ is 11.42\% over all rows, and the gap remains positive at every tested
+broken-bike rate.
+
+
+\section{Conclusions}\label{ch5:sec:conclusions}\label{ch5:sec:conclusion}
+
+This chapter proposes an EUDF-aware cluster-first route-second heuristic to solve
+the static bike repositioning problem with broken bikes and on-site repair. In
+this problem, trucks move usable bikes and collect broken bikes, while
+repairers visit stations to repair broken bikes on site. The objective is to
+minimize the total user dissatisfaction on the following day, evaluated by the
+Extended User Dissatisfaction Function. The proposed heuristic first applies a
+hybrid genetic search to partition the station network into clusters. An
+Extended Activated Transfer Selection procedure is used to estimate the
+user-dissatisfaction reduction within each cluster, and the resulting
+cluster-level planning problems are solved by the HGSADC-SBC heuristic. To
+illustrate the proposed heuristic's performance, it was tested on Citi
+Bike-based instances with up to 2000 stations. On the small benchmark
+instances, Gurobi does not close the MIP gap within the 600~s limit, and the
+proposed heuristic improves the Gurobi upper bounds by 32.94\% on average. The
+average improvement over the monolithic HGSADC-SBC heuristic is 7.26\% on the
+small instances and 8.81\% on the large instances. For the five
+2000-station instances, the average improvement is 11.71\%. The computational
+results also show that the proposed heuristic maintains a positive advantage
+under different vehicle capacities, time budgets, and broken-bike rates.
+However, the heuristic fixes the station partition before detailed cluster-level planning, so
+it may miss useful operations involving stations in different clusters.
+Therefore, a future research direction is to develop adaptive clustering and
+cross-cluster coordination mechanisms for large-scale bike-repositioning
+problems with broken bikes and on-site repair.

@@ -2,6 +2,28 @@
 
 \section{Summary of main findings}
 
+This thesis studies static bike repositioning problems with user-dissatisfaction-based service measures, with particular attention to scalable decomposition methods and the operational treatment of broken bikes. Chapters 3--5 develop the main models and solution methods.
+
+Chapter 3 considers the multi-vehicle static bike repositioning problem with the User Dissatisfaction Function (UDF) as the service-quality measure. The chapter formulates a UDF-aware cluster-first, route-second decomposition framework in which the clustering phase accounts for both user dissatisfaction reduction and routing-time feasibility. The proposed Activated Transfer Selection procedure provides an efficient approximation for evaluating clusters, and the Hybrid Genetic Search for UDF-aware Clustering (HGS-UC) makes the clustering model tractable for large station networks. The computational results show that the proposed decomposition can produce competitive solutions on small and medium instances and outperform several baseline clustering methods on larger instances.
+
+Chapter 4 extends the static bike repositioning problem by incorporating broken bikes and on-site repair. The chapter formulates the problem as a time-indexed mixed-integer programming model involving truck routing, repairer routing, and station-level decisions for repairing, loading, and unloading bikes. It then develops the HGSADC-SBC heuristic, which combines Hybrid Genetic Search with Adaptive Diversity Control and a station-budget-constrained quantity assignment procedure. The computational results indicate that the heuristic can obtain high-quality feasible solutions more efficiently than direct optimization on larger instances. The experiments also show that the value of introducing on-site repair depends on the repair time and the amount of broken bikes in the system.
+
+Chapter 5 combines the scalability motivation of Chapter 3 with the broken-bike and on-site-repair setting of Chapter 4. The chapter develops an EUDF-aware cluster-first, route-second framework for the static bike repositioning problem with broken bikes and on-site repair. The Extended Activated Transfer Selection procedure evaluates the expected benefit of clustering decisions, while the Hybrid Genetic Search for Extended-UDF Clustering (HGS-EUC) searches for station partitions. Cluster-level planning is then performed using the Chapter 4 heuristic. The computational results show that the proposed framework improves upon monolithic planning heuristics and maintains its advantage across different instance sizes, vehicle capacities, time budgets, and broken-bike rates.
+
 \section{Contributions of the thesis}
 
+The thesis makes three main contributions. First, it develops user-dissatisfaction-aware decomposition models for static bike repositioning. Instead of treating clustering as a purely geographic or demand-balancing preprocessing step, the proposed methods incorporate service-quality effects directly into the clustering phase. This provides a closer link between network partitioning and the final repositioning objective.
+
+Second, the thesis extends static bike repositioning models to account for broken bikes and on-site repair operations. By jointly considering usable-bike repositioning, broken-bike collection, and repairer routing, the formulation captures operational interactions that are important in systems where damaged bikes occupy docks and reduce service availability.
+
+Third, the thesis designs scalable heuristic solution frameworks for large bike-sharing networks. The ATS and EATS procedures provide tractable cluster-evaluation mechanisms, while HGS-UC, HGSADC-SBC, and HGS-EUC address different layers of the resulting planning problems. Together, these methods show how user-dissatisfaction-based models can be made more computationally practical for large-scale static repositioning.
+
 \section{Future research directions}
+
+Several directions can naturally extend this work. First, future research may study dynamic and stochastic repositioning settings. The models in this thesis focus on static overnight planning with known initial inventories and planning inputs. Incorporating uncertain demand, uncertain damage discovery, and real-time inventory updates would allow the methods to support rolling-horizon or intra-day decision making.
+
+Second, repair operations can be modeled in greater operational detail. Future extensions may consider heterogeneous repair types, uncertain repair durations, repairer shift scheduling, preventive maintenance, and coordination between on-site repair and depot-based repair. These extensions would be especially relevant when the damage level of a system changes over time.
+
+Third, future work may strengthen coordination across clusters. The decomposition methods in Chapters 3 and 5 improve scalability by fixing station partitions before detailed routing or cluster-level planning. Adaptive repartitioning, boundary-station exchanges, or limited cross-cluster transfers may recover benefits that are missed by a fixed partition.
+
+Finally, broader service-quality measures could be incorporated into the proposed frameworks. The UDF and EUDF capture expected user dissatisfaction associated with bike and dock availability, but operators may also consider fairness across stations, reliability over multiple periods, emissions, labor utilization, and robustness to disruptions. Extending the decomposition methods to handle such multi-criteria service measures would further improve their practical relevance.

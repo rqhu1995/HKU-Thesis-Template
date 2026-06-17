@@ -1,5 +1,60 @@
-% Appendix A
+% Appendix A imported from Paper1.tex
 
-\chapter{About Appendix} % Main appendix title
-\label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
-The appendix is usually used to provide some supplementary materials for the publications. For example, some experimental results, network architecture, detailed experimental settings or proving of the theories. You can have more than one appendices to provide the materials for different uses.
+\chapter{Linearization of the EUDF}
+\label{AppendixA}
+\label{app:ch4-linearization-eudf}
+
+The Extended User Dissatisfaction Function (EUDF) is a bivariate function that represents a weighted
+sum of the expected shortages of usable bikes and the expected shortages of lockers at a
+bike-sharing station in a day. It is calculated based on the quantities of both usable and unusable
+bikes at the station. The calculation of the EUDF values follows a Markov process, which captures
+the dynamics of bicycle inventory levels over time. For detailed steps for how the EUDF values are
+calculated, readers can refer to the approach outlined in the paper of Kaspi et al. (2017).
+
+Let \(F_{i}\left( {p_{i}',b_{i}'} \right)\) be the EUDF, where \(p_{i}'\) and \(b_{i}'\) are the
+usable and broken inventory levels at the station, respectively. The domain of EUDF at each station
+\emph{i} is
+\(\Theta_{i} = \left\{ {\left( {p_{i}',b_{i}'} \right) \mid p_{i}' \geq 0,b_{i}' \geq 0,p_{i}' + b_{i}' \leq C_{i}} \right\}\),
+where \emph{C\textsubscript{i}} is the station capacity. For each point
+\(\left( {p_{i}',b_{i}'} \right) \in \Theta_{i},\) a plane
+\(\alpha_{p_{i},b_{i}}^{i} \cdot p_{i}' + \beta_{p_{i},b_{i}}^{i} \cdot b_{i}' + \gamma_{p_{i},b_{i}}^{i}\)
+that passes as close as possible to \(F_{i}\left( {p_{i}',b_{i}'} \right)\) can be fitted, where
+\(\alpha_{p_{i},b_{i}}^{i},\beta_{p_{i},b_{i}}^{i},\) and \(\gamma_{p_{i},b_{i}}^{i}\) are the
+coefficients of the plane that can be computed for every
+\(\left( {p_{i},b_{i}} \right) \in \Theta_{i}\). These coefficients are obtained by solving a linear
+programming (LP) model which ensures that the polyhedral
+function\({\overset{\sim}{F}}_{i}\left( {p_{i}^{'},b_{i}^{'}} \right)\)~=~\(\max\limits_{{({p_{i},b_{i}})} \in \theta}\left( {\alpha_{p_{i},b_{i}}^{i} \cdot p_{i}' + \beta_{p_{i},b_{i}}^{i} \cdot b_{i}' + \gamma_{p_{i},b_{i}}^{i}} \right)\)remains
+below or equal to the EUDF values at all points except for
+\(\left( {p_{i},b_{i}} \right) \in \theta_{i}\), with the objective of minimizing the gap between
+the fitted function and the actual EUDF at each point. The LP model is given as follows:
+
+\textbf{Decision variables:}
+
+\(\alpha_{p_{i},b_{i}}^{i},\beta_{p_{i},b_{i}}^{i},\)\(\gamma_{p_{i},b_{i}}^{i}\) Coefficients of
+the fitted plane
+
+\(s\) Gap at the point \(\left( {p_{i},b_{i}} \right)\) between the fitted plane and the EUDF value
+
+\textbf{The LP formulation:}
+
+Minimize \(s\) (A.74)
+
+s.t.\[\tag{A.75}\alpha_{p_{i},b_{i}}^{i} \cdot p_{i}' + \beta_{p_{i},b_{i}}^{i} \cdot b_{i}' + \gamma_{p_{i},b_{i}}^{i} \leq F\left( {p_{i}',b_{i}'} \right)\quad\forall\left( {p_{i}',b_{i}'} \right)\left. \in \theta\backslash \right.\left\{ \left( {p_{i},b_{i}} \right) \right\}\]
+
+\[\tag{A.76}\alpha_{p_{i},b_{i}}^{i} \cdot p_{i} + \beta_{p_{i},b_{i}}^{i} \cdot b_{i} + \gamma_{p_{i},b_{i}}^{i} = F\left( {p_{i},b_{i}} \right) - s\]
+
+\[\tag{A.77}\alpha_{p_{i},b_{i}}^{i},\beta_{p_{i},b_{i}}^{i},\gamma_{p_{i},b_{i}}^{i}\quad{free},\]
+
+\[\tag{A.78}s \geq 0\]
+
+The objective (A.74) is to minimize the gap between the fitted plane and the EUDF value. Constraints
+(A.75) ensure that the fitted plane passes under the EUDF at all integer points except for
+\(\left( {p_{i},b_{i}} \right)\). Constraint (A.76) defines the gap at the point
+\(\left( {p_{i},b_{i}} \right)\) between the fitted plane and the EUDF value. Constraints (A.77) and
+(A.78) are the domain constraints for the decision variables.
+
+After the polyhedral function \({\overset{\sim}{F}}_{i}\left( {p_{i},b_{i}} \right)\) is formed at
+each point \(\left( {p_{i},b_{i}} \right) \in \Theta_{i},\) we replace the EUDF
+\(F_{i}\left( {p_{i,T'},b_{i,T'}} \right)\) in the objective function with an auxiliary variable
+\({\widehat{F}}_{i}\) and add the following constraints to the
+model:\[\tag{A.79}{\hat{F}}_{i} \geq \alpha_{p_{i},b_{i}}^{i} \cdot p_{i,T^{'}} + \beta_{p_{i},b_{i}}^{i} \cdot b_{i,T^{'}} + \gamma_{p_{i},b_{i}}^{i},\forall\left( {p_{i},b_{i}} \right) \in \left\{ {\left( {p_{i},b_{i}} \right) \in {\mathbb{Z}}^{2} \mid p_{i} \geq 0,b_{i} \geq 0,p_{i} + b_{i} \leq C_{i}} \right\},\forall i \in S.\]

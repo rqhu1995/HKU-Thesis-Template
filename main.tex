@@ -26,16 +26,16 @@
 
 \documentclass[
 12pt, % The default document font size, options: 10pt, 11pt, 12pt
-%oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
+oneside, % Conservative formal submission layout with symmetric margins
 english, % ngerman for German
 onehalfspacing, % Single line spacing (singlespacing), alternatives: onehalfspacing or doublespacing
 % draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
 % nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
 liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
-%toctotoc, % Uncomment to add the main table of contents to the table of contents
+toctotoc, % Add the main table of contents to the table of contents
 parskip, % Uncomment to add space between paragraphs
 %nohyperref, % Uncomment to not load the hyperref package
-headsepline, % Uncomment to get a line under the header
+%headsepline, % Disabled for the formal submission style
 %chapterinoneline, % Uncomment to place the chapter title next to the number on one line
 % consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
 ]{HKUThesis} % The class file specifying the document structure
@@ -44,7 +44,11 @@ headsepline, % Uncomment to get a line under the header
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 \usepackage{fontawesome} % Awesome symbol for usage
 \usepackage{wrapfig} % Add enbedded figure in the text
-\usepackage{tikz} % Add the signature figure overlap the text
+\usepackage{tikz} % Used by optional reference title-page elements
+\usepackage{adjustbox} % Scale imported wide tables
+\usepackage{pdflscape} % Landscape pages for imported wide tables
+\usepackage{threeparttable} % Table notes for imported article tables
+\usepackage{mathtools} % Provides \mathmakebox for imported wide equations
 % \usepackage[labelformat=simple]{subcaption} % Add multiple subfigures in a figure environment
 % \captionsetup{justification=justified, margin=0pt}
 % \renewcommand\thesubfigure{(\Alph{subfigure})} % change the image numbering and reference link to (A),(B),(C), ...... format
@@ -71,12 +75,11 @@ headsepline, % Uncomment to get a line under the header
 %----------------------------------------------------------------------------------------
 
 \geometry{
-	paper=a4paper, % Change to letterpaper for US letter
-	left=3.5cm, % Left margin
-	right=3.6cm, % Right margin
-	bindingoffset=.5cm, % Binding offset
-	top=2.5cm, % Top margin
-	bottom=2.5cm, % Bottom margin
+	paper=a4paper,
+	left=35mm,
+	right=35mm,
+	top=25mm,
+	bottom=25mm,
 	%showframe, % Uncomment to show how the type block is set on the page
 }
 
@@ -104,13 +107,16 @@ headsepline, % Uncomment to get a line under the header
 \author{Runqiu \textsc{Hu}}
 % The author name, this is used in the title page and abstract, print it elsewhere with \authorname
 
+\newcommand{\previousdegrees}{B.Eng.; M.Eng.}
+% Previous degrees to print under the author name on the title page.
+
 \addresses{}
 % Your address, this is not currently used anywhere in the template, print it elsewhere with \addressname
 
-\subject{Computer Vision}
+\subject{}
 % Your subject area, this is not currently used anywhere in the template, print it elsewhere with \subjectname
 
-\keywords{Light field, high-dimensional convolutional neural network, deep learning}
+\keywords{}
 % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 
 \university{The University of Hong Kong}
@@ -123,7 +129,7 @@ headsepline, % Uncomment to get a line under the header
 \department{Department of Civil Engineering}
 % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 
-\group{Laboratory of The Student}
+\group{}
 % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 
 \faculty{Faculty of Engineering}
@@ -142,6 +148,25 @@ headsepline, % Uncomment to get a line under the header
 %	NEW COMMAND DEFINITION
 %----------------------------------------------------------------------------------------
 \newcommand{\codestyle}[1]{\colorbox{gray!20}{\darkred{#1}}}
+\renewcommand{\submissionmonthyear}{TODO Month Year}
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\addto\captionsenglish{\renewcommand{\contentsname}{TABLE OF CONTENTS}}
+
+% Optional pages/lists. Enable only when they are needed for the final thesis.
+\newif\ifincludeLibraryTitlePage
+\includeLibraryTitlePagefalse
+\newif\ifincludeListOfFigures
+\includeListOfFiguresfalse
+\newif\ifincludeListOfTables
+\includeListOfTablesfalse
+\newif\ifincludeListOfAlgorithms
+\includeListOfAlgorithmsfalse
+\newif\ifincludeAbbreviations
+\includeAbbreviationsfalse
+\newif\ifincludeSymbols
+\includeSymbolsfalse
+\newif\ifincludeAppendices
+\includeAppendicestrue
 
 % ======================================================================================== %
 %                                        START DOCUMENT
@@ -149,14 +174,16 @@ headsepline, % Uncomment to get a line under the header
 
 \begin{document}
 
-\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
-\pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
+\pagenumbering{gobble}
+\pagestyle{empty}
 
 %----------------------------------------------------------------------------------------
-%	REFERENCE TITLE PAGE
+%	OPTIONAL REFERENCE TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\input{Titlepage/library_titlepage.tex}
+\ifincludeLibraryTitlePage
+	\input{Titlepage/library_titlepage.tex}
+\fi
 
 
 %----------------------------------------------------------------------------------------
@@ -171,7 +198,10 @@ headsepline, % Uncomment to get a line under the header
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 \input{Titlepage/titlepage.tex}
-\pagestyle{plain}
+
+\frontmatter
+\pagestyle{thesis}
+\setcounter{page}{1}
 
 
 %----------------------------------------------------------------------------------------
@@ -192,22 +222,31 @@ headsepline, % Uncomment to get a line under the header
 
 \tableofcontents % Prints the main table of contents
 
-\listoffigures % Prints the list of figures
+\ifincludeListOfFigures
+	\listoffigures % Prints the list of figures
+\fi
 
-\listoftables % Prints the list of tables
+\ifincludeListOfTables
+	\listoftables % Prints the list of tables
+\fi
 
-\listofalgorithms % Prints the list of algorithms
-\addchaptertocentry{\listalgorithmcfname}
+\ifincludeListOfAlgorithms
+	\listofalgorithms % Prints the list of algorithms
+\fi
 %----------------------------------------------------------------------------------------
 %	ABBREVIATIONS
 %----------------------------------------------------------------------------------------
-\input{Abbreviations/abbreviations.tex}
+\ifincludeAbbreviations
+	\input{Abbreviations/abbreviations.tex}
+\fi
 
 
 %----------------------------------------------------------------------------------------
 %	SYMBOLS
 %----------------------------------------------------------------------------------------
-\input{Symbols/symbols.tex}
+\ifincludeSymbols
+	\input{Symbols/symbols.tex}
+\fi
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - CHAPTERS
@@ -231,22 +270,29 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 
-\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+\ifincludeAppendices
+	\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
 
-% Include the appendices of the thesis as separate files from the Appendices folder
-% Uncomment the lines as you write the Appendices
+	% Include the appendices of the thesis as separate files from the Appendices folder
+	% Uncomment the lines as you write the Appendices
 
-\include{Appendices/AppendixA}
-\include{Appendices/AppendixB}
-\include{Appendices/AppendixC}
+	\include{Appendices/AppendixA}
+	\include{Appendices/AppendixB}
+	\include{Appendices/AppendixC}
+	\include{Appendices/AppendixD}
+	\include{Appendices/AppendixE}
+\fi
 
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-\nocite{Gershun1939Light}
-\printbibliography[heading=bibintoc]
+\cleardoublepage
+\phantomsection
+\chapter*{\bibname}
+\addcontentsline{toc}{chapter}{\bibname}
+\printbibliography[heading=none]
 
 %----------------------------------------------------------------------------------------
 

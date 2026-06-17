@@ -1,7 +1,187 @@
-% Appendix Template
+% Appendix B imported from Paper1.tex
 
-\chapter{Appendix Title Here} % Main appendix title
+\chapter{SBC Heuristic for the Quantity Assignment}
+\label{AppendixB}
+\label{app:ch4-sbc-heuristic-quantity-assignment}
 
-\label{AppendixB} % For referencing this appendix elsewhere, use \ref{AppendixB}
+\begin{longtable}{@{}llllll@{}}
+\toprule
+\multicolumn{6}{@{}l@{}}{%
+\textbf{Algorithm 2:} \(SBCAssignment\left( {S_{\text{R}},S_{\text{K}}} \right)\)} \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\textbf{1} & \multicolumn{5}{l@{}}{%
+\(p_{s} = p_{s}^{0},b_{s} = b_{s}^{0},\forall s \in S\)// initialization} \\
+& \multicolumn{5}{l@{}}{%
+// lines 2 to 9: repairing quantity assignment} \\
+\textbf{2} & \multicolumn{5}{l@{}}{%
+\textbf{for} \(i = 1\;\text{to}\;|R|\) \textbf{do}} \\
+\textbf{3} & & \multicolumn{4}{l@{}}{%
+// assign the repairing budget for repairer \emph{i} at each visited station (\textbf{Algorithm
+3})} \\
+& & \multicolumn{4}{l@{}}{%
+\(\left( {\mathit{maxTim}e_{s,i}^{\text{r}}} \right)_{s \in S}\)=
+\(\mathit{allocateRepairBudget}\left( r_{i} \right)\)} \\
+& & \multicolumn{4}{l@{}}{%
+// determine the repairing quantity for repairer \emph{i} at each visited station in route \(r_{i}\)
+(\textbf{Algorithm 5})} \\
+\textbf{4} & & \multicolumn{4}{l@{}}{%
+\(\left( g_{s,i} \right)_{s \in S}\)=\(assignRepair\left( {r_{i},\left( {\mathit{maxTim}e_{s,i}^{\text{r}}} \right)_{s \in S}} \right)\)} \\
+\textbf{8} & & \multicolumn{4}{l@{}}{%
+/* lines 5 to 8: station inventory update (create a duplicate of the usable and broken bike
+inventory after repairs in \(p_{s}'\) and \(b_{s}'\) , respectively, in preparation for restoring
+the bike inventories to the state after repairs before the second-round truck (un)loading assignment
+(Line 37) */} \\
+\textbf{5} & & \multicolumn{4}{l@{}}{%
+\textbf{for} \(s = 1\;\text{to}\;|S|\) \textbf{do}} \\
+\textbf{6} & & & \multicolumn{3}{l@{}}{%
+\(p_{s} = p_{s} + g_{s,i}\),\(p_{s}' = p_{s}\)} \\
+\textbf{7} & & & \multicolumn{3}{l@{}}{%
+\(b_{s} = b_{s} - g_{s,i}\),\(b_{s}' = b_{s}\)} \\
+\textbf{8} & & \multicolumn{4}{l@{}}{%
+\textbf{end for}} \\
+\textbf{9} & \multicolumn{5}{l@{}}{%
+\textbf{end for}} \\
+& \multicolumn{5}{l@{}}{%
+// lines 10 to 36: truck (un)loading quantity assignment (the first round)} \\
+\textbf{10} & \multicolumn{5}{l@{}}{%
+\textbf{for} \(k = 1\;\text{to}\;|K|\) \textbf{do}} \\
+\textbf{11} & & \multicolumn{4}{l@{}}{%
+\(\mathit{unsa}t_{s,k}^{\text{load,u}} = unsat_{s,k}^{\text{unload,u}} = unsat_{s,k}^{\text{load,b}} = 0,\forall s \in S\)//
+initialization} \\
+& & \multicolumn{4}{l@{}}{%
+/* assign the station (un)loading budget for truck \emph{k} at each station (\textbf{Algorithm 4})
+and record it in \(\left( {\mathit{maxTimeIni}t_{s,k}^{\text{t}}} \right)_{s \in S}\) */} \\
+\textbf{12} & & \multicolumn{4}{l@{}}{%
+\(\left( {\mathit{maxTimeIni}t_{s,k}^{\text{t}}} \right)_{s \in S}\)=\(\mathit{allocateLoadingBudget}\left( r_{k}' \right)\)} \\
+\textbf{13} & & \multicolumn{4}{l@{}}{%
+\(\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S} = \left( {\mathit{maxTimeIni}t_{s,k}^{\text{t}}} \right)_{s \in S}\)
+// initialization} \\
+& & \multicolumn{4}{l@{}}{%
+/* at the first departure from the depot, we load no usable bikes by default, and the adjustment on
+depot loading quantities is made in \textbf{Algorithm 8} when we assign unloading quantities at
+subsequent deficit stations */} \\
+\textbf{14} & & \multicolumn{4}{l@{}}{%
+\(y_{0,k}^{\text{u}^{+}} = y_{0,k}^{\text{u}^{-}} = y_{0,k}^{\text{b}^{+}} = y_{0,k}^{\text{b}^{-}} = 0\),\(\psi_{0,k}^{\text{u}} = \psi_{0,k}^{\text{b}} = 0\)} \\
+& & \multicolumn{4}{l@{}}{%
+// lines 15 to 33: assign loading and unloading quantities for each node in the route} \\
+\textbf{15} & & \multicolumn{4}{l@{}}{%
+\textbf{for} \(l = 1\;\text{to}\;\left| r_{k}' \right| - 1\) \textbf{do}} \\
+\textbf{16} & & & \multicolumn{3}{l@{}}{%
+\(\psi_{l,k}^{\text{u}} = \psi_{l,k}^{\text{b}} = 0\)} \\
+\textbf{17} & & & \multicolumn{3}{l@{}}{%
+\(s' = s_{k_{l}}'\)} \\
+\textbf{18} & & & \multicolumn{3}{l@{}}{%
+\(y_{l,k}^{\text{u}^{+}} = y_{l,k}^{\text{u}^{-}} = y_{l,k}^{\text{b}^{+}} = y_{l,k}^{\text{b}^{-}} = 0\)//
+all (un)loading quantities are initialized with 0} \\
+\textbf{19} & & & \multicolumn{3}{l@{}}{%
+\textbf{if} \(s' = 0\) \textbf{then}} \\
+& & & & \multicolumn{2}{l@{}}{%
+/* at intermediate visits to the depot, we load no usable bikes by default, and the adjustment on
+the depot (un)loading quantities is made in \textbf{Algorithm 8} when we assign unloading quantities
+at subsequent deficit stations */} \\
+\textbf{20} & & & & \multicolumn{2}{l@{}}{%
+\(y_{l,k}^{\text{u}^{+}} = \psi_{l - 1,k}^{\text{u}},y_{l,k}^{\text{b}^{+}} = \psi_{l - 1,k}^{\text{b}}\)} \\
+\textbf{21} & & & \multicolumn{3}{l@{}}{%
+\textbf{else}} \\
+\textbf{22} & & & & \multicolumn{2}{l@{}}{%
+\textbf{if} \(p_{s'} > q_{s'}\) \textbf{then} // for surplus stations, load usable bikes
+(\textbf{Algorithm 6}).} \\
+\textbf{23} & & & & & \(\begin{matrix}
+{\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load,u}}} \right)_{s \in S},y_{l,k}^{\text{u}^{-}} =} \\
+{assignLoadU\left( {r_{k}',l,\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load,u}}} \right)_{s \in S}} \right)}
+\end{matrix}\) \\
+\textbf{24} & & & & \textbf{else} & \\
+\textbf{25} & & & & & \textbf{if} \(p_{s'} < q_{s'}\) \textbf{then} // for deficit stations, unload
+usable bikes (\textbf{Algorithms 7}--\textbf{8}) \\
+\textbf{26} & & & & & \(\begin{matrix}
+{\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load,u}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{unload,u}}} \right)_{s \in S},y_{l,k}^{\text{u}^{+}} =} \\
+{assignUnloadU\begin{pmatrix}
+{r_{k}',l,\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load,u}}} \right)_{s \in S},} \\
+\left( {\mathit{unsa}t_{s,k}^{\text{unload,u}}} \right)_{s \in S}
+\end{pmatrix}}
+\end{matrix}\) \\
+\textbf{27} & & & & & \textbf{end if} \\
+\textbf{28} & & & & \multicolumn{2}{l@{}}{%
+\textbf{end if}} \\
+& & & & \multicolumn{2}{l@{}}{%
+// station and truck inventory update} \\
+\textbf{29} & & & & \multicolumn{2}{l@{}}{%
+\(p_{s'} = p_{s'} - y_{l,k}^{\text{u}^{-}} + y_{l,k}^{\text{u}^{+}},\psi_{l,k}^{\text{u}} = \psi_{l,k}^{\text{u}} + y_{l,k}^{\text{u}^{-}} - y_{l,k}^{\text{u}^{+}}\)} \\
+& & & & \multicolumn{2}{l@{}}{%
+// for both types of stations, load broken bikes (Algorithm 9)} \\
+\textbf{30} & & & & \multicolumn{2}{l@{}}{%
+\(\begin{matrix}
+{\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load},\text{b}}} \right)_{s \in S},y_{l,k}^{\text{b}^{-}} =} \\
+{assignLoadB\left( {r_{k}',l,\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{unload},\text{b}}} \right)_{s \in S}} \right)}
+\end{matrix}\)} \\
+\textbf{31} & & & & \multicolumn{2}{l@{}}{%
+\(b_{s'} = b_{s'} - y_{l,k}^{\text{b}^{-}},\psi_{l,k}^{\text{b}} = \psi_{l,k}^{\text{b}} + y_{l,k}^{\text{b}^{-}}\)//
+station and truck inventory update} \\
+\textbf{32} & & & \multicolumn{3}{l@{}}{%
+\textbf{end if}} \\
+\textbf{33} & & \multicolumn{4}{l@{}}{%
+\textbf{end for}} \\
+& & \multicolumn{4}{l@{}}{%
+// \(\mathit{BCR}F_{s}^{\text{t}}\) is updated here in preparation for the reassignment of the
+station (un)loading budget} \\
+\textbf{34} & & \multicolumn{4}{l@{}}{%
+Update \(\mathit{BCR}F_{s}^{\text{t}}\) for each station based on the current station
+inventories} \\
+& & \multicolumn{4}{l@{}}{%
+/* adjust the station un(loading) budget of truck \emph{k} by distributing the unused time to
+unbalanced stations with bikes unable to be (un)loaded due to insufficient station (un)loading
+budgets (\textbf{Algorithm 10}) */} \\
+\textbf{35} & & \multicolumn{4}{l@{}}{%
+\(\begin{matrix}
+{\left( {\mathit{maxTimeNe}w_{s,k}^{\text{t}}} \right)_{s \in S} =} \\
+{adjustLoadingBudget\begin{pmatrix}
+{\left( {\mathit{maxTimeIni}t_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},} \\
+{\left( {\mathit{unsa}t_{s,k}^{\text{load},\text{u}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{unload},\text{u}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load},\text{b}}} \right)_{s \in S}}
+\end{pmatrix}}
+\end{matrix}\)} \\
+\textbf{36} & \multicolumn{5}{l@{}}{%
+\textbf{end for}} \\
+& \multicolumn{5}{l@{}}{%
+/* restore the station inventories to the inventories before the first-round truck (un)loading
+quantity assignment */} \\
+\textbf{37} & \multicolumn{5}{l@{}}{%
+\(p_{s} = p_{s}',b_{s} = b_{s}'\)} \\
+\textbf{38} & \multicolumn{5}{l@{}}{%
+\textbf{for} \(k = 1\;\text{to}\;|K|\) \textbf{do}} \\
+& & \multicolumn{4}{l@{}}{%
+/* assign the quantities for bike (un)loading for the second round using the updated station
+(un)loading budget */} \\
+\textbf{39} & & \multicolumn{4}{l@{}}{%
+Set
+\(\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S} = \left( {\mathit{maxTimeNe}w_{s,k}^{\text{t}}} \right)_{s \in S}\)
+and repeat the procedure from Line 15 to Line 33} \\
+\textbf{40} & \multicolumn{5}{l@{}}{%
+\textbf{end for}} \\
+\textbf{41} & \multicolumn{5}{l@{}}{%
+Conduct amendments to both trucks and repairers regarding the routes and their associated repairing
+or (un)loading quantities using the algorithm described in Section~\ref{ch4:subsubsec:route-quantity-amendments}.} \\
+\textbf{42} & \multicolumn{5}{l@{}}{%
+\textbf{return} \emph{G}\textsubscript{R}, \emph{Y}\textsubscript{K}} \\
+\end{longtable}
 
-Write your Appendix content here.
+The algorithm begins by assigning quantities of repairs for each repairer and updating the station
+inventories (Line 1 to Line 9). Following this, the algorithm iteratively traverses the route of
+each truck, determining the quantities of loading/unloading based on the status of each station
+(Line 10 to Line 40). A key feature of this SBC heuristic is setting a maximum time for bike
+loading/unloading for every truck and a maximum time for bike repairing for every repairer, referred
+to as the \emph{station budget}. Specifically, we refer to the budget at each station as the
+\emph{station} (\emph{un})\emph{loading budget} for trucks and the \emph{station repairing budget}
+for repairers. The introduction of the station budget prevents the truck/repairer from excessively
+spending time at the initial stations, which can lead to insufficient time for the latter stations.
+For each truck, the first round of (un)loading quantity assignments is conducted (Line 15 to Line
+33), followed by an adjustment on the station (un)loading budgets based on unsatisfied demand and
+unused time budgets in the first round (Lines 34 and 35). Afterward, the algorithm restores the
+station inventories to the values before the truck (un)loading quantity assignment (Line 37) and
+conducts a second-round assignment to adjust the truck (un)loading quantities (Line 38 to Line 40).
+Next, amendments to both trucks and repairers regarding the routes and their associated repairing or
+(un)loading quantities are made to utilize the unused time budget resulting from the rounding-down
+strategies applied during quantity assignments (Line 41). Finally, the algorithm returns the
+assigned repairing and (un)loading quantities for usable and broken bikes (Line 42).
