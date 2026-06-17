@@ -63,14 +63,41 @@
   \leftskip\z@skip}
   
 %  Simple interface for the user  to customize the chapter titles
-\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{18pt}}
-\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{36pt}}
-\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{18pt}}
+\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{-36pt}}
+\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{24pt}}
+\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{14pt}}
 \ProvideDocumentCommand{\autodot}{}{}
 \ProvideDocumentCommand{\mdtChapapp}{}{}
-\ProvideDocumentCommand{\chapteralign}{}{\raggedright}
-\ProvideDocumentCommand{\chapterfont}{}{\Huge\bfseries}
-\ProvideDocumentCommand{\chapterprefixfont}{}{\LARGE\bfseries}
+\ProvideDocumentCommand{\chapteralign}{}{\centering}
+\ProvideDocumentCommand{\chapterfont}{}{\Large\bfseries}
+\ProvideDocumentCommand{\chaptertitlefont}{}{\large\bfseries}
+\ProvideDocumentCommand{\chapterprefixfont}{}{\large\bfseries}
+\ProvideDocumentCommand{\frontmatterheadingfont}{}{\large\bfseries}
+\ProvideDocumentCommand{\sectionheadingfont}{}{\normalfont\large\bfseries}
+\ProvideDocumentCommand{\subsectionheadingfont}{}{\normalfont\normalsize\bfseries}
+\ProvideDocumentCommand{\subsubsectionheadingfont}{}{\normalfont\normalsize}
+\ProvideDocumentCommand{\paragraphheadingfont}{}{\normalfont\normalsize}
+\ProvideDocumentCommand{\subparagraphheadingfont}{}{\normalfont\normalsize\itshape}
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}%
+  {2.3ex \@plus .2ex}%
+  {\sectionheadingfont}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\subsectionheadingfont}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}%
+  {1.5ex \@plus .2ex}%
+  {\subsubsectionheadingfont}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\paragraphheadingfont}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\subparagraphheadingfont}}
 \DeclareDocumentCommand{\@makechapterhead}{ m }{%
 	\abovechapterskip
 	{\parindent \z@ \chapteralign \normalfont
@@ -79,14 +106,14 @@
 		\ifbool{chapteroneline}{%
 			\chapterfont \mdtChapapp\thechapter\autodot\enspace
 		}{%
-			\chapterprefixfont \@chapapp\space \thechapter
+				\chapterprefixfont \MakeUppercase{\@chapapp}\space \thechapter
 			\par\nobreak
 			\chapterinbetweenskip
 		}%
 		\fi
 		\fi
 		\interlinepenalty\@M%
-		\chapterfont #1\par\nobreak
+			\chaptertitlefont #1\par\nobreak
 		\chapterbelowskip
 	}
 	\thispagestyle{\chapter@p@gestyle}
@@ -402,10 +429,8 @@
 	\clearpairofpagestyles%
 	\automark[chapter]{chapter}
 	\ihead{\headmark}% Inner header
-	\ohead[\pagemark]{\pagemark}% Outer header
+	\cfoot[\pagemark]{\pagemark}% Centered footer page number, including plain pages
 }
-\ifoot{}% Inner footer
-\ofoot{}% Outer footer
 \pagestyle{thesisSimple}
 \providepairofpagestyles[thesisSimple]{thesis}{%
 	\automark*[section]{}%
@@ -508,14 +533,14 @@ KOMA-script documentation for details.}]{fancyhdr}
 % }
 % =====================================================================
 {%
-	\DeclareDocumentEnvironment{abstract}{ O{\null} }{
+	\DeclareDocumentEnvironment{abstract}{ O{} }{
 		\checktoopen
-		\tttypeout{\abstractname}#1%added to be able to have abstract more than one page long
+		\tttypeout{\abstractname}
 		\pagestyle{empty}
 		\begin{center}
 		    \vspace{-2em}
             {\normalsize\abstractname~of thesis entitled \par}
-			{\Large\bfseries \@title \par}% Thesis title
+			{\Large\bfseries ``\@title'' \par}% Thesis title
             \medskip
             {Submitted by \par}
             \medskip
@@ -528,9 +553,17 @@ KOMA-script documentation for details.}]{fancyhdr}
 		\end{center}
 	}
 	{
-		\vfill\null
+			\ifblank{#1}{}{%
+				\par\bigskip
+				\begin{center}
+					\rule{0.75\textwidth}{1.2pt}\\
+					{\bfseries\itshape An abstract of #1 words\par}
+				\end{center}
+			}
+			\thispagestyle{empty}
+			\vfill\null
+		}
 	}
-}
 \DeclareDocumentEnvironment{extraAbstract}{ O{\null\vfill} }{
 	\checktoopen
 	\tttypeout{\abstractname}
@@ -572,15 +605,15 @@ KOMA-script documentation for details.}]{fancyhdr}
 		\addchap*{\acknowledgementname}
 	}
 }
-{
-	\DeclareDocumentEnvironment{acknowledgements}{}{%
-		\checktoopen
-		\tttypeout{\acknowledgementname}
-		\thispagestyle{plain}
-		\begin{center}{\huge\textit{\acknowledgementname}\par}\end{center}
-	}
 	{
-		\vfil\vfil\null
+		\DeclareDocumentEnvironment{acknowledgements}{}{%
+			\checktoopen
+			\tttypeout{\acknowledgementname}
+			\thispagestyle{plain}
+			\begin{center}{\frontmatterheadingfont\acknowledgementname\par}\end{center}
+		}
+		{
+			\vfil\vfil\null
 	}
 }
 
@@ -597,14 +630,13 @@ KOMA-script documentation for details.}]{fancyhdr}
 		\addchap*{\authorshipname}
 		}{}%
 }{
-	\DeclareDocumentEnvironment{declaration}{}{
-		\checktoopen
-		\tttypeout{\authorshipname}
-		\thispagestyle{plain}
-		\null\vfil
-		{\noindent\huge\bfseries\authorshipname\par\vspace{10pt}}
-	}{}
-}
+		\DeclareDocumentEnvironment{declaration}{}{
+			\checktoopen
+			\tttypeout{\authorshipname}
+			\thispagestyle{plain}
+			{\noindent\frontmatterheadingfont\authorshipname\par\vspace{\baselineskip}}
+		}{}
+	}
 
 %----------------------------------------------------------------------------------------
 %	DEDICATION PAGE DESIGN
@@ -666,7 +698,7 @@ KOMA-script documentation for details.}]{fancyhdr}
 	\ifbool{nolistspace}{\endgroup}{}
 }
 
-\newcommand{\symboltitle}[1]{\textbf{\LARGE #1}}
+\newcommand{\symboltitle}[1]{\textbf{\large #1}}
 %----------------------------------------------------------------------------------------
 
 \ifbool{hyperrefsupport}{% If the nohyperref class option has not been specified
@@ -675,10 +707,8 @@ KOMA-script documentation for details.}]{fancyhdr}
 bookmarksopen=true,
 bookmarksopenlevel=0,
 hypertexnames=false,
-colorlinks=true,% Set to false to disable coloring links
-citecolor=darkspringgreen,% The color of citations
-linkcolor=darkred,% The color of references to document elements (sections, figures, etc)
-urlcolor=darkred,% The color of hyperlinks (URLs)
+colorlinks=true,% Keep links clickable without colored boxes
+allcolors=black,% Print link, citation, and URL text in normal black
 pdfstartview={FitV},
 unicode,
 breaklinks=true,

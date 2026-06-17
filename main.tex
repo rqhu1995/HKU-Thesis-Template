@@ -25,7 +25,7 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[
-10pt, % The default document font size, options: 10pt, 11pt, 12pt
+12pt, % The default document font size, options: 10pt, 11pt, 12pt
 %oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
 english, % ngerman for German
 onehalfspacing, % Single line spacing (singlespacing), alternatives: onehalfspacing or doublespacing
@@ -49,9 +49,11 @@ headsepline, % Uncomment to get a line under the header
 % \captionsetup{justification=justified, margin=0pt}
 % \renewcommand\thesubfigure{(\Alph{subfigure})} % change the image numbering and reference link to (A),(B),(C), ...... format
 
-\usepackage{mathpazo} % Use the Palatino font by default
+\usepackage{newtxtext} % Times-like text font
+\usepackage{newtxmath} % Times-like math font
+\renewcommand{\ttdefault}{\rmdefault} % Keep code-style text in the same Times-like family
 % \usepackage[backend=bibtex,style=alphabetic,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
-\usepackage[natbib=true,maxbibnames=99,firstinits=true,sorting=none]{biblatex}
+\usepackage[natbib=true,maxbibnames=99,giveninits=true,sorting=none]{biblatex}
 
 \addbibresource{thesis.bib} % The filename of the bibliography
 
@@ -83,10 +85,10 @@ headsepline, % Uncomment to get a line under the header
 %	THESIS INFORMATION
 %----------------------------------------------------------------------------------------
 
-\thesistitle{HKU Doctoral Thesis Template}
+\thesistitle{User-Dissatisfaction-Based Static Bike Repositioning: Formulations, Solution Methods, and Extensions to Broken Bikes and On-Site Repair}
 % Thesis title, this is used in the title and abstract, print it elsewhere with \ttitle
 
-\supervisor{Prof. FirstName \textsc{FamilyName}}
+\supervisor{Prof. W. Y. \textsc{Szeto}}
 % Your supervisor's name, this is used in the title page, print it elsewhere with \supname
 
 \cosupervisor{Prof. FirstName \textsc{FamilyName}}
@@ -99,7 +101,7 @@ headsepline, % Uncomment to get a line under the header
 \degree{Doctor of Philosophy}
 % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
 
-\author{FirstName \textsc{FamilyName}}
+\author{Runqiu \textsc{Hu}}
 % The author name, this is used in the title page and abstract, print it elsewhere with \authorname
 
 \addresses{}
@@ -111,20 +113,20 @@ headsepline, % Uncomment to get a line under the header
 \keywords{Light field, high-dimensional convolutional neural network, deep learning}
 % Keywords for your thesis, this is not currently used anywhere in the template, print it elsewhere with \keywordnames
 
-\university{University of Hong Kong}
+\university{The University of Hong Kong}
 % Your University's name and URL, this is used in the cover page and abstract, print it elsewhere with \univname
 
-\bsuniversity{HKU}
-\msuniversity{HKU}
+\bsuniversity{}
+\msuniversity{}
 % Your Bachelor/Master University's name and URL, this is used in the title page and abstract, print it elsewhere with \univname
 
-\department{Department Name}
+\department{Department of Civil Engineering}
 % Your department's name and URL, this is used in the title page and abstract, print it elsewhere with \deptname
 
 \group{Laboratory of The Student}
 % Your research group's name and URL, this is used in the title page, print it elsewhere with \groupname
 
-\faculty{Faculty Name}
+\faculty{Faculty of Engineering}
 % Your faculty's name and URL, this is used in the title page and abstract, print it elsewhere with \facname
 
 \AtBeginDocument{
@@ -150,12 +152,11 @@ headsepline, % Uncomment to get a line under the header
 \frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
 \pagestyle{plain} % Default to the plain heading style until the thesis style is called for the body content
 
-
 %----------------------------------------------------------------------------------------
-%	COVER
+%	REFERENCE TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\input{Covers/cover.tex}
+\input{Titlepage/library_titlepage.tex}
 
 
 %----------------------------------------------------------------------------------------
@@ -170,12 +171,7 @@ headsepline, % Uncomment to get a line under the header
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 \input{Titlepage/titlepage.tex}
-
-%----------------------------------------------------------------------------------------
-%	COPYRIGHT PAGE
-%----------------------------------------------------------------------------------------
-
-\input{Copyrights/copyright.tex}
+\pagestyle{plain}
 
 
 %----------------------------------------------------------------------------------------
@@ -186,22 +182,9 @@ headsepline, % Uncomment to get a line under the header
 
 
 %----------------------------------------------------------------------------------------
-%	QUOTATION PAGE
-%----------------------------------------------------------------------------------------
-
-\input{Dedication/dedication.tex}
-
-
-%----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------------------
 \input{Acknowledgments/acknowledgments.tex}
-
-%----------------------------------------------------------------------------------------
-%	LIST OF PUBLICATIONS PAGES
-%----------------------------------------------------------------------------------------
-\input{Publications/publications.tex}
-
 
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
@@ -239,6 +222,10 @@ headsepline, % Uncomment to get a line under the header
 
 \include{Chapters/Chapter1}
 \include{Chapters/Chapter2}
+\include{Chapters/Chapter3}
+\include{Chapters/Chapter4}
+\include{Chapters/Chapter5}
+\include{Chapters/Chapter6}
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
@@ -258,6 +245,7 @@ headsepline, % Uncomment to get a line under the header
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
+\nocite{Gershun1939Light}
 \printbibliography[heading=bibintoc]
 
 %----------------------------------------------------------------------------------------
