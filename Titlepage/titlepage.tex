@@ -1,32 +1,37 @@
 \begin{titlepage}
 \thispagestyle{empty}
+\setlength{\parskip}{0pt}
 \begin{center}
-\vspace*{0.07\textheight}
 
-{\large\bfseries \ttitle\par}
+{\fontsize{14pt}{18pt}\selectfont\bfseries
+\parbox{0.82\textwidth}{\centering\MakeUppercase{\ttitle}}\par}
 
-\vspace*{0.16\textheight}
-by
+\vspace*{108pt}
 
-\vspace*{0.06\textheight}
-{\bfseries \authorname\par}
+{\fontsize{14pt}{18pt}\selectfont by\par}
+
+\vspace*{46pt}
+
+{\fontsize{14pt}{18pt}\selectfont\bfseries \authorname\par}
 \ifblank{\previousdegrees}{}{%
-	\vspace{0.4\baselineskip}
-	{\previousdegrees\par}%
+	{\fontsize{14pt}{18pt}\selectfont \previousdegrees\par}%
 }
 
-\vspace*{0.12\textheight}
-\deptname\par
-\univname\par
+\vspace*{74pt}
+
+{\fontsize{12pt}{18pt}\selectfont \deptname\par}
+{\fontsize{12pt}{18pt}\selectfont \univname\par}
 
 \vfill
 
-A thesis submitted in partial fulfilment of the requirements for\par
-the Degree of \degreename\par
-at \univname\par
+{\fontsize{12pt}{18pt}\selectfont A thesis submitted in partial fulfilment of the requirements for\par}
+{\fontsize{12pt}{18pt}\selectfont the Degree of \degreename\par}
+{\fontsize{12pt}{18pt}\selectfont at \univname\par}
 
-\vspace*{0.04\textheight}
-\submissionmonthyear\par
+\vspace*{12pt}
 
+{\fontsize{12pt}{18pt}\selectfont \submissionmonthyear\par}
+
+\vspace*{10pt}
 \end{center}
 \end{titlepage}

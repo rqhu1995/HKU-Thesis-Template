@@ -63,37 +63,50 @@
   \leftskip\z@skip}
   
 %  Simple interface for the user to customize the chapter titles
-\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{-90pt}}
-\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{16pt}}
-\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{10pt}}
+\ProvideDocumentCommand{\abovechapterskip}{}{\vspace*{-43.5pt}}
+\ProvideDocumentCommand{\chapterbelowskip}{}{\vspace*{9pt}}
+\ProvideDocumentCommand{\chapterinbetweenskip}{}{\vspace*{-18pt}}
 \ProvideDocumentCommand{\autodot}{}{}
 \ProvideDocumentCommand{\mdtChapapp}{}{}
 \ProvideDocumentCommand{\chapteralign}{}{\centering}
-\ProvideDocumentCommand{\chapterfont}{}{\Large\bfseries}
-\ProvideDocumentCommand{\chaptertitlefont}{}{\Large\bfseries}
-\ProvideDocumentCommand{\chapterprefixfont}{}{\Large\bfseries}
-\ProvideDocumentCommand{\frontmatterheadingfont}{}{\large\bfseries}
-\ProvideDocumentCommand{\sectionheadingfont}{}{\normalfont\normalsize\bfseries}
-\ProvideDocumentCommand{\subsectionheadingfont}{}{\normalfont\normalsize\bfseries}
-\ProvideDocumentCommand{\subsubsectionheadingfont}{}{\normalfont\normalsize}
-\renewcommand\@seccntformat[1]{%
-  \ifstrequal{#1}{section}{\csname the#1\endcsname.\quad}{%
-  \ifstrequal{#1}{subsection}{\csname the#1\endcsname.\quad}{%
-  \csname the#1\endcsname\quad}}%
+\ProvideDocumentCommand{\chapterfont}{}{\normalfont\fontsize{16pt}{36pt}\selectfont\bfseries}
+\ProvideDocumentCommand{\chaptertitlefont}{}{\normalfont\fontsize{16pt}{36pt}\selectfont\bfseries}
+\ProvideDocumentCommand{\chapterprefixfont}{}{\normalfont\fontsize{16pt}{36pt}\selectfont\bfseries}
+\ProvideDocumentCommand{\frontmatterheadingfont}{}{\normalfont\fontsize{16pt}{18pt}\selectfont\bfseries}
+\ProvideDocumentCommand{\appendixheadingfont}{}{\normalfont\fontsize{14pt}{18pt}\selectfont\bfseries}
+\ProvideDocumentCommand{\appendixsectionheadingfont}{}{\normalfont\fontsize{11pt}{18pt}\selectfont\bfseries\itshape}
+\ProvideDocumentCommand{\sectionheadingfont}{}{\normalfont\fontsize{14pt}{18pt}\selectfont\bfseries}
+\ProvideDocumentCommand{\subsectionheadingfont}{}{\normalfont\fontsize{12pt}{18pt}\selectfont\bfseries}
+\ProvideDocumentCommand{\subsubsectionheadingfont}{}{\normalfont\fontsize{11pt}{18pt}\selectfont\bfseries}
+\newif\ifHKU@inappendix
+\pretocmd{\appendix}{\HKU@inappendixtrue}{}{}
+\newcommand{\HKU@sectionheading}[1]{%
+	\ifHKU@inappendix
+		{\appendixsectionheadingfont #1}%
+	\else
+		{\sectionheadingfont\MakeUppercase{#1}}%
+	\fi
 }
+\renewcommand\@seccntformat[1]{%
+  \ifHKU@inappendix
+    \ifstrequal{#1}{section}{Appendix \csname the#1\endcsname\quad}{\csname the#1\endcsname.\quad}%
+  \else
+	    \csname the#1\endcsname.\quad
+	  \fi
+	}
 \ProvideDocumentCommand{\paragraphheadingfont}{}{\normalfont\normalsize}
 \ProvideDocumentCommand{\subparagraphheadingfont}{}{\normalfont\normalsize\itshape}
 \renewcommand\section{\@startsection{section}{1}{\z@}%
-  {-3.5ex \@plus -1ex \@minus -.2ex}%
-  {1.2ex \@plus .2ex}%
-  {\sectionheadingfont\MakeUppercase}}
+  {16pt \@plus 1ex \@minus .2ex}%
+  {3pt \@plus .2ex}%
+  {\HKU@sectionheading}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-  {-3.25ex\@plus -1ex \@minus -.2ex}%
-  {1.0ex \@plus .2ex}%
+  {3pt\@plus 1ex \@minus .2ex}%
+  {3pt \@plus .2ex}%
   {\subsectionheadingfont}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
-  {-3.25ex\@plus -1ex \@minus -.2ex}%
-  {1.5ex \@plus .2ex}%
+  {3pt\@plus 1ex \@minus .2ex}%
+  {3pt \@plus .2ex}%
   {\subsubsectionheadingfont}}
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
   {3.25ex \@plus1ex \@minus.2ex}%
@@ -104,9 +117,26 @@
   {-1em}%
   {\subparagraphheadingfont}}
 \DeclareDocumentCommand{\@makechapterhead}{ m }{%
-	\abovechapterskip
-	{\parindent \z@ \chapteralign \normalfont
-		\ifnum \c@secnumdepth >\m@ne
+	\ifHKU@inappendix
+			\ifnum\value{chapter}=1
+				\abovechapterskip
+				{\parindent \z@ \centering \normalfont
+					\chapterfont APPENDIXES\par\nobreak
+					\vspace*{-9.4pt}
+				}
+			\else
+				\vspace*{-35.2pt}
+			\fi
+		{\parindent \z@ \normalfont
+			\appendixheadingfont
+			\noindent\makebox[96pt][l]{Appendix \thechapter}#1\par\nobreak
+			\vspace*{18pt}
+		}
+		\thispagestyle{\chapter@p@gestyle}
+	\else
+		\abovechapterskip
+		{\parindent \z@ \chapteralign \normalfont
+			\ifnum \c@secnumdepth >\m@ne
 		\if@mainmatter
 		\ifbool{chapteroneline}{%
 			\chapterfont \mdtChapapp\thechapter\autodot\enspace
@@ -120,19 +150,50 @@
 		\interlinepenalty\@M%
 			\chaptertitlefont #1\par\nobreak
 		\chapterbelowskip
-	}
-	\thispagestyle{\chapter@p@gestyle}
+		}
+		\thispagestyle{\chapter@p@gestyle}
+	\fi
 }
+\def\@chapter[#1]#2{%
+	\ifnum \c@secnumdepth >\m@ne
+		\if@mainmatter
+			\refstepcounter{chapter}%
+			\typeout{\@chapapp\space\thechapter.}%
+			\ifHKU@inappendix
+				\ifnum\value{chapter}=1
+					\ifdef{\phantomsection}{\phantomsection}{}%
+					\addcontentsline{toc}{chapter}{APPENDIXES}%
+				\fi
+				\ifdef{\phantomsection}{\phantomsection}{}%
+				\addcontentsline{toc}{section}{Appendix \thechapter}%
+			\else
+				\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+			\fi
+		\else
+			\addcontentsline{toc}{chapter}{#1}%
+		\fi
+	\else
+		\addcontentsline{toc}{chapter}{#1}%
+	\fi
+	\chaptermark{#1}%
+	\addtocontents{lof}{\protect\addvspace{10\p@}}%
+	\addtocontents{lot}{\protect\addvspace{10\p@}}%
+	\if@twocolumn
+		\@topnewpage[\@makechapterhead{#2}]%
+	\else
+		\@makechapterhead{#2}%
+		\@afterheading
+	\fi}
 \def\@makeschapterhead#1{%
-	\abovechapterskip
-	{\parindent \z@ \chapteralign
-		\normalfont
-		\interlinepenalty\@M
-		\chapterfont  #1\par\nobreak
-		\chapterbelowskip
+		\abovechapterskip
+		{\parindent \z@ \chapteralign
+			\normalfont
+			\interlinepenalty\@M
+			\chapterfont  #1\par\nobreak
+			\vspace*{-4pt}
+		}
+		\thispagestyle{\chapter@p@gestyle}
 	}
-	\thispagestyle{\chapter@p@gestyle}
-}
 
 % Add blank page
 \def\blankpage{%
@@ -177,6 +238,8 @@
 %	DEFINITION OF LIST OF PUBLICATIONS
 %----------------------------------------------------------------------------------------
 \RequirePackage{enumitem} % Required for listing the journal and conference items
+\setlist[itemize]{topsep=0pt, itemsep=0pt, parsep=0pt, partopsep=0pt, before=\vspace{-\parskip}, after=\vspace{-\parskip}}
+\setlist[enumerate]{topsep=0pt, itemsep=0pt, parsep=0pt, partopsep=0pt, before=\vspace{-\parskip}, after=\vspace{-\parskip}}
 
 \newenvironment{publications}{
     \chapter*{}
@@ -237,11 +300,21 @@
 \patchcmd{\listoffigures}{\MakeUppercase}{\MakeMarkcase}{}{}
 \patchcmd{\listoftables}{\MakeUppercase}{\MakeMarkcase}{}{}
 \patchcmd{\listofalgorithms}{\MakeUppercase}{\MakeMarkcase}{}{}
-\patchcmd{\tableofcontents}{%
-	\@starttoc{toc}%
-}{%
-	\begingroup\emergencystretch=3em\@starttoc{toc}\endgroup%
-}{}{}
+		\patchcmd{\tableofcontents}{%
+			\@starttoc{toc}%
+		}{%
+			\begingroup\emergencystretch=3em\setlength{\parskip}{0pt}\fontsize{12pt}{18pt}\selectfont\vspace*{12pt}\@starttoc{toc}\endgroup%
+		}{}{}
+		\patchcmd{\listoftables}{%
+			\@starttoc{lot}%
+		}{%
+			\begingroup\emergencystretch=3em\setlength{\parskip}{0pt}\fontsize{12pt}{18pt}\selectfont\vspace*{12pt}\let\addvspace\@gobble\@starttoc{lot}\endgroup%
+		}{}{}
+		\patchcmd{\listoffigures}{%
+			\@starttoc{lof}%
+		}{%
+			\begingroup\emergencystretch=3em\setlength{\parskip}{0pt}\fontsize{12pt}{18pt}\selectfont\vspace*{12pt}\let\addvspace\@gobble\@starttoc{lof}\endgroup%
+		}{}{}
 
 % If the option `nolistspacing' is given, the spacing in the different lists is reduced to single spacing. This option is only useful, if the spacing of the document has been changed to onehalfspacing or doublespacing.
 \ifbool{nolistspace}{
@@ -309,8 +382,28 @@
 
 \RequirePackage{caption} % Required for customising the captions
 \RequirePackage[labelformat=simple,font=small]{subcaption}
-\captionsetup{justification=justified,font=normalsize,labelfont=bf,margin=0pt}
+\captionsetup{justification=centering,font=small,labelfont=normalfont,labelsep=space,margin=0pt}
+\renewcommand{\thefigure}{\thechapter-\arabic{figure}}
+\renewcommand{\thetable}{\thechapter-\arabic{table}}
 \renewcommand\thesubfigure{(\alph{subfigure})} % change the image numbering and reference link to (a),(b),(c), ...... format
+\newcommand*\HKU@listentry[3]{%
+	\ifnum \c@tocdepth >\z@
+			\begingroup
+				\parindent \z@ \rightskip \@pnumwidth
+				\parfillskip -\@pnumwidth
+				\def\numberline##1##2{%
+					\settowidth{\@tempdima}{#3~9-99\enspace}%
+					\hangindent\@tempdima
+					\hangafter 1
+					\noindent\makebox[\@tempdima][l]{#3~##1}##2%
+				}%
+			#1\nobreak
+			\leaders\hbox{$\m@th \mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill
+			\nobreak\hb@xt@\@pnumwidth{\hss #2\kern-\p@\kern\p@}\par
+		\endgroup
+	\fi}
+\renewcommand*\l@table[2]{\HKU@listentry{#1}{#2}{Table}}
+\renewcommand*\l@figure[2]{\HKU@listentry{#1}{#2}{Figure}}
 
 \RequirePackage[ruled, linesnumbered]{algorithm2e}
 %----------------------------------------------------------------------------------------
@@ -376,19 +469,38 @@
 
 \setcounter{tocdepth}{3} % The depth to which the document sections are printed to the table of contents
 \ProvideDocumentCommand{\addchaptertocentry}{ m }{%
-	\addcontentsline{toc}{chapter}{#1}%
+	\addcontentsline{toc}{chapter}{\MakeUppercase{#1}}%
 }
-\patchcmd{\l@chapter}{%
-	\setlength\@tempdima{1.5em}%
-}{%
-	\setlength\@tempdima{6.8em}%
-}{}{}
-\patchcmd{\l@chapter}{%
-	#1\nobreak\hfil%
-}{%
-	\renewcommand{\numberline}[1]{\hb@xt@\@tempdima{CHAPTER ##1\hfil}}%
-	#1\nobreak\hfil%
-}{}{}
+\renewcommand*\l@chapter[2]{%
+	\ifnum \c@tocdepth >\m@ne
+		\addpenalty{-\@highpenalty}%
+		\setlength\@tempdima{6.8em}%
+		\begingroup
+			\parindent \z@ \rightskip \@pnumwidth
+			\parfillskip -\@pnumwidth
+			\leavevmode \bfseries
+			\renewcommand{\numberline}[1]{%
+				\hb@xt@\@tempdima{%
+					\ifcat a##1%
+						Appendix ##1%
+					\else
+						CHAPTER ##1%
+					\fi
+					\hfil
+				}%
+			}%
+			\advance\leftskip\@tempdima
+			\hskip -\leftskip
+			#1\nobreak
+			\leaders\hbox{$\m@th \mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill
+			\nobreak\hb@xt@\@pnumwidth{\hss #2\kern-\p@\kern\p@}\par
+			\penalty\@highpenalty
+		\endgroup
+	\fi}
+\renewcommand{\numberline}[1]{\hb@xt@\@tempdima{#1.\hfil}}
+\renewcommand*\l@section{\@dottedtocline{1}{24pt}{48pt}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{48pt}{48pt}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{72pt}{72pt}}
 
 %----------------------------------------------------------------------------------------
 %	DEFINE CUSTOM NEW COMMAND
@@ -425,12 +537,14 @@
 
 \RequirePackage{geometry}
 \geometry{
-	headheight=4ex,
-	includehead,
-	includefoot
+	headheight=14pt,
+	headsep=0pt,
+	footskip=8.6mm,
+	ignorehead,
+	ignorefoot
 }
 
-\raggedbottom
+\flushbottom
 
 %----------------------------------------------------------------------------------------
 %	PENALTIES
@@ -449,7 +563,7 @@
 \RequirePackage[markcase=used]{scrlayer-scrpage}
 \providepairofpagestyles{thesisSimple}{%
 	\clearpairofpagestyles%
-	\cfoot[\pagemark]{\pagemark}% Centered footer page number, including plain pages
+	\ofoot*{\normalfont\fontsize{10pt}{12pt}\selectfont\pagemark\hspace*{2.7pt}}% Right footer page number, including plain pages
 }
 \pagestyle{thesisSimple}
 \providepairofpagestyles[thesisSimple]{thesis}{%
@@ -486,15 +600,20 @@ KOMA-script documentation for details.}]{fancyhdr}
 %	ABBREVIATIONS PAGE DESIGN
 %----------------------------------------------------------------------------------------
 
-\newcommand{\abbrevname}{List of Abbreviations}
+\newcommand{\abbrevname}{LIST OF ABBREVIATIONS}
 \providecaptionname{english,british,american}{\abbrevname}{List of Abbreviations}
 \providecaptionname{ngerman,german,austrian,naustrian}{\abbrevname}{Abk\"urzungsverzeichnis}
 \NewDocumentEnvironment{abbreviations}{ m }{%
 	\ifbool{nolistspace}{\begingroup\singlespacing}{}
-	\ifbool{listtoc}{\addchap{\abbrevname}}{\addchap*{\abbrevname}}
+	\ifbool{listtoc}{\addchap{LIST OF ABBREVIATIONS}}{\addchap*{LIST OF ABBREVIATIONS}}
+	\vspace*{22pt}
+	\HKUAbbreviationsTabletrue
+	\setlength\LTleft{0pt}
+	\setlength\LTright{0pt}
 	\begin{longtable}{#1}
 	}{%
 	\end{longtable}
+	\HKUAbbreviationsTablefalse
 	\addtocounter{table}{-1}% Don't count this table as one of the document tables
 	\ifbool{nolistspace}{\endgroup}{}
 }
@@ -552,25 +671,26 @@ KOMA-script documentation for details.}]{fancyhdr}
 % }
 % =====================================================================
 {%
-	\DeclareDocumentEnvironment{abstract}{ O{} }{
-		\checktoopen
-		\tttypeout{\abstractname}
-		\pagestyle{empty}
-		\begin{center}
-		    \vspace{-2em}
-            {\normalsize\abstractname~of thesis entitled \par}
-			{\Large\bfseries ``\@title'' \par}% Thesis title
-            \medskip
-            {Submitted by \par}
-            \medskip
-            {\textbf{\authorname} \par}
-            \medskip
-            {for the degree of \degreename \par}
-            {at \univname \par}
-            {in \submissionmonthyear \par}
-			\bigskip
-		\end{center}
-	}
+		\DeclareDocumentEnvironment{abstract}{ O{} }{
+			\checktoopen
+			\tttypeout{\abstractname}
+			\pagestyle{empty}
+			{\setlength{\parskip}{0pt}
+			\begin{center}
+			    \vspace*{-18pt}
+	            {\fontsize{11pt}{18pt}\selectfont\MakeUppercase{\abstractname}~of the thesis entitled \par}
+				{\fontsize{14pt}{18pt}\selectfont\bfseries\MakeUppercase{\@title} \par}% Thesis title
+	            \vspace{18pt}
+	            {Submitted by \par}
+	            {\textbf{\authorname} \par}
+	            {for the degree of \degreename \par}
+	            {at \univname \par}
+	            {in \submissionmonthyear \par}
+				\vspace{0pt}
+			\end{center}
+			}
+				\vspace*{-18pt}\ignorespaces
+		}
 	{
 			\ifblank{#1}{}{%
 				\par\bigskip
@@ -625,12 +745,12 @@ KOMA-script documentation for details.}]{fancyhdr}
 	}
 }
 	{
-		\DeclareDocumentEnvironment{acknowledgements}{}{%
-			\checktoopen
-			\tttypeout{\acknowledgementname}
-			\thispagestyle{plain}
-			\begin{center}{\frontmatterheadingfont\acknowledgementname\par}\end{center}
-		}
+			\DeclareDocumentEnvironment{acknowledgements}{}{%
+				\checktoopen
+				\tttypeout{\acknowledgementname}
+				\thispagestyle{plain}
+					{\setlength{\parskip}{0pt}\begin{center}\vspace*{-8pt}{\frontmatterheadingfont\MakeUppercase{\acknowledgementname}\par}\end{center}}
+			}
 		{
 			\vfil\vfil\null
 	}
@@ -649,13 +769,14 @@ KOMA-script documentation for details.}]{fancyhdr}
 		\addchap*{\authorshipname}
 		}{}%
 }{
-		\DeclareDocumentEnvironment{declaration}{}{
-			\checktoopen
-			\tttypeout{\authorshipname}
-			\thispagestyle{plain}
-			{\noindent\frontmatterheadingfont\authorshipname\par\vspace{\baselineskip}}
-		}{}
-	}
+				\DeclareDocumentEnvironment{declaration}{}{
+					\checktoopen
+					\tttypeout{\authorshipname}
+					\thispagestyle{plain}
+						{\setlength{\parskip}{0pt}\begin{center}\vspace*{-8pt}{\frontmatterheadingfont\MakeUppercase{\authorshipname}\par}\end{center}}
+					\vspace*{-22pt}
+				}{}
+			}
 
 %----------------------------------------------------------------------------------------
 %	DEDICATION PAGE DESIGN

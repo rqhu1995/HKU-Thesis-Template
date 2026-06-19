@@ -1,6 +1,6 @@
 % Appendix D imported from Paper1.tex
 
-\chapter{Repairing, Loading, and Unloading Quantity Assignment Algorithms}
+\chapter[Repairing, Loading, and Unloading Quantity Assignment Algorithms]{Repairing, Loading, and Unloading\\ Quantity Assignment Algorithms}
 \label{AppendixD}
 \label{app:ch4-quantity-assignment-algorithms}
 
@@ -10,24 +10,24 @@ bikes repaired by repairman \emph{i} at each station. For surplus stations, no b
 the current stage. For deficit stations, the repairing quantity is constrained by the deviation of
 usable bike inventory from the target level and the station repairing budget.
 
-\begin{longtable}{@{}lll@{}}
+\begin{longtable}{@{}L{0.06\linewidth}L{0.04\linewidth}L{0.84\linewidth}@{}}
 \toprule
-\multicolumn{3}{@{}l@{}}{%
+\multicolumn{3}{@{}L{0.94\linewidth}@{}}{%
 \textbf{Algorithm 5:}
 \(assignRepair\left( {r_{i},\left( {\mathit{maxTim}e_{s,i}^{\text{r}}} \right)_{s \in S}} \right)\)} \\
 \midrule
 \endhead
 \bottomrule
 \endlastfoot
-\textbf{1} & \multicolumn{2}{l@{}}{%
+\textbf{1} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 Initialization:\(g_{s,i} = 0,\forall s \in S\)} \\
-\textbf{2} & \multicolumn{2}{l@{}}{%
+\textbf{2} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{for} \emph{j}~\textbf{=}~1 to \(\left| r_{i} \right| - 2\) \textbf{do}} \\
 \textbf{3} & &
 \(g_{s_{i_{j}},i} = \min\left\{ {\max\left\{ {q_{s_{\mathit{ij}}} - p_{s_{\mathit{ij}}},0} \right\},b_{s_{i_{j}}},\left\lfloor \mathit{maxTim}e_{s_{i_{j}},i}^{\text{r}}/t^{\text{repair}} \right\rfloor} \right\}\) \\
-\textbf{4} & \multicolumn{2}{l@{}}{%
+\textbf{4} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{end for}} \\
-\textbf{5} & \multicolumn{2}{l@{}}{%
+\textbf{5} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{return} \(\left( g_{s,i} \right)_{s \in S}\)} \\
 \end{longtable}
 
@@ -37,9 +37,9 @@ loading (\textbf{Algorithm 9}). Note that we use \emph{l} to represent the order
 when the concerned node is visited by truck and assigned a loading quantity in these four
 algorithms.
 
-\begin{longtable}{@{}ll@{}}
+\begin{longtable}{@{}L{0.06\linewidth}L{0.88\linewidth}@{}}
 \toprule
-\multicolumn{2}{@{}l@{}}{%
+\multicolumn{2}{@{}L{0.90\linewidth}@{}}{%
 \textbf{Algorithm 6:}
 \(assignLoadU\left( {r_{k}',l,\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load,u}}} \right)_{s \in S}} \right)\)} \\
 \midrule
@@ -70,9 +70,11 @@ updates the station loading budget (Line 5). Finally, it returns the updated rem
 (un)loading budget, unsatisfied loading quantity due to the limited station loading budget, and the
 number of bikes loaded onto truck \emph{k} (Line 6).
 
-\begin{longtable}{@{}lllll@{}}
+\begin{landscape}
+\setlength{\tabcolsep}{2pt}
+\begin{longtable}{@{}L{0.05\linewidth}L{0.04\linewidth}L{0.04\linewidth}L{0.04\linewidth}L{0.79\linewidth}@{}}
 \toprule
-\multicolumn{5}{@{}l@{}}{%
+\multicolumn{5}{@{}L{0.94\linewidth}@{}}{%
 \textbf{Algorithm 7:} \(assignUnloadU\begin{pmatrix}
 {r_{k}',l,\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},} \\
 {\left( {\mathit{unsa}t_{s,k}^{\text{load,u}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{unload,u}}} \right)_{s \in S}}
@@ -81,96 +83,97 @@ number of bikes loaded onto truck \emph{k} (Line 6).
 \endhead
 \bottomrule
 \endlastfoot
-\textbf{1} & \multicolumn{4}{l@{}}{%
+\textbf{1} & \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 \(s = s_{k_{l}}'\)} \\
-\textbf{2} & \multicolumn{4}{l@{}}{%
+\textbf{2} & \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 \(y_{l,k}^{\text{u}^{+}} = \min\left\{ {\psi_{l - 1,k}^{\text{u}},C_{s} - p_{s} - b_{s},q_{s} - p_{s}} \right\}\)} \\
-& \multicolumn{4}{l@{}}{%
+& \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 /* add back the double-counted loading time as these unloaded bikes are not from the depot but from
 the previously visited surplus stations */} \\
-\textbf{3} & \multicolumn{4}{l@{}}{%
+\textbf{3} & \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 \(\mathit{maxTimeRemai}n_{s,k}^{\text{t}} = maxTimeRemain_{s,k}^{\text{t}} + 2t^{\text{load}} \cdot y_{l,k}^{\text{u}^{+}}\)} \\
-& \multicolumn{4}{l@{}}{%
+& \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 // target inventory not reached due to insufficient bike supply on the truck} \\
-\textbf{4} & \multicolumn{4}{l@{}}{%
+\textbf{4} & \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 \textbf{if} \(y_{l,k}^{\text{u}^{+}} < q_{s} - p_{s}\) \emph{and}
 \(y_{l,k}^{\text{u}^{+}} \neq C_{s} - p_{s} - b_{s}\) \textbf{then}} \\
-& & \multicolumn{3}{l@{}}{%
+& & \multicolumn{3}{@{}L{0.82\linewidth}@{}}{%
 /* line 5 to 20: load more bikes from the visited but still surplus stations and unload them to the
 current station until the target inventory is reached or the station loading budget is used up
 */} \\
-\textbf{5} & & \multicolumn{3}{l@{}}{%
+\textbf{5} & & \multicolumn{3}{@{}L{0.82\linewidth}@{}}{%
 \textbf{while} \(\exists\widehat{s} \in S:unsat_{\widehat{s},k}^{\text{load},\text{u}} > 0\)
 \textbf{and} \(\mathit{maxTimeRemai}n_{s,k}^{\text{t}} \geq 2t^{\text{load}}\) \textbf{do}} \\
-\textbf{6} & & & \multicolumn{2}{l@{}}{%
+\textbf{6} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(s'\)~=~the station with the highest \(\mathit{BCR}F_{\widehat{s}}^{\text{t}}\) and
 \(\mathit{unsat}_{s^{'},k}^{\text{load},\text{u}} > 0\) (break ties by choosing the smallest
 \(s'\))} \\
-\textbf{7} & & & \multicolumn{2}{l@{}}{%
+\textbf{7} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(l'\)~=~the index of station \(s'\) in the route \(r_{k}'\) (break ties by choosing the one with
 the largest order index)} \\
-& & & \multicolumn{2}{l@{}}{%
+& & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 // minimum truck residual capacity from the chosen node to the current node} \\
-\textbf{8} & & & \multicolumn{2}{l@{}}{%
+\textbf{8} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(rc_{k} = \min_{l^{''} = l^{'},l^{'} + 1,...,l - 1}Q_{k} - \psi_{l^{''},k}^{\text{u}} - \psi_{l^{''},k}^{\text{b}}\)} \\
-& & & \multicolumn{2}{l@{}}{%
+& & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 // the extra loaded quantity with no station loading budget} \\
-\textbf{9} & & & \multicolumn{2}{l@{}}{%
+\textbf{9} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(n = \min\left( {q_{s} - p_{s} - y_{l,k}^{\text{u}^{+}},rc_{k},unsat_{s^{'},k}^{\text{load,u}}} \right)\)} \\
-& & & \multicolumn{2}{l@{}}{%
+& & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 // the extra loaded quantity with the remaining station loading budget} \\
-\textbf{10} & & & \multicolumn{2}{l@{}}{%
+\textbf{10} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(\Lambda^{\text{load,u}} = \min\left\{ {n,\left\lfloor \mathit{maxTimeRemai}n_{s,k}^{\text{t}}/2t^{\text{load}} \right\rfloor} \right\}\)} \\
-\textbf{11} & & & \multicolumn{2}{l@{}}{%
+\textbf{11} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(\mathit{unsa}t_{s,k}^{\text{unload},\text{u}} = unsat_{s,k}^{\text{unload},\text{u}} + \left( {n - \Lambda^{\text{load,u}}} \right)\)//
 update the unsatisfied unloading quantity} \\
-& & & \multicolumn{2}{l@{}}{%
+& & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 // update the remaining station loading budget of the current station} \\
-\textbf{12} & & & \multicolumn{2}{l@{}}{%
+\textbf{12} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(\mathit{maxTimeRemai}n_{s,k}^{\text{t}} = maxTimeRemain_{s,k}^{\text{t}} - 2t^{\text{load}} \cdot \Lambda^{\text{load,u}}\)} \\
-\textbf{13} & & & \multicolumn{2}{l@{}}{%
+\textbf{13} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(\mathit{unsa}t_{s^{'},k}^{\text{load,u}} = unsat_{s^{'},k}^{\text{load,u}} - \Lambda^{\text{load},\text{u}}\)//
 update the unsatisfied loading quantity} \\
-\textbf{14} & & & \multicolumn{2}{l@{}}{%
+\textbf{14} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(p_{s'} = p_{s'} - \Lambda^{\text{load},\text{u}}\)// update the station inventory after extra
 loading of bikes} \\
-\textbf{15} & & & \multicolumn{2}{l@{}}{%
+\textbf{15} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{for} \(l''\) \textbf{in} \(l'\) \emph{to} \(l - 1\) \textbf{do} // update the truck
 inventories} \\
 \textbf{16} & & & &
 \(\psi_{l^{''},k}^{\text{u}} = \psi_{l^{''},k}^{\text{u}} + \Lambda^{\text{load,u}}\) \\
-\textbf{17} & & & \multicolumn{2}{l@{}}{%
+\textbf{17} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{end for}} \\
-\textbf{18} & & & \multicolumn{2}{l@{}}{%
+\textbf{18} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(y_{l^{'},k}^{\text{u}^{-}} = y_{l^{'},k}^{\text{u}^{-}} + \Lambda^{\text{load,u}}\)// update the
 loading quantity} \\
-\textbf{19} & & & \multicolumn{2}{l@{}}{%
+\textbf{19} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(y_{l,k}^{\text{u}^{+}} = y_{l,k}^{\text{u}^{+}} + \Lambda^{\text{load,u}}\)// update the unloading
 quantity} \\
-\textbf{20} & & \multicolumn{3}{l@{}}{%
+\textbf{20} & & \multicolumn{3}{@{}L{0.82\linewidth}@{}}{%
 \textbf{end while}} \\
-\textbf{21} & & \multicolumn{3}{l@{}}{%
+\textbf{21} & & \multicolumn{3}{@{}L{0.82\linewidth}@{}}{%
 \textbf{if} \(y_{l,k}^{\text{u}^{+}} < q_{s} - p_{s}\) \textbf{then}// the target inventory is still
 not reached} \\
-\textbf{22} & & & \multicolumn{2}{l@{}}{%
+\textbf{22} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \emph{dv =} \(\max\left\{ {\mathit{dv} \mid dv < l,s_{k_{\mathit{dv}}}' = 0} \right\}\) // order
 index of the last visited depot} \\
-\textbf{23} & & & \multicolumn{2}{l@{}}{%
+\textbf{23} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 // adjust the loading at the previously visited depot (\textbf{Algorithm 8})} \\
-\textbf{24} & & & \multicolumn{2}{l@{}}{%
+\textbf{24} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \emph{h}, \(\mathit{maxTimeRemai}n_{s,k}^{\text{t}}\),
 \(\mathit{unsa}t_{s,k}^{\text{unload},\text{u}}\)\emph{=}\(adjustDepotLoading\left( {\mathit{dv},l,maxTimeRemain_{s,k}^{\text{t}},unsat_{s,k}^{\text{unload,u}}} \right)\)} \\
-\textbf{25} & & & \multicolumn{2}{l@{}}{%
+\textbf{25} & & & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(y_{l,k}^{\text{u}^{+}} = y_{l,k}^{\text{u}^{+}} + h\)} \\
-\textbf{26} & & \multicolumn{3}{l@{}}{%
+\textbf{26} & & \multicolumn{3}{@{}L{0.82\linewidth}@{}}{%
 \textbf{end if}} \\
-\textbf{27} & \multicolumn{4}{l@{}}{%
+\textbf{27} & \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 \textbf{end if}} \\
-\textbf{28} & \multicolumn{4}{l@{}}{%
+\textbf{28} & \multicolumn{4}{@{}L{0.86\linewidth}@{}}{%
 \textbf{return} \(\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S}\),
 \(\left( {\mathit{unsa}t_{s,k}^{\text{load,u}}} \right)_{s \in S}\),
 \(\left( {\mathit{unsa}t_{s,k}^{\text{unload,u}}} \right)_{s \in S}\),\(y_{l,k}^{\text{u}^{+}}\)} \\
 \end{longtable}
+\end{landscape}
 
 \textbf{Algorithm 7} determines the unloading quantity by considering the truck's usable bike
 inventory, the station's residual capacity, and the deviation of the inventory from the target
@@ -187,24 +190,24 @@ the last visited depot in \(r_{k}'\) that requires (un)loading adjustment, h to 
 loading of usable bikes at the station that requires (un)loading adjustment, and s is the station
 that requires (un)loading adjustment from the previous depot.
 
-\begin{longtable}{@{}lll@{}}
+\begin{longtable}{@{}L{0.06\linewidth}L{0.04\linewidth}L{0.84\linewidth}@{}}
 \toprule
-\multicolumn{3}{@{}l@{}}{%
+\multicolumn{3}{@{}L{0.94\linewidth}@{}}{%
 \textbf{Algorithm 8:}
 \(adjustDepotLoading\left( {\mathit{dv},l,maxTimeRemain_{s,k}^{\text{t}},unsat_{s,k}^{\text{unload,u}}} \right)\)} \\
 \midrule
 \endhead
 \bottomrule
 \endlastfoot
-\textbf{1} & \multicolumn{2}{l@{}}{%
+\textbf{1} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(rc_{k} = \min_{l^{'} = dv,dv + 1,...,l - 1}Q_{k} - \psi_{l^{'},k}^{\text{u}} - \psi_{l^{'},k}^{\text{b}}\)} \\
-\textbf{2} & \multicolumn{2}{l@{}}{%
+\textbf{2} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(n = \min\left\{ {rc_{k},q_{s} - p_{s} - y_{l,k}^{\text{u}^{+}}} \right\}\)} \\
-\textbf{3} & \multicolumn{2}{l@{}}{%
+\textbf{3} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(h = \min\left\{ {n,\left\lfloor \mathit{maxTimeRemai}n_{s,k}^{\text{t}}/2t^{\text{load}} \right\rfloor} \right\}\)} \\
-\textbf{4} & \multicolumn{2}{l@{}}{%
+\textbf{4} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(\mathit{unsa}t_{s_{k_{l}}',k}^{\text{unload},\text{u}} = unsat_{s_{k_{l}}',k}^{\text{unload},\text{u}} + \left( {n - h} \right)\)} \\
-\textbf{5} & \multicolumn{2}{l@{}}{%
+\textbf{5} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{if} \(y_{\mathit{dv},k}^{\text{u}^{+}} > 0\) \textbf{then}// the original operation at the
 depot is unloading} \\
 \textbf{6} & &
@@ -216,23 +219,23 @@ loading \\
 \(y_{\mathit{dv},k}^{\text{u}^{-}} = \max\left\{ {h - y_{\mathit{dv},k}^{\text{u}^{+}},0} \right\}\) \\
 \textbf{8} & &
 \(\mathit{maxTimeRemai}n_{s_{k_{l}}',k}^{\text{t}} = maxTimeRemain_{s_{k_{l}}',k}^{\text{t}} - 2t^{\text{load}} \cdot y_{\mathit{dv},k}^{\text{u}^{-}}\) \\
-\textbf{9} & \multicolumn{2}{l@{}}{%
+\textbf{9} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{end if}} \\
-\textbf{10} & \multicolumn{2}{l@{}}{%
+\textbf{10} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{if} \(y_{\mathit{dv},k}^{\text{u}^{-}} > 0\) \textbf{then}// the original operation at the
 depot is loading} \\
 \textbf{11} & & \(y_{\mathit{dv},k}^{\text{u}^{-}} = y_{\mathit{dv},k}^{\text{u}^{-}} + h\)//
 increase the loading quantity \\
 \textbf{12} & &
 \(\mathit{maxTimeRemai}n_{s,k}^{\text{t}} = maxTimeRemain_{s,k}^{\text{t}} - 2t^{\text{load}} \cdot h\) \\
-\textbf{13} & \multicolumn{2}{l@{}}{%
+\textbf{13} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{end if}} \\
-\textbf{14} & \multicolumn{2}{l@{}}{%
+\textbf{14} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{for} \(l'\)~=~\emph{dv} to \emph{l} - 1 do} \\
 \textbf{15} & & \(\psi_{l',k}^{\text{u}} = \psi_{l',k}^{\text{u}} + h\) \\
-\textbf{16} & \multicolumn{2}{l@{}}{%
+\textbf{16} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{end for}} \\
-\textbf{17} & \multicolumn{2}{l@{}}{%
+\textbf{17} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{return} \emph{h},
 \(\mathit{maxTimeRemai}n_{s,k}^{\text{t}}\),\(\mathit{unsa}t_{s,k}^{\text{unload},\text{u}}\)} \\
 \end{longtable}
@@ -256,9 +259,11 @@ be loaded using \textbf{Algorithm 9}. The assignment follows a similar procedure
 \textbf{Algorithm 6}, with the loading quantities of broken bikes constrained by the residual
 capacity of the truck, the broken bike inventory at the station, and the station loading budget.
 
-\begin{longtable}{@{}ll@{}}
+\pagebreak
+
+\begin{longtable}{@{}L{0.06\linewidth}L{0.88\linewidth}@{}}
 \toprule
-\multicolumn{2}{@{}l@{}}{%
+\multicolumn{2}{@{}L{0.90\linewidth}@{}}{%
 \textbf{Algorithm 9:}
 \(assignLoadB\left( {r_{k}',l,\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load},\text{b}}} \right)_{s \in S}} \right)\)} \\
 \midrule

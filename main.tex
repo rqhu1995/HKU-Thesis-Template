@@ -24,40 +24,79 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
+% !TeX program = xelatex
 \documentclass[
-12pt, % The default document font size, options: 10pt, 11pt, 12pt
+11pt, % Shui (2016) uses an 11 pt Times New Roman body face
 oneside, % Conservative formal submission layout with symmetric margins
 english, % ngerman for German
-onehalfspacing, % Single line spacing (singlespacing), alternatives: onehalfspacing or doublespacing
+singlespacing, % Body leading is set explicitly below to match the sample thesis
 % draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
 % nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
 liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
 toctotoc, % Add the main table of contents to the table of contents
-parskip, % Uncomment to add space between paragraphs
 %nohyperref, % Uncomment to not load the hyperref package
 %headsepline, % Disabled for the formal submission style
 %chapterinoneline, % Uncomment to place the chapter title next to the number on one line
 % consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
-]{HKUThesis} % The class file specifying the document structure
+	]{HKUThesis} % The class file specifying the document structure
 
-\usepackage[utf8]{inputenc} % Required for inputting international characters
-\usepackage[T1]{fontenc} % Output font encoding for international characters
+\raggedbottom % Avoid stretching vertical gaps to force every page to the same bottom edge
+
+\usepackage{fontspec} % Native system fonts under XeLaTeX
+\setmainfont{Times New Roman}
+\setsansfont{Times New Roman}
+\setmonofont{Times New Roman}
 \usepackage{fontawesome} % Awesome symbol for usage
 \usepackage{wrapfig} % Add enbedded figure in the text
 \usepackage{tikz} % Used by optional reference title-page elements
-\usepackage{adjustbox} % Scale imported wide tables
+\usepackage{array} % Wrapped column types for imported tables and algorithms
 \usepackage{pdflscape} % Landscape pages for imported wide tables
 \usepackage{threeparttable} % Table notes for imported article tables
 \usepackage{mathtools} % Provides \mathmakebox for imported wide equations
+\allowdisplaybreaks[1] % Permit conservative page breaks inside long aligned models
+\newenvironment{modelalign}{%
+	\begingroup
+	\setlength{\abovedisplayskip}{6pt plus 2pt minus 2pt}%
+	\setlength{\abovedisplayshortskip}{4pt plus 2pt minus 2pt}%
+	\setlength{\belowdisplayskip}{6pt plus 2pt minus 2pt}%
+	\setlength{\belowdisplayshortskip}{4pt plus 2pt minus 2pt}%
+	\align
+}{%
+	\endalign
+	\endgroup
+}
+\usepackage{unicode-math}
+\setmathfont{TeX Gyre Termes Math} % Times-compatible mathematics
 % \usepackage[labelformat=simple]{subcaption} % Add multiple subfigures in a figure environment
-% \captionsetup{justification=justified, margin=0pt}
 % \renewcommand\thesubfigure{(\Alph{subfigure})} % change the image numbering and reference link to (A),(B),(C), ...... format
+\captionsetup[figure]{
+	font=small,
+	labelfont=bf,
+	labelsep=period,
+	format=hang,
+	justification=justified,
+	singlelinecheck=false,
+	width=0.90\textwidth,
+	skip=6pt
+}
+\captionsetup[table]{
+	font=small,
+	labelfont=bf,
+	labelsep=period,
+	format=hang,
+	justification=justified,
+	singlelinecheck=false,
+	width=0.90\textwidth,
+	skip=6pt
+}
 
-\usepackage{newtxtext} % Times-like text font
-\usepackage{newtxmath} % Times-like math font
 \renewcommand{\ttdefault}{\rmdefault} % Keep code-style text in the same Times-like family
-% \usepackage[backend=bibtex,style=alphabetic,natbib=true]{biblatex} % Use the bibtex backend with the authoryear citation style (which resembles APA)
-\usepackage[natbib=true,maxbibnames=99,giveninits=true,sorting=none]{biblatex}
+% Shui (2016) uses an author-year reference list rather than numeric labels.
+\usepackage[backend=biber,style=apa,natbib=true,maxbibnames=99,giveninits=true,sorting=nyt,doi=false,url=false,isbn=false]{biblatex}
+\setlength{\bibhang}{22pt}
+\setlength{\bibitemsep}{0pt}
+\setlength{\bibparsep}{0pt}
+\AtBeginBibliography{\fontsize{11pt}{18pt}\selectfont}
 
 \addbibresource{thesis.bib} % The filename of the bibliography
 
@@ -69,19 +108,31 @@ parskip, % Uncomment to add space between paragraphs
 
 \usepackage[normalem]{ulem} % Required to add dashed underlines
 
-\setlength\parindent{2em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newif\ifHKUAbbreviationsTable
+\setlength\parindent{24pt}
+\setlength\parskip{18pt}
+\setstretch{1}
+\AtBeginDocument{\setstretch{1}\fontsize{11pt}{18pt}\selectfont}
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
 %----------------------------------------------------------------------------------------
 
 \geometry{
-	paper=a4paper,
-	left=35mm,
-	right=35mm,
-	top=25mm,
-	bottom=25mm,
-	%showframe, % Uncomment to show how the type block is set on the page
-}
+		paper=a4paper,
+		left=35mm,
+		right=34mm,
+		top=25.15mm,
+		bottom=31.5mm,
+		headheight=14pt,
+		headsep=0pt,
+		footskip=8.6mm,
+		ignorehead,
+		ignorefoot,
+		%showframe, % Uncomment to show how the type block is set on the page
+	}
 
 
 %----------------------------------------------------------------------------------------
@@ -104,7 +155,7 @@ parskip, % Uncomment to add space between paragraphs
 \degree{Doctor of Philosophy}
 % Your degree name, this is used in the title page and abstract, print it elsewhere with \degreename
 
-\author{Runqiu \textsc{Hu}}
+\author{Runqiu Hu}
 % The author name, this is used in the title page and abstract, print it elsewhere with \authorname
 
 \newcommand{\previousdegrees}{B.Eng.; M.Eng.}
@@ -148,21 +199,27 @@ parskip, % Uncomment to add space between paragraphs
 %	NEW COMMAND DEFINITION
 %----------------------------------------------------------------------------------------
 \newcommand{\codestyle}[1]{\colorbox{gray!20}{\darkred{#1}}}
-\renewcommand{\submissionmonthyear}{TODO Month Year}
+\renewcommand{\submissionmonthyear}{June 2026}
 \renewcommand{\contentsname}{TABLE OF CONTENTS}
-\addto\captionsenglish{\renewcommand{\contentsname}{TABLE OF CONTENTS}}
+\renewcommand{\listtablename}{LIST OF TABLES}
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\addto\captionsenglish{%
+	\renewcommand{\contentsname}{TABLE OF CONTENTS}%
+	\renewcommand{\listtablename}{LIST OF TABLES}%
+	\renewcommand{\listfigurename}{LIST OF FIGURES}%
+}
 
 % Optional pages/lists. Enable only when they are needed for the final thesis.
 \newif\ifincludeLibraryTitlePage
 \includeLibraryTitlePagefalse
 \newif\ifincludeListOfFigures
-\includeListOfFiguresfalse
+\includeListOfFigurestrue
 \newif\ifincludeListOfTables
-\includeListOfTablesfalse
+\includeListOfTablestrue
 \newif\ifincludeListOfAlgorithms
 \includeListOfAlgorithmsfalse
 \newif\ifincludeAbbreviations
-\includeAbbreviationsfalse
+\includeAbbreviationstrue
 \newif\ifincludeSymbols
 \includeSymbolsfalse
 \newif\ifincludeAppendices
@@ -182,8 +239,10 @@ parskip, % Uncomment to add space between paragraphs
 %----------------------------------------------------------------------------------------
 
 \ifincludeLibraryTitlePage
-	\input{Titlepage/library_titlepage.tex}
+		\input{Titlepage/library_titlepage.tex}
 \fi
+
+\input{Covers/cover.tex}
 
 
 %----------------------------------------------------------------------------------------
@@ -222,12 +281,12 @@ parskip, % Uncomment to add space between paragraphs
 
 \tableofcontents % Prints the main table of contents
 
-\ifincludeListOfFigures
-	\listoffigures % Prints the list of figures
-\fi
-
 \ifincludeListOfTables
 	\listoftables % Prints the list of tables
+\fi
+
+\ifincludeListOfFigures
+	\listoffigures % Prints the list of figures
 \fi
 
 \ifincludeListOfAlgorithms
@@ -267,6 +326,17 @@ parskip, % Uncomment to add space between paragraphs
 \include{Chapters/Chapter6}
 
 %----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\cleardoublepage
+\phantomsection
+\chapter*{REFERENCES}
+\addcontentsline{toc}{chapter}{REFERENCES}
+\vspace*{12pt}
+\printbibliography[heading=none]
+
+%----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES
 %----------------------------------------------------------------------------------------
 
@@ -282,17 +352,6 @@ parskip, % Uncomment to add space between paragraphs
 	\include{Appendices/AppendixD}
 	\include{Appendices/AppendixE}
 \fi
-
-
-%----------------------------------------------------------------------------------------
-%	BIBLIOGRAPHY
-%----------------------------------------------------------------------------------------
-
-\cleardoublepage
-\phantomsection
-\chapter*{\bibname}
-\addcontentsline{toc}{chapter}{\bibname}
-\printbibliography[heading=none]
 
 %----------------------------------------------------------------------------------------
 

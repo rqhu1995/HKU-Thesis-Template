@@ -1,14 +1,14 @@
 % Appendix E imported from Paper1.tex
 
-\chapter{(Un)loading Budget Adjustment Algorithm for Trucks}
+\chapter[(Un)loading Budget Adjustment Algorithm for Trucks]{(Un)loading Budget Adjustment Algorithm\\ for Trucks}
 \label{AppendixE}
 \label{app:ch4-loading-budget-adjustment-algorithm}
 
 \textbf{Algorithm 10} shows the procedure of the (un)loading budget adjustment.
 
-\begin{longtable}{@{}lll@{}}
+\begin{longtable}{@{}L{0.06\linewidth}L{0.04\linewidth}L{0.84\linewidth}@{}}
 \toprule
-\multicolumn{3}{@{}l@{}}{%
+\multicolumn{3}{@{}L{0.94\linewidth}@{}}{%
 \textbf{Algorithm 10:} \(adjustLoadingBudget\begin{pmatrix}
 {\left( {\mathit{maxTimeIni}t_{s,k}^{\text{t}}} \right)_{s \in S},\left( {\mathit{maxTimeRemai}n_{s,k}^{\text{t}}} \right)_{s \in S},} \\
 {\left( {\mathit{unsa}t_{s,k}^{\text{load},\text{u}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{unload},\text{u}}} \right)_{s \in S},\left( {\mathit{unsa}t_{s,k}^{\text{load},\text{b}}} \right)_{s \in S}}
@@ -17,15 +17,15 @@
 \endhead
 \bottomrule
 \endlastfoot
-\textbf{1} & \multicolumn{2}{l@{}}{%
+\textbf{1} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \(\mathit{unusedTim}e_{k} = 0\)// the variable that stores the time budget that is assigned but not
 used} \\
-& \multicolumn{2}{l@{}}{%
+& \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 /* lines 2 to 6: add up all the bikes not loaded/unloaded at each station due to insufficient
 station (un)loading budgets and store the result in \(\mathit{unsa}t_{\widehat{s},k}\), subtract the
 overly assigned station (un)loading budgets, and accumulate them into
 \(\mathit{unusedTim}e_{k}\)*/} \\
-\textbf{2} & \multicolumn{2}{l@{}}{%
+\textbf{2} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{for} \(\widehat{s}\) \textbf{in} \emph{S} \textbf{do}} \\
 \textbf{3} & &
 \(\mathit{unsa}t_{\widehat{s},k} = unsat_{\widehat{s},k}^{\text{load,u}\mspace{6mu}} + unsat_{\widehat{s},k}^{\text{load,b}\mspace{6mu}} + unsat_{\widehat{s},k}^{\text{unload,u}\mspace{6mu}}\) \\
@@ -33,9 +33,9 @@ overly assigned station (un)loading budgets, and accumulate them into
 \(\mathit{maxTimeNe}w_{\widehat{s},k}^{\text{t}} = maxTimeInit_{\widehat{s},k}^{\text{t}} - maxTimeRemain_{\widehat{s},k}^{\text{t}}\) \\
 \textbf{5} & &
 \(\mathit{unusedTim}e_{k} = unusedTime_{k} + maxTimeRemain_{\widehat{s},k}^{\text{t}}\) \\
-\textbf{6} & \multicolumn{2}{l@{}}{%
+\textbf{6} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{end for}} \\
-\textbf{7} & \multicolumn{2}{l@{}}{%
+\textbf{7} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{while} \(\mathit{unusedTim}e_{k} \geq 2t^{\text{load}}\) \textbf{and}
 \(\exists\widehat{s} \in S:unsat_{\widehat{s},k} > 0\) \textbf{do}} \\
 \textbf{8} & & \(s' =\) The station that satisfies \(\mathit{unsa}t_{\widehat{s},k} > 0\) with the
@@ -47,9 +47,9 @@ highest \(\mathit{BCR}F_{\widehat{s}}^{\text{t}}\) (break ties by choosing the s
 \textbf{11} & & \(\mathit{unusedTim}e_{k} = unusedTime_{k} - \Delta\) \\
 \textbf{12} & &
 \(\mathit{unsa}t_{s',k} = unsat_{s',k} - \left\lfloor \Delta/2t^{\text{load}} \right\rfloor\) \\
-\textbf{13} & \multicolumn{2}{l@{}}{%
+\textbf{13} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{end while}} \\
-\textbf{14} & \multicolumn{2}{l@{}}{%
+\textbf{14} & \multicolumn{2}{@{}L{0.78\linewidth}@{}}{%
 \textbf{return} \(\left( {\mathit{maxTimeNe}w_{s,k}^{\text{t}}} \right)_{s \in S}\)} \\
 \end{longtable}
 

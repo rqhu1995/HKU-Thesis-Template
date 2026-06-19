@@ -1,4 +1,4 @@
-\chapter{USER-DISSATISFACTION-AWARE CLUSTER-FIRST, ROUTE-SECOND DECOMPOSITION FOR THE STATIC BIKE REPOSITIONING PROBLEM}
+\chapter[UDF-AWARE STATIC BRP DECOMPOSITION]{USER-DISSATISFACTION-AWARE CLUSTER-FIRST, ROUTE-SECOND DECOMPOSITION FOR THE STATIC BIKE REPOSITIONING PROBLEM}
 
 This chapter develops a user-dissatisfaction-aware cluster-first, route-second decomposition framework for the multi-vehicle static bike repositioning problem. The aim is to improve the scalability of UDF-based repositioning by incorporating user dissatisfaction reduction directly into the clustering phase, rather than treating clustering as a purely distance- or demand-based preprocessing step.
 
@@ -55,147 +55,62 @@ ${{f}_{i}}(s)$ & User dissatisfaction function at station $i$ \\
 \subsection{Arc-indexed formulation}\label{ch3:subsec:arc-indexed-formulation}
 
 For the sake of completeness, we present the multi-vehicle static BRP as a mixed-integer linear program, building on the arc-indexed formulation of Raviv et al. (2013). We specialize to a homogeneous fleet with shared capacity $Q$ and equal loading and unloading times $t^{\text{load}}$, and restrict each station to be visited by at most one vehicle. The formulation is
-
-\begin{equation}
-\label{ch3:eq:mvbrp-obj}
-\max \sum_{i \in V} \bigl( f_i(s_i^0) - g_i \bigr)
-\end{equation}
-
-subject to
-
-\begin{equation}
-\label{ch3:eq:mvbrp-inventory}
-s_i = s_i^0 - \sum_{k \in K} (y_{ik}^{\text{load}} - y_{ik}^{\text{unload}}) \quad \forall i \in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-load-conservation}
-y_{ik}^{\text{load}}-y_{ik}^{\text{unload}}=\sum\limits_{\begin{smallmatrix}
-j\in {{V}_{0}} \\
-j\ne i
-\end{smallmatrix}}{{{y}_{ijk}}}-\sum\limits_{\begin{smallmatrix}
-j\in {{V}_{0}} \\
-j\ne i
-\end{smallmatrix}}{{{y}_{jik}}}\quad \forall i\in {{V}_{0}},\ k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-arc-capacity}
-{{y}_{ijk}}\le Q{{x}_{ijk}}\quad \forall i,j\in {{V}_{0}}(i\ne j),\ k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-flow-conservation}
-\sum\limits_{\begin{smallmatrix}
-j\in {{V}_{0}} \\
-j\ne i
-\end{smallmatrix}}{{{x}_{ijk}}}=\sum\limits_{\begin{smallmatrix}
-j\in {{V}_{0}} \\
-j\ne i
-\end{smallmatrix}}{{{x}_{jik}}}\quad \forall i\in {{V}_{0}},\ k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-single-visit}
-\sum_{k \in K} \sum_{\substack{j \in V_0 \\ j \neq i}} x_{jik} \leq 1 \quad \forall i \in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-load-bound}
-\sum_{k \in K} y_{ik}^{\text{load}} \leq s_i^0 \quad \forall i \in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-unload-bound}
-\sum\limits_{k\in K}{y_{ik}^{\text{unload}}}\le {{c}_{i}}-s_{i}^{0}\quad \forall i\in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-vehicle-balance}
-\sum_{i \in V_0} (y_{ik}^{\text{load}} - y_{ik}^{\text{unload}}) = 0 \quad \forall k \in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-time-budget}
-{{t}^{\text{load}}}\cdot \sum\limits_{i\in {{V}_{0}}}{(y_{ik}^{\text{load}}+y_{ik}^{\text{unload}})}+\sum\limits_{\begin{smallmatrix}
-i,j\in {{V}_{0}} \\
-i\ne j
-\end{smallmatrix}}{{{t}_{ij}}}{{x}_{ijk}}\le T\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-depot-departure}
-\sum\limits_{j\in V}{{{x}_{0jk}}}=1\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-depot-return}
-\sum\limits_{j\in V}{{{x}_{j0k}}}=1\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-load-visit-bound}
-y_{ik}^{\text{load}}\le s_{i}^{0}{{\sum }_{\begin{matrix}
-j\in {{V}_{0}}  \\
-j\ne i  \\
-\end{matrix}}}{{x}_{jik}}\quad \forall i\in V,\ k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-unload-visit-bound}
-y_{ik}^{\text{unload}}\le ({{c}_{i}}-s_{i}^{0}){{\sum }_{\begin{matrix}
-j\in {{V}_{0}}  \\
-j\ne i  \\
-\end{matrix}}}{{x}_{jik}}\quad \forall i\in V,\ k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-udf-linearization}
-{{g}_{i}}\ge {{a}_{i\ell }}+{{b}_{i\ell }}{{s}_{i}}\quad \forall i\in V,\ \ell =0,1,\ldots ,{{c}_{i}}-1
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-dfj}
-\sum\limits_{i\in S}{\sum\limits_{\begin{smallmatrix}
-j\in S \\
-j\ne i
-\end{smallmatrix}}{{{x}_{ijk}}}}\le |S|-1\quad \forall S\subseteq V,\ |S|\ge 2,\ \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-x-domain}
-{{x}_{ijk}}\in \{0,1\}\quad \forall i,j\in {{V}_{0}}(i\ne j),k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-load-domain}
-y_{ik}^{\text{load}}\ge 0,\ \text{integer}\quad \forall i\in {{V}_{0}},\ k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-load-domain-repeat}
-y_{ik}^{\text{load}}\ge 0,\ \text{integer}\quad \forall i\in {{V}_{0}},\ k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-arc-load-domain}
-{{y}_{ijk}}\ge 0\quad \forall i,j\in {{V}_{0}}(i\ne j),k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-inventory-lower}
-{{s}_{i}}\ge 0\quad \forall i\in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-inventory-upper}
-{{s}_{i}}\le {{c}_{i}}\quad \forall i\in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:mvbrp-udf-nonnegative}
-{{g}_{i}}\ge 0\quad \forall i\in V
-\end{equation}
+\begin{modelalign}
+\max\quad
+& \sum_{i \in V} \bigl( f_i(s_i^0) - g_i \bigr) \label{ch3:eq:mvbrp-obj}\\
+\text{s.t.}\quad
+& s_i = s_i^0 - \sum_{k \in K} (y_{ik}^{\mathrm{load}} - y_{ik}^{\mathrm{unload}}),
+&& \forall i \in V \label{ch3:eq:mvbrp-inventory}\\
+& y_{ik}^{\mathrm{load}}-y_{ik}^{\mathrm{unload}}
+= \sum_{j\in V_0\setminus\{i\}}{{y}_{ijk}}
+-\sum_{j\in V_0\setminus\{i\}}{{y}_{jik}},
+&& \forall i\in {{V}_{0}},\ k\in K \label{ch3:eq:mvbrp-load-conservation}\\
+& {{y}_{ijk}} \le Q{{x}_{ijk}},
+&& \forall i,j\in {{V}_{0}}(i\ne j),\ k\in K \label{ch3:eq:mvbrp-arc-capacity}\\
+& \sum_{j\in V_0\setminus\{i\}}{{x}_{ijk}}
+= \sum_{j\in V_0\setminus\{i\}}{{x}_{jik}},
+&& \forall i\in {{V}_{0}},\ k\in K \label{ch3:eq:mvbrp-flow-conservation}\\
+& \sum_{k \in K} \sum_{j \in V_0\setminus\{i\}} x_{jik} \le 1,
+&& \forall i \in V \label{ch3:eq:mvbrp-single-visit}\\
+& \sum_{k \in K} y_{ik}^{\mathrm{load}} \le s_i^0,
+&& \forall i \in V \label{ch3:eq:mvbrp-load-bound}\\
+& \sum\limits_{k\in K}{y_{ik}^{\mathrm{unload}}} \le {{c}_{i}}-s_{i}^{0},
+&& \forall i\in V \label{ch3:eq:mvbrp-unload-bound}\\
+& \sum_{i \in V_0} (y_{ik}^{\mathrm{load}} - y_{ik}^{\mathrm{unload}}) = 0,
+&& \forall k \in K \label{ch3:eq:mvbrp-vehicle-balance}\\
+& \begin{aligned}[t]
+  &{{t}^{\mathrm{load}}}\cdot \sum\limits_{i\in {{V}_{0}}}{(y_{ik}^{\mathrm{load}}+y_{ik}^{\mathrm{unload}})}\\
+  &+\sum\limits_{\substack{i,j\in {{V}_{0}}\\i\ne j}}{{{t}_{ij}}}{{x}_{ijk}} \le T
+  \end{aligned}
+&& \forall k\in K \label{ch3:eq:mvbrp-time-budget}\displaybreak[2]\\
+& \sum\limits_{j\in V}{{{x}_{0jk}}} = 1,
+&& \forall k\in K \label{ch3:eq:mvbrp-depot-departure}\\
+& \sum\limits_{j\in V}{{{x}_{j0k}}} = 1,
+&& \forall k\in K \label{ch3:eq:mvbrp-depot-return}\\
+& y_{ik}^{\mathrm{load}} \le s_{i}^{0}\sum_{j\in V_0\setminus\{i\}}{{x}_{jik}},
+&& \forall i\in V,\ k\in K \label{ch3:eq:mvbrp-load-visit-bound}\\
+& y_{ik}^{\mathrm{unload}}
+\le ({{c}_{i}}-s_{i}^{0})\sum_{j\in V_0\setminus\{i\}}{{x}_{jik}},
+&& \forall i\in V,\ k\in K \label{ch3:eq:mvbrp-unload-visit-bound}\\
+& {{g}_{i}} \ge {{a}_{i\ell }}+{{b}_{i\ell }}{{s}_{i}},
+&& \forall i\in V,\ \ell =0,1,\ldots ,{{c}_{i}}-1 \label{ch3:eq:mvbrp-udf-linearization}\displaybreak[2]\\
+& \sum\limits_{i\in S}{\sum\limits_{j\in S\setminus\{i\}}{{{x}_{ijk}}}} \le |S|-1,
+&& \forall S\subseteq V,\ |S|\ge 2,\ \forall k\in K \label{ch3:eq:mvbrp-dfj}\\
+& {{x}_{ijk}} \in \{0,1\},
+&& \forall i,j\in {{V}_{0}}(i\ne j),k\in K \label{ch3:eq:mvbrp-x-domain}\\
+& y_{ik}^{\mathrm{load}} \ge 0,\ \text{integer},
+&& \forall i\in {{V}_{0}},\ k\in K \label{ch3:eq:mvbrp-load-domain}\\
+& y_{ik}^{\mathrm{load}} \ge 0,\ \text{integer},
+&& \forall i\in {{V}_{0}},\ k\in K \label{ch3:eq:mvbrp-load-domain-repeat}\displaybreak[2]\\
+& {{y}_{ijk}} \ge 0,
+&& \forall i,j\in {{V}_{0}}(i\ne j),k\in K \label{ch3:eq:mvbrp-arc-load-domain}\\
+& {{s}_{i}} \ge 0,
+&& \forall i\in V \label{ch3:eq:mvbrp-inventory-lower}\\
+& {{s}_{i}} \le {{c}_{i}},
+&& \forall i\in V \label{ch3:eq:mvbrp-inventory-upper}\\
+& {{g}_{i}} \ge 0,
+&& \forall i\in V \label{ch3:eq:mvbrp-udf-nonnegative}
+\end{modelalign}
 
 The objective function~\eqref{ch3:eq:mvbrp-obj} maximizes the total reduction in user dissatisfaction across all stations: for each station $i$, the term $f_i(s_i^0) - g_i$ measures the improvement from the initial UDF level to the level after the repositioning. Constraints~\eqref{ch3:eq:mvbrp-inventory} define the post-repositioning inventory at each station as the initial inventory adjusted by all loading and unloading operations. Constraints~\eqref{ch3:eq:mvbrp-load-conservation} ensure conservation of bikes on each vehicle: the net loading at a node equals the change in vehicle load. Constraints~\eqref{ch3:eq:mvbrp-arc-capacity} limit the load on each vehicle to its capacity and set the load to zero on arcs not traversed. Constraints~\eqref{ch3:eq:mvbrp-flow-conservation} are the vehicle flow conservation equations. Constraints~\eqref{ch3:eq:mvbrp-single-visit} stipulate that each station can be visited by at most one vehicle across the fleet.
 
@@ -259,148 +174,80 @@ $\tilde{g}_i$ & Estimated linearized UDF at station $i$ after the bike transfers
 \subsubsection{MILP formulation}\label{ch3:subsubsec:clustering-milp}
 
 The formulation is
-
-\begin{equation}
-\label{ch3:eq:uc-obj}
-\max \sum\limits_{i\in V}{\left( {{f}_{i}}(s_{i}^{0})-{{{\tilde{g}}}_{i}} \right)}
-\end{equation}
-
-subject to
-
-\begin{equation}
-\label{ch3:eq:uc-assignment}
-\sum\limits_{k\in K}{{{z}_{ik}}}=1\quad \forall i\in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-transfer-source-assignment}
-{{w}_{ijk}}\le {{U}_{ij}}{{z}_{ik}}\quad \forall i\in {{V}^{+}},j\in {{V}^{-}},k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-transfer-target-assignment}
-{{w}_{ijk}}\le {{U}_{ij}}{{z}_{jk}}\quad \forall i\in {{V}^{+}},j\in {{V}^{-}},k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-surplus-transfer-bound}
-\sum\limits_{j\in {{V}^{-}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}}\le s_{i}^{0}-s_{i}^{*}\quad \forall i\in {{V}^{+}}
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-deficit-transfer-bound}
-\sum\limits_{i\in {{V}^{+}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}}\le s_{j}^{*}-s_{j}^{0}\quad \forall j\in {{V}^{-}}
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-activation-assignment}
-{{\delta }_{ik}}\le {{z}_{ik}}\quad \forall i\in V,k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-surplus-activation-upper}
-\sum\limits_{j\in {{V}^{-}}}{{{w}_{ijk}}}\le \left( s_{i}^{0}-s_{i}^{*} \right){{\delta }_{ik}}\quad \forall i\in {{V}^{+}},k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-surplus-activation-lower}
-\sum\limits_{j\in {{V}^{-}}}{{{w}_{ijk}}}\ge {{\delta }_{ik}}\quad \forall i\in {{V}^{+}},k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-deficit-activation-upper}
-\sum\limits_{i\in {{V}^{+}}}{{{w}_{ijk}}}\le \left( s_{j}^{*}-s_{j}^{0} \right){{\delta }_{jk}}\quad \forall j\in {{V}^{-}},k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-deficit-activation-lower}
-\sum\limits_{i\in {{V}^{+}}}{{{w}_{ijk}}}\ge {{\delta }_{jk}}\quad \forall j\in {{V}^{-}},k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-mss-star}
-\tau _{k}^{\text{star}}\ge \sum\limits_{i\in V}{\max \left\{ {{t}_{ij}},{{t}_{ji}} \right\}}\cdot \left( {{\delta }_{ik}}+{{\delta }_{jk}}-1 \right)\quad \forall j\in V,k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-depot-roundtrip}
-\tau _{k}^{\text{depot}}\ge 2\max \left\{ {{t}_{0j}},{{t}_{j0}} \right\}\cdot {{\delta }_{jk}}\quad \forall j\in V,k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-time-budget}
-\tau _{k}^{\text{star}}+\tau _{k}^{\text{depot}}+2{{t}^{\text{load}}}\sum\limits_{i\in {{V}^{+}}}{\sum\limits_{j\in {{V}^{-}}}{{{w}_{ijk}}}}\le T\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-min-cluster-size}
-\sum\limits_{i\in V}{{{z}_{ik}}}\ge {{N}_{\min }}\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-max-cluster-size}
-\sum\limits_{i\in V}{{{z}_{ik}}}\le {{N}_{\max }}\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-surplus-inventory}
-\tilde{s}_i=s_{i}^{0}-\sum\limits_{j\in {{V}^{-}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}}\quad \forall i\in {{V}^{+}}
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-deficit-inventory}
-\tilde{s}_j=s_{j}^{0}+\sum\limits_{i\in {{V}^{+}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}}\quad \forall j\in {{V}^{-}}
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-balanced-inventory}
-{{\tilde{s}}_{i}}=s_{i}^{0}\quad \forall i\in V\backslash \left( {{V}^{+}}\cup {{V}^{-}} \right)
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-udf-linearization}
-{{\tilde{g}}_{i}}\ge {{a}_{i\ell }}+{{b}_{i\ell }}{{\tilde{s}}_{i}}\quad \forall i\in V,\ell =0,1,\ldots ,{{c}_{i}}-1
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-z-domain}
-{{z}_{ik}}\in \{0,1\}\quad \forall i\in V,k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-delta-domain}
-{{\delta }_{ik}}\in \{0,1\}\quad \forall i\in V,k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-transfer-domain}
-{{w}_{ijk}}\ge 0,\ \text{integer}\quad \forall i\in {{V}^{+}},j\in {{V}^{-}},k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-star-nonnegative}
-\tau _{k}^{\text{star}}\ge 0\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-depot-nonnegative}
-\tau _{k}^{\text{depot}}\ge 0\quad \forall k\in K
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-inventory-lower}
-\tilde{s}_i \ge 0\quad \forall i\in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-inventory-upper}
-{{\tilde{s}}_{i}}\le {{c}_{i}}\quad \forall i\in V
-\end{equation}
-
-\begin{equation}
-\label{ch3:eq:uc-udf-nonnegative}
-\tilde{g}_i \ge 0\quad \forall i\in V
-\end{equation}
+\begin{modelalign}
+\max\quad
+& \sum\limits_{i\in V}{\left( {{f}_{i}}(s_{i}^{0})-{{{\tilde{g}}}_{i}} \right)}
+\label{ch3:eq:uc-obj}\\
+\text{s.t.}\quad
+& \sum\limits_{k\in K}{{{z}_{ik}}} = 1,
+&& \forall i\in V \label{ch3:eq:uc-assignment}\\
+& {{w}_{ijk}} \le {{U}_{ij}}{{z}_{ik}},
+&& \forall i\in {{V}^{+}},j\in {{V}^{-}},k\in K \label{ch3:eq:uc-transfer-source-assignment}\\
+& {{w}_{ijk}} \le {{U}_{ij}}{{z}_{jk}},
+&& \forall i\in {{V}^{+}},j\in {{V}^{-}},k\in K \label{ch3:eq:uc-transfer-target-assignment}\\
+& \sum\limits_{j\in {{V}^{-}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}}
+\le s_{i}^{0}-s_{i}^{*},
+&& \forall i\in {{V}^{+}} \label{ch3:eq:uc-surplus-transfer-bound}\\
+& \sum\limits_{i\in {{V}^{+}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}}
+\le s_{j}^{*}-s_{j}^{0},
+&& \forall j\in {{V}^{-}} \label{ch3:eq:uc-deficit-transfer-bound}\\
+& {{\delta }_{ik}} \le {{z}_{ik}},
+&& \forall i\in V,k\in K \label{ch3:eq:uc-activation-assignment}\\
+& \sum\limits_{j\in {{V}^{-}}}{{{w}_{ijk}}}
+\le \left( s_{i}^{0}-s_{i}^{*} \right){{\delta }_{ik}},
+&& \forall i\in {{V}^{+}},k\in K \label{ch3:eq:uc-surplus-activation-upper}\\
+& \sum\limits_{j\in {{V}^{-}}}{{{w}_{ijk}}} \ge {{\delta }_{ik}},
+&& \forall i\in {{V}^{+}},k\in K \label{ch3:eq:uc-surplus-activation-lower}\\
+& \sum\limits_{i\in {{V}^{+}}}{{{w}_{ijk}}}
+\le \left( s_{j}^{*}-s_{j}^{0} \right){{\delta }_{jk}},
+&& \forall j\in {{V}^{-}},k\in K \label{ch3:eq:uc-deficit-activation-upper}\\
+& \sum\limits_{i\in {{V}^{+}}}{{{w}_{ijk}}} \ge {{\delta }_{jk}},
+&& \forall j\in {{V}^{-}},k\in K \label{ch3:eq:uc-deficit-activation-lower}\displaybreak[2]\\
+& \tau _{k}^{\mathrm{star}} \ge \begin{aligned}[t]
+        &\sum\limits_{i\in V}{\max \left\{ {{t}_{ij}},{{t}_{ji}} \right\}}\\
+        &{}\cdot \left( {{\delta }_{ik}}+{{\delta }_{jk}}-1 \right)
+        \end{aligned},
+&& \forall j\in V,k\in K \label{ch3:eq:uc-mss-star}\\
+& \tau _{k}^{\mathrm{depot}}
+\ge 2\max \left\{ {{t}_{0j}},{{t}_{j0}} \right\}\cdot {{\delta }_{jk}},
+&& \forall j\in V,k\in K \label{ch3:eq:uc-depot-roundtrip}\\
+& \begin{aligned}[t]
+  &\tau _{k}^{\mathrm{star}}+\tau _{k}^{\mathrm{depot}}\\
+  &+2{{t}^{\mathrm{load}}}\sum\limits_{i\in {{V}^{+}}}{\sum\limits_{j\in {{V}^{-}}}{{{w}_{ijk}}}}
+  \le T
+  \end{aligned}
+&& \forall k\in K \label{ch3:eq:uc-time-budget}\displaybreak[2]\\
+& \sum\limits_{i\in V}{{{z}_{ik}}} \ge {{N}_{\min }},
+&& \forall k\in K \label{ch3:eq:uc-min-cluster-size}\\
+& \sum\limits_{i\in V}{{{z}_{ik}}} \le {{N}_{\max }},
+&& \forall k\in K \label{ch3:eq:uc-max-cluster-size}\\
+& \tilde{s}_i
+= s_{i}^{0}-\sum\limits_{j\in {{V}^{-}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}},
+&& \forall i\in {{V}^{+}} \label{ch3:eq:uc-surplus-inventory}\\
+& \tilde{s}_j
+= s_{j}^{0}+\sum\limits_{i\in {{V}^{+}}}{\sum\limits_{k\in K}{{{w}_{ijk}}}},
+&& \forall j\in {{V}^{-}} \label{ch3:eq:uc-deficit-inventory}\\
+& {{\tilde{s}}_{i}} = s_{i}^{0},
+&& \forall i\in V\setminus \left( {{V}^{+}}\cup {{V}^{-}} \right) \label{ch3:eq:uc-balanced-inventory}\\
+& {{\tilde{g}}_{i}} \ge {{a}_{i\ell }}+{{b}_{i\ell }}{{\tilde{s}}_{i}},
+&& \forall i\in V,\ell =0,1,\ldots ,{{c}_{i}}-1 \label{ch3:eq:uc-udf-linearization}\displaybreak[2]\\
+& {{z}_{ik}} \in \{0,1\},
+&& \forall i\in V,k\in K \label{ch3:eq:uc-z-domain}\\
+& {{\delta }_{ik}} \in \{0,1\},
+&& \forall i\in V,k\in K \label{ch3:eq:uc-delta-domain}\\
+& {{w}_{ijk}} \ge 0,\ \text{integer},
+&& \forall i\in {{V}^{+}},j\in {{V}^{-}},k\in K \label{ch3:eq:uc-transfer-domain}\\
+& \tau _{k}^{\mathrm{star}} \ge 0,
+&& \forall k\in K \label{ch3:eq:uc-star-nonnegative}\\
+& \tau _{k}^{\mathrm{depot}} \ge 0,
+&& \forall k\in K \label{ch3:eq:uc-depot-nonnegative}\\
+& \tilde{s}_i \ge 0,
+&& \forall i\in V \label{ch3:eq:uc-inventory-lower}\\
+& {{\tilde{s}}_{i}} \le {{c}_{i}},
+&& \forall i\in V \label{ch3:eq:uc-inventory-upper}\\
+& \tilde{g}_i \ge 0,
+&& \forall i\in V \label{ch3:eq:uc-udf-nonnegative}
+\end{modelalign}
 
 The objective function~\eqref{ch3:eq:uc-obj} has the same form as~\eqref{ch3:eq:mvbrp-obj}, with $\tilde{g}_i$ replacing $g_i$ to indicate that the UDF is evaluated at the estimated inventory after the transfers rather than at the actual repositioning outcome. Constraints~\eqref{ch3:eq:uc-assignment} ensure that each station is assigned to exactly one cluster. Constraints~\eqref{ch3:eq:uc-transfer-source-assignment} and~\eqref{ch3:eq:uc-transfer-target-assignment} ensure that a transfer between two stations can take place only if both are assigned to the same cluster.
 
@@ -435,8 +282,20 @@ The ATS procedure operates on the following derived quantities, defined per clus
 \item Marginal UDF reductions. For a surplus station $i$, the $m$-th marginal UDF reduction is $\Delta _{i}^{m}={{f}_{i}}(s_{i}^{0}-m+1)-{{f}_{i}}(s_{i}^{0}-m)$ for $m=1,\ldots ,r_{i}^{+}$, representing the decrease in UDF when the $m$-th bike is removed. For a deficit station $j$, the $m$-th marginal UDF reduction is $\Delta _{j}^{m}={{f}_{j}}(s_{j}^{0}+m-1)-{{f}_{j}}(s_{j}^{0}+m)$ for $m=1,\ldots ,r_{j}^{-}$. Because ${{f}_{i}}$ is convex, the marginals are decreasing: $\Delta _{i}^{1}\ge \Delta _{i}^{2}\ge \cdots \ge 0$.
 \item Edge scores. The score of edge $(i,j)$ is ${{\sigma }_{ij}}=(\Delta _{i}^{1}+\Delta _{j}^{1})/(2{{t}^{\text{load}}})$, where the denominator accounts for one loading and one unloading operation. The score measures the UDF reduction per unit handling time for the first bike transferred on the edge.
 \item Activated stations. The set of stations participating in at least one accepted transfer within cluster ${{C}_{k}}$ is denoted $\mathcal{A}\subseteq {{C}_{k}}$. Each member of $\mathcal{A}$ must be visited by the vehicle, incurring routing time.
-\item Routing time estimate. The routing time for a set of activated stations $\mathcal{A}$ is estimated as $\tau (\mathcal{A})=MSS(\mathcal{A})+2{{\max }_{i\in \mathcal{A}}}\max ({{t}_{0i}},{{t}_{i0}})$, where $MSS(\mathcal{A})={{\max }_{i\in \mathcal{A}}}\sum\limits_{j\in \mathcal{A},j\ne i}{\max }({{t}_{ij}},{{t}_{ji}})$ is the maximum spanning star and the second term accounts for the depot round trip. This is the same estimate used in the clustering model.
-\item MSS time feasibility. A transfer set ${{\mathcal{T}}_{k}}$ is MSS time-feasible if $\tau (\mathcal{A})+2{{t}^{\text{load}}}\sum\limits_{(i,j,q)\in {{\mathcal{T}}_{k}}}{q}\le T$, where the handling term reflects that each transferred bike is loaded at its source and unloaded at its destination. Because the MSS provides an upper bound on the optimal tour length through $\mathcal{A}$, any transfer set that satisfies this condition remains feasible when the actual route is computed.
+\item Routing time estimate. The routing time for a set of activated stations $\mathcal{A}$ is estimated as
+\begin{equation}
+\tau (\mathcal{A})=MSS(\mathcal{A})+2{{\max }_{i\in \mathcal{A}}}\max ({{t}_{0i}},{{t}_{i0}}),
+\end{equation}
+where
+\begin{equation}
+MSS(\mathcal{A})={{\max }_{i\in \mathcal{A}}}\sum\limits_{j\in \mathcal{A},j\ne i}{\max }({{t}_{ij}},{{t}_{ji}})
+\end{equation}
+is the maximum spanning star and the second term accounts for the depot round trip. This is the same estimate used in the clustering model.
+\item MSS time feasibility. A transfer set ${{\mathcal{T}}_{k}}$ is MSS time-feasible if
+\begin{equation}
+\tau (\mathcal{A})+2{{t}^{\text{load}}}\sum\limits_{(i,j,q)\in {{\mathcal{T}}_{k}}}{q}\le T,
+\end{equation}
+where the handling term reflects that each transferred bike is loaded at its source and unloaded at its destination. Because the MSS provides an upper bound on the optimal tour length through $\mathcal{A}$, any transfer set that satisfies this condition remains feasible when the actual route is computed.
 \end{enumerate}
 
 We now present the ATS procedure in detail. The procedure takes a cluster ${{C}_{k}}$ as input and returns an MSS time-feasible transfer set ${{\mathcal{T}}_{k}}$. Each cluster is processed independently.
@@ -445,9 +304,9 @@ Step 0 (Initialization). Generate all edges within ${{C}_{k}}$ and sort them by 
 
 Step 1 (First-marginal selection). Process the sorted edges sequentially. For each edge $(i,j)$, skip if $i\in \mathcal{A}$ or $j\in \mathcal{A}$. Otherwise, tentatively add $i$ and $j$ to $\mathcal{A}$, recompute $\tau (\mathcal{A})$, and compute the feasible quantity
 
-\[
+\begin{equation}
 q=\min \left\{ \tilde{r}_{i}^{+},\ \tilde{r}_{j}^{-},\ \left\lfloor \frac{T-\tau (\mathcal{A})-2{{t}^{\text{load}}}\sum\limits_{({i}',{j}',{q}')\in {{\mathcal{T}}_{k}}}{{{q}'}}}{2{{t}^{\text{load}}}} \right\rfloor  \right\},
-\]
+\end{equation}
 
 If $q\ge 1$, accept transfer $(i,j,q)$ into ${{\mathcal{T}}_{k}}$ and update $\tilde{r}_{i}^{+}\leftarrow \tilde{r}_{i}^{+}-q$ and $\tilde{r}_{j}^{-}\leftarrow \tilde{r}_{j}^{-}-q$. If $q<1$, remove $i$ and $j$ from $\mathcal{A}$ and proceed to the next edge. Skipping edges whose stations are already active enforces mutual exclusivity and keeps the precomputed first-marginal scores valid throughout this step.
 
@@ -455,26 +314,26 @@ Step 2 (Residual capacity matching). This step fills in additional transfers tha
 
 At each iteration, Step 2 selects the surplus-deficit pair $(i,j)$ within ${{C}_{k}}$ with the highest score
 
-\[
+\begin{equation}
 {{\tilde{\sigma }}_{ij}}=\frac{\Delta _{i}^{{{m}_{i}}+1}+\Delta _{j}^{{{m}_{j}}+1}}{2\,{{t}^{\text{load}}}},
-\]
+\end{equation}
 
 where ${{m}_{i}}$ and ${{m}_{j}}$ are the numbers of bikes already transferred from $i$ and into $j$ by previously accepted transfers in this cluster. Only pairs with ${{\tilde{\sigma }}_{ij}}>0$ are considered.
 
 For the selected pair, any inactive station is tentatively activated. $\tau \left( \mathcal{A} \right)$ is recomputed, and the feasible quantity $q$ is determined as in Step 1. If $q\ge 1$, the transfer is accepted and all residual quantities are updated. Step 2 terminates when no surplus-deficit pair with a positive score remains, or when the remaining time budget can no longer accommodate any transfer.
 
 After applying ATS to every cluster, the objective value of solution $\phi$ is
-\[
+\begin{equation}
 F(\phi)=\sum_{i\in V}\left[f_i(s_i^0)-f_i(s_i^0+\nu_i)\right],
-\]
+\end{equation}
 where
-\[
+\begin{equation}
 \nu_i=\begin{cases}
 -\sum_{j:(i,j,q)\in\mathcal{T}} q, & \text{if } i\in V^{+},\\
 \sum_{j:(j,i,q)\in\mathcal{T}} q, & \text{if } i\in V^{-},\\
 0, & \text{otherwise},
 \end{cases}
-\]
+\end{equation}
 is the net inventory change at station $i$ and $\mathcal{T}=\bigcup_{k=1}^{|K|}\mathcal{T}_k$ is the set of all accepted transfers. Figure~\ref{ch3:fig:ats-toy} illustrates the procedure on a four-station toy cluster.
 
 \begin{figure}[htbp]
@@ -484,7 +343,7 @@ is the net inventory change at station $i$ and $\mathcal{T}=\bigcup_{k=1}^{|K|}\
 \label{ch3:fig:ats-toy}
 \end{figure}
 
-\section{Hybrid Genetic Search for UDF-aware Clustering}\label{ch3:sec:hgs-uc}
+\section[Hybrid Genetic Search for UDF-aware Clustering]{Hybrid Genetic Search for UDF-aware\\ Clustering}\label{ch3:sec:hgs-uc}
 
 This section presents the Hybrid Genetic Search for UDF-aware Clustering (HGS-UC), a metaheuristic for the clustering model formulated in Section~\ref{ch3:sec:udf-aware-clustering-model}. HGS-UC adapts the Hybrid Genetic Search framework of Vidal et al. (2012), refined in the open-source implementation of Vidal (2022).
 
@@ -542,18 +401,18 @@ The algorithm constructs new solutions when building the initial population (Alg
 
 Specifically, the bilateral UDF reduction of stations i and j is defined as
 
-\[
+\begin{equation}
 {{B}_{ij}}=\left\{ \begin{array}{*{35}{l}}
 \max ({{f}_{i}}(s_{i}^{0})+{{f}_{j}}(s_{j}^{0})-{{f}_{i}}(s_{i}^{0}-{{q}_{ij}})-{{f}_{j}}(s_{j}^{0}+{{q}_{ij}}),\ 0) & \text{if }i\in {{V}^{+}},j\in {{V}^{-}}  \\
 0 & \text{otherwise}  \\
 \end{array} \right.,
-\]
+\end{equation}
 
 where ${{q}_{ij}}=\min (r_{i}^{+},r_{j}^{-})$. The dissimilarity of stations i and j is then defined as
 
-\[
+\begin{equation}
 {{D}_{ij}}=\alpha {{\hat{t}}_{ij}}+(1-\alpha )(1-{{\hat{B}}_{ij}}),
-\]
+\end{equation}
 
 where ${{\hat{t}}_{ij}}$ and ${{\hat{B}}_{ij}}$ denote min--max normalizations over all off-diagonal station pairs, and $\alpha \in [0,1]$ controls the relative weight. A low ${{D}_{ij}}$ indicates that $i$ and $j$ are geographically close and offer substantial mutual UDF reduction, making them desirable cluster partners.
 
@@ -595,7 +454,18 @@ Recompute all medoids\;
 \KwRet{$(C_1,\ldots,C_{|K|})$}
 \end{algorithm}
 
-Given parents ${{\phi }_{A}}$ and ${{\phi }_{B}}$, the operator first samples $\left\lfloor \left| K \right|/2 \right\rfloor $ cluster indices and copies the corresponding clusters from ${{\phi }_{A}}$ into the offspring, preserving member stations and medoids (Lines 1--5). Each remaining station $i\in V\backslash \mathcal{A}\mathcal{S}$ is then allocated using ${{\phi }_{B}}$: if ${{\phi }_{B}}$ places $i$ in a cluster ${{k}^{\prime }}$ not among the inherited indices, $i$ is assigned to ${{k}^{\prime }}$. Otherwise, $i$ is assigned to the inherited cluster whose medoid has the smallest dissimilarity ${{D}_{i,{{m}_{k}}}}$ (Lines 6--13). Any cluster that remains empty after reassignment is reseeded from the largest cluster, and all medoids are recomputed (Lines 14--15). Figure~\ref{ch3:fig:crossover} walks through a nine-station example with $\left|K\right|=4$ that triggers both the direct copy and the fallback assignment.
+Given parents \( \phi_A \) and \( \phi_B \), the operator first samples
+\(\lfloor |K|/2 \rfloor\) cluster indices and copies the selected
+\(\phi_A\) clusters into the offspring, preserving member stations and medoids
+(Lines 1--5). Each remaining station \(i\in V\setminus \mathcal{AS}\) is then
+allocated using \( \phi_B \): if \( \phi_B \) places \(i\) in a cluster
+\(k'\) not among the inherited indices, \(i\) is assigned to \(k'\).
+Otherwise, \(i\) is assigned to the inherited cluster whose medoid has the
+smallest dissimilarity \(D_{i,m_k}\) (Lines 6--13). Any cluster that remains
+empty after reassignment is reseeded from the largest cluster, and all medoids
+are recomputed (Lines 14--15). Figure~\ref{ch3:fig:crossover} walks through a
+nine-station example with \(|K|=4\) that triggers both the direct copy and the
+fallback assignment.
 
 Inheriting complete clusters preserves the intra-cluster groupings refined by the donating parent's local search history, and the reassignment phase recombines inter-cluster boundaries.
 
@@ -618,9 +488,9 @@ Every new individual undergoes local search education before entering the popula
 
 Two mechanisms guide candidate selection across all operators. The first is a complementary fit score that estimates a station's compatibility with a target cluster before committing to an ATS evaluation. For a station $i$ and a target cluster ${{C}_{k}}$, we define the complementary fit score
 
-\[
+\begin{equation}
 FS(i,{{C}_{k}})=\frac{1}{|{{{\bar{C}}}_{k}}(i)|}\sum\limits_{j\in {{{\bar{C}}}_{k}}(i)}{(1-{{D}_{ij}})},
-\]
+\end{equation}
 
 where ${{\bar{C}}_{k}}(i)$ denotes the set of stations in ${{C}_{k}}$ whose surplus/deficit status is complementary to that of $i$: surplus stations are scored against deficit members, and vice versa. A higher value indicates stronger UDF complementarity between station $i$ and the members of ${{C}_{k}}$. Balanced stations receive a score of zero and are excluded from candidate generation.
 
@@ -647,27 +517,27 @@ When the fit-score step produces no candidate at all, each operator falls back t
 HGS-UC maintains a single population of feasible solutions whose size ranges between $\mu $ (minimum) and $\mu +\lambda $ (maximum), where $\mu $ is the base population size and $\lambda $ is the number of offspring slots. Selection and survival decisions are driven by a biased fitness measure that balances solution quality and population diversity.
 
 Each individual $\phi$ is assigned a fitness rank $r^{\mathrm{fit}}(\phi)$, determined by objective value in descending order, and a diversity rank $r^{\mathrm{div}}(\phi)$, determined by diversity contribution in descending order. The biased fitness of individual $\phi$ is given by
-\[
+\begin{equation}
 BF(\phi)=r^{\mathrm{fit}}(\phi)+\left(1-\frac{n_{\mathrm{elite}}}{\mu}\right)r^{\mathrm{div}}(\phi),
-\]
+\end{equation}
 where lower values are better.
 
 The diversity contribution of an individual is the average distance to its ${{n}_{\text{close}}}$ nearest neighbours in the population. For two solutions ${{\phi }_{a}}$ and ${{\phi }_{b}}$, let ${{\chi }_{\phi }}\left( i,j \right)=1$ if stations $i$ and $j$ belong to the same cluster in partition $\phi $ and $0$ otherwise. The distance between ${{\phi }_{a}}$ and ${{\phi }_{b}}$ is the fraction of station pairs on which the two partitions disagree,
 
-\[
+\begin{equation}
 d\left( {{\phi }_{a}},{{\phi }_{b}} \right)={{\left( \begin{matrix}
 \left| V \right|  \\
 2  \\
 \end{matrix} \right)}^{-1}}\underset{\left\{ i,j \right\}\subseteq V}{\mathop \sum }\,\left| {{\chi }_{{{\phi }_{a}}}}\left( i,j \right)-{{\chi }_{{{\phi }_{b}}}}\left( i,j \right) \right|,
-\]
+\end{equation}
 
 Exact evaluation is $O\left( {{\left| V \right|}^{2}} \right)$ per solution pair, which is computationally expensive given the frequency of distance queries during selection and survival. The implementation uses a sampled estimator $\hat{d}\left( {{\phi }_{a}},{{\phi }_{b}} \right)$ that draws ${{N}_{\text{sample}}}$ station pairs uniformly at random and returns the proportion of broken pairs among them. Each draw is an independent Bernoulli trial with success probability $d({{\phi }_{a}},{{\phi }_{b}})$. By Hoeffding's inequality (Hoeffding, 1963), we have
 
-\[
+\begin{equation}
 \Pr [|\hat{d}-d|\ge \epsilon ]\le 2{{e}^{-2{{N}_{\text{sample}}}{{\epsilon }^{2}}}}\quad \forall \epsilon >0.
-\]
+\end{equation}
 
-Consequently, with ${{N}_{\text{sample}}}=500$ and $\mathsf{\epsilon }=0.1$ used in the implementation, the probability that $\hat{d}$ deviates from $d\left( {{\phi }_{a}},{{\phi }_{b}} \right)$ by more than 0.1 is bounded by $2{{e}^{-10}}<{{10}^{-4}}$. This precision is adequate for the ranking-based use of $d$ in biased fitness.
+Consequently, with ${{N}_{\text{sample}}}=500$ and $\epsilon =0.1$ used in the implementation, the probability that $\hat{d}$ deviates from $d\left( {{\phi }_{a}},{{\phi }_{b}} \right)$ by more than 0.1 is bounded by $2{{e}^{-10}}<{{10}^{-4}}$. This precision is adequate for the ranking-based use of $d$ in biased fitness.
 
 Parents are selected by binary tournament on biased fitness. Two individuals are drawn at random, and the one with lower biased fitness is chosen. Each generation draws two parents independently. When offspring insertion brings the population size above $\mu +\lambda $, survivor selection removes individuals with the highest biased fitness until the size returns to $\mu $. No explicit clone removal is applied.
 
@@ -727,14 +597,13 @@ Three approaches were compared on instances with $\mid V\mid =50$ ($\left| K \ri
 Ten instances were generated for each network size. Both $T=120$ min and $T=180$ min were evaluated. HGS-UC was run 20 times per instance with independent seeds. Tables~\ref{tab:benchmark-50} and~\ref{tab:benchmark-100} present the results. A negative gap indicates that the decomposition method surpasses the MV-BRP incumbent.
 
 \begin{landscape}
-\begin{table}[p]
-\centering
-\caption{Three-way benchmark comparison results, $\mid V\mid =50$ and $\left| K \right|=2$.}
-\label{tab:benchmark-50}
-\scriptsize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{llrrrrrrr rrrr}
+\vspace*{-5\baselineskip}
+\setlength{\LTpre}{0pt}
+\setlength{\LTpost}{0pt}
+\begin{longtable}{@{}C{0.06\linewidth}C{0.07\linewidth}*{11}{R{0.066\linewidth}}@{}}
+\caption{Three-way benchmark comparison results, $\mid V\mid =50$ and $\left| K \right|=2$.}
+\label{tab:benchmark-50}\\
 \toprule
 \multirow{2}{*}{$T$ (min)} & \multirow{2}{*}{Instance} & \multicolumn{4}{c}{MV-BRP} & \multicolumn{3}{c}{Gurobi-UC} & \multicolumn{4}{c}{HGS-UC} \\
 \cmidrule(lr){3-6}\cmidrule(lr){7-9}\cmidrule(lr){10-13}
@@ -765,24 +634,19 @@ Ten instances were generated for each network size. Both $T=120$ min and $T=180$
 \midrule
  & Avg &  &  & 0.07 & 3169.82 &  & 1.31 & 6.77 &  &  & 0.48 & 55.79 \\
 \bottomrule
-\end{tabular}
-\end{adjustbox}
-\begin{tablenotes}\footnotesize
-\item *Gap = (MV-BRP LB -- Gurobi-UC Obj.) / MV-BRP LB $\times$ 100.
-\item **Gap = (MV-BRP LB -- HGS-UC Avg.) / MV-BRP LB $\times$ 100.
-\end{tablenotes}
-\end{table}
+\multicolumn{13}{@{}l}{*Gap = (MV-BRP LB -- Gurobi-UC Obj.) / MV-BRP LB $\times$ 100.}\\
+\multicolumn{13}{@{}l}{**Gap = (MV-BRP LB -- HGS-UC Avg.) / MV-BRP LB $\times$ 100.}\\
+\end{longtable}
 \end{landscape}
 
 \begin{landscape}
-\begin{table}[p]
-\centering
-\caption{Three-way benchmark comparison results, $\mid V\mid =100$ and $\left| K \right|=4$.}
-\label{tab:benchmark-100}
-\scriptsize
 \setlength{\tabcolsep}{3pt}
-\begin{adjustbox}{max width=\linewidth}
-\begin{tabular}{llrrrrrrr rrrr}
+\vspace*{-5\baselineskip}
+\setlength{\LTpre}{0pt}
+\setlength{\LTpost}{0pt}
+\begin{longtable}{@{}C{0.06\linewidth}C{0.07\linewidth}*{11}{R{0.066\linewidth}}@{}}
+\caption{Three-way benchmark comparison results, $\mid V\mid =100$ and $\left| K \right|=4$.}
+\label{tab:benchmark-100}\\
 \toprule
 \multirow{2}{*}{$T$ (min)} & \multirow{2}{*}{Instance} & \multicolumn{4}{c}{MV-BRP} & \multicolumn{3}{c}{Gurobi-UC} & \multicolumn{4}{c}{HGS-UC} \\
 \cmidrule(lr){3-6}\cmidrule(lr){7-9}\cmidrule(lr){10-13}
@@ -813,13 +677,9 @@ Ten instances were generated for each network size. Both $T=120$ min and $T=180$
 \midrule
  & Avg &  &  & 3.24 & 7200.00 &  & -0.09 & 7224.24 &  &  & -1.50 & 142.13 \\
 \bottomrule
-\end{tabular}
-\end{adjustbox}
-\begin{tablenotes}\footnotesize
-\item *Gap = (MV-BRP LB -- Gurobi-UC Obj.) / MV-BRP LB $\times$ 100.
-\item **Gap = (MV-BRP LB -- HGS-UC Avg.) / MV-BRP LB $\times$ 100.
-\end{tablenotes}
-\end{table}
+\multicolumn{13}{@{}l}{*Gap = (MV-BRP LB -- Gurobi-UC Obj.) / MV-BRP LB $\times$ 100.}\\
+\multicolumn{13}{@{}l}{**Gap = (MV-BRP LB -- HGS-UC Avg.) / MV-BRP LB $\times$ 100.}\\
+\end{longtable}
 \end{landscape}
 
 For the MV-BRP, UB and LB denote the upper bound (relaxation bound) and lower bound (best feasible solution) returned by Gurobi, respectively, and the gap is the Gurobi optimality gap (UB $-$ LB) / LB $\times$ 100. For the decomposition methods, Best and Avg. denote the maximum and mean UDF reduction across seeds (for the deterministic Gurobi-UC, Best and Avg. coincide with its single objective value). The gap is computed as (MV-BRP LB $-$ Method Obj.) / MV-BRP LB $\times$ 100, where Method Obj. is the Gurobi-UC objective or HGS-UC average, as indicated in the table footnotes. A negative value indicates that the method surpasses the MV-BRP incumbent.
@@ -841,7 +701,7 @@ For each of $\mid V\mid \in \left\{ 200,400,800,1000 \right\}$, one instance was
 All methods use the same routing-phase BRP solver and the same instance data. The cluster size is $\left| K \right|=\left\lfloor \mid V\mid /25 \right\rfloor $ for all methods. Table~\ref{tab:baseline-default} reports the average UDF reduction (Avg.), the best single run (Best), the CPU time, and the percentage gap relative to HGS-UC, defined as (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100. A negative gap indicates that HGS-UC outperforms the baseline. The reported performance therefore reflects the cluster compositions produced by each method under a common routing benchmark.
 
 \begin{landscape}
-\begin{longtable}{llp{4.3cm}rrrrr}
+\begin{longtable}{@{}C{0.06\linewidth}C{0.05\linewidth}L{0.30\linewidth}R{0.08\linewidth}R{0.08\linewidth}R{0.09\linewidth}R{0.09\linewidth}R{0.10\linewidth}@{}}
 \caption{Baseline comparison results ($T=120$ min, $Q=20$, 20 seeds per stochastic method).}\label{tab:baseline-default}\\
 \toprule
 $|V|$ & $|K|$ & Method & Avg. & Best & CPU (s) & Gap* (\%) & p-value** \\
@@ -852,8 +712,8 @@ $|V|$ & $|K|$ & Method & Avg. & Best & CPU (s) & Gap* (\%) & p-value** \\
 \midrule
 \endhead
 \bottomrule
-\multicolumn{8}{l}{\footnotesize *Gap = (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100.}\\
-\multicolumn{8}{l}{\footnotesize **p-values obtained from one-sided Welch's t-test.}\\
+\multicolumn{8}{l}{*Gap = (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100.}\\
+\multicolumn{8}{l}{**p-values obtained from one-sided Welch's t-test.}\\
 \endfoot
 200 & 8 & HGS-UC & 286.23 & 289.62 & 324.33 & -- & -- \\
  &  & Schuijbroek et al. & 244.06 & 244.06 & 65.82 & -14.73 & 1.90E-23 \\
@@ -902,7 +762,7 @@ HGS-UC achieves the highest average UDF reduction at every instance size. The ga
 Tables~\ref{tab:baseline-time} and~\ref{tab:baseline-capacity} report the gap of each baseline method relative to HGS-UC under varying time budgets ($T\in \left\{ 60,120,180,240 \right\}$ min with $Q=20$) and vehicle capacities ($Q\in \left\{ 10,20,30,40 \right\}$ with $T=120$ min), respectively. Methods whose clustering depends on T or Q (HGS-UC, Schuijbroek et al., and Lv et al. for T; Schuijbroek et al. and Lv et al. for Q) were re-clustered at each parameter value. HGS-UC clustering is independent of Q and was not re-clustered for the capacity experiments.
 
 \begin{landscape}
-\begin{longtable}{p{4.2cm}lrrrrrrrr}
+\begin{longtable}{@{}L{0.24\linewidth}C{0.05\linewidth}*{8}{R{0.065\linewidth}}@{}}
 \caption{Baseline comparison results under varying time budgets ($Q=20$, 20 seeds per stochastic method).}\label{tab:baseline-time}\\
 \toprule
 \multirow{2}{*}{Method} & \multirow{2}{*}{$|V|$} & \multicolumn{2}{c}{$T=60$} & \multicolumn{2}{c}{$T=120$} & \multicolumn{2}{c}{$T=180$} & \multicolumn{2}{c}{$T=240$} \\
@@ -917,8 +777,8 @@ Tables~\ref{tab:baseline-time} and~\ref{tab:baseline-capacity} report the gap of
 \midrule
 \endhead
 \bottomrule
-\multicolumn{10}{l}{\footnotesize *Gap = (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100.}\\
-\multicolumn{10}{l}{\footnotesize **p-values obtained from one-sided Welch's t-test.}\\
+\multicolumn{10}{l}{*Gap = (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100.}\\
+\multicolumn{10}{l}{**p-values obtained from one-sided Welch's t-test.}\\
 \endfoot
 Schuijbroek et al. & 200 & -21.45 & 1.73E-24 & -14.73 & 1.90E-23 & -12.82 & 3.73E-30 & -11.37 & 1.01E-42 \\
  & 400 & -18.44 & 4.48E-07 & -17.71 & 6.66E-14 & -14.82 & 1.11E-18 & -13.19 & 1.69E-25 \\
@@ -963,7 +823,7 @@ KNN & 200 & -36.56 & 3.87E-28 & -26.10 & 1.36E-26 & -14.10 & 1.19E-24 & -4.18 & 
 \end{landscape}
 
 \begin{landscape}
-\begin{longtable}{p{4.2cm}lrrrrrrrr}
+\begin{longtable}{@{}L{0.24\linewidth}C{0.05\linewidth}*{8}{R{0.065\linewidth}}@{}}
 \caption{Baseline comparison results under varying vehicle capacities ($T=120$ min, 20 seeds per stochastic method).}\label{tab:baseline-capacity}\\
 \toprule
 \multirow{2}{*}{Method} & \multirow{2}{*}{$|V|$} & \multicolumn{2}{c}{$Q=10$} & \multicolumn{2}{c}{$Q=20$} & \multicolumn{2}{c}{$Q=30$} & \multicolumn{2}{c}{$Q=40$} \\
@@ -978,8 +838,8 @@ KNN & 200 & -36.56 & 3.87E-28 & -26.10 & 1.36E-26 & -14.10 & 1.19E-24 & -4.18 & 
 \midrule
 \endhead
 \bottomrule
-\multicolumn{10}{l}{\footnotesize *Gap = (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100.}\\
-\multicolumn{10}{l}{\footnotesize **p-values obtained from one-sided Welch's t-test.}\\
+\multicolumn{10}{l}{*Gap = (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100.}\\
+\multicolumn{10}{l}{**p-values obtained from one-sided Welch's t-test.}\\
 \endfoot
 Schuijbroek et al. & 200 & -9.60 & 6.28E-17 & -14.73 & 1.90E-23 & -17.31 & 1.82E-17 & -15.02 & 7.59E-21 \\
  & 400 & -14.09 & 3.32E-24 & -17.71 & 6.66E-14 & -15.44 & 1.41E-20 & -8.73 & 1.54E-16 \\

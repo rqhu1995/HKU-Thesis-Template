@@ -1,4 +1,4 @@
-\chapter{EXTENDED-USER-DISSATISFACTION-AWARE CLUSTER-FIRST, ROUTE-SECOND DECOMPOSITION FOR THE STATIC BIKE REPOSITIONING PROBLEM WITH BROKEN BIKES AND ON-SITE REPAIR}
+\chapter[EUDF-AWARE BRP WITH REPAIR]{EXTENDED-USER-DISSATISFACTION-AWARE CLUSTER-FIRST, ROUTE-SECOND DECOMPOSITION FOR THE STATIC BIKE REPOSITIONING PROBLEM WITH BROKEN BIKES AND ON-SITE REPAIR}
 
 This chapter extends the cluster-first, route-second idea to the static bike repositioning problem with broken bikes and on-site repair. The problem setting combines the operational features introduced in Chapter 4 with the scalability motivation of Chapter 3. The resulting framework aims to partition a large-scale system into clusters while accounting for the expected change in user dissatisfaction caused by repositioning, repair, and station-level inventory changes.
 
@@ -16,12 +16,11 @@ feasibility constraints of that model, removes the emission component, and
 evaluates a repositioning plan by the total user dissatisfaction at all stations
 on the following day.
 
-The problem considers a BSS with one depot and a finite set of stations over an
-overnight rebalancing horizon. Each station has a fixed capacity, an initial
-usable-bike inventory, and an initial broken-bike inventory, all of which are
-assumed to be known at the beginning of the horizon. Usable bikes can be rented
-by users after repositioning, whereas broken bikes cannot be rented and continue
-to occupy docks until they are collected or repaired.
+The setting has one depot and a finite set of stations over an overnight
+rebalancing horizon. Each station has a fixed capacity and known
+initial inventories of usable and broken bikes. Usable bikes can be rented by
+users after repositioning, whereas broken bikes cannot be rented and continue to
+occupy docks until they are collected or repaired.
 
 A fleet of repositioning trucks and a set of repairers operate within the same
 time budget. Trucks depart from the depot, travel among stations, deliver or
@@ -59,8 +58,6 @@ parameters, variables, and objective terms. Table~\ref{ch5:tab:notation} lists t
 sets, parameters, and decision variables retained in the formulation.
 
 {\vspace{0.8\baselineskip}
-\renewcommand{\baselinestretch}{1}\small
-\renewcommand{\arraystretch}{1.0}
 \setlength{\LTpre}{0.4\baselineskip}
 \setlength{\LTpost}{0.4\baselineskip}
 \refstepcounter{table}\label{ch5:tab:notation}
@@ -229,309 +226,255 @@ coefficients are precomputed and used in the time-indexed MILP below.
 \subsection{Time-indexed mixed-integer formulation}\label{ch5:sec:milp}
 
 The time-indexed MILP for the BRP-BR-OSR is given as follows:
-\begin{align}
-\min \quad & \sum_{i\in S}\hat F_i \label{ch5:eq:milp-objective}\\
+\begin{modelalign}
+\min\quad
+& \sum_{i\in S}\hat F_i \label{ch5:eq:milp-objective}\\
 \text{s.t.}\quad
-&\hat F_i\ge
-\alpha^i_{p_i,b_i}p_{i,T'}
+& \hat F_i \ge \alpha^i_{p_i,b_i}p_{i,T'}
 +\beta^i_{p_i,b_i}b_{i,T'}
 +\gamma^i_{p_i,b_i},
-&&\forall (p_i,b_i)\in\Theta_i,\ i\in S.
+&& \forall (p_i,b_i)\in\Theta_i,\ i\in S.
 \label{ch5:eq:eudf-linearization}
-\end{align}
+\end{modelalign}
 
 \begin{subequations}\label{ch5:eq:usable-inventory}
-\begin{align}
-&p_{i,1}
-=p_i^0-\sum_{k\in K}y_{i,1,k}^{\mathrm{u}^{-}}
+\begin{modelalign}
+& p_{i,1} = p_i^0-\sum_{k\in K}y_{i,1,k}^{\mathrm{u}^{-}}
 +\sum_{k\in K}y_{i,1,k}^{\mathrm{u}^{+}}
 +\sum_{m\in R}g_{i,1,m},
-&&\forall i\in S_0, \label{ch5:eq:usable-inventory-first}\\
-&p_{i,t}
-=p_{i,t-1}-\sum_{k\in K}y_{i,t,k}^{\mathrm{u}^{-}}
+&& \forall i\in S_0, \label{ch5:eq:usable-inventory-first}\\
+& p_{i,t} = p_{i,t-1}-\sum_{k\in K}y_{i,t,k}^{\mathrm{u}^{-}}
 +\sum_{k\in K}y_{i,t,k}^{\mathrm{u}^{+}}
 +\sum_{m\in R}g_{i,t,m},
-&&\forall i\in S_0,\ t=2,\ldots,T'. \label{ch5:eq:usable-inventory-recursive}
-\end{align}
+&& \forall i\in S_0,\ t=2,\ldots,T'. \label{ch5:eq:usable-inventory-recursive}
+\end{modelalign}
 \end{subequations}
 \begin{subequations}\label{ch5:eq:broken-inventory}
-\begin{align}
-&b_{i,1}
-=b_i^0-\sum_{k\in K}y_{i,1,k}^{\mathrm{b}^{-}}
+\begin{modelalign}
+& b_{i,1} = b_i^0-\sum_{k\in K}y_{i,1,k}^{\mathrm{b}^{-}}
 +\sum_{k\in K}y_{i,1,k}^{\mathrm{b}^{+}}
 -\sum_{m\in R}g_{i,1,m},
-&&\forall i\in S_0, \label{ch5:eq:broken-inventory-first}\\
-&b_{i,t}
-=b_{i,t-1}-\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{-}}
+&& \forall i\in S_0, \label{ch5:eq:broken-inventory-first}\\
+& b_{i,t} = b_{i,t-1}-\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{-}}
 +\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{+}}
 -\sum_{m\in R}g_{i,t,m},
-&&\forall i\in S_0,\ t=2,\ldots,T'. \label{ch5:eq:broken-inventory-recursive}
-\end{align}
+&& \forall i\in S_0,\ t=2,\ldots,T'. \label{ch5:eq:broken-inventory-recursive}
+\end{modelalign}
 \end{subequations}
-\begin{equation}
-p_{i,t}+b_{i,t}\le C_i,
-\quad \forall i\in S,\ t=1,\ldots,T'.
+\begin{modelalign}
+& p_{i,t}+b_{i,t} \le C_i,
+&& \forall i\in S,\ t=1,\ldots,T'.
 \label{ch5:eq:station-capacity}
-\end{equation}
+\end{modelalign}
 \begin{subequations}\label{ch5:eq:usable-load}
-\begin{align}
-&\sum_{j\in S_0}\psi_{0,j,1,k}^{\mathrm{u}}
-=y_{0,1,k}^{\mathrm{u}^{-}},
-&&\forall k\in K, \label{ch5:eq:usable-load-initial}\\
-&\sum_{j\in S_0}\psi_{i,j,t,k}^{\mathrm{u}}
-=\sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
+\begin{modelalign}
+& \sum_{j\in S_0}\psi_{0,j,1,k}^{\mathrm{u}} = y_{0,1,k}^{\mathrm{u}^{-}},
+&& \forall k\in K, \label{ch5:eq:usable-load-initial}\\
+& \sum_{j\in S_0}\psi_{i,j,t,k}^{\mathrm{u}}
+= \sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
 \psi_{j,i,t-t'_{j,i},k}^{\mathrm{u}}
 -y_{i,t,k}^{\mathrm{u}^{+}}
 +y_{i,t,k}^{\mathrm{u}^{-}},
-&&\forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:usable-load-balance}\\
-&\psi_{i,j,T',k}^{\mathrm{u}}
-=0,
-&&\forall i,j\in S_0,\ k\in K, \label{ch5:eq:usable-load-final}\\
-&\psi_{i,j,t,k}^{\mathrm{u}}
-\le Q_k x_{i,j,t,k}^{\mathrm{v}},
-&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:usable-load-link}
-\end{align}
+&& \forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:usable-load-balance}\\
+& \psi_{i,j,T',k}^{\mathrm{u}} = 0,
+&& \forall i,j\in S_0,\ k\in K, \label{ch5:eq:usable-load-final}\\
+& \psi_{i,j,t,k}^{\mathrm{u}} \le Q_k x_{i,j,t,k}^{\mathrm{v}},
+&& \forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:usable-load-link}
+\end{modelalign}
 \end{subequations}
 \begin{subequations}\label{ch5:eq:broken-load}
-\begin{align}
-&\psi_{i,j,1,k}^{\mathrm{b}}
-=0,
-&&\forall i,j\in S_0,\ k\in K, \label{ch5:eq:broken-load-initial}\\
-&\sum_{j\in S_0}\psi_{i,j,t,k}^{\mathrm{b}}
-=\sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
+\begin{modelalign}
+& \psi_{i,j,1,k}^{\mathrm{b}} = 0,
+&& \forall i,j\in S_0,\ k\in K, \label{ch5:eq:broken-load-initial}\\
+& \sum_{j\in S_0}\psi_{i,j,t,k}^{\mathrm{b}}
+= \sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
 \psi_{j,i,t-t'_{j,i},k}^{\mathrm{b}}
 -y_{i,t,k}^{\mathrm{b}^{+}}
 +y_{i,t,k}^{\mathrm{b}^{-}},
-&&\forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:broken-load-balance}\\
-&\psi_{i,j,T',k}^{\mathrm{b}}
-=0,
-&&\forall i,j\in S_0,\ k\in K, \label{ch5:eq:broken-load-final}\\
-&\psi_{i,j,t,k}^{\mathrm{b}}
-\le Q_k x_{i,j,t,k}^{\mathrm{v}},
-&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:broken-load-link}
-\end{align}
+&& \forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:broken-load-balance}\\
+& \psi_{i,j,T',k}^{\mathrm{b}} = 0,
+&& \forall i,j\in S_0,\ k\in K, \label{ch5:eq:broken-load-final}\\
+& \psi_{i,j,t,k}^{\mathrm{b}} \le Q_k x_{i,j,t,k}^{\mathrm{v}},
+&& \forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:broken-load-link}
+\end{modelalign}
 \end{subequations}
-\begin{equation}
-\psi_{i,j,t,k}^{\mathrm{u}}+\psi_{i,j,t,k}^{\mathrm{b}}\le Q_k,
-\quad \forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K.
+\begin{modelalign}
+& \psi_{i,j,t,k}^{\mathrm{u}}+\psi_{i,j,t,k}^{\mathrm{b}} \le Q_k,
+&& \forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K.
 \label{ch5:eq:truck-capacity}
-\end{equation}
+\end{modelalign}
 \begin{subequations}\label{ch5:eq:truck-action-linking}
-\begin{align}
-&y_{i,t,k}^{\mathrm{u}^{+}}
+\begin{modelalign}
+& y_{i,t,k}^{\mathrm{u}^{+}}
 \le \min\{C_i,Q_k\}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}},
-&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:usable-delivery-link}\\
-&y_{i,t,k}^{\mathrm{u}^{-}}
+&& \forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:usable-delivery-link}\\
+& y_{i,t,k}^{\mathrm{u}^{-}}
 \le \min\{C_i,Q_k\}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}},
-&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:usable-pickup-link}
-\end{align}
+&& \forall i\in S_0,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:usable-pickup-link}
+\end{modelalign}
 \end{subequations}
 \begin{subequations}\label{ch5:eq:broken-bike-rules}
-\begin{align}
-&y_{0,t,k}^{\mathrm{b}^{+}}
-\le Q_k\sum_{j\in S_0}x_{0,j,t,k}^{\mathrm{v}},
-&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:broken-depot-delivery-link}\\
-&y_{i,t,k}^{\mathrm{b}^{+}}
-=0,
-&&\forall i\in S,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:no-broken-station-delivery}\\
-&y_{0,t,k}^{\mathrm{b}^{-}}
-=0,
-&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:no-broken-depot-pickup}\\
-&y_{i,t,k}^{\mathrm{b}^{-}}
+\begin{modelalign}
+& y_{0,t,k}^{\mathrm{b}^{+}} \le Q_k\sum_{j\in S_0}x_{0,j,t,k}^{\mathrm{v}},
+&& \forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:broken-depot-delivery-link}\\
+& y_{i,t,k}^{\mathrm{b}^{+}} = 0,
+&& \forall i\in S,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:no-broken-station-delivery}\\
+& y_{0,t,k}^{\mathrm{b}^{-}} = 0,
+&& \forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:no-broken-depot-pickup}\\
+& y_{i,t,k}^{\mathrm{b}^{-}}
 \le \min\{b_i^0,Q_k\}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}},
-&&\forall i\in S,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:broken-station-pickup-link}
-\end{align}
+&& \forall i\in S,\ t=1,\ldots,T',\ k\in K. \label{ch5:eq:broken-station-pickup-link}
+\end{modelalign}
 \end{subequations}
 \begin{subequations}\label{ch5:eq:repair-rules}
-\begin{align}
-&g_{0,t,m}
-=0,
-&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:no-depot-repair}\\
-&g_{i,t,m}
-\le b_i^0\sum_{j\in S_0}x_{i,j,t,m}^{\mathrm{r}},
-&&\forall i\in S,\ t=1,\ldots,T',\ m\in R. \label{ch5:eq:repair-visit-link}
-\end{align}
+\begin{modelalign}
+& g_{0,t,m} = 0,
+&& \forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:no-depot-repair}\\
+& g_{i,t,m} \le b_i^0\sum_{j\in S_0}x_{i,j,t,m}^{\mathrm{r}},
+&& \forall i\in S,\ t=1,\ldots,T',\ m\in R. \label{ch5:eq:repair-visit-link}
+\end{modelalign}
 \end{subequations}
-\begin{equation}
-\sum_{t=1}^{T'}\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{-}}
+\begin{modelalign}
+& \sum_{t=1}^{T'}\sum_{k\in K}y_{i,t,k}^{\mathrm{b}^{-}}
 +\sum_{t=1}^{T'}\sum_{m\in R}g_{i,t,m}
 \le b_i^0,
-\quad \forall i\in S.
+&& \forall i\in S.
 \label{ch5:eq:broken-handling-limit}
-\end{equation}
+\end{modelalign}
 \begin{subequations}\label{ch5:eq:start-return}
-\begin{align}
-&\sum_{j\in S_0}x_{0,j,1,k}^{\mathrm{v}}
-=1,
-&&\forall k\in K, \label{ch5:eq:truck-start}\\
-&\sum_{j\in S}x_{0,j,1,m}^{\mathrm{r}}
-=1,
-&&\forall m\in R, \label{ch5:eq:repairer-start}\\
-&\sum_{i\in S_0}x_{i,0,T'-t'_{i,0},k}^{\mathrm{v}}
-=1,
-&&\forall k\in K, \label{ch5:eq:truck-return}\\
-&\sum_{i\in S_0}x_{i,0,T'-t''_{i,0},m}^{\mathrm{r}}
-=1,
-&&\forall m\in R. \label{ch5:eq:repairer-return}
-\end{align}
+\begin{modelalign}
+& \sum_{j\in S_0}x_{0,j,1,k}^{\mathrm{v}} = 1,
+&& \forall k\in K, \label{ch5:eq:truck-start}\\
+& \sum_{j\in S}x_{0,j,1,m}^{\mathrm{r}} = 1,
+&& \forall m\in R, \label{ch5:eq:repairer-start}\\
+& \sum_{i\in S_0}x_{i,0,T'-t'_{i,0},k}^{\mathrm{v}} = 1,
+&& \forall k\in K, \label{ch5:eq:truck-return}\\
+& \sum_{i\in S_0}x_{i,0,T'-t''_{i,0},m}^{\mathrm{r}} = 1,
+&& \forall m\in R. \label{ch5:eq:repairer-return}
+\end{modelalign}
 \end{subequations}
 \begin{subequations}\label{ch5:eq:flow-conservation}
-\begin{align}
-&\sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
+\begin{modelalign}
+& \sum_{\substack{j\in S_0:\\ t>t'_{j,i}}}
 x_{j,i,t-t'_{j,i},k}^{\mathrm{v}}
-=\sum_{u\in S_0}x_{i,u,t,k}^{\mathrm{v}},
-&&\forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:truck-flow}\\
-&\sum_{\substack{j\in S_0:\\ t>t''_{j,i}}}
+= \sum_{u\in S_0}x_{i,u,t,k}^{\mathrm{v}},
+&& \forall i\in S_0,\ t=2,\ldots,T',\ k\in K, \label{ch5:eq:truck-flow}\\
+& \sum_{\substack{j\in S_0:\\ t>t''_{j,i}}}
 x_{j,i,t-t''_{j,i},m}^{\mathrm{r}}
-=\sum_{u\in S_0}x_{i,u,t,m}^{\mathrm{r}},
-&&\forall i\in S_0,\ t=2,\ldots,T',\ m\in R. \label{ch5:eq:repairer-flow}
-\end{align}
+= \sum_{u\in S_0}x_{i,u,t,m}^{\mathrm{r}},
+&& \forall i\in S_0,\ t=2,\ldots,T',\ m\in R. \label{ch5:eq:repairer-flow}
+\end{modelalign}
 \end{subequations}
 \begin{subequations}\label{ch5:eq:depot-stay}
-\begin{align}
-&\varsigma_{t,k}^{\mathrm{v}}
-\ge (t-\partial_k^{\mathrm{v}}+1)/T',
-&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-lower}\\
-&\varsigma_{t,k}^{\mathrm{v}}
-\le (t-\partial_k^{\mathrm{v}}+0.5)/T'+1,
-&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-upper}\\
-&\varsigma_{t,m}^{\mathrm{r}}
-\ge (t-\partial_m^{\mathrm{r}}+1)/T',
-&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-stay-lower}\\
-&\varsigma_{t,m}^{\mathrm{r}}
-\le (t-\partial_m^{\mathrm{r}}+0.5)/T'+1,
-&&\forall t=1,\ldots,T',\ m\in R. \label{ch5:eq:repairer-stay-upper}
-\end{align}
+\begin{modelalign}
+& \varsigma_{t,k}^{\mathrm{v}} \ge (t-\partial_k^{\mathrm{v}}+1)/T',
+&& \forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-lower}\\
+& \varsigma_{t,k}^{\mathrm{v}} \le (t-\partial_k^{\mathrm{v}}+0.5)/T'+1,
+&& \forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-upper}\\
+& \varsigma_{t,m}^{\mathrm{r}} \ge (t-\partial_m^{\mathrm{r}}+1)/T',
+&& \forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-stay-lower}\\
+& \varsigma_{t,m}^{\mathrm{r}} \le (t-\partial_m^{\mathrm{r}}+0.5)/T'+1,
+&& \forall t=1,\ldots,T',\ m\in R. \label{ch5:eq:repairer-stay-upper}
+\end{modelalign}
 \end{subequations}
-\begingroup
-\small
-\newlength{\timefeasdomainwidth}
-\settowidth{\timefeasdomainwidth}{$\displaystyle
-\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
-t_{ij}^{\mathrm{r}}x_{i,j,t,m}^{\mathrm{r}}
-+\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}
-\ge (w-2)\tau-\varsigma_{w,m}^{\mathrm{r}}T$}
 \begin{subequations}\label{ch5:eq:time-feasibility}
-\begin{equation}
-\begin{array}{@{}l@{}}
-\displaystyle
-\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t'_{ij}}}
-t_{ij}^{\mathrm{v}}x_{i,j,t-t'_{ij},k}^{\mathrm{v}}
-+\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
-\left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
-+y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right)
-\le w\tau,\\[0.4ex]
-\mathmakebox[\timefeasdomainwidth][l]{}
-\quad \forall w=1,\ldots,T',\ k\in K,
-\end{array}
-\label{ch5:eq:truck-time-upper}
-\end{equation}
-\begin{equation}
-\begin{array}{@{}l@{}}
-\displaystyle
-\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
-t_{ij}^{\mathrm{v}}x_{i,j,t,k}^{\mathrm{v}}
-+\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
-\left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
-+y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right)
-\ge (w-2)\tau-\varsigma_{w,k}^{\mathrm{v}}T,\\[0.4ex]
-\mathmakebox[\timefeasdomainwidth][l]{}
-\quad \forall w=1,\ldots,T',\ k\in K,
-\end{array}
-\label{ch5:eq:truck-time-lower}
-\end{equation}
-\begin{equation}
-\mathmakebox[\timefeasdomainwidth][l]{\displaystyle
-\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t''_{ij}}}
-t_{ij}^{\mathrm{r}}x_{i,j,t-t''_{ij},m}^{\mathrm{r}}
-+\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}
-\le w\tau,}
-\quad \forall w=1,\ldots,T',\ m\in R,
-\label{ch5:eq:repairer-time-upper}
-\end{equation}
-\begin{equation}
-\mathmakebox[\timefeasdomainwidth][l]{\displaystyle
-\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
-t_{ij}^{\mathrm{r}}x_{i,j,t,m}^{\mathrm{r}}
-+\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}
-\ge (w-2)\tau-\varsigma_{w,m}^{\mathrm{r}}T,}
-\quad \forall w=1,\ldots,T',\ m\in R.
+\begin{modelalign}
+& \begin{aligned}[t]
+  &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t'_{ij}}}
+  t_{ij}^{\mathrm{v}}x_{i,j,t-t'_{ij},k}^{\mathrm{v}} \\
+  &+\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
+  \left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
+  +y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right) \le w\tau
+  \end{aligned}
+&& \forall w=1,\ldots,T',\ k\in K,
+\label{ch5:eq:truck-time-upper}\\
+& \begin{aligned}[t]
+  &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
+  t_{ij}^{\mathrm{v}}x_{i,j,t,k}^{\mathrm{v}} \\
+  &+\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
+  \left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
+  +y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right)\\
+  &\ge (w-2)\tau-\varsigma_{w,k}^{\mathrm{v}}T
+  \end{aligned}
+&& \forall w=1,\ldots,T',\ k\in K,
+\label{ch5:eq:truck-time-lower}\\
+& \begin{aligned}[t]
+  &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t''_{ij}}}
+  t_{ij}^{\mathrm{r}}x_{i,j,t-t''_{ij},m}^{\mathrm{r}} \\
+  &+\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m} \le w\tau
+  \end{aligned}
+&& \forall w=1,\ldots,T',\ m\in R,
+\label{ch5:eq:repairer-time-upper}\\
+& \begin{aligned}[t]
+  &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
+  t_{ij}^{\mathrm{r}}x_{i,j,t,m}^{\mathrm{r}} \\
+  &+\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}\\
+  &\ge (w-2)\tau-\varsigma_{w,m}^{\mathrm{r}}T
+  \end{aligned}
+&& \forall w=1,\ldots,T',\ m\in R.
 \label{ch5:eq:repairer-time-lower}
-\end{equation}
+\end{modelalign}
 \end{subequations}
-\endgroup
 \begin{subequations}\label{ch5:eq:waiting-self-loops}
-\begin{align}
-&x_{0,0,t,k}^{\mathrm{v}}
+\begin{modelalign}
+& x_{0,0,t,k}^{\mathrm{v}}
 \le 1-\left(\varsigma_{t+1,k}^{\mathrm{v}}-\varsigma_{t,k}^{\mathrm{v}}\right),
-&&\forall t=1,\ldots,T'-1,\ k\in K, \label{ch5:eq:truck-depot-wait}\\
-&x_{0,0,t,m}^{\mathrm{r}}
+&& \forall t=1,\ldots,T'-1,\ k\in K, \label{ch5:eq:truck-depot-wait}\\
+& x_{0,0,t,m}^{\mathrm{r}}
 \le 1-\left(\varsigma_{t+1,m}^{\mathrm{r}}-\varsigma_{t,m}^{\mathrm{r}}\right),
-&&\forall t=1,\ldots,T'-1,\ m\in R, \label{ch5:eq:repairer-depot-wait}\\
-&x_{i,i,t,k}^{\mathrm{v}}
+&& \forall t=1,\ldots,T'-1,\ m\in R, \label{ch5:eq:repairer-depot-wait}\\
+& x_{i,i,t,k}^{\mathrm{v}}
 \le y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
 +y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}
-+\left\lfloor \tau/t^{\mathrm{load}}\right\rfloor\varsigma_{t,k}^{\mathrm{v}},
-&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-self-loop}\\
-&x_{i,i,t,m}^{\mathrm{r}}
++\lfloor \tau/t^{\mathrm{load}}\rfloor\varsigma_{t,k}^{\mathrm{v}},
+&& \forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-self-loop}\\
+& x_{i,i,t,m}^{\mathrm{r}}
 \le g_{i,t,m}
-+\left\lfloor \tau/t^{\mathrm{repair}}\right\rfloor\varsigma_{t,m}^{\mathrm{r}},
-&&\forall i\in S_0,\ t=1,\ldots,T',\ m\in R. \label{ch5:eq:repairer-self-loop}
-\end{align}
++\lfloor \tau/t^{\mathrm{repair}}\rfloor\varsigma_{t,m}^{\mathrm{r}},
+&& \forall i\in S_0,\ t=1,\ldots,T',\ m\in R. \label{ch5:eq:repairer-self-loop}
+\end{modelalign}
 \end{subequations}
 \begin{subequations}\label{ch5:eq:movement-visit-limits}
-\begin{align}
-&\sum_{i\in S_0}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}}
-\le 1,
-&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-one-action}\\
-&\sum_{i\in S_0}\sum_{j\in S_0}x_{i,j,t,m}^{\mathrm{r}}
-\le 1,
-&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-one-action}\\
-&\sum_{\substack{j\in S_0:\\ j\ne i}}
+\begin{modelalign}
+& \sum_{i\in S_0}\sum_{j\in S_0}x_{i,j,t,k}^{\mathrm{v}} \le 1,
+&& \forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-one-action}\\
+& \sum_{i\in S_0}\sum_{j\in S_0}x_{i,j,t,m}^{\mathrm{r}} \le 1,
+&& \forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-one-action}\\
+& \sum_{\substack{j\in S_0:\\ j\ne i}}
 \sum_{t=t''_{j,i}+1}^{T'}
 \sum_{m\in R}x_{j,i,t-t''_{j,i},m}^{\mathrm{r}}
 \le 1,
-&&\forall i\in S_0. \label{ch5:eq:single-repairer-visit}
-\end{align}
+&& \forall i\in S_0. \label{ch5:eq:single-repairer-visit}
+\end{modelalign}
 \end{subequations}
 
 \begin{subequations}\label{ch5:eq:domains}
-\begin{align}
-&x_{i,j,t,k}^{\mathrm{v}}
-\in\{0,1\},
-&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-route-domain}\\
-&x_{i,j,t,m}^{\mathrm{r}}
-\in\{0,1\},
-&&\forall i,j\in S_0,\ t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-route-domain}\\
-&\varsigma_{t,k}^{\mathrm{v}}
-\in\{0,1\},
-&&\forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-domain}\\
-&\varsigma_{t,m}^{\mathrm{r}}
-\in\{0,1\},
-&&\forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-stay-domain}\\
-&p_{i,t},b_{i,t}
-\ge 0,
-&&\forall i\in S_0,\ t=1,\ldots,T', \label{ch5:eq:inventory-domain}\\
-&y_{i,t,k}^{\mathrm{u}^{+}},y_{i,t,k}^{\mathrm{u}^{-}},
+\begin{modelalign}
+& x_{i,j,t,k}^{\mathrm{v}} \in \{0,1\},
+&& \forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-route-domain}\\
+& x_{i,j,t,m}^{\mathrm{r}} \in \{0,1\},
+&& \forall i,j\in S_0,\ t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-route-domain}\\
+& \varsigma_{t,k}^{\mathrm{v}} \in \{0,1\},
+&& \forall t=1,\ldots,T',\ k\in K, \label{ch5:eq:truck-stay-domain}\\
+& \varsigma_{t,m}^{\mathrm{r}} \in \{0,1\},
+&& \forall t=1,\ldots,T',\ m\in R, \label{ch5:eq:repairer-stay-domain}\\
+& p_{i,t},b_{i,t} \ge 0,
+&& \forall i\in S_0,\ t=1,\ldots,T', \label{ch5:eq:inventory-domain}\\
+& y_{i,t,k}^{\mathrm{u}^{+}},y_{i,t,k}^{\mathrm{u}^{-}},
 y_{i,t,k}^{\mathrm{b}^{+}},y_{i,t,k}^{\mathrm{b}^{-}}
-\in\mathbb{Z}_+,
-&&\forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:action-domain}\\
-&g_{i,t,m}
-\in\mathbb{Z}_+,
-&&\forall i\in S_0,\ t=1,\ldots,T',\ m\in R, \label{ch5:eq:repair-domain}\\
-&\partial_k^{\mathrm{v}}
-\in\mathbb{Z}_+,\quad 0\le\partial_k^{\mathrm{v}}\le T',
-&&\forall k\in K, \label{ch5:eq:truck-return-domain}\\
-&\partial_m^{\mathrm{r}}
-\in\mathbb{Z}_+,\quad 0\le\partial_m^{\mathrm{r}}\le T',
-&&\forall m\in R, \label{ch5:eq:repairer-return-domain}\\
-&\psi_{i,j,t,k}^{\mathrm{u}},\psi_{i,j,t,k}^{\mathrm{b}}
-\ge 0,
-&&\forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:load-domain}\\
-&\hat F_i
-\ge 0,
-&&\forall i\in S. \label{ch5:eq:eudf-domain-variable}
-\end{align}
+\in \mathbb{Z}_+,
+&& \forall i\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:action-domain}\\
+& g_{i,t,m} \in \mathbb{Z}_+,
+&& \forall i\in S_0,\ t=1,\ldots,T',\ m\in R, \label{ch5:eq:repair-domain}\\
+& \partial_k^{\mathrm{v}} \in \mathbb{Z}_+,\quad 0\le\partial_k^{\mathrm{v}}\le T',
+&& \forall k\in K, \label{ch5:eq:truck-return-domain}\\
+& \partial_m^{\mathrm{r}} \in \mathbb{Z}_+,\quad 0\le\partial_m^{\mathrm{r}}\le T',
+&& \forall m\in R, \label{ch5:eq:repairer-return-domain}\\
+& \psi_{i,j,t,k}^{\mathrm{u}},\psi_{i,j,t,k}^{\mathrm{b}} \ge 0,
+&& \forall i,j\in S_0,\ t=1,\ldots,T',\ k\in K, \label{ch5:eq:load-domain}\\
+& \hat F_i \ge 0,
+&& \forall i\in S. \label{ch5:eq:eudf-domain-variable}
+\end{modelalign}
 \end{subequations}
 
 The objective in~\eqref{ch5:eq:milp-objective} minimizes total user dissatisfaction
@@ -623,32 +566,34 @@ constraints~\eqref{ch5:eq:repairer-one-action}. Constraints
 \eqref{ch5:eq:single-repairer-visit} ensure that each station can be visited at most
 once by at most one repairer during the whole rebalancing horizon.
 
-Constraints~\eqref{ch5:eq:truck-route-domain} and
-\eqref{ch5:eq:repairer-route-domain} define the binary route variables for trucks
-and repairers. Constraints~\eqref{ch5:eq:truck-stay-domain} and
+Constraints \eqref{ch5:eq:truck-route-domain} and
+\eqref{ch5:eq:repairer-route-domain} define the binary route variables for
+trucks and repairers. Constraints \eqref{ch5:eq:truck-stay-domain} and
 \eqref{ch5:eq:repairer-stay-domain} define the binary depot-stay variables.
-Constraints~\eqref{ch5:eq:inventory-domain} define the nonnegative inventory
-variables. Constraints~\eqref{ch5:eq:action-domain} and~\eqref{ch5:eq:repair-domain}
-define the nonnegative integer loading, unloading, collection, delivery, and
-repair variables. Constraints~\eqref{ch5:eq:truck-return-domain} and
-\eqref{ch5:eq:repairer-return-domain} define the return-period variables and their
-bounds. Constraints~\eqref{ch5:eq:load-domain} define the nonnegative truck-load
-variables, and constraints~\eqref{ch5:eq:eudf-domain-variable} define the
-nonnegative auxiliary EUDF variables.
+Constraints \eqref{ch5:eq:inventory-domain} define the nonnegative inventory
+variables. Constraints \eqref{ch5:eq:action-domain} and
+\eqref{ch5:eq:repair-domain} define the nonnegative integer loading, unloading,
+collection, delivery, and repair variables. Constraints
+\eqref{ch5:eq:truck-return-domain} and \eqref{ch5:eq:repairer-return-domain}
+define the return-period variables and their bounds. Constraints
+\eqref{ch5:eq:load-domain} define the nonnegative truck-load variables, and
+constraints \eqref{ch5:eq:eudf-domain-variable} define the nonnegative auxiliary
+EUDF variables.
 
 The formulation specifies the BRP-BR-OSR feasible set and the EUDF-based
 objective on inventories after repositioning used as the reference problem in the
 remainder of this chapter.
 
 
-\section{EUDF-aware cluster-first, route-second framework}\label{ch5:sec:eudf-aware-cfrs-framework}\label{ch5:sec:methodology}\label{ch5:sec:framework}\label{ch5:sec:cfrs-framework}
+\section[EUDF-aware cluster-first, route-second framework]{EUDF-aware cluster-first, route-second\\ framework}\label{ch5:sec:eudf-aware-cfrs-framework}\label{ch5:sec:methodology}\label{ch5:sec:framework}\label{ch5:sec:cfrs-framework}
 
 This section presents the cluster-first route-second (CFRS) solution method for
 large-scale BRP-BR-OSR instances. CFRS decomposes the original network into two
 connected layers. In the clustering phase, the station set is partitioned into clusters whose
 internal inventory-adjustment potential is high. In the cluster-level planning
-phase, each selected cluster is converted into a cluster-level BRP-BR-OSR instance and solved with the
-HGSADC-SBC algorithm of \citet{huRepositioningBikeSharing2025}.
+phase, each selected cluster is converted into a cluster-level BRP-BR-OSR
+instance and solved with HGSADC-SBC, following
+\citet{huRepositioningBikeSharing2025}.
 
 The partition is the interface between the two layers. The partition search
 evaluates candidate partitions by Extended Activated Transfer Selection (EATS),
@@ -812,7 +757,6 @@ Algorithm~\ref{ch5:alg:eats} gives the complete EATS evaluation routine.
 \begin{algorithm}[htbp]
 \caption{EATS evaluation of a cluster}
 \label{ch5:alg:eats}
-\footnotesize
 \KwIn{Cluster $B$, initial states $(p_i^0,b_i^0)$, EUDF functions $F_i(\cdot)$, travel-time data, time budget $T$, loading time $t^{\mathrm{load}}$, repair time $t^{\mathrm{repair}}$, and repairer travel-time multiplier $\rho$}
 \KwOut{Cluster value $G(B)$ and accepted operation records $\mathcal R_B$}
 \textbf{Step 0. Initialization}\;
@@ -855,7 +799,7 @@ at a station are jointly bounded by the available broken bikes. This keeps
 changes returned by Algorithm~\ref{ch5:alg:eats}.
 
 
-\section{Hybrid Genetic Search for Extended-UDF Clustering}\label{ch5:sec:hgs-euc}
+\section[Hybrid Genetic Search for Extended-UDF Clustering]{Hybrid Genetic Search for Extended-UDF\\ Clustering}\label{ch5:sec:hgs-euc}
 
 HGS-EUC is a hybrid genetic search for EUDF-guided clustering. It maintains a
 population of partition solutions, generates offspring through cluster-based
@@ -870,7 +814,6 @@ are defined in the following subsections.
 \begin{algorithm}[htbp]
 \caption{HGS-EUC partition search}
 \label{ch5:alg:hgs-euc}
-\footnotesize
 \KwIn{Station set $S$, number of clusters $M$, construction dissimilarity $d^{\mathrm{con}}$, EATS value $G(\cdot)$, and HGS parameters}
 \KwOut{Best-found partition $\Pi^\star$}
 $\mathcal P\gets\emptyset$; $\Pi^\star\gets\emptyset$; $it_{\mathrm{noimp}}\gets 0$\;
@@ -995,7 +938,11 @@ wall-clock limit, or maximum iteration limit is reached.
 \section{Cluster-level planning}\label{ch5:sec:cluster-level-planning}\label{ch5:sec:routing-interface}
 
 The cluster-level planning phase receives the best-found partition
-$\Pi^\star=\{B_1^\star,\ldots,B_M^\star\}$. For each selected cluster
+\begin{equation}
+\Pi^\star=\{B_1^\star,\ldots,B_M^\star\}.
+\label{ch5:eq:best-found-partition}
+\end{equation}
+For each selected cluster
 $B_m^\star$, the adapter constructs the cluster-level node set
 \begin{equation}
 V_m^0=B_m^\star\cup\{0\},
@@ -1095,7 +1042,7 @@ experiments.
   \centering
   \caption{Selected HGS-EUC parameters used in the computational experiments.}
   \label{ch5:tab:hgs-euc-params}
-  \begin{tabular}{lll}
+  \begin{tabular}{@{}L{0.16\linewidth}L{0.62\linewidth}L{0.12\linewidth}@{}}
     \toprule
     Parameter & Meaning & Value \\
     \midrule
@@ -1121,13 +1068,12 @@ time-indexed MILP with Gurobi. Method~B applies the HGSADC-SBC heuristic of
 is the proposed CFRS method: HGS-EUC first partitions the station set, and
 HGSADC-SBC then solves the cluster-level planning instances.
 
+\begin{landscape}
 {\vspace{0.8\baselineskip}
-\renewcommand{\baselinestretch}{1}\small
-\renewcommand{\arraystretch}{1.0}
 \setlength{\tabcolsep}{3pt}
 \setlength{\LTpre}{0.4\baselineskip}
 \setlength{\LTpost}{0.4\baselineskip}
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.11\linewidth}*{9}{>{\raggedleft\arraybackslash}p{0.081\linewidth}}@{}}
+\begin{longtable}{@{}L{0.10\linewidth}*{9}{R{0.09\linewidth}}@{}}
 \caption{Small-scale benchmark comparison. Method~A is Gurobi applied to the time-indexed MILP; Methods~B and~C are the monolithic HGSADC-SBC and the proposed CFRS method, respectively.}\label{ch5:tab:small-benchmark}\\
 \toprule
 & \multicolumn{3}{c}{Method~A (Gurobi)} & \multicolumn{2}{c}{Method~B} & \multicolumn{4}{c}{Method~C (CFRS)} \\
@@ -1177,6 +1123,7 @@ Instance & LB\textsuperscript{a} & UB\textsuperscript{b} & MIP gap\textsuperscri
 \end{tabular}
 \vspace{0.4\baselineskip}
 }
+\end{landscape}
 
 Table~\ref{ch5:tab:small-benchmark} shows that Gurobi does not close the MIP gap
 within the 600~s limit on these instances. The average MIP gap is 91.39\%.
@@ -1193,8 +1140,6 @@ are run on Set~3 with the same computational budget and the same 20 random
 seeds.
 
 {\vspace{0.8\baselineskip}
-\renewcommand{\baselinestretch}{1}\small
-\renewcommand{\arraystretch}{1.0}
 \setlength{\tabcolsep}{3pt}
 \setlength{\LTpre}{0.4\baselineskip}
 \setlength{\LTpost}{0.4\baselineskip}
@@ -1274,8 +1219,6 @@ Truck capacity is varied over $Q\in\{15,20,25,30,35\}$ bikes. The remaining
 parameters are kept at their default values.
 
 {\vspace{0.8\baselineskip}
-\renewcommand{\baselinestretch}{1}\small
-\renewcommand{\arraystretch}{1.0}
 \setlength{\tabcolsep}{3pt}
 \setlength{\LTpre}{0.4\baselineskip}
 \setlength{\LTpost}{0.4\baselineskip}
@@ -1468,8 +1411,6 @@ $T\in\{3600,5400,7200,9000,10800\}$~s. The remaining parameters are kept at
 their default values.
 
 {\vspace{0.8\baselineskip}
-\renewcommand{\baselinestretch}{1}\small
-\renewcommand{\arraystretch}{1.0}
 \setlength{\tabcolsep}{3pt}
 \setlength{\LTpre}{0.4\baselineskip}
 \setlength{\LTpost}{0.4\baselineskip}
@@ -1663,8 +1604,6 @@ parameter belongs only to Method~C, because Method~B solves the full instance
 without a clustering phase.
 
 {\vspace{0.8\baselineskip}
-\renewcommand{\baselinestretch}{1}\small
-\renewcommand{\arraystretch}{1.0}
 \setlength{\tabcolsep}{3pt}
 \setlength{\LTpre}{0.4\baselineskip}
 \setlength{\LTpost}{0.4\baselineskip}
@@ -1845,26 +1784,27 @@ Instance & Target size & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{Metho
 \vspace{0.4\baselineskip}
 }
 
-Table~\ref{ch5:tab:config-cluster-size} shows that the target cluster size directly
-affects the performance of Method~C. Method~C has the largest average advantage
-when the target cluster size is 50 stations, where the average $\text{Gap}_B$ is 26.36\%.
-The average $\text{Gap}_B$ decreases to 17.96\% at 75 stations and 8.81\% at 100
-stations; it remains positive at 10.07\% and 8.64\% for target sizes 125 and
-150, respectively. Thus, smaller cluster sizes generally perform better in these
-tests, but Method~C maintains a positive average advantage over Method~B for all
-tested target sizes. This is consistent with the role of the target cluster size
-in CFRS: it determines the sizes of the cluster-level planning subproblems passed
-to HGSADC-SBC.
+Table~\ref{ch5:tab:config-cluster-size} shows that target cluster size affects
+Method~C. Method~C has the largest average
+advantage when the target cluster size is 50 stations, where the average
+\(\text{Gap}_B\) is 26.36\%. The average \(\text{Gap}_B\) decreases to 17.96\%
+at 75 stations and 8.81\% at 100 stations; it remains positive at 10.07\% and
+8.64\% for target sizes 125 and 150, respectively. Thus, smaller cluster sizes
+generally perform better in these tests, but Method~C maintains a positive
+average advantage over Method~B for all tested target sizes. This is consistent
+with the role of the target cluster size in CFRS: it determines the sizes of the
+cluster-level planning subproblems passed to HGSADC-SBC.
 
 \subsubsection{Broken-bike-rate configurations}\label{ch5:sec:exp-config-broken-rate}\label{ch5:sec:exp-sens-broken}
 
 The broken-bike rate is varied over
-$\{0.00,0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00\}$. The remaining parameters are kept at
+\begin{equation}
+\{0.00,0.25,0.50,0.75,1.00,1.25,1.50,1.75,2.00\}.
+\end{equation}
+The remaining parameters are kept at
 their default values.
 
 {\vspace{0.8\baselineskip}
-\renewcommand{\baselinestretch}{1}\small
-\renewcommand{\arraystretch}{1.0}
 \setlength{\tabcolsep}{3pt}
 \setlength{\LTpre}{0.4\baselineskip}
 \setlength{\LTpost}{0.4\baselineskip}
@@ -2145,8 +2085,8 @@ Instance & Broken-bike rate & \multicolumn{2}{c}{Method~B} & \multicolumn{3}{c}{
 \vspace{0.4\baselineskip}
 }
 
-Table~\ref{ch5:tab:config-broken-rate} shows that Method~C obtains a lower average
-objective than Method~B for every broken-bike-rate configuration. The average
+The results in Table~\ref{ch5:tab:config-broken-rate} show that Method~C obtains
+a lower average objective than Method~B for every broken-bike-rate configuration. The average
 $\text{Gap}_B$ is 11.42\% over all rows, and the gap remains positive at every tested
 broken-bike rate.
 

@@ -1,4 +1,4 @@
-\chapter{STATIC BIKE REPOSITIONING WITH BROKEN BIKES AND ON-SITE REPAIR}
+\chapter[STATIC BRP WITH BROKEN BIKES AND REPAIR]{STATIC BIKE REPOSITIONING WITH BROKEN BIKES AND ON-SITE REPAIR}
 
 This chapter studies a static bike repositioning problem with broken bikes and on-site repair. In addition to relocating usable and broken bikes by trucks, the problem considers repairers who visit stations and repair broken bikes directly in the system. The resulting planning problem involves two interacting routing decisions and station-level quantity decisions for repairing, loading, and unloading bikes.
 
@@ -44,10 +44,9 @@ a truck. The objective of the BRP is to minimize the cost consisting of the foll
   The sum of user dissatisfaction at all stations on the following day and;
 \item
   The CO\textsubscript{2} emissions of the repositioning trucks during the rebalancing process.
+  Note that the daily repair staffing cost is not included in our optimization objective as it does
+  not affect the optimal repositioning decisions.
 \end{itemize}
-
-Note that the daily repair staffing cost is not included in our optimization objective as it does
-not affect the optimal repositioning decisions.
 
 Figure~\ref{ch4:fig:problem-illustration} illustrates an example of the problem. The BSS consists of one depot (represented by a red
 star and labeled with 0) and ten stations (labeled from 1 to 10). The tables in Figure~\ref{ch4:fig:problem-illustration}
@@ -167,7 +166,8 @@ time-indexed formulation.
 
 \subsection{Notations}\label{ch4:subsec:notations}
 
-\begin{longtable}{@{}ll@{}}
+\begingroup
+\begin{longtable}{@{}L{0.17\linewidth}L{0.77\linewidth}@{}}
 \caption{Notation used in the problem formulation.}\label{ch4:tab:notations}\\
 \toprule
 \endfirsthead
@@ -262,336 +262,249 @@ Function} \\
 \emph{p\textsubscript{i}} and broken bike inventory level \emph{b\textsubscript{i}} at station
 \emph{i} \\
 \end{longtable}
+\endgroup
 
 \subsection{Time-indexed formulation}\label{ch4:subsec:time-indexed-formulation}
 
 The time-indexed formulation of the BRP separating the routes of trucks and repairers is as follows.
-
-\begin{equation}
-\label{ch4:eq:2}
-\begin{array}{l}
-{\text{minimize~}c^{\text{p}}\sum_{i \in S}F_{i}\left( {p_{i,T^{'}},b_{i,T^{'}}} \right) + c^{\text{e}}\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}e_{i,j,t - t_{i,j}^{'}k} +} \\
-{\theta \cdot \left( \begin{array}{l}
-{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}\left( {t_{i,j}^{\text{v}} \cdot x_{i,j,t - t_{i,j}^{'},k}^{\text{v}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}t^{\text{load}} \cdot \left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) +} \\
-{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}\left( {t_{i,j}^{\text{r}} \cdot x_{i,j,t - t_{i,j}^{''},m}^{\text{r}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}t^{\text{repair}} \cdot g_{i,t,m}}
-\end{array} \right)}
-\end{array}
-\end{equation}Subject to
-
-\begin{equation}
-\label{ch4:eq:3}
-p_{i,1} = p_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\text{u}^{-}} + \sum\limits_{k \in K}y_{i,1,k}^{\text{u}^{+}} + \sum\limits_{m \in R}g_{i,1,m},\forall i \in S_{0},
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:4}
-p_{i,t} = p_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\text{u}^{-}} + \sum\limits_{k \in K}y_{i,t,k}^{\text{u}^{+}} + \sum\limits_{m \in R}g_{i,t,m},\forall i \in S_{0},t = 2,...,T',
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:5}
-b_{i,1} = b_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\text{b}^{-}} + \sum\limits_{k \in K}y_{i,1,k}^{\text{b}^{+}} - \sum\limits_{m \in R}g_{i,1,m},\forall i \in S_{0},
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:6}
-b_{i,t} = b_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\text{b}^{-}} + \sum\limits_{k \in K}y_{i,t,k}^{\text{b}^{+}} - \sum\limits_{m \in R}g_{i,t,m},\forall i \in S_{0},t = 2,\ldots,T',
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:7}
-p_{i,t} + b_{i,t} \leq C_{i},\forall i \in S,t = 1,....T',
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:8}
-\sum\limits_{j \in S_{0}}\psi_{0,j,1,k}^{\text{u}} = y_{0,1,k}^{\text{u}^{-}},\forall k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:9}
-\sum\limits_{j \in S_{0}}\psi_{i,j,t,k}^{\text{u}} = \sum\limits_{j \in S_{0},t - t_{j,i}' > 0}\psi_{j,i,t - t_{j,i}',k}^{\text{u}} - y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}},\forall i \in S_{0},t = 2,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:10}
-\psi_{i,j,T',k}^{\text{u}} = 0,\forall i \in S_{0},j \in S_{0},k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:11}
-\psi_{i,j,t,k}^{\text{u}} \leq Q_{k}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},j \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:12}
-\psi_{i,j,1,k}^{\text{b}} = 0,\forall i \in S_{0},j \in S_{0},k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:13}
-\sum\limits_{j \in S_{0}}\psi_{i,j,t,k}^{\text{b}} = \sum\limits_{j \in S_{0},t - t_{j,i}' > 0}\psi_{j,i,t - t_{j,i}',k}^{\text{b}} - y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}},\forall i \in S_{0},t = 2,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:14}
-\psi_{i,j,T',k}^{\text{b}} = 0,\forall i \in S_{0},j \in S_{0},k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:15}
-\psi_{i,j,t,k}^{\text{b}} \leq Q_{k}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},j \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:16}
-\psi_{i,j,t,k}^{\text{u}} + \psi_{i,j,t,k}^{\text{b}} \leq Q_{k},\forall i \in S_{0},j \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:17}
-y_{i,t,k}^{\text{u}^{+}} \leq \min\left\{ {C_{i},Q_{k}} \right\} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:18}
-y_{i,t,k}^{\text{u}^{-}} \leq \min\left\{ {C_{i},Q_{k}} \right\} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}},\forall i \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:19}
-y_{0,t,k}^{\text{b}^{+}} \leq Q_{k} \cdot \sum\limits_{j \in S_{0}}x_{0,j,t,k}^{\text{v}},\forall t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:20}
-y_{i,t,k}^{\text{b}^{+}} = 0,\forall i \in S,t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:21}
-y_{0,t,k}^{\text{b}^{-}} = 0,\forall t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:22}
-y_{i,t,k}^{\text{b}^{-}} \leq \min\left\{ {b_{i}^{0},Q_{k}} \right\} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}},\forall i \in S,t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:23}
-g_{0,t,m} = 0,\forall t = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:24}
-g_{i,t,m} \leq b_{i}^{0} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,m}^{\text{r}},\forall i \in S,t = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:25}
-\sum\limits_{t = 1}^{T'}{\sum\limits_{k \in K}y_{i,t,k}^{\text{b}^{-}}} + \sum\limits_{t = 1}^{T'}{\sum\limits_{m \in R}g_{i,t,m}} \leq b_{i}^{0},\forall i \in S,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:26}
-\sum\limits_{j \in S_{0}}x_{0,j,1,k}^{\text{v}} = 1,\forall k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:27}
-\sum\limits_{j \in S}x_{0,j,1,m}^{\text{r}} = 1,\forall m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:28}
-\sum\limits_{i \in S_{0}}x_{i,0,T^{'} - t_{i,0}^{'},k}^{\text{v}} = 1,\forall k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:29}
-\sum\limits_{i \in S_{0}}x_{i,0,T^{'} - t_{i,0}^{''},m}^{\text{r}} = 1,\forall m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:30}
-\sum\limits_{j \in S_{0},t - t_{\mathit{ji}}' > 0}x_{j,i,t - t_{\mathit{ji}}',k}^{\text{v}} = \sum\limits_{u \in S_{0}}x_{i,u,t,k}^{\text{v}},\forall i \in S_{0},t = 2,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:31}
-\sum\limits_{j \in S_{0},t - t_{\mathit{ji}}^{''} > 0}x_{j,i,t - t_{\mathit{ji}}^{''},m}^{\text{r}} = \sum\limits_{u \in S_{0}}x_{i,u,t,m}^{\text{r}},\forall i \in S_{0},t = 2,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:32}
-\left. \varsigma_{t,k}^{\text{v}} \geq \left( t - \partial_{k}^{\text{v}} + 1 \right)/T',\forall t = 1,\ldots,T',k \in K, \right.
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:33}
-\left. \varsigma_{t,k}^{\text{v}} \leq \left( t - \partial_{k}^{\text{v}} + 0.5 \right)/T' + 1,\forall t = 1,\ldots,T',k \in K, \right.
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:34}
-\left. \varsigma_{t,m}^{\text{r}} \geq \left( t - \partial_{m}^{\text{r}} + 1 \right)/T',\forall t = 1,\ldots,T',m \in R, \right.
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:35}
-\left. \varsigma_{t,m}^{\text{r}} \leq \left( t - \partial_{m}^{\text{r}} + 0.5 \right)/T' + 1,\forall t = 1,\ldots,T',m \in R, \right.
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:36}
-\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > t_{ij}^{'}}t_{i,j}^{\text{v}} \cdot x_{i,j,t - t_{ij}^{'},k}^{\text{v}} + \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\text{load}}\left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) \leq w \cdot \tau,\forall w = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:37}
-\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > 0}t_{i,j}^{\text{v}} \cdot x_{i,j,t,k}^{\text{v}} + \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\text{load}}\left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) \geq \left( {w - 2} \right) \cdot \tau - \varsigma_{w,k}^{\text{v}}T,\forall w = 1,...,T^{'},k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:38}
-\sum\limits_{i,j \in S_{0}}{\sum\limits_{t \leq w,t > t_{\mathit{ij}}^{''}}t_{i,j}^{\text{r}}} \cdot x_{i,j,t - t_{\mathit{ij}}^{''},m}^{\text{r}} + \sum\limits_{i \in S}{\sum\limits_{t \leq w}{t^{\text{repair}}g_{i,t,m}}} \leq w \cdot \tau,\forall w = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:39}
-\sum\limits_{i,j \in S_{0}}{\sum\limits_{t \leq w,t > 0}t_{i,j}^{\text{r}}} \cdot x_{i,j,t,m}^{\text{r}} + \sum\limits_{i \in S}{\sum\limits_{t \leq w}{t^{\text{repair}}g_{i,t,m}}} \geq \left( {w - 2} \right) \cdot \tau - \varsigma_{w,m}^{\text{r}}T,\forall w = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:40}
-x_{0,0,t,k}^{\text{v}} \leq 1 - \left( \varsigma_{t + 1,k}^{\text{v}} - \varsigma_{t,k}^{\text{v}} \right),\forall t = 1,\ldots,T' - 1,k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:41}
-x_{0,0,t,m}^{\text{r}} \leq 1 - \left( \varsigma_{t + 1,m}^{\text{r}} - \varsigma_{t,m}^{\text{r}} \right),\forall t = 1,\ldots,T' - 1,m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:42}
-x_{i,i,t,k}^{\text{v}} \leq \left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right) + \left\lfloor \frac{\tau}{t^{load}} \right\rfloor \varsigma_{t,k}^{\text{v}},\forall i \in S_{0},t = 1,\ldots,T^{'},k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:43}
-x_{i,i,t,m}^{\text{r}} \leq g_{i,t,m} + \left\lfloor \frac{\tau}{t^{\text{repair}}} \right\rfloor \varsigma_{t,m}^{\text{r}},\forall i \in S_{0},t = 1,\ldots,T^{'},m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:44}
-\sum\limits_{i \in S_{0}}{\sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\text{v}}} \leq 1,\forall t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:45}
-\sum\limits_{i \in S_{0}}{\sum\limits_{j \in S_{0}}x_{i,j,t,m}^{\text{r}}} \leq 1,\forall t = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:46}
-\sum\limits_{j \in S_{0},j \neq i}{\sum\limits_{t = t_{j,i}^{''} + 1}^{T'}{\sum\limits_{m \in R}x_{j,i,t - t_{j,i}^{''},m}^{\text{r}}}} \leq 1,\forall i \in S_{0},
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:47}
-e_{i,j,t,k} \geq CER \cdot \left\lbrack {\rho_{0} \cdot x_{i,j,t,k}^{\text{v}} + \frac{\rho^{\ast} - \rho_{0}}{Q_{k}} \cdot \left( {\psi_{i,j,t,k}^{\text{u}} + \psi_{i,j,t,k}^{\text{b}}} \right)} \right\rbrack \cdot d_{\mathit{ij}},\mspace{100mu}\mspace{100mu}\forall i,j \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:48}
-x_{i,j,t,k}^{\text{v}} \in \left\{ 0,1 \right\},\forall i,j \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:49}
-x_{i,j,t,m}^{\text{r}} \in \left\{ 0,1 \right\},\forall i,j \in S_{0},t = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:50}
-\varsigma_{t,k}^{\text{v}} \in \left\{ 0,1 \right\},\forall t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:51}
-\varsigma_{t,m}^{\text{r}} \in \left\{ 0,1 \right\},\forall t = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:52}
-p_{i,t} \geq 0,\forall i \in S_{0},t = 1,...,T',
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:53}
-b_{i,t} \geq 0,\forall i \in S_{0},t = 1,...,T',
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:54}
-y_{i,t,k}^{\text{u}^{+}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:55}
-y_{i,t,k}^{\text{u}^{-}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:56}
-y_{i,t,k}^{\text{b}^{+}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:57}
-y_{i,t,k}^{\text{b}^{-}} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:58}
-g_{i,t,m} \geq 0,\text{integer},\forall i \in S_{0},t = 1,...,T',m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:59}
-\partial_{k}^{\text{v}} \geq 0,\text{integer},\forall k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:60}
-\partial_{m}^{\text{r}} \geq 0,\text{integer},\forall m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:61}
-\partial_{k}^{\text{v}} \leq T',\text{integer},\forall k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:62}
-\partial_{m}^{\text{r}} \leq T',\text{integer},\forall m \in R,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:63}
-\psi_{i,j,t,k}^{\text{u}} \geq 0,\forall i,\mspace{100mu} j \in S_{0},t = 1,...,T',k \in K,
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:64}
-\psi_{i,j,t,k}^{\text{b}} \geq 0,\forall i,\mspace{100mu} j \in S_{0},t = 1,...,T',k \in K,\quad\mspace{600mu}\text{and}
-\end{equation}
-
-\begin{equation}
-\label{ch4:eq:65}
-e_{i,j,t,k} \geq 0,\forall i,\mspace{100mu} j \in S_{0},t = 1,...,T',k \in K.
-\end{equation}
+\begin{modelalign}
+\min\quad
+& \begin{aligned}[t]
+  & c^{\mathrm{p}}\sum\nolimits_{i \in S}F_{i}\left(p_{i,T'},b_{i,T'}\right)\\
+  &\quad + c^{\mathrm{e}}\sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}
+    \sum\nolimits_{k \in K}e_{i,j,t - t_{i,j}',k} \\
+  &\quad + \theta \Bigg(
+    \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}
+      \sum\nolimits_{k \in K} t_{i,j}^{\mathrm{v}} x_{i,j,t - t_{i,j}',k}^{\mathrm{v}} \\
+  &\qquad\quad
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}\sum\nolimits_{k \in K}
+      t^{\mathrm{load}}\bigl( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
+      \\
+  &\qquad\qquad{}
+      + y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}} \bigr) \\
+  &\qquad\quad
+    + \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}
+      \sum\nolimits_{m \in R} t_{i,j}^{\mathrm{r}} x_{i,j,t - t_{i,j}'',m}^{\mathrm{r}} \\
+  &\qquad\quad
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}\sum\nolimits_{m \in R}
+      t^{\mathrm{repair}} g_{i,t,m}
+    \Bigg)
+		  \end{aligned}
+ \label{ch4:eq:2}\displaybreak[2]\\
+\text{s.t.}\quad
+& p_{i,1} = \begin{aligned}[t]
+      &p_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{u}^{-}}
+      + \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{u}^{+}}\\
+      &{} + \sum\limits_{m \in R}g_{i,1,m}
+      \end{aligned},
+&& \forall i \in S_{0} \label{ch4:eq:3}\\
+& p_{i,t} = \begin{aligned}[t]
+      &p_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\mathrm{u}^{-}}
+      + \sum\limits_{k \in K}y_{i,t,k}^{\mathrm{u}^{+}}\\
+      &{} + \sum\limits_{m \in R}g_{i,t,m}
+      \end{aligned},
+&& \forall i \in S_{0},t = 2,\ldots,T' \label{ch4:eq:4}\\
+& b_{i,1} = \begin{aligned}[t]
+      &b_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{b}^{-}}
+      + \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{b}^{+}}\\
+      &{} - \sum\limits_{m \in R}g_{i,1,m}
+      \end{aligned},
+&& \forall i \in S_{0} \label{ch4:eq:5}\\
+& b_{i,t} = \begin{aligned}[t]
+      &b_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\mathrm{b}^{-}}
+      + \sum\limits_{k \in K}y_{i,t,k}^{\mathrm{b}^{+}}\\
+      &{} - \sum\limits_{m \in R}g_{i,t,m}
+      \end{aligned},
+&& \forall i \in S_{0},t = 2,\ldots,T' \label{ch4:eq:6}\\
+& p_{i,t} + b_{i,t} \le C_{i},
+&& \forall i \in S,t = 1,\ldots,T' \label{ch4:eq:7}\\
+& \sum\limits_{j \in S_{0}}\psi_{0,j,1,k}^{\mathrm{u}} = y_{0,1,k}^{\mathrm{u}^{-}},
+&& \forall k \in K \label{ch4:eq:8}\\
+& \sum\limits_{j \in S_{0}}\psi_{i,j,t,k}^{\mathrm{u}} = \begin{aligned}[t]
+      &\sum\limits_{j \in S_{0},t - t_{j,i}' > 0}\psi_{j,i,t - t_{j,i}',k}^{\mathrm{u}}\\
+      &{} - y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
+      \end{aligned},
+&& \forall i \in S_{0},t = 2,\ldots,T',k \in K \label{ch4:eq:9}\\
+& \psi_{i,j,T',k}^{\mathrm{u}} = 0,
+&& \forall i,j \in S_{0},k \in K \label{ch4:eq:10}\\
+& \psi_{i,j,t,k}^{\mathrm{u}} \le Q_{k}x_{i,j,t,k}^{\mathrm{v}},
+&& \forall i,j \in S_{0},t{=}1,\ldots,T',k \in K \label{ch4:eq:11}\displaybreak[2]\\
+& \psi_{i,j,1,k}^{\mathrm{b}} = 0,
+&& \forall i,j \in S_{0},k \in K \label{ch4:eq:12}\\
+& \sum\limits_{j \in S_{0}}\psi_{i,j,t,k}^{\mathrm{b}} = \begin{aligned}[t]
+      &\sum\limits_{j \in S_{0},t - t_{j,i}' > 0}\psi_{j,i,t - t_{j,i}',k}^{\mathrm{b}}\\
+      &{} - y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}}
+      \end{aligned},
+&& \forall i \in S_{0},t = 2,\ldots,T',k \in K \label{ch4:eq:13}\\
+& \psi_{i,j,T',k}^{\mathrm{b}} = 0,
+&& \forall i,j \in S_{0},k \in K \label{ch4:eq:14}\\
+& \psi_{i,j,t,k}^{\mathrm{b}} \le Q_{k}x_{i,j,t,k}^{\mathrm{v}},
+&& \forall i,j \in S_{0},t{=}1,\ldots,T',k \in K \label{ch4:eq:15}\\
+& \psi_{i,j,t,k}^{\mathrm{u}} + \psi_{i,j,t,k}^{\mathrm{b}} \le Q_{k},
+&& \forall i,j \in S_{0},t{=}1,\ldots,T',k \in K \label{ch4:eq:16}\\
+& \begin{aligned}[t]
+  y_{i,t,k}^{\mathrm{u}^{+}}
+  &\le \min\{C_{i},Q_{k}\}\\
+  &\quad{}\cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\mathrm{v}}
+  \end{aligned},
+&& \forall i \in S_{0},t = 1,\ldots,T',k \in K \label{ch4:eq:17}\\
+& \begin{aligned}[t]
+  y_{i,t,k}^{\mathrm{u}^{-}}
+  &\le \min\{C_{i},Q_{k}\}\\
+  &\quad{}\cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\mathrm{v}}
+  \end{aligned},
+&& \forall i \in S_{0},t = 1,\ldots,T',k \in K \label{ch4:eq:18}\\
+& y_{0,t,k}^{\mathrm{b}^{+}} \le Q_{k} \cdot \sum\limits_{j \in S_{0}}x_{0,j,t,k}^{\mathrm{v}},
+&& \forall t = 1,\ldots,T',k \in K \label{ch4:eq:19}\\
+& y_{i,t,k}^{\mathrm{b}^{+}} = 0,
+&& \forall i \in S,t = 1,\ldots,T',k \in K \label{ch4:eq:20}\\
+& y_{0,t,k}^{\mathrm{b}^{-}} = 0,
+&& \forall t = 1,\ldots,T',k \in K \label{ch4:eq:21}\\
+& \begin{aligned}[t]
+  y_{i,t,k}^{\mathrm{b}^{-}}
+  &\le \min\{b_{i}^{0},Q_{k}\}\\
+  &\quad{}\cdot \sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\mathrm{v}}
+  \end{aligned},
+&& \forall i \in S,t = 1,\ldots,T',k \in K \label{ch4:eq:22}\\
+& g_{0,t,m} = 0,
+&& \forall t = 1,\ldots,T',m \in R \label{ch4:eq:23}\\
+& g_{i,t,m} \le b_{i}^{0} \cdot \sum\limits_{j \in S_{0}}x_{i,j,t,m}^{\mathrm{r}},
+&& \forall i \in S,t = 1,\ldots,T',m \in R \label{ch4:eq:24}\\
+& \begin{aligned}[t]
+  &\sum\limits_{t = 1}^{T'}{\sum\limits_{k \in K}y_{i,t,k}^{\mathrm{b}^{-}}}\\
+  &{} + \sum\limits_{t = 1}^{T'}{\sum\limits_{m \in R}g_{i,t,m}} \le b_{i}^{0}
+  \end{aligned}
+&& \forall i \in S \label{ch4:eq:25}\displaybreak[2]\\
+& \sum\limits_{j \in S_{0}}x_{0,j,1,k}^{\mathrm{v}} = 1,
+&& \forall k \in K \label{ch4:eq:26}\\
+& \sum\limits_{j \in S}x_{0,j,1,m}^{\mathrm{r}} = 1,
+&& \forall m \in R \label{ch4:eq:27}\\
+& \sum\limits_{i \in S_{0}}x_{i,0,T^{'} - t_{i,0}^{'},k}^{\mathrm{v}} = 1,
+&& \forall k \in K \label{ch4:eq:28}\\
+& \sum\limits_{i \in S_{0}}x_{i,0,T^{'} - t_{i,0}^{''},m}^{\mathrm{r}} = 1,
+&& \forall m \in R \label{ch4:eq:29}\\
+& \begin{aligned}[t]
+  &\sum\limits_{j \in S_{0},t - t_{\mathit{ji}}' > 0}x_{j,i,t - t_{\mathit{ji}}',k}^{\mathrm{v}}\\
+  &= \sum\limits_{u \in S_{0}}x_{i,u,t,k}^{\mathrm{v}}
+  \end{aligned},
+&& \forall i \in S_{0},t = 2,\ldots,T',k \in K \label{ch4:eq:30}\\
+& \begin{aligned}[t]
+  &\sum\limits_{j \in S_{0},t - t_{\mathit{ji}}^{''} > 0}x_{j,i,t - t_{\mathit{ji}}^{''},m}^{\mathrm{r}}\\
+  &= \sum\limits_{u \in S_{0}}x_{i,u,t,m}^{\mathrm{r}}
+  \end{aligned},
+&& \forall i \in S_{0},t = 2,\ldots,T',m \in R \label{ch4:eq:31}\\
+& \varsigma_{t,k}^{\mathrm{v}} \ge \left( t - \partial_{k}^{\mathrm{v}} + 1 \right)/T',
+&& \forall t = 1,\ldots,T',k \in K \label{ch4:eq:32}\\
+& \varsigma_{t,k}^{\mathrm{v}} \le \left( t - \partial_{k}^{\mathrm{v}} + 0.5 \right)/T' + 1,
+&& \forall t = 1,\ldots,T',k \in K \label{ch4:eq:33}\\
+& \varsigma_{t,m}^{\mathrm{r}} \ge \left( t - \partial_{m}^{\mathrm{r}} + 1 \right)/T',
+&& \forall t = 1,\ldots,T',m \in R \label{ch4:eq:34}\\
+& \varsigma_{t,m}^{\mathrm{r}} \le \left( t - \partial_{m}^{\mathrm{r}} + 0.5 \right)/T' + 1,
+&& \forall t = 1,\ldots,T',m \in R \label{ch4:eq:35}\displaybreak[2]\\
+& \begin{aligned}[t]
+  &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > t_{ij}^{'}}
+  t_{i,j}^{\mathrm{v}} x_{i,j,t - t_{ij}^{'},k}^{\mathrm{v}} \\
+  &+ \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\mathrm{load}}
+  \left( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
+  + y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}} \right) \le w \cdot \tau
+  \end{aligned}
+&& \forall w = 1,\ldots,T',\ k \in K \label{ch4:eq:36}\\
+& \begin{aligned}[t]
+  &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > 0}
+  t_{i,j}^{\mathrm{v}} x_{i,j,t,k}^{\mathrm{v}} \\
+  &+ \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\mathrm{load}}
+  \left( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
+  + y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}} \right)\\
+  &\ge \left( w - 2 \right)\tau - \varsigma_{w,k}^{\mathrm{v}}T
+  \end{aligned}
+&& \forall w = 1,\ldots,T^{'},\ k \in K \label{ch4:eq:37}\\
+& \begin{aligned}[t]
+  &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > t_{\mathit{ij}}^{''}}
+  t_{i,j}^{\mathrm{r}} x_{i,j,t - t_{\mathit{ij}}^{''},m}^{\mathrm{r}} \\
+  &+ \sum\limits_{i \in S}\sum\limits_{t \leq w}t^{\mathrm{repair}}g_{i,t,m}
+  \le w \cdot \tau
+  \end{aligned}
+&& \forall w = 1,\ldots,T',\ m \in R \label{ch4:eq:38}\\
+& \begin{aligned}[t]
+  &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > 0}
+  t_{i,j}^{\mathrm{r}} x_{i,j,t,m}^{\mathrm{r}} \\
+  &+ \sum\limits_{i \in S}\sum\limits_{t \leq w}t^{\mathrm{repair}}g_{i,t,m}\\
+  &\ge \left( w - 2 \right)\tau - \varsigma_{w,m}^{\mathrm{r}}T
+  \end{aligned}
+&& \forall w = 1,\ldots,T',\ m \in R \label{ch4:eq:39}\displaybreak[2]\\
+& x_{0,0,t,k}^{\mathrm{v}}
+\le 1 - \left( \varsigma_{t + 1,k}^{\mathrm{v}} - \varsigma_{t,k}^{\mathrm{v}} \right),
+&& \forall t = 1,\ldots,T' - 1,k \in K \label{ch4:eq:40}\\
+& x_{0,0,t,m}^{\mathrm{r}}
+\le 1 - \left( \varsigma_{t + 1,m}^{\mathrm{r}} - \varsigma_{t,m}^{\mathrm{r}} \right),
+&& \forall t = 1,\ldots,T' - 1,m \in R \label{ch4:eq:41}\\
+& x_{i,i,t,k}^{\mathrm{v}} \le \begin{aligned}[t]
+       &\left( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}} \right.\\
+       &\left.{} + y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}} \right)\\
+       &{} + \left\lfloor \frac{\tau}{t^{\mathrm{load}}} \right\rfloor \varsigma_{t,k}^{\mathrm{v}}
+       \end{aligned},
+&& \forall i \in S_{0},t = 1,\ldots,T^{'},k \in K \label{ch4:eq:42}\\
+& x_{i,i,t,m}^{\mathrm{r}}
+\le g_{i,t,m} + \left\lfloor \frac{\tau}{t^{\mathrm{repair}}} \right\rfloor \varsigma_{t,m}^{\mathrm{r}},
+&& \forall i \in S_{0},t = 1,\ldots,T^{'},m \in R \label{ch4:eq:43}\displaybreak[2]\\
+& \sum\limits_{i \in S_{0}}{\sum\limits_{j \in S_{0}}x_{i,j,t,k}^{\mathrm{v}}} \le 1,
+&& \forall t = 1,\ldots,T',k \in K \label{ch4:eq:44}\\
+& \sum\limits_{i \in S_{0}}{\sum\limits_{j \in S_{0}}x_{i,j,t,m}^{\mathrm{r}}} \le 1,
+&& \forall t = 1,\ldots,T',m \in R \label{ch4:eq:45}\\
+& \begin{aligned}[t]
+  &\sum\limits_{j \in S_{0}\setminus\{i\}}
+    \sum\limits_{t = t_{j,i}^{''} + 1}^{T'}
+    \sum\limits_{m \in R}x_{j,i,t - t_{j,i}^{''},m}^{\mathrm{r}} \le 1
+  \end{aligned}
+&& \forall i \in S_{0} \label{ch4:eq:46}\\
+& e_{i,j,t,k} \ge \begin{aligned}[t]
+       &CER \Biggl[
+        \rho_{0} x_{i,j,t,k}^{\mathrm{v}}
+        + \frac{\rho^{\ast} - \rho_{0}}{Q_{k}}\\
+       &\qquad{}\cdot
+        \bigl( \psi_{i,j,t,k}^{\mathrm{u}}\\
+       &\qquad\qquad{}
+        + \psi_{i,j,t,k}^{\mathrm{b}} \bigr)
+        \Biggr] d_{\mathit{ij}}
+       \end{aligned},
+&& \forall i,j \in S_{0},\ t{=}1,\ldots,T',\ k \in K \label{ch4:eq:47}\displaybreak[2]\\
+& x_{i,j,t,k}^{\mathrm{v}} \in \left\{ 0,1 \right\},
+&& \forall i,j \in S_{0},t{=}1,\ldots,T',k \in K \label{ch4:eq:48}\\
+& x_{i,j,t,m}^{\mathrm{r}} \in \left\{ 0,1 \right\},
+&& \forall i,j \in S_{0},t{=}1,\ldots,T',m \in R \label{ch4:eq:49}\\
+& \varsigma_{t,k}^{\mathrm{v}} \in \left\{ 0,1 \right\},
+&& \forall t = 1,\ldots,T',k \in K \label{ch4:eq:50}\\
+& \varsigma_{t,m}^{\mathrm{r}} \in \left\{ 0,1 \right\},
+&& \forall t = 1,\ldots,T',m \in R \label{ch4:eq:51}\\
+& p_{i,t} \ge 0,
+&& \forall i \in S_{0},t = 1,\ldots,T' \label{ch4:eq:52}\\
+& b_{i,t} \ge 0,
+&& \forall i \in S_{0},t = 1,\ldots,T' \label{ch4:eq:53}\\
+& y_{i,t,k}^{\mathrm{u}^{+}} \ge 0,\text{integer},
+&& \forall i \in S_{0},t = 1,\ldots,T',k \in K \label{ch4:eq:54}\\
+& y_{i,t,k}^{\mathrm{u}^{-}} \ge 0,\text{integer},
+&& \forall i \in S_{0},t = 1,\ldots,T',k \in K \label{ch4:eq:55}\\
+& y_{i,t,k}^{\mathrm{b}^{+}} \ge 0,\text{integer},
+&& \forall i \in S_{0},t = 1,\ldots,T',k \in K \label{ch4:eq:56}\\
+& y_{i,t,k}^{\mathrm{b}^{-}} \ge 0,\text{integer},
+&& \forall i \in S_{0},t = 1,\ldots,T',k \in K \label{ch4:eq:57}\\
+& g_{i,t,m} \ge 0,\text{integer},
+&& \forall i \in S_{0},t = 1,\ldots,T',m \in R \label{ch4:eq:58}\\
+& \partial_{k}^{\mathrm{v}} \ge 0,\text{integer},
+&& \forall k \in K \label{ch4:eq:59}\\
+& \partial_{m}^{\mathrm{r}} \ge 0,\text{integer},
+&& \forall m \in R \label{ch4:eq:60}\\
+& \partial_{k}^{\mathrm{v}} \le T',\text{integer},
+&& \forall k \in K \label{ch4:eq:61}\\
+& \partial_{m}^{\mathrm{r}} \le T',\text{integer},
+&& \forall m \in R \label{ch4:eq:62}\\
+& \psi_{i,j,t,k}^{\mathrm{u}} \ge 0,
+&& \forall i,j \in S_{0},t{=}1,\ldots,T',k \in K \label{ch4:eq:63}\\
+& \psi_{i,j,t,k}^{\mathrm{b}} \ge 0,
+&& \forall i,j \in S_{0},\ t{=}1,\ldots,T',\ k \in K \label{ch4:eq:64}\\
+& e_{i,j,t,k} \ge 0,
+&& \forall i,j \in S_{0},t{=}1,\ldots,T',k \in K. \label{ch4:eq:65}
+\end{modelalign}
 
 The objective~\eqref{ch4:eq:2} is to minimize the sum of the penalty cost of the total user dissatisfaction at
 all stations and the cost of the total CO\textsubscript{2} emissions of all the trucks. Note that we
@@ -623,15 +536,20 @@ noticeable impact on results that are rounded to two decimal places.
 \label{ch4:fig:redundant-operations}
 \end{figure}
 
-Constraints~\eqref{ch4:eq:3},~\eqref{ch4:eq:4},~\eqref{ch4:eq:5},~\eqref{ch4:eq:6} keep track of the numbers of usable and broken bikes at each node at
-the end of each period. Constraints~\eqref{ch4:eq:7} stipulate that the total number of usable and broken bikes
-at each station is no more than its capacity. Constraints~\eqref{ch4:eq:8} specify the initial load of usable
-bikes on each truck during the first period. Constraints~\eqref{ch4:eq:9} update the load of usable bikes on each
-truck at each node during each period. Constraints~\eqref{ch4:eq:10} require that each truck holds no usable
-bikes at the end of the last period. Constraints~\eqref{ch4:eq:11} ensure that the quantity of usable bikes
-carried by each truck in any period does not exceed its capacity. Similar constraints for broken
-bikes are provided in constraints~\eqref{ch4:eq:12},~\eqref{ch4:eq:13},~\eqref{ch4:eq:14},~\eqref{ch4:eq:15}. Constraints~\eqref{ch4:eq:16} ensure that the total
-number of usable and broken bikes on each truck during each period is no more than its capacity.
+Constraints \eqref{ch4:eq:3}--\eqref{ch4:eq:6} keep track of the numbers of
+usable and broken bikes at each node at the end of each period.
+Constraint~\eqref{ch4:eq:7} stipulates that the total number of usable and
+broken bikes at each station is no more than its capacity.
+Constraint~\eqref{ch4:eq:8} specifies the initial load of usable bikes on each
+truck during the first period. Constraint~\eqref{ch4:eq:9} updates the load of
+usable bikes on each truck at each node during each period.
+Constraint~\eqref{ch4:eq:10} requires that each truck holds no usable bikes at
+the end of the last period. Constraint~\eqref{ch4:eq:11} ensures that the
+quantity of usable bikes carried by each truck in any period does not exceed its
+capacity. Similar constraints for broken bikes are given in
+\eqref{ch4:eq:12}--\eqref{ch4:eq:15}. Constraint~\eqref{ch4:eq:16} ensures that
+the total number of usable and broken bikes on each truck during each period is
+no more than its capacity.
 
 Constraints~\eqref{ch4:eq:17},~\eqref{ch4:eq:18} make sure that the total quantity of usable bikes delivered to or collected
 from a visited station in a period is less than or equal to the minimum of the station capacity and
@@ -646,21 +564,21 @@ bikes repaired at any station is less than or equal to the initial broken bike i
 station. Constraints~\eqref{ch4:eq:25} ensure that the total number of broken bikes collected by trucks and
 repaired by repairers at each station does not exceed the initial broken bike inventory.
 
-Constraints~\eqref{ch4:eq:26},~\eqref{ch4:eq:27},~\eqref{ch4:eq:28},~\eqref{ch4:eq:29} require that both trucks and repairers depart from the depot
-initially and return to the depot eventually. Constraints~\eqref{ch4:eq:30},~\eqref{ch4:eq:31} are the
-flow~conservation~conditions for trucks and repairers, respectively. Constraints~\eqref{ch4:eq:32},~\eqref{ch4:eq:33},~\eqref{ch4:eq:34},
-\eqref{ch4:eq:35} relate \(\varsigma_{t,k}^{\text{v}}\)(the variable used to define whether a truck or a repairer stays
+Constraints~\eqref{ch4:eq:26}--\eqref{ch4:eq:29} require that both trucks and repairers depart from the depot
+initially and return to the depot eventually. Constraints~\eqref{ch4:eq:30} and~\eqref{ch4:eq:31} are the
+flow~conservation~conditions for trucks and repairers, respectively. Constraints~\eqref{ch4:eq:32}--\eqref{ch4:eq:35}
+relate \(\varsigma_{t,k}^{\text{v}}\)(the variable used to define whether a truck or a repairer stays
 still at the depot from period \emph{t} to the end of the rebalancing process) to
 \(\partial_{k}^{\text{v}}\) (the period of the truck's or repairer's final return to the depot).
 
-Constraints~\eqref{ch4:eq:36},~\eqref{ch4:eq:37},~\eqref{ch4:eq:38},~\eqref{ch4:eq:39} restrict the upper and lower bounds of the operational time, and
+Constraints~\eqref{ch4:eq:36}--\eqref{ch4:eq:39} restrict the upper and lower bounds of the operational time, and
 are modified from the study of Liu et al. (2018). Specifically, constraints~\eqref{ch4:eq:36} imply that up to
 each period, the sum of route travel time and the service time at each node cannot exceed the time
 from the start of repositioning to the end of that period, and constraints~\eqref{ch4:eq:37} imply that up to
 each period, the sum of route travel time and the service time at each node cannot be lower than the
 time from the start of repositioning to the end of two periods before that period. Similar
-constraints are also imposed on the repairers in constraints~\eqref{ch4:eq:38},~\eqref{ch4:eq:39}. Note that constraints~\eqref{ch4:eq:37},
-\eqref{ch4:eq:39} are only activated before the period that the truck and the repairer return to the depot for
+constraints are also imposed on the repairers in constraints~\eqref{ch4:eq:38} and~\eqref{ch4:eq:39}. Note that constraints~\eqref{ch4:eq:37}
+and~\eqref{ch4:eq:39} are only activated before the period that the truck and the repairer return to the depot for
 the last time, respectively.
 
 Constraints~\eqref{ch4:eq:40},~\eqref{ch4:eq:41} ensure the truck or the repairer stays at the depot after the final return.
@@ -670,74 +588,118 @@ repair here. Constraints~\eqref{ch4:eq:44} enforce that a truck can travel betwe
 within a period. A similar set of constraints for repairers is given in constraints~\eqref{ch4:eq:45}.
 Constraints~\eqref{ch4:eq:46} ensure that each station can be visited at most once by at most one repairer in the
 whole repositioning horizon. Constraints~\eqref{ch4:eq:47} define the carbon emissions of each truck produced in
-each period when traveling between any two nodes. Constraints~\eqref{ch4:eq:48},~\eqref{ch4:eq:49},~\eqref{ch4:eq:50},~\eqref{ch4:eq:51},~\eqref{ch4:eq:52},~\eqref{ch4:eq:53},
-\eqref{ch4:eq:54},~\eqref{ch4:eq:55},~\eqref{ch4:eq:56},~\eqref{ch4:eq:57},~\eqref{ch4:eq:58},~\eqref{ch4:eq:59},~\eqref{ch4:eq:60},~\eqref{ch4:eq:61},~\eqref{ch4:eq:62},~\eqref{ch4:eq:63},~\eqref{ch4:eq:64},~\eqref{ch4:eq:65} are the domain constraints.
+each period when traveling between any two nodes. Constraints~\eqref{ch4:eq:48}--\eqref{ch4:eq:65} are the domain constraints.
 
 Following Kaspi (2015), the EUDF is linearized by introducing a new variable \({\widehat{F}}_{i}\)
 for each station \(i \in S\), and the following linear constraints are added to the
-formulation.\begin{equation}
+formulation.
+\begin{modelalign}
+& {\hat{F}}_{i} \ge \begin{aligned}[t]
+        &\alpha_{p_{i},b_{i}}^{i} p_{i,T^{'}}
+        + \beta_{p_{i},b_{i}}^{i} b_{i,T^{'}}\\
+        &{} + \gamma_{p_{i},b_{i}}^{i}
+        \end{aligned},
+&& \begin{aligned}[t]
+        &\forall\left( p_{i},b_{i} \right)
+        \in \left\{ \left( p_{i},b_{i} \right) \in {\mathbb{Z}}^{2}
+        \mid p_{i} \geq 0,\ b_{i} \geq 0,\ p_{i} + b_{i} \leq C_{i} \right\},\\
+        &\forall i \in S.
+        \end{aligned}
 \label{ch4:eq:66}
-{\hat{F}}_{i} \geq \alpha_{p_{i},b_{i}}^{i} \cdot p_{i,T^{'}} + \beta_{p_{i},b_{i}}^{i} \cdot b_{i,T^{'}} + \gamma_{p_{i},b_{i}}^{i},\forall\left( {p_{i},b_{i}} \right) \in \left\{ {\left( {p_{i},b_{i}} \right) \in {\mathbb{Z}}^{2} \mid p_{i} \geq 0,b_{i} \geq 0,p_{i} + b_{i} \leq C_{i}} \right\},\forall i \in S.
-\end{equation}
+\end{modelalign}
 
 The resultant objective is
-
-\begin{equation}
+\begin{modelalign}
+\min\quad
+& \begin{aligned}[t]
+  & c^{\mathrm{p}}\sum\nolimits_{i \in S}{\hat{F}}_{i}\\
+  &\quad + c^{\mathrm{e}}\sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}
+    \sum\nolimits_{k \in K}e_{i,j,t - t_{i,j}',k} \\
+  &\quad + \theta \Bigg(
+    \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}
+      \sum\nolimits_{k \in K} t_{i,j}^{\mathrm{v}} x_{i,j,t - t_{i,j}',k}^{\mathrm{v}} \\
+  &\qquad\quad
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}\sum\nolimits_{k \in K}
+      t^{\mathrm{load}}\bigl( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
+      \\
+  &\qquad\qquad{}
+      + y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}} \bigr) \\
+  &\qquad\quad
+    + \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}
+      \sum\nolimits_{m \in R}t_{i,j}^{\mathrm{r}} x_{i,j,t - t_{i,j}'',m}^{\mathrm{r}} \\
+  &\qquad\quad
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}\sum\nolimits_{m \in R}
+      t^{\mathrm{repair}} g_{i,t,m}
+	\Bigg).
+\end{aligned}
 \label{ch4:eq:67}
-\begin{array}{l}
-{\text{minimize}\mspace{6mu} c^{\text{p}}\sum\limits_{i \in S}{\hat{F}}_{i} + c^{\text{e}}\sum\limits_{i \in S_{0}}\sum\limits_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum\limits_{k \in K}e_{i,j,t - t_{i,j}^{'},k} +} \\
-{\theta \cdot \left( \begin{array}{l}
-{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}\left( {t_{i,j}^{\text{v}} \cdot x_{i,j,t - t_{i,j}^{'},k}^{\text{v}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{'} + 1}^{T^{'}}\sum_{k \in K}t^{\text{load}} \cdot \left( {y_{i,t,k}^{\text{u}^{+}} + y_{i,t,k}^{\text{u}^{-}} + y_{i,t,k}^{\text{b}^{+}} + y_{i,t,k}^{\text{b}^{-}}} \right)} \\
-{\sum_{i \in S_{0}}\sum_{j \in S_{0}}\sum\limits_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}\left( {t_{i,j}^{\text{r}} \cdot x_{i,j,t - t_{i,j}^{''},m}^{\text{r}}} \right) + \sum_{i \in S_{0}}\sum_{t = t_{i,j}^{''} + 1}^{T^{'}}\sum_{m \in R}t^{\text{repair}} \cdot g_{i,t,m}}
-\end{array} \right)}
-\end{array}.
-\end{equation}
+\end{modelalign}
 
 \section{Solution method}\label{ch4:sec:solution-method}
 
-This study developed a hybrid algorithm (HGSADC-SBC) consisting of Hybrid Genetic Search with
-Adaptive Diversity Control (HGSADC) and a Station Budget Constrained (SBC) heuristic to solve the
-proposed model. The HGSADC is the backbone of the algorithm, and the SBC heuristic is encapsulated
-to determine the quantities of loading, unloading, and repairing of bikes for a given route.
+This study developed a hybrid algorithm, HGSADC-SBC, to solve the proposed
+model. It combines Hybrid Genetic Search with Adaptive Diversity Control
+(HGSADC) with a Station-Budget-Constrained (SBC) heuristic. HGSADC is the
+backbone of the algorithm, and the SBC heuristic is encapsulated to determine
+loading, unloading, and repairing quantities for a given route.
 
 \subsection{Solution representation}\label{ch4:subsec:solution-representation}
 
 Each solution is represented by
 \(\phi = \left( {S_{\text{R}},S_{\text{K}},\Omega_{\text{R}},\Omega_{\text{K}}} \right)\), where
 \(S_{\text{R}} = \left( {r_{1},r_{2},...,r_{|R|}} \right)\) denotes the list of repairer routes
-\(r_{i}\mspace{100mu}\mspace{100mu}\left( {i \in R} \right)\), and
+\(r_{i}\) for \(i \in R\), and
 \(S_{\text{K}} = \left( {r_{1}',r_{2}',...,r_{|K|}'} \right)\) denotes the list of truck routes
-\(r_{k}'\mspace{100mu}\left( {k \in K} \right)\). The repairing quantities are represented by
+\(r_{k}'\) for \(k \in K\). The repairing quantities are represented by
 \(\Omega_{\text{R}} = \left( {G_{1},G_{2},\ldots,G_{|R|}} \right)\), with \emph{G\textsubscript{i}}
 \(\left( {i \in R} \right)\) specifying the repairing quantities associated with the repairer route
-\(r_{i}\mspace{100mu}\mspace{100mu}\left( {i \in R} \right)\). Similarly, the (un)loading quantities
+\(r_{i}\). Similarly, the (un)loading quantities
 are represented by \(\Omega_{\text{K}} = \left( {Y_{1},Y_{2},\ldots,Y_{|K|}} \right)\), where
 \emph{Y\textsubscript{k}} \(\left( {k \in K} \right)\) specifies the (un)loading quantities
-associated with the truck route \(r_{k}'\mspace{100mu}\left( {k \in K} \right)\).
+associated with the truck route \(r_{k}'\).
 
 The route of each repairer is represented as
-\(r_{i} = \left( {s_{i_{0}},s_{i_{1}},s_{i_{2}},...,s_{i_{|r_{i}{| - 2}}},s_{i_{|r_{i}{| - 1}}}} \right),i \in R\),
+\begin{equation}
+r_{i} = \left( s_{i_{0}},s_{i_{1}},s_{i_{2}},\ldots,s_{i_{|r_{i}| - 2}},s_{i_{|r_{i}| - 1}} \right),
+\quad i \in R,
+\end{equation}
 and the route of each truck is represented as
-\(r_{k}' = \left( {s_{k_{0}}',s_{k_{1}}',s_{k_{2}}',...,s_{k_{{|r_{k}'|} - 2}}',s_{k_{{|r_{k}'|} - 1}}'} \right),k \in K,\)
+\begin{equation}
+r_{k}' = \left( s_{k_{0}}',s_{k_{1}}',s_{k_{2}}',\ldots,
+s_{k_{|r_{k}'| - 2}}',s_{k_{|r_{k}'| - 1}}' \right),
+\quad k \in K,
+\end{equation}
 where \(s_{i_{j}} \in S_{0}\) and \(s_{k_{l}}' \in S_{0}\)
 \(\left( {0 \leq j \leq \left| r_{i} \right| - 1,0 \leq l \leq \left| r_{k}' \right| - 1} \right)\),
 and the subscripts \emph{j} and \emph{l} are used to define the order of nodes being visited. Every
 route comprises a permutation of visited nodes, with the first and last being the depot, labeled
 with 0, i.e.,
-\(s_{i_{0}} = s_{i_{|r_{i}{| - 1}}} = 0\mspace{100mu}\mspace{100mu}\mspace{100mu}\left( {i \in R} \right)\)
+\(s_{i_{0}} = s_{i_{|r_{i}| - 1}} = 0\) for \(i \in R\)
 and
-\(s_{k_{0}}' = s_{k_{|r_{k}'{| - 1}}}' = 0\mspace{100mu}\mspace{100mu}\left( {k \in K} \right)\).
+\(s_{k_{0}}' = s_{k_{|r_{k}'| - 1}}' = 0\) for \(k \in K\).
 For any of the two routes in \emph{S}\textsubscript{R}, no common stations are allowed between the
 initial and ending depot.
 
 For repairer \emph{i} \(\left( {i \in R} \right)\), the repairing quantities associated with route
 \(r_{i}\) are represented as
-\(G_{i} = \left( {g_{s_{i_{0}},i},g_{s_{i_{1}},i},\ldots,g_{s_{i_{|r_{i}{| - 1}}},i}} \right)\),
+\begin{equation}
+G_{i} = \left( g_{s_{i_{0}},i},g_{s_{i_{1}},i},\ldots,g_{s_{i_{|r_{i}| - 1}},i} \right),
+\end{equation}
 where \(g_{s_{i_{j}},i}\) denotes the number of broken bikes repaired at node \(s_{i_{j}}\) in
-\(r_{i}\) \(\left( {0 \leq j \leq \left| r_{i} \right| - 1} \right)\). Similarly, for truck \emph{k}
-\(\left( {k \in K} \right)\), the (un)loading quantities associated with route \(r_{k}'\) are
+\(r_{i}\), for \(j=0,\ldots,\left| r_{i} \right|-1\). Similarly, for truck \(k\in K\), the
+(un)loading quantities associated with route \(r_{k}'\) are
 denoted by
-\(Y_{k} = \left( {\left( {y_{0,k}^{\text{u}^{+}},y_{0,k}^{\text{u}^{-}},y_{0,k}^{\text{b}^{+}},y_{0,k}^{\text{b}^{-}}} \right),\left( {y_{1,k}^{\text{u}^{+}},y_{1,k}^{\text{u}^{-}},y_{1,k}^{\text{b}^{+}},y_{1,k}^{\text{b}^{-}}} \right),\ldots,\left( {y_{{|r_{k}'|} - 1,k}^{\text{u}^{+}},y_{{|r_{k}'|} - 1,k}^{\text{u}^{-}},y_{{|r_{k}'|} - 1,k}^{\text{b}^{+}},y_{{|r_{k}'|} - 1,k}^{\text{b}^{-}}} \right)} \right)\),
+\begin{equation}
+\begin{aligned}
+Y_{k} = \big(&
+(y_{0,k}^{\text{u}^{+}},y_{0,k}^{\text{u}^{-}},y_{0,k}^{\text{b}^{+}},y_{0,k}^{\text{b}^{-}}),
+(y_{1,k}^{\text{u}^{+}},y_{1,k}^{\text{u}^{-}},y_{1,k}^{\text{b}^{+}},y_{1,k}^{\text{b}^{-}}),
+\ldots, \\
+& (y_{|r_{k}'|-1,k}^{\text{u}^{+}},y_{|r_{k}'|-1,k}^{\text{u}^{-}},
+y_{|r_{k}'|-1,k}^{\text{b}^{+}},y_{|r_{k}'|-1,k}^{\text{b}^{-}})
+\big),
+\end{aligned}
+\end{equation}
 where \(y_{l,k}^{\text{u}^{+}}\) and \(y_{l,k}^{\text{u}^{-}}\) denote the number of usable bikes
 unloaded and loaded at node \(s_{k_{l}}\) respectively, and \(y_{l,k}^{\text{b}^{+}}\) and
 \(y_{l,k}^{\text{b}^{-}}\) represent the number of broken bikes unloaded and loaded at \(s_{k_{l}}\)
@@ -745,7 +707,13 @@ unloaded and loaded at node \(s_{k_{l}}\) respectively, and \(y_{l,k}^{\text{b}^
 
 The solution that corresponds to the one shown in Figure~\ref{ch4:fig:problem-illustration} in a network with ten stations and one
 depot with two repairers and two trucks can be represented
-as\[\phi = \left( {S_{\text{R}},S_{\text{K}},\Omega_{\text{R}},\Omega_{\text{K}}} \right) = \left( {\left( {r_{1},r_{2}} \right),\left( {r_{1}',r_{2}'} \right),\left( {G_{1},G_{2}} \right),\left( {Y_{1},Y_{2}} \right)} \right)\]where:
+as
+\begin{equation}
+\phi = \left( {S_{\text{R}},S_{\text{K}},\Omega_{\text{R}},\Omega_{\text{K}}} \right)
+= \left( {\left( {r_{1},r_{2}} \right),\left( {r_{1}',r_{2}'} \right),
+\left( {G_{1},G_{2}} \right),\left( {Y_{1},Y_{2}} \right)} \right)
+\end{equation}
+where:
 
 \begin{itemize}
 \item
@@ -767,19 +735,23 @@ the sequence of the visited nodes in between being retained to enhance computati
 
 \subsection{Overall algorithmic procedure}\label{ch4:subsec:overall-algorithmic-procedure}
 
-The algorithmic procedure for HGSADC-SBC is given in Table~\ref{ch4:tab:hgsadc-sbc-procedure}. The algorithm starts with
-the initialization of a population \emph{Pop} consisting of a feasible subpopulation
-\emph{Pop}\textsubscript{f} and an infeasible subpopulation \emph{Pop}\textsubscript{i} (Line 1).
-Then, the population of individuals iteratively evolves through successive operations (Line 3 to
-Line 29). The best fitness value and its corresponding solution up to each iteration are kept with
-\emph{current\_best\_value} and \emph{current\_best\_sol}, respectively. The algorithm terminates
-and returns the best known solution and fitness value when the number of iterations without
-improvement (denoted as \emph{iter\_no\_imp}) reaches the limit \emph{It}\textsubscript{NI}, or the
-running time (denoted as \emph{cpu\_time}) reaches the limit \emph{T}\textsubscript{max}. A
-diversification process is activated every \emph{It}\textsubscript{div} iterations without
-improvement to maintain a high level of diversity among individuals (Line 26 to Line 28).
+The algorithmic procedure for HGSADC-SBC is given in
+Table~\ref{ch4:tab:hgsadc-sbc-procedure}. The algorithm starts with the
+initialization of a population \emph{Pop} consisting of a feasible subpopulation
+\emph{Pop}\textsubscript{f} and an infeasible subpopulation
+\emph{Pop}\textsubscript{i} (Line 1). Then, the population iteratively evolves
+through successive operations (Lines 3--29). The best fitness value and its
+corresponding solution up to each iteration are kept with
+\emph{current\_best\_value} and \emph{current\_best\_sol}, respectively.
+The algorithm terminates and returns the best known solution and fitness value
+when the number of iterations without improvement, denoted as
+\emph{iter\_no\_imp}, reaches \emph{It}\textsubscript{NI}, or when the running
+time, denoted as \emph{cpu\_time}, reaches \emph{T}\textsubscript{max}.
+A diversification process is activated every \emph{It}\textsubscript{div}
+iterations without improvement to maintain a high level of diversity among
+individuals (Lines 26--28).
 
-\begin{longtable}{@{}lll@{}}
+\begin{longtable}{@{}L{0.055\linewidth}L{0.025\linewidth}L{0.83\linewidth}@{}}
 \caption{Algorithmic procedure for HGSADC-SBC.}\label{ch4:tab:hgsadc-sbc-procedure}\\
 \toprule
 \multicolumn{3}{@{}l@{}}{%
@@ -965,8 +937,8 @@ The SBC heuristic procedure is formed by the following steps:
 \item
   Update truck and station inventories accordingly.
 \item
-  \textbf{Step 4: Adjust station budgets based on unused time.} Adjust the station (un)loading
-  budgets to redistribute any unused time to stations where demand remains unmet.
+  \textbf{Step 4: Adjust station budgets based on unused time.} Redistribute unused time to
+  stations where demand remains unmet.
 \item
   \textbf{Step 5: Second-round truck loading and unloading assignment.} Revert station inventories
   to their values before the first round of loading/unloading assignment, and reassign the
@@ -1077,11 +1049,14 @@ truck's loading and unloading operations instead of repair operations. To illust
 with a simple example, consider a route consisting of the above three stations 0--1-2--3-0, where 0
 is the depot. After accounting for the route's travel time, the remaining time for bike loading and
 unloading is distributed proportionally across the stations based on their BCRF values. The results
-of this distribution are depicted in Figure~\ref{ch4:fig:bcrf-time-allocation}, which are calculated as follows:\[\begin{array}{l}
+of this distribution are depicted in Figure~\ref{ch4:fig:bcrf-time-allocation}, which are calculated as follows:
+\begin{equation}
+\begin{array}{l}
 {\text{Station 1:}\frac{0.0103}{0.0103 + 0.0344 + 0.0032} = 21.5\%,} \\
 {\text{Station 2:}\frac{0.0344}{0.0103 + 0.0344 + 0.0032} = 71.8\%,\;\text{and}} \\
 {\text{Station 3:}\frac{0.0032}{0.0103 + 0.0344 + 0.0032} = 6.7\%.}
-\end{array}\]
+\end{array}
+\end{equation}
 
 \begin{figure}[htbp]
 \centering
@@ -1208,7 +1183,13 @@ calculated following the procedure below:
   broken bikes exceeds the capacity of the station \(C_{s}\) by
 \end{itemize}
 
-\[\left. \varepsilon(\phi)\leftarrow\varepsilon(\phi) - \left( {\min\left\{ {p_{s},0} \right\} + \min\left\{ {b_{s},0} \right\} + \min\left\{ {C_{s} - p_{s} - b_{s},0} \right\}} \right). \right.\]
+\begin{equation}
+\left.
+\varepsilon(\phi)\leftarrow\varepsilon(\phi)
+- \left( {\min\left\{ {p_{s},0} \right\} + \min\left\{ {b_{s},0} \right\}
++ \min\left\{ {C_{s} - p_{s} - b_{s},0} \right\}} \right).
+\right.
+\end{equation}
 
 Next, we define the biased fitness value of a solution to consider the diversity in each
 subpopulation, which is calculated
@@ -1288,8 +1269,9 @@ generated, followed by the survivor selection to adjust the size of each subpopu
 
 \section{Computational experiments}\label{ch4:sec:computational-experiments}
 
-The proposed model was implemented in Python 3.11 using Gurobi Python API (Gurobi Optimization, LLC,
-2023). The hybrid algorithm HGSADC-SBC was implemented with C++. All numerical experiments were
+The proposed model was implemented in Python 3.11 with the Gurobi Python API
+(Gurobi Optimization, LLC, 2023). The hybrid algorithm HGSADC-SBC was
+implemented with C++. All numerical experiments were
 conducted on a computer equipped with an Intel Core i9-12900 processor (12 cores, 24 threads) and
 64~GB of physical memory.
 
@@ -1301,7 +1283,7 @@ of varying repair times on the cost-effectiveness of including a repairer throug
 different proportions of broken bikes.
 
 The parameters regarding the network are from the dataset used by Ho and Szeto (2017), which is
-available at https://www.dropbox.com/s/jbsfefi2wqsssrr/hlns-set3.zip?dl=0. The dataset contains the
+available at \url{https://www.dropbox.com/s/jbsfefi2wqsssrr/hlns-set3.zip?dl=0}. The dataset contains the
 travel times between nodes, the capacity of each station, and the initial inventory of usable bikes
 at each station. The travel times used in the experiments are also from the dataset above, in which
 the asymmetric travel times (in seconds) between the stations were obtained from the Open Source
@@ -1313,7 +1295,7 @@ the existing literature that provide relevant speed information for both vehicle
 As a result, the travel times for repairers between nodes can be calculated accordingly based on the
 constant.
 
-\begin{longtable}{@{}llll@{}}
+\begin{longtable}{@{}L{0.14\linewidth}L{0.37\linewidth}L{0.11\linewidth}L{0.22\linewidth}@{}}
 \caption{Parameter setting of the numerical experiments.}\label{ch4:tab:numerical-parameters}\\
 \toprule
 \multicolumn{2}{@{}l}{%
@@ -1348,12 +1330,17 @@ The EUDF value of each station was calculated based on the historical data of Ci
 consists of the number of bike rentals and returns at each station, recorded every 15~min from 6:00
 a.m. to 12:00p.m., over the course of a single day.
 
-All instances used in this section were generated by randomly selecting a certain number of stations
-from the 518-station dataset. Specifically, in parameter tuning in Section~\ref{ch4:subsec:parameter-tuning-setting}, a 60-station network
-was generated. In the experiment in Section~\ref{ch4:subsec:small-network-comparison}, five different instances were generated for each
-network size (6, 10, and 15 stations). In the experiment in Section~\ref{ch4:subsec:large-network-comparison}, instances with network
-sizes ranging from 60 to 500 stations were created, with one instance generated for each size. In
-the experiment in Section~\ref{ch4:subsec:repairer-cost-effectiveness}, one of the 15-station networks generated in Section~\ref{ch4:subsec:small-network-comparison} was used. As
+All instances used in this section were generated by randomly selecting stations
+from the 518-station dataset. For parameter tuning
+(Section~\ref{ch4:subsec:parameter-tuning-setting}), a 60-station network was
+generated. For the small-network comparison
+(Section~\ref{ch4:subsec:small-network-comparison}), five instances were
+generated for each network size (6, 10, and 15 stations). For the large-network
+comparison (Section~\ref{ch4:subsec:large-network-comparison}), instances with
+60 to 500 stations were created, with one instance generated for each size. For
+the repairer cost-effectiveness experiment
+(Section~\ref{ch4:subsec:repairer-cost-effectiveness}), one of the 15-station
+networks generated in Section~\ref{ch4:subsec:small-network-comparison} was used. As
 the dataset provides no information on the initial inventory of broken bikes, we set the initial
 quantity of broken bikes \(b_{i}^{0}\) at station \emph{i} as follows: in the experiments in
 Sections~\ref{ch4:subsec:parameter-tuning-setting},~\ref{ch4:subsec:small-network-comparison},
@@ -1398,7 +1385,7 @@ parameter setting is summarized in Table~\ref{ch4:tab:hgsadc-sbc-parameters}.
 \label{ch4:fig:parameter-tuning}
 \end{figure}
 
-\begin{longtable}{@{}ll@{}}
+\begin{longtable}{@{}L{0.66\linewidth}L{0.22\linewidth}@{}}
 \caption{Parameter setting for HGSADC-SBC.}\label{ch4:tab:hgsadc-sbc-parameters}\\
 \toprule
 Parameter & Value \\
@@ -1432,7 +1419,7 @@ different random seeds 20 times to a single instance, the heuristic consistently
 solution. Therefore, we only report the CPU times using Gurobi and the average CPU times over 20
 runs with HGSADC-SBC in Table~\ref{ch4:tab:small-network-cpu}.
 
-\begin{longtable}{@{}llll@{}}
+\begin{longtable}{@{}L{0.16\linewidth}L{0.17\linewidth}L{0.24\linewidth}L{0.24\linewidth}@{}}
 \caption{Comparison between the CPU times (s) of Gurobi and HGSADC-SBC on small networks (repositioning time budget $T=2$ h, $|K|=|R|=1$, $\tau=600$ s).}\label{ch4:tab:small-network-cpu}\\
 \toprule
 \textbar{}\emph{S}\textbar{} & instance & Gurobi & HGSADC-SBC \\
@@ -1481,13 +1468,15 @@ repairers. Gurobi was given a two-hour time limit for computation in all instanc
 In some cases, Gurobi terminated earlier due to running out of memory. Hence, no CPU times are
 reported for those instances (marked as N/A). The results are reported in Table~\ref{ch4:tab:large-network-2h}.
 
-\begin{longtable}{@{}lllllllllllll@{}}
+\begin{landscape}
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}C{0.055\linewidth}C{0.045\linewidth}C{0.045\linewidth}R{0.085\linewidth}R{0.085\linewidth}R{0.09\linewidth}C{0.015\linewidth}R{0.105\linewidth}R{0.105\linewidth}R{0.085\linewidth}R{0.085\linewidth}C{0.015\linewidth}R{0.075\linewidth}@{}}
 \caption{Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=2$ h, $\tau=600$ s).}\label{ch4:tab:large-network-2h}\\
 \toprule
 \multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
 \multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
-Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
-HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+Gurobi} & \multirow{2}{*}{} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
 & & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
 \textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
 \midrule
@@ -1495,8 +1484,8 @@ HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}G
 \toprule
 \multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
 \multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
-Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
-HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+Gurobi} & \multirow{2}{*}{} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
 & & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
 \textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
 \midrule
@@ -1552,6 +1541,7 @@ average computational time for each instance in 20 runs in seconds.
 \item[5]
 (UB -- Obj. Avg) / UB.
 \end{description}
+\end{landscape}
 
 As shown in both Table~\ref{ch4:tab:large-network-2h} and Table~\ref{ch4:tab:large-network-3h}, Gurobi was unable to find optimal solutions within the
 two-hour CPU time limit in any of the instances. For all instances where memory did not run out,
@@ -1559,13 +1549,15 @@ Gurobi used the entire two-hour time limit to provide the best feasible solution
 difficulty in solving these larger instances again highlights the computational complexity of the
 problem.
 
-\begin{longtable}{@{}lllllllllllll@{}}
+\begin{landscape}
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{@{}C{0.055\linewidth}C{0.045\linewidth}C{0.045\linewidth}R{0.085\linewidth}R{0.085\linewidth}R{0.09\linewidth}C{0.015\linewidth}R{0.105\linewidth}R{0.105\linewidth}R{0.085\linewidth}R{0.085\linewidth}C{0.015\linewidth}R{0.075\linewidth}@{}}
 \caption{Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=3$ h, $\tau=600$ s).}\label{ch4:tab:large-network-3h}\\
 \toprule
 \multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
 \multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
-Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
-HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+Gurobi} & \multirow{2}{*}{} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
 & & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
 \textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
 \midrule
@@ -1573,8 +1565,8 @@ HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}G
 \toprule
 \multirow{2}{*}{\textbar{}\emph{S}\textbar{}} & \multirow{2}{*}{\textbar{}\emph{K}\textbar{}} &
 \multirow{2}{*}{\textbar{}\emph{R}\textbar{}} & \multicolumn{3}{l}{%
-Gurobi} & \multirow{2}{*}{Empty Cell} & \multicolumn{4}{l}{%
-HGSADC-SBC} & \multirow{2}{*}{Empty Cell} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
+Gurobi} & \multirow{2}{*}{} & \multicolumn{4}{l}{%
+HGSADC-SBC} & \multirow{2}{*}{} & \multirow{2}{*}{\textsuperscript{5}Gap (\%)} \\
 & & & UB & LB & CPU (s) & & \textsuperscript{1}Obj. Avg. & \textsuperscript{2}Obj. Best. &
 \textsuperscript{3}Obj. Std. & \textsuperscript{4}CPU (s) \\
 \midrule
@@ -1630,6 +1622,7 @@ average computational time for each instance in 20 runs in seconds.
 \item[5]
 (UB -- Obj. Avg) / UB.
 \end{description}
+\end{landscape}
 
 On the other hand, HGSADC-SBC consistently outperformed Gurobi by finding better feasible solutions
 (as reflected by a positive gap) in significantly less time. As the repositioning time budget
@@ -1708,20 +1701,24 @@ system to ensure the cost-effectiveness. Specifically, part-time repairer schedu
 flexible strategy to further enhance resource allocation, allowing systems to adjust the input for
 repairs dynamically.
 
-Another important observation is the shift in the repair time at which the cost-effectiveness ratio
-\(\nu\) equals 1.0. As the level of broken bikes increases, this critical point moves toward longer
-repair times. For example, when the broken bike inventory reaches 50~\%, the point at which
-\(\nu\)~=~1.0 occurs at approximately 492~s, whereas for the 90~\% level, it occurs at around 580~s.
-This suggests that with a higher number of broken bikes, longer repair times can still yield a
-favorable cost-effectiveness ratio before the repairer's cost outweighs the benefit. However, once
-repair times exceed around 645~s, employing a repairer becomes less cost-effective across all
-instances, regardless of the level of broken bike inventory. Although our model assumes the same
-repair time for all bikes, this can be viewed as an average repair time, representing the overall
-damage level of the system. Hence, such a relatively long repair time suggests that the system is
-experiencing significant damage. Therefore, it may be more effective to shift resources from
-reactive repairs to preventive maintenance. This strategy can be adapted based on the system's
-changing damage degrees, helping to reduce the number of broken bikes and the average repair time
-over time and preventing the system from reaching a state where repairs become less cost-effective.
+A second observation concerns the repair time at which the cost-effectiveness
+ratio \(\nu\) equals 1.0. As the level of broken bikes
+increases, this critical point moves toward longer repair times. For example,
+when the broken bike inventory reaches 50~\%, the point at which \(\nu=1.0\)
+occurs at approximately 492~s, whereas for the 90~\% level, it occurs at around
+580~s. This suggests that with more broken bikes, longer repair times can still
+yield a favorable cost-effectiveness ratio before the repairer's cost outweighs
+the benefit. However, once repair times exceed around 645~s, employing a
+repairer becomes less cost-effective across all instances, regardless of the
+level of broken bike inventory. Although the model assumes the same repair time
+for all bikes, this can be viewed as an average repair time representing the
+overall damage level of the system. A relatively long repair time therefore
+suggests that the system is experiencing significant damage. It may then be more
+effective to shift resources from reactive repairs to preventive maintenance.
+This strategy can be adapted based on the system's changing damage degrees,
+helping to reduce the number of broken bikes and the average repair time over
+time and preventing the system from reaching a state where repairs become less
+cost-effective.
 
 \section{Conclusions}\label{ch4:sec:conclusions}
 
@@ -1736,18 +1733,21 @@ a novel concept of station budget, which utilizes the Benefit-Cost Ratio Functio
 determine (un)loading and repair quantities at stations, ensuring that time is spent effectively
 across the network.
 
-Numerical experiments on small networks of up to 15 stations demonstrated that HGSADC-SBC
-consistently achieves optimal solutions, matching Gurobi's results while requiring significantly
-less computational time in most cases. For larger networks, ranging from 60 to 500 stations,
-HGSADC-SBC outperformed Gurobi in finding a feasible solution obtained under a two-hour time limit,
-demonstrating the algorithm's computational efficiency. Additionally, we analyzed the
-cost-effectiveness of introducing a repairer under varying repair times and broken bike inventory
-levels. The findings show that long repair times reduce cost-effectiveness. In the extreme case,
-when the repair time exceeds a certain level, introducing on-site repairs is cost-ineffective.
-Moreover, when the number of broken bikes in the system is small, introducing on-site repairs can
-become detrimental. The results also underscore the need for a dynamic repairer allocation strategy
-based on the system's actual damage level and suggest that preventive maintenance strategies can
-reduce the average number of broken bikes in the system and the average repair time over time.
+In small networks of up to 15 stations, HGSADC-SBC consistently achieved
+optimal solutions, matching Gurobi's results while requiring significantly less
+computational time in most cases. For larger
+networks, ranging from 60 to 500 stations, HGSADC-SBC outperformed Gurobi in
+finding a feasible solution under a two-hour time limit, demonstrating the
+algorithm's computational efficiency. Additionally, the experiments analyzed the
+cost-effectiveness of introducing a repairer under varying repair times and
+broken bike inventory levels. The findings show that long repair times reduce
+cost-effectiveness. In the extreme case, when the repair time exceeds a certain
+level, introducing on-site repairs is cost-ineffective. Moreover, when the number
+of broken bikes in the system is small, introducing on-site repairs can become
+detrimental. The results also underscore the need for a dynamic repairer
+allocation strategy based on the system's actual damage level and suggest that
+preventive maintenance strategies can reduce the average number of broken bikes
+in the system and the average repair time over time.
 
 It is worth noting that we conducted additional experiments comparing a full station set with a
 reduced station set, where stations with no broken bicycles and inventory levels that (nearly)
