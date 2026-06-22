@@ -8,31 +8,20 @@ The chapter first presents the benchmark multi-vehicle static BRP formulation wi
 
 This section defines the multi-vehicle static BRP (MV-BRP) studied in this chapter and presents its mixed-integer linear programming formulation.
 
-We consider a BSS consisting of a single depot and a set of stations. Each station is characterized by its capacity, its initial bike inventory, and a user dissatisfaction function. The user dissatisfaction function represents the expected shortage of bikes and docks incurred by station users as a function of the station's inventory after repositioning is carried out (Raviv and Kolka, 2013). Travel times between all pairs of nodes are known. The initial inventory at each station is assumed to be known, as modern BSSs provide the operator with real-time inventory data. The depot is assumed to hold a sufficient inventory of bikes and to have sufficient capacity to store returned bikes.
+We consider a BSS consisting of a single depot and a set of stations. Each station is characterized by its capacity, its initial bike inventory, and a user dissatisfaction function. The user dissatisfaction function represents the expected shortage of bikes and docks incurred by station users as a function of the station's inventory after repositioning is carried out \citep{ravivOptimalInventoryManagement2013}. Travel times between all pairs of nodes are known. The initial inventory at each station is assumed to be known, as modern BSSs provide the operator with real-time inventory data. The depot is assumed to hold a sufficient inventory of bikes and to have sufficient capacity to store returned bikes.
 
 A fleet of homogeneous vehicles with limited capacity is used to redistribute bikes across the stations. A station whose initial inventory exceeds the level that minimizes its UDF is called a surplus station, and a station whose initial inventory falls below that level is called a deficit station. Vehicles depart from the depot simultaneously, collect bikes from surplus stations and deliver bikes to deficit stations, and finally return to the depot within a given time budget. Loading and unloading each bike takes a fixed amount of time. Repositioning is performed overnight, when user activity is negligible. Station inventories change only through vehicle operations. We assume that each station may be visited by at most one vehicle. The inventory at each station after repositioning sets the starting condition for the following operating day. The objective is to determine the route of each vehicle and the number of bikes loaded and unloaded at each visited station to maximize the total reduction in user dissatisfaction across all stations.
 
-We adopt the user dissatisfaction function introduced by Raviv and Kolka (2013). For each station i, ${{f}_{i}}\left( s \right)$ measures the expected number of failed rentals and returns over the planning horizon as a function of the station's inventory $s$ after the repositioning, and is convex over the integer inventory levels $0,1,\ldots ,{{c}_{i}}$. Convexity permits an exact piecewise-linear representation that can be embedded in a linear program. The UDF values at all inventory levels are precomputed and treated as input to the optimization model. We refer the reader to Raviv and Kolka (2013) for the computational procedure.
+\citet{ravivOptimalInventoryManagement2013} introduced the user dissatisfaction function. For each station i, ${{f}_{i}}\left( s \right)$ measures the expected number of failed rentals and returns over the planning horizon as a function of the station's inventory $s$ after the repositioning, and is convex over the integer inventory levels $0,1,\ldots ,{{c}_{i}}$. Convexity permits an exact piecewise-linear representation that can be embedded in a linear program. The UDF values at all inventory levels are precomputed and treated as input to the optimization model. We refer the reader to \citet{ravivOptimalInventoryManagement2013} for the computational procedure.
 
 \subsection{Notation}\label{ch3:subsec:mvbrp-notation}
 
-\begin{longtable}{@{}p{0.28\linewidth}p{0.66\linewidth}@{}}
-\caption{Notation for the MV-BRP model.}\label{tab:mvbrp-notation}\\
-\toprule
-Symbol & Description \\
-\midrule
-\endfirsthead
-\toprule
-Symbol & Description \\
-\midrule
-\endhead
-\bottomrule
-\endfoot
-\multicolumn{2}{@{}l}{\textit{Sets}} \\
+\begin{notationlist}[@{}L{0.28\linewidth}L{0.66\linewidth}@{}]
+\notationheading{Sets}
 $V$ & Set of stations \\
 ${{V}_{0}}$ & Set of all nodes, including the stations and the depot \\
-$K$ & Set of vehicles \\
-\multicolumn{2}{@{}l}{\textit{Parameters}} \\
+$K$ & Set of vehicles \\[0.8\baselineskip]
+\notationheading{Parameters}
 ${{c}_{i}}$ & Capacity of station $i$ \\
 $s_{i}^{0}$ & Initial inventory at station $i$ \\
 $Q$ & Vehicle capacity \\
@@ -40,21 +29,21 @@ $T$ & Time budget per vehicle \\
 ${{t}_{ij}}$ & Travel time from node $i$ to node $j$ \\
 ${{t}^{\text{load}}}$ & Time to load or unload one bike \\
 ${{a}_{i\ell }}$ & Intercept coefficient in the linearization of ${{f}_{i}}$ at inventory level $\ell$ \\
-${{b}_{i\ell }}$ & Slope coefficient in the linearization of ${{f}_{i}}$ at inventory level $\ell$ \\
-\multicolumn{2}{@{}l}{\textit{Decision variables}} \\
+${{b}_{i\ell }}$ & Slope coefficient in the linearization of ${{f}_{i}}$ at inventory level $\ell$ \\[0.8\baselineskip]
+\notationheading{Decision variables}
 ${{x}_{ijk}}$ & Binary variable that equals one if vehicle $k$ travels directly from node $i$ to node $j$, and zero otherwise \\
 ${{y}_{ijk}}$ & Number of bikes on vehicle $k$ when it travels directly from node $i$ to node $j$ \\
 $y_{ik}^{\text{load}}$ & Number of bikes loaded onto vehicle $k$ at node $i$ \\
 $y_{ik}^{\text{unload}}$ & Number of bikes unloaded from vehicle $k$ at node $i$ \\
 ${{s}_{i}}$ & Inventory at station $i$ after the repositioning \\
-${{g}_{i}}$ & Linearized user dissatisfaction at station $i$ after the repositioning \\
-\multicolumn{2}{@{}l}{\textit{Function}} \\
+${{g}_{i}}$ & Linearized user dissatisfaction at station $i$ after the repositioning \\[0.8\baselineskip]
+\notationheading{Function}
 ${{f}_{i}}(s)$ & User dissatisfaction function at station $i$ \\
-\end{longtable}
+\end{notationlist}
 
 \subsection{Arc-indexed formulation}\label{ch3:subsec:arc-indexed-formulation}
 
-For the sake of completeness, we present the multi-vehicle static BRP as a mixed-integer linear program, building on the arc-indexed formulation of Raviv et al. (2013). We specialize to a homogeneous fleet with shared capacity $Q$ and equal loading and unloading times $t^{\text{load}}$, and restrict each station to be visited by at most one vehicle. The formulation is
+For the sake of completeness, we present the multi-vehicle static BRP as a mixed-integer linear program, building on the arc-indexed formulation of \citet{ravivStaticRepositioningBikesharing2013}. We specialize to a homogeneous fleet with shared capacity $Q$ and equal loading and unloading times $t^{\text{load}}$, and restrict each station to be visited by at most one vehicle. The formulation is
 \begin{modelalign}
 \max\quad
 & \sum_{i \in V} \bigl( f_i(s_i^0) - g_i \bigr) \label{ch3:eq:mvbrp-obj}\\
@@ -78,10 +67,10 @@ For the sake of completeness, we present the multi-vehicle static BRP as a mixed
 && \forall i\in V \label{ch3:eq:mvbrp-unload-bound}\\
 & \sum_{i \in V_0} (y_{ik}^{\mathrm{load}} - y_{ik}^{\mathrm{unload}}) = 0,
 && \forall k \in K \label{ch3:eq:mvbrp-vehicle-balance}\\
-& \begin{aligned}[t]
-  &{{t}^{\mathrm{load}}}\cdot \sum\limits_{i\in {{V}_{0}}}{(y_{ik}^{\mathrm{load}}+y_{ik}^{\mathrm{unload}})}\\
-  &+\sum\limits_{\substack{i,j\in {{V}_{0}}\\i\ne j}}{{{t}_{ij}}}{{x}_{ijk}} \le T
-  \end{aligned}
+& t^{\mathrm{load}}\sum_{i\in V_0}
+  \left(y_{ik}^{\mathrm{load}}+y_{ik}^{\mathrm{unload}}\right)
+  + \sum_{\substack{i,j\in V_0\\i\ne j}} t_{ij}x_{ijk}
+  \le T,
 && \forall k\in K \label{ch3:eq:mvbrp-time-budget}\displaybreak[2]\\
 & \sum\limits_{j\in V}{{{x}_{0jk}}} = 1,
 && \forall k\in K \label{ch3:eq:mvbrp-depot-departure}\\
@@ -100,8 +89,8 @@ For the sake of completeness, we present the multi-vehicle static BRP as a mixed
 && \forall i,j\in {{V}_{0}}(i\ne j),k\in K \label{ch3:eq:mvbrp-x-domain}\\
 & y_{ik}^{\mathrm{load}} \ge 0,\ \text{integer},
 && \forall i\in {{V}_{0}},\ k\in K \label{ch3:eq:mvbrp-load-domain}\\
-& y_{ik}^{\mathrm{load}} \ge 0,\ \text{integer},
-&& \forall i\in {{V}_{0}},\ k\in K \label{ch3:eq:mvbrp-load-domain-repeat}\displaybreak[2]\\
+& y_{ik}^{\mathrm{unload}} \ge 0,\ \text{integer},
+&& \forall i\in {{V}_{0}},\ k\in K \label{ch3:eq:mvbrp-unload-domain}\displaybreak[2]\\
 & {{y}_{ijk}} \ge 0,
 && \forall i,j\in {{V}_{0}}(i\ne j),k\in K \label{ch3:eq:mvbrp-arc-load-domain}\\
 & {{s}_{i}} \ge 0,
@@ -114,9 +103,9 @@ For the sake of completeness, we present the multi-vehicle static BRP as a mixed
 
 The objective function~\eqref{ch3:eq:mvbrp-obj} maximizes the total reduction in user dissatisfaction across all stations: for each station $i$, the term $f_i(s_i^0) - g_i$ measures the improvement from the initial UDF level to the level after the repositioning. Constraints~\eqref{ch3:eq:mvbrp-inventory} define the post-repositioning inventory at each station as the initial inventory adjusted by all loading and unloading operations. Constraints~\eqref{ch3:eq:mvbrp-load-conservation} ensure conservation of bikes on each vehicle: the net loading at a node equals the change in vehicle load. Constraints~\eqref{ch3:eq:mvbrp-arc-capacity} limit the load on each vehicle to its capacity and set the load to zero on arcs not traversed. Constraints~\eqref{ch3:eq:mvbrp-flow-conservation} are the vehicle flow conservation equations. Constraints~\eqref{ch3:eq:mvbrp-single-visit} stipulate that each station can be visited by at most one vehicle across the fleet.
 
-Constraints~\eqref{ch3:eq:mvbrp-load-bound} and~\eqref{ch3:eq:mvbrp-unload-bound} bound the total loading and unloading at each station by the available inventory and remaining capacity, respectively. Constraints~\eqref{ch3:eq:mvbrp-vehicle-balance} require that all bikes collected by each vehicle are eventually delivered. Constraints~\eqref{ch3:eq:mvbrp-time-budget} limit the total operating time of each vehicle, including travel, loading, and unloading, to the time budget. Constraints~\eqref{ch3:eq:mvbrp-depot-departure} and~\eqref{ch3:eq:mvbrp-depot-return} require each vehicle to depart from and return to the depot exactly once. Constraints~\eqref{ch3:eq:mvbrp-load-visit-bound} and~\eqref{ch3:eq:mvbrp-unload-visit-bound} tighten the loading and unloading bounds per vehicle by conditioning on whether that vehicle visits the station. These valid inequalities strengthen the LP relaxation (Raviv et al., 2013).
+Constraints~\eqref{ch3:eq:mvbrp-load-bound} and~\eqref{ch3:eq:mvbrp-unload-bound} bound the total loading and unloading at each station by the available inventory and remaining capacity, respectively. Constraints~\eqref{ch3:eq:mvbrp-vehicle-balance} require that all bikes collected by each vehicle are eventually delivered. Constraints~\eqref{ch3:eq:mvbrp-time-budget} limit the total operating time of each vehicle, including travel, loading, and unloading, to the time budget. Constraints~\eqref{ch3:eq:mvbrp-depot-departure} and~\eqref{ch3:eq:mvbrp-depot-return} require each vehicle to depart from and return to the depot exactly once. Constraints~\eqref{ch3:eq:mvbrp-load-visit-bound} and~\eqref{ch3:eq:mvbrp-unload-visit-bound} tighten the loading and unloading bounds per vehicle by conditioning on whether that vehicle visits the station. These valid inequalities strengthen the LP relaxation \citep{ravivStaticRepositioningBikesharing2013}.
 
-The UDF at each station is linearized following Raviv et al. (2013). Constraints~\eqref{ch3:eq:mvbrp-udf-linearization} are the linear constraints that support the convex function ${{f}_{i}}$. For each station $i$ and inventory level $\ell =0,1,\ldots ,{{c}_{i}}-1$, the slope and intercept are ${{b}_{i\ell }}={{f}_{i}}\left( \ell +1 \right)-{{f}_{i}}\left( \ell  \right)$ and ${{a}_{i\ell }}={{f}_{i}}\left( \ell  \right)-{{b}_{i\ell }}\cdot \ell $, respectively. Because $f_i$ is convex and defined over integer values, this linearization is exact (Raviv et al., 2013). Constraints~\eqref{ch3:eq:mvbrp-dfj} are the Dantzig-Fulkerson-Johnson (DFJ) subtour elimination constraints (Dantzig et al., 1954), which prevent any subset of stations from forming a disconnected tour. Constraints~\eqref{ch3:eq:mvbrp-x-domain}--\eqref{ch3:eq:mvbrp-udf-nonnegative} define the variable domains and bounds.
+The UDF at each station is linearized following \citet{ravivStaticRepositioningBikesharing2013}. Constraints~\eqref{ch3:eq:mvbrp-udf-linearization} are the linear constraints that support the convex function ${{f}_{i}}$. For each station $i$ and inventory level $\ell =0,1,\ldots ,{{c}_{i}}-1$, the slope and intercept are ${{b}_{i\ell }}={{f}_{i}}\left( \ell +1 \right)-{{f}_{i}}\left( \ell  \right)$ and ${{a}_{i\ell }}={{f}_{i}}\left( \ell  \right)-{{b}_{i\ell }}\cdot \ell $, respectively. Because $f_i$ is convex and defined over integer values, this linearization is exact \citep{ravivStaticRepositioningBikesharing2013}. Constraints~\eqref{ch3:eq:mvbrp-dfj} are the Dantzig-Fulkerson-Johnson (DFJ) subtour elimination constraints \citep{dantzigSolutionLargescaleTravelingsalesman1954}, which prevent any subset of stations from forming a disconnected tour. Constraints~\eqref{ch3:eq:mvbrp-x-domain}--\eqref{ch3:eq:mvbrp-udf-nonnegative} define the variable domains and bounds.
 
 \section{UDF-aware clustering model}\label{ch3:sec:udf-aware-clustering-model}
 
@@ -137,31 +126,20 @@ The clustering phase is formulated below as a mixed-integer linear program, foll
 
 \subsection{Clustering model}\label{ch3:subsec:clustering-model}
 
-We formulate the clustering phase as a mixed-integer linear program that jointly assigns stations to clusters and determines approximate transfers between surplus and deficit stations within each cluster, subject to a per-cluster time budget and cluster size limits. The notation from Table~\ref{tab:mvbrp-notation} carries over. Table~\ref{tab:clustering-notation} lists the additional sets, parameters, and decision variables.
+We formulate the clustering phase as a mixed-integer linear program that jointly assigns stations to clusters and determines approximate transfers between surplus and deficit stations within each cluster, subject to a per-cluster time budget and cluster size limits. The notation introduced in Section~\ref{ch3:subsec:mvbrp-notation} carries over. The additional sets, parameters, and decision variables are listed below.
 
 \subsubsection{Notation}\label{ch3:subsubsec:clustering-notation}
 
-\begin{longtable}{@{}p{0.28\linewidth}p{0.66\linewidth}@{}}
-\caption{Additional notation for the clustering model.}\label{tab:clustering-notation}\\
-\toprule
-Symbol & Description \\
-\midrule
-\endfirsthead
-\toprule
-Symbol & Description \\
-\midrule
-\endhead
-\bottomrule
-\endfoot
-\multicolumn{2}{@{}l}{\textit{Sets}} \\
+\begin{notationlist}[@{}L{0.28\linewidth}L{0.66\linewidth}@{}]
+\notationheading{Sets}
 ${{V}^{+}}$ & Set of surplus stations, ${{V}^{+}}=\{i\in V \mid s_{i}^{0}>s_{i}^{*}\}$ \\
-${{V}^{-}}$ & Set of deficit stations, ${{V}^{-}}=\{i\in V \mid s_{i}^{0}<s_{i}^{*}\}$ \\
-\multicolumn{2}{@{}l}{\textit{Parameters}} \\
+${{V}^{-}}$ & Set of deficit stations, ${{V}^{-}}=\{i\in V \mid s_{i}^{0}<s_{i}^{*}\}$ \\[0.8\baselineskip]
+\notationheading{Parameters}
 $s_{i}^{*}$ & Inventory level that minimizes ${{f}_{i}}$ at station $i$ \\
 ${{U}_{ij}}$ & Maximum number of bikes transferable from station $i$ to station $j$, ${{U}_{ij}}=\min \left\{ s_{i}^{0}-s_{i}^{*},s_{j}^{*}-s_{j}^{0} \right\}$ if $i\in {{V}^{+}}$ and $j\in {{V}^{-}}$, 0 otherwise \\
 ${{N}_{\min }}$ & Minimum number of stations per cluster \\
-${{N}_{\max }}$ & Maximum number of stations per cluster \\
-\multicolumn{2}{@{}l}{\textit{Decision variables}} \\
+${{N}_{\max }}$ & Maximum number of stations per cluster \\[0.8\baselineskip]
+\notationheading{Decision variables}
 ${{z}_{ik}}$ & Binary variable that equals one if station $i$ is assigned to cluster $k$, and zero otherwise \\
 ${{w}_{ijk}}$ & Number of bikes transferred from station $i$ to station $j$ within cluster $k$ \\
 ${{\delta }_{ik}}$ & Binary variable that equals one if station $i$ participates in at least one transfer within cluster $k$, and zero otherwise \\
@@ -169,7 +147,7 @@ $\tau _{k}^{\text{star}}$ & Maximum spanning star component of the estimated tra
 $\tau _{k}^{\text{depot}}$ & Depot round-trip component of the estimated travel time for cluster $k$ \\
 $\tilde{s}_i$ & Estimated inventory at station $i$ after the bike transfers \\
 $\tilde{g}_i$ & Estimated linearized UDF at station $i$ after the bike transfers \\
-\end{longtable}
+\end{notationlist}
 
 \subsubsection{MILP formulation}\label{ch3:subsubsec:clustering-milp}
 
@@ -203,19 +181,16 @@ The formulation is
 && \forall j\in {{V}^{-}},k\in K \label{ch3:eq:uc-deficit-activation-upper}\\
 & \sum\limits_{i\in {{V}^{+}}}{{{w}_{ijk}}} \ge {{\delta }_{jk}},
 && \forall j\in {{V}^{-}},k\in K \label{ch3:eq:uc-deficit-activation-lower}\displaybreak[2]\\
-& \tau _{k}^{\mathrm{star}} \ge \begin{aligned}[t]
-        &\sum\limits_{i\in V}{\max \left\{ {{t}_{ij}},{{t}_{ji}} \right\}}\\
-        &{}\cdot \left( {{\delta }_{ik}}+{{\delta }_{jk}}-1 \right)
-        \end{aligned},
+& \tau _{k}^{\mathrm{star}} \ge
+\sum_{i\in V}\max \left\{ {{t}_{ij}},{{t}_{ji}} \right\}
+\cdot \left( {{\delta }_{ik}}+{{\delta }_{jk}}-1 \right),
 && \forall j\in V,k\in K \label{ch3:eq:uc-mss-star}\\
 & \tau _{k}^{\mathrm{depot}}
 \ge 2\max \left\{ {{t}_{0j}},{{t}_{j0}} \right\}\cdot {{\delta }_{jk}},
 && \forall j\in V,k\in K \label{ch3:eq:uc-depot-roundtrip}\\
-& \begin{aligned}[t]
-  &\tau _{k}^{\mathrm{star}}+\tau _{k}^{\mathrm{depot}}\\
-  &+2{{t}^{\mathrm{load}}}\sum\limits_{i\in {{V}^{+}}}{\sum\limits_{j\in {{V}^{-}}}{{{w}_{ijk}}}}
-  \le T
-  \end{aligned}
+& \tau _{k}^{\mathrm{star}}+\tau _{k}^{\mathrm{depot}}
++2{{t}^{\mathrm{load}}}\sum_{i\in {{V}^{+}}}\sum_{j\in {{V}^{-}}}{{{w}_{ijk}}}
+\le T,
 && \forall k\in K \label{ch3:eq:uc-time-budget}\displaybreak[2]\\
 & \sum\limits_{i\in V}{{{z}_{ik}}} \ge {{N}_{\min }},
 && \forall k\in K \label{ch3:eq:uc-min-cluster-size}\\
@@ -253,15 +228,15 @@ The objective function~\eqref{ch3:eq:uc-obj} has the same form as~\eqref{ch3:eq:
 
 Constraints~\eqref{ch3:eq:uc-surplus-transfer-bound} and~\eqref{ch3:eq:uc-deficit-transfer-bound} bound the total transfers out of each surplus station and into each deficit station by the available surplus and deficit, respectively. Constraints~\eqref{ch3:eq:uc-activation-assignment}--\eqref{ch3:eq:uc-deficit-activation-lower} tie the activation variables to the assignment and transfer variables, so that ${{\delta }_{ik}}=1$ if and only if station $i$ is assigned to cluster $k$ and participates in at least one transfer within it. Balanced stations ($s_{i}^{0}=s_{i}^{*}$) are never activated, as they have neither surplus to offer nor deficit to fill.
 
-Constraints~\eqref{ch3:eq:uc-mss-star}--\eqref{ch3:eq:uc-time-budget} approximate the within-cluster routing time as the sum of a maximum spanning star (MSS) component and a depot round-trip component, following Schuijbroek et al. (2017). Specifically, it is defined as the maximum over all candidate centers of the sum of distances from the center to all other active stations in the cluster, which is an upper bound on the shortest Hamiltonian path through the cluster and admits a compact linear representation. Constraints~\eqref{ch3:eq:uc-mss-star} encode this maximum through the weight $\left( {{\delta }_{ik}}+{{\delta }_{jk}}-1 \right)$: when $j$ is an active center (${{\delta }_{jk}}=1$), it reduces to ${{\delta }_{ik}}$ and the right-hand side becomes the sum of distances from j to all other active stations in cluster k. Otherwise, every term is non-positive and the inequality is deactivated. Constraints~\eqref{ch3:eq:uc-depot-roundtrip} account for the depot round-trip through the farthest active station. Constraints~\eqref{ch3:eq:uc-time-budget} enforce the time budget, where the factor 2 on ${{t}^{\text{load}}}$ reflects the loading time at the source and the unloading time at the destination of each transferred bike.
+\citet{schuijbroekInventoryRebalancingVehicle2017} approximate the within-cluster routing time as a maximum spanning star (MSS) component plus a depot round-trip component. Constraints~\eqref{ch3:eq:uc-mss-star}--\eqref{ch3:eq:uc-time-budget} adapt this approximation. Specifically, it is defined as the maximum over all candidate centers of the sum of distances from the center to all other active stations in the cluster, which is an upper bound on the shortest Hamiltonian path through the cluster and admits a compact linear representation. Constraints~\eqref{ch3:eq:uc-mss-star} encode this maximum through the weight $\left( {{\delta }_{ik}}+{{\delta }_{jk}}-1 \right)$: when $j$ is an active center (${{\delta }_{jk}}=1$), it reduces to ${{\delta }_{ik}}$ and the right-hand side becomes the sum of distances from j to all other active stations in cluster k. Otherwise, every term is non-positive and the inequality is deactivated. Constraints~\eqref{ch3:eq:uc-depot-roundtrip} account for the depot round-trip through the farthest active station. Constraints~\eqref{ch3:eq:uc-time-budget} enforce the time budget, where the factor 2 on ${{t}^{\text{load}}}$ reflects the loading time at the source and the unloading time at the destination of each transferred bike.
 
 When the travel time matrix is asymmetric, constraints~\eqref{ch3:eq:uc-mss-star} and~\eqref{ch3:eq:uc-depot-roundtrip} use the symmetrized value $\text{max}\left\{ {{t}_{ij}},{{t}_{ji}} \right\}$ on each station pair rather than a single directed value. Since the within-cluster route is not yet determined at the clustering stage, the orientation in which any edge would be traversed is unknown. Taking the maximum of the two directions yields a symmetric surrogate that upper-bounds the true routing cost in either orientation, so a cluster satisfying the time budget under this surrogate remains feasible once the actual route is computed.
 
 Constraints~\eqref{ch3:eq:uc-min-cluster-size} and~\eqref{ch3:eq:uc-max-cluster-size} bound the cluster sizes between $N_{\min}$ and $N_{\max}$. Constraints~\eqref{ch3:eq:uc-surplus-inventory}--\eqref{ch3:eq:uc-balanced-inventory} define the estimated inventory at each station as the initial inventory adjusted by the within-cluster transfers. Constraints~\eqref{ch3:eq:uc-udf-linearization} linearize the estimated UDF using the same piecewise-linear technique as constraints~\eqref{ch3:eq:mvbrp-udf-linearization} in Section~\ref{ch3:subsec:arc-indexed-formulation}. The representation is exact because $f_i$ is convex over integer inventory levels. Constraints~\eqref{ch3:eq:uc-z-domain}--\eqref{ch3:eq:uc-udf-nonnegative} define the variable domains and bounds.
 
-Compared with the savings heuristic of Forma et al. (2015), which also incorporates UDF into clustering but evaluates each cluster's UDF reduction by optimally redistributing its total bike count under the assumption of costless within-cluster transfers, our formulation differs in two structural aspects. First, transfer quantities $w_{ijk}$ between individual surplus--deficit pairs are determined explicitly, bounded by each station's available surplus or deficit, so that UDF is evaluated at station-level rather than cluster-level inventories. Second, these transfers are subject to the per-cluster time budget through the MSS approximation in constraints~\eqref{ch3:eq:uc-mss-star}--\eqref{ch3:eq:uc-time-budget}, so that geographic proximity and routing feasibility enter the clustering decision directly rather than through separate proximity constraints.
+Compared with the savings heuristic of \citet{forma3stepMathHeuristic2015}, which also incorporates UDF into clustering but evaluates each cluster's UDF reduction by optimally redistributing its total bike count under the assumption of costless within-cluster transfers, our formulation differs in two structural aspects. First, transfer quantities $w_{ijk}$ between individual surplus--deficit pairs are determined explicitly, bounded by each station's available surplus or deficit, so that UDF is evaluated at station-level rather than cluster-level inventories. Second, these transfers are subject to the per-cluster time budget through the MSS approximation in constraints~\eqref{ch3:eq:uc-mss-star}--\eqref{ch3:eq:uc-time-budget}, so that geographic proximity and routing feasibility enter the clustering decision directly rather than through separate proximity constraints.
 
-The MSS is known to consistently overestimate the actual routing cost (Schuijbroek et al., 2017), so the time budget constraints~\eqref{ch3:eq:uc-time-budget} are enforced against an upper bound rather than the exact shortest Hamiltonian path. This keeps the clustering model linear and free of exact routing variables, at the cost of excluding some clusters whose exact single-vehicle route would in fact fit within the time budget. Nonetheless, the clustering MILP remains intractable for city-scale instances, motivating the metaheuristic developed in Section~\ref{ch3:sec:hgs-uc}.
+The MSS is known to consistently overestimate the actual routing cost \citep{schuijbroekInventoryRebalancingVehicle2017}, so the time budget constraints~\eqref{ch3:eq:uc-time-budget} are enforced against an upper bound rather than the exact shortest Hamiltonian path. This keeps the clustering model linear and free of exact routing variables, at the cost of excluding some clusters whose exact single-vehicle route would in fact fit within the time budget. Nonetheless, the clustering MILP remains intractable for city-scale instances, motivating the metaheuristic developed in Section~\ref{ch3:sec:hgs-uc}.
 
 \subsection{Routing phase}\label{ch3:subsec:routing-phase}
 
@@ -345,7 +320,7 @@ is the net inventory change at station $i$ and $\mathcal{T}=\bigcup_{k=1}^{|K|}\
 
 \section[Hybrid Genetic Search for UDF-aware Clustering]{Hybrid Genetic Search for UDF-aware\\ Clustering}\label{ch3:sec:hgs-uc}
 
-This section presents the Hybrid Genetic Search for UDF-aware Clustering (HGS-UC), a metaheuristic for the clustering model formulated in Section~\ref{ch3:sec:udf-aware-clustering-model}. HGS-UC adapts the Hybrid Genetic Search framework of Vidal et al. (2012), refined in the open-source implementation of Vidal (2022).
+This section presents the Hybrid Genetic Search for UDF-aware Clustering (HGS-UC), a metaheuristic for the clustering model formulated in Section~\ref{ch3:sec:udf-aware-clustering-model}. HGS-UC adapts the Hybrid Genetic Search framework of \citet{vidalHybridGeneticAlgorithm2012}, refined in the open-source implementation of \citet{vidalHybridGeneticSearch2022}.
 
 \subsection{Solution representation}
 
@@ -377,10 +352,9 @@ Add $\phi$ to $P$\;
 SelectSurvivors$(P)$\;
 }
 Update $\phi^{*}$ if a better solution exists in $P$\;
-\If{$F(\phi^{*})>F_{\text{prev}}$}{
+\eIf{$F(\phi^{*})>F_{\text{prev}}$}{
 Set $F_{\text{prev}}\leftarrow F(\phi^{*})$, $iter_{\text{NI}}\leftarrow 0$, and $iter_{\text{div}}\leftarrow 0$\;
-}
-\Else{
+}{
 Set $iter_{\text{NI}}\leftarrow iter_{\text{NI}}+1$ and $iter_{\text{div}}\leftarrow iter_{\text{div}}+1$\;
 }
 \If{$iter_{\text{div}}\ge It_{\text{div}}$}{
@@ -416,7 +390,7 @@ where ${{q}_{ij}}=\min (r_{i}^{+},r_{j}^{-})$. The dissimilarity of stations i a
 
 where ${{\hat{t}}_{ij}}$ and ${{\hat{B}}_{ij}}$ denote min--max normalizations over all off-diagonal station pairs, and $\alpha \in [0,1]$ controls the relative weight. A low ${{D}_{ij}}$ indicates that $i$ and $j$ are geographically close and offer substantial mutual UDF reduction, making them desirable cluster partners.
 
-The construction procedure applies K-medoids clustering with K-means++ seeding (Arthur and Vassilvitskii, 2007), adapted to the K-medoids setting by sampling proportionally to the dissimilarity rather than its square. The procedure is as follows:
+The construction procedure applies K-medoids clustering with K-means++ seeding \citep{arthurKmeansAdvantagesCareful2007}, adapted to the K-medoids setting by sampling proportionally to the dissimilarity rather than its square. The procedure is as follows:
 
 Step 0 (Seeding). Select the first medoid ${{m}_{1}}$ uniformly at random from $V$. For $k=2,\ldots ,\left| K \right|$, let ${{M}_{k-1}}=\{{{m}_{1}},\ldots ,{{m}_{k-1}}\}$ and ${{d}_{i}}={{\min }_{m\in {{M}_{k-1}}}}{{D}_{i,m}}$ for each $i\in V\backslash {{M}_{k-1}}$. Sample ${{m}_{k}}=i$ from $V\backslash {{M}_{k-1}}$ with probability $\frac{{{d}_{i}}}{\sum\limits_{j\in V\backslash {{M}_{k-1}}}{{{d}_{j}}}}.$
 
@@ -442,10 +416,9 @@ $C_k\leftarrow C_k(\phi_A)$, $m_k\leftarrow m_k(\phi_A)$, $\mathcal{AS}\leftarro
 }
 \For{each $i\in V\setminus\mathcal{AS}$}{
 $k'\leftarrow$ cluster of $i$ in $\phi_B$\;
-\If{$k'\notin\mathcal{I}$}{
+\eIf{$k'\notin\mathcal{I}$}{
 Assign $i$ to cluster $k'$\;
-}
-\Else{
+}{
 Assign $i$ to cluster $\arg\min_{k\in\mathcal{I}}D_{i,m_k}$\;
 }
 }
@@ -494,7 +467,7 @@ FS(i,{{C}_{k}})=\frac{1}{|{{{\bar{C}}}_{k}}(i)|}\sum\limits_{j\in {{{\bar{C}}}_{
 
 where ${{\bar{C}}_{k}}(i)$ denotes the set of stations in ${{C}_{k}}$ whose surplus/deficit status is complementary to that of $i$: surplus stations are scored against deficit members, and vice versa. A higher value indicates stronger UDF complementarity between station $i$ and the members of ${{C}_{k}}$. Balanced stations receive a score of zero and are excluded from candidate generation.
 
-The second mechanism is a granular neighbourhood restriction adapted from Vidal (2022). For each station, a fixed number of nearest neighbours by dissimilarity ${{D}_{ij}}$ are precomputed once before the algorithm begins. LS-1 and LS-2 restrict their search to clusters containing at least one of these nearest neighbours, reducing the set of target clusters from $K$ to a small subset.
+The second mechanism is a granular neighbourhood restriction adapted from \citet{vidalHybridGeneticSearch2022}. For each station, a fixed number of nearest neighbours by dissimilarity ${{D}_{ij}}$ are precomputed once before the algorithm begins. LS-1 and LS-2 restrict their search to clusters containing at least one of these nearest neighbours, reducing the set of target clusters from $K$ to a small subset.
 
 Within each operator, candidates are evaluated sequentially by computing the ATS objective for the affected clusters before and after the move, and the first candidate yielding an improvement is accepted. Cluster evaluations are cached by station membership, allowing tentatively rejected moves to still populate the cache for subsequent lookups. The six operators are described below.
 
@@ -531,7 +504,7 @@ d\left( {{\phi }_{a}},{{\phi }_{b}} \right)={{\left( \begin{matrix}
 \end{matrix} \right)}^{-1}}\underset{\left\{ i,j \right\}\subseteq V}{\mathop \sum }\,\left| {{\chi }_{{{\phi }_{a}}}}\left( i,j \right)-{{\chi }_{{{\phi }_{b}}}}\left( i,j \right) \right|,
 \end{equation}
 
-Exact evaluation is $O\left( {{\left| V \right|}^{2}} \right)$ per solution pair, which is computationally expensive given the frequency of distance queries during selection and survival. The implementation uses a sampled estimator $\hat{d}\left( {{\phi }_{a}},{{\phi }_{b}} \right)$ that draws ${{N}_{\text{sample}}}$ station pairs uniformly at random and returns the proportion of broken pairs among them. Each draw is an independent Bernoulli trial with success probability $d({{\phi }_{a}},{{\phi }_{b}})$. By Hoeffding's inequality (Hoeffding, 1963), we have
+Exact evaluation is $O\left( {{\left| V \right|}^{2}} \right)$ per solution pair, which is computationally expensive given the frequency of distance queries during selection and survival. The implementation uses a sampled estimator $\hat{d}\left( {{\phi }_{a}},{{\phi }_{b}} \right)$ that draws ${{N}_{\text{sample}}}$ station pairs uniformly at random and returns the proportion of broken pairs among them. Each draw is an independent Bernoulli trial with success probability $d({{\phi }_{a}},{{\phi }_{b}})$. By Hoeffding's inequality \citep{hoeffdingProbabilityInequalitiesSums1963}, we have
 
 \begin{equation}
 \Pr [|\hat{d}-d|\ge \epsilon ]\le 2{{e}^{-2{{N}_{\text{sample}}}{{\epsilon }^{2}}}}\quad \forall \epsilon >0.
@@ -547,9 +520,9 @@ The diversity component of biased fitness implicitly penalizes near-duplicate so
 
 The HGS-UC algorithm is implemented in single-threaded C++ and compiled with GCC. The clustering MILP, baseline clustering methods, and routing-phase BRP solver are implemented in Python using Gurobi 13.0.1 as the MIP solver. All computational experiments were carried out on a desktop PC equipped with a 13-th Gen Intel Core i9-13900 CPU (24 cores, 32 threads) and 64 GB of RAM. Every Gurobi solve, including the MV-BRP, the clustering MILP, and the per-cluster single-vehicle BRPs, is executed with a single thread to ensure reproducible and comparable timing results across methods. For decomposition-based methods (Gurobi-UC, HGS-UC, and all baseline clustering methods in Section~\ref{ch3:subsec:baseline-comparison}), the per-cluster single-vehicle BRPs produced by the clustering phase are solved in parallel, each as an independent single-threaded Gurobi process. Accordingly, the reported CPU time of a decomposition-based method is the sum of (i) the clustering time and (ii) the wall-clock time of the longest single-cluster BRP solve within that run, reflecting the end-to-end time an operator would observe. For stochastic methods, we report the mean over 20 independent seeds. The HGS-UC clustering time is the mean over 20 seeds, and the per-run BRP solve time is the maximum across all clusters within that run, averaged over the 20 seeds.
 
-All instances were generated from the New York Citi Bike system data. Citi Bike NYC November 2024 trip records\footnote{\url{https://s3.amazonaws.com/tripdata/index.html}} were aggregated into five-minute pick-up and drop-off rates for each station, and the queueing-theoretic model of Raviv and Kolka (2013) was applied to compute the UDF at every station. After filtering stations with incomplete or anomalous activity records, 1,000 stations were retained as the master pool. To examine how the CFRS framework scales with network size, instances of varying sizes $|V|\in \{50,100,200,400,800,1000\}$ were constructed by sampling stations uniformly at random without replacement from the master pool. The duration matrices of the networks were calculated by the OSRM project\footnote{\url{https://project-osrm.org/}}, which provides the duration of the fastest route between all pairs of supplied coordinates. The resulting matrices are asymmetric.
+All instances were generated from the New York Citi Bike system data. Citi Bike NYC November 2024 trip records\footnote{\url{https://s3.amazonaws.com/tripdata/index.html}} were aggregated into five-minute pick-up and drop-off rates for each station, and the queueing-theoretic model of \citet{ravivOptimalInventoryManagement2013} was applied to compute the UDF at every station. After filtering stations with incomplete or anomalous activity records, 1,000 stations were retained as the master pool. To examine how the CFRS framework scales with network size, instances of varying sizes $|V|\in \{50,100,200,400,800,1000\}$ were constructed by sampling stations uniformly at random without replacement from the master pool. The duration matrices of the networks were calculated by the OSRM project\footnote{\url{https://project-osrm.org/}}, which provides the duration of the fastest route between all pairs of supplied coordinates. The resulting matrices are asymmetric.
 
-The number of vehicles is $\left| K \right|=\left\lfloor |V|/25 \right\rfloor $, yielding approximately 25 stations per cluster, which is in line with the per-vehicle workload in Schuijbroek et al. (2017). The cluster size bounds are set to ${N_{\min}} = 10$ and ${N_{\max}} = 40$, chosen so that the single-vehicle BRP within each cluster remains tractable for Gurobi at the routing phase. The default vehicle capacity is $Q=20$ and the default repositioning time budget is T = 120 min, unless stated otherwise.
+The number of vehicles is $\left| K \right|=\left\lfloor |V|/25 \right\rfloor $, yielding approximately 25 stations per cluster, which is in line with the per-vehicle workload in \citet{schuijbroekInventoryRebalancingVehicle2017}. The cluster size bounds are set to ${N_{\min}} = 10$ and ${N_{\max}} = 40$, chosen so that the single-vehicle BRP within each cluster remains tractable for Gurobi at the routing phase. The default vehicle capacity is $Q=20$ and the default repositioning time budget is T = 120 min, unless stated otherwise.
 
 Three sets of experiments were conducted: parameter tuning of HGS-UC on a canonical instance, a comparison between the CFRS decomposition and the MV-BRP formulation solved directly by Gurobi on small-to-medium instances ($\mid V\mid \in \left\{ 50,100 \right\}$), and a comparison between HGS-UC and five baseline clustering methods on large-scale instances ($\mid V\mid \in \left\{ 200,400,800,1000 \right\}$) under varying time budgets and vehicle capacities.
 
@@ -693,9 +666,9 @@ For each of $\mid V\mid \in \left\{ 200,400,800,1000 \right\}$, one instance was
 \begin{itemize}
 \item K-means: Multidimensional scaling is applied to the travel-time matrix, followed by standard K-means clustering in the resulting coordinate space.
 \item KNN: A $k$-nearest-neighbour graph is constructed from travel times and spectral clustering is applied.
-\item Schuijbroek et al. (2017): Stations are clustered to minimize the total service-level violation, accounting for inventory imbalance at each station.
-\item Forma et al. (2015): A savings-based heuristic partitions stations into vehicle districts by merging station pairs that share high UDF-reduction potential.
-\item Lv et al. (2020): A self-sufficiency-based clustering method that constructs clusters where internal supply and demand are balanced. The perturbation parameter $\theta $ was not specified in the original paper. We tested $\theta \in \left\{ 0,5,10,20 \right\}$.
+\item \citet{schuijbroekInventoryRebalancingVehicle2017}: Stations are clustered to minimize the total service-level violation, accounting for inventory imbalance at each station.
+\item \citet{forma3stepMathHeuristic2015}: A savings-based heuristic partitions stations into vehicle districts by merging station pairs that share high UDF-reduction potential.
+\item \citet{lvHybridAlgorithmStatic2020}: A self-sufficiency-based clustering method that constructs clusters where internal supply and demand are balanced. The perturbation parameter $\theta $ was not specified in the original paper. We tested $\theta \in \left\{ 0,5,10,20 \right\}$.
 \end{itemize}
 
 All methods use the same routing-phase BRP solver and the same instance data. The cluster size is $\left| K \right|=\left\lfloor \mid V\mid /25 \right\rfloor $ for all methods. Table~\ref{tab:baseline-default} reports the average UDF reduction (Avg.), the best single run (Best), the CPU time, and the percentage gap relative to HGS-UC, defined as (Method Avg. -- HGS-UC Avg.) / HGS-UC Avg. $\times$ 100. A negative gap indicates that HGS-UC outperforms the baseline. The reported performance therefore reflects the cluster compositions produced by each method under a common routing benchmark.
@@ -889,4 +862,4 @@ HGS-UC outperforms all baselines at every time-budget level, every capacity leve
 
 This chapter addresses the multi-vehicle static BRP with UDF as the service measure and proposes a CFRS framework in which the clustering phase is formulated as an MILP that jointly captures UDF reduction and vehicle routing time feasibility. To the best of our knowledge, no prior CFRS framework for the BRP formulates clustering as an optimization model that simultaneously evaluates UDF reduction at station-level inventories and enforces a per-cluster routing time budget. Because this MILP is intractable for city-scale instances, we develop HGS-UC, a hybrid genetic search tailored to the clustering model. HGS-UC represents a solution as a partition of the station set, constructs initial solutions by K-medoids clustering on a dissimilarity measure that combines travel-time proximity and bilateral UDF reduction potential, and refines them through a local search with six operators guided by a complementary fit score and a granular neighborhood restriction. Solution evaluation uses the ATS procedure, which estimates a time-feasible transfer set for each cluster by selecting surplus-deficit transfers in decreasing order of UDF reduction per unit handling time. ATS replaces an exact single-vehicle BRP solve that would be prohibitively expensive at every evaluation, making population-based search tractable on city-scale instances.
 
-Computational experiments on instances generated from New York Citi Bike data demonstrate the framework's performance across three instance scales. First, on the 50-station instances, HGS-UC obtains solutions whose mean is within 0.54\% of the MV-BRP incumbent in under a minute of CPU time, with the best seed matching the incumbent on several instances. Second, on the 100-station instances, where Gurobi reaches the two-hour limit on every instance with average optimality gaps of 7.56\% and 3.24\% at the 120-minute and 180-minute budgets, respectively,  HGS-UC's mean solution exceeds the Gurobi incumbent on 8 of 10 instances at the 120-minute repositioning budget and on all 10 instances at the 180-minute budget, in 1 to 3 minutes of CPU time. Third, on instances of 200 to 1,000 stations --- a scale not previously reported in the CFRS literature for the BRP --- HGS-UC delivers higher UDF reduction than five baseline clustering methods, namely the methods of Schuijbroek et al. (2017), Forma et al. (2015), and Lv et al. (2020), together with K-means and KNN, at every combination of network size, time budget, and vehicle capacity tested, with all gaps statistically significant ($p<10^{-4}$). At the default time budget and vehicle capacity, the average UDF reduction gains range from 14.73\% to 40.67\%, with consistent improvements across variations in both parameters. On the largest 1,000-station instances, the complete CFRS pipeline (clustering plus per-cluster routing) finishes in under one hour, well within the overnight repositioning window.
+Computational experiments on instances generated from New York Citi Bike data demonstrate the framework's performance across three instance scales. First, on the 50-station instances, HGS-UC obtains solutions whose mean is within 0.54\% of the MV-BRP incumbent in under a minute of CPU time, with the best seed matching the incumbent on several instances. Second, on the 100-station instances, where Gurobi reaches the two-hour limit on every instance with average optimality gaps of 7.56\% and 3.24\% at the 120-minute and 180-minute budgets, respectively,  HGS-UC's mean solution exceeds the Gurobi incumbent on 8 of 10 instances at the 120-minute repositioning budget and on all 10 instances at the 180-minute budget, in 1 to 3 minutes of CPU time. Third, on instances of 200 to 1,000 stations --- a scale not previously reported in the CFRS literature for the BRP --- HGS-UC delivers higher UDF reduction than five baseline clustering methods, namely the methods of \citet{schuijbroekInventoryRebalancingVehicle2017}, \citet{forma3stepMathHeuristic2015}, and \citet{lvHybridAlgorithmStatic2020}, together with K-means and KNN, at every combination of network size, time budget, and vehicle capacity tested, with all gaps statistically significant ($p<10^{-4}$). At the default time budget and vehicle capacity, the average UDF reduction gains range from 14.73\% to 40.67\%, with consistent improvements across variations in both parameters. On the largest 1,000-station instances, the complete CFRS pipeline (clustering plus per-cluster routing) finishes in under one hour, well within the overnight repositioning window.

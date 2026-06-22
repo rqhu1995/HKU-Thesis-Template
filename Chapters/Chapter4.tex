@@ -109,7 +109,7 @@ Truck 2 from other stations and delivered to the station.
 
 The first component of the objective function of the problem involves the calculation of user
 dissatisfaction throughout the day following the rebalancing process based on the starting
-inventories resulting from that process. The method proposed by Kaspi et al. (2017) is used for this
+inventories resulting from that process. The method proposed by \citet{kaspiBikesharingSystemsUser2017} is used for this
 calculation, which is briefly introduced here. Given station \emph{i} with \emph{C\textsubscript{i}}
 docks and a finite period for the following day, at the beginning of that day, there are
 \emph{p\textsubscript{i}} usable bikes and \emph{b\textsubscript{i}} broken bikes present at the
@@ -127,7 +127,7 @@ interventions such as truck repositioning or repairs. An Extended User Dissatisf
 dissatisfaction at station \emph{i} given the inventories \emph{p\textsubscript{i}} and
 \emph{b\textsubscript{i}}. The domain of this bivariate function is
 \(\Theta_{i} = \left\{ {\left( {p_{i},b_{i}} \right) \mid p_{i} \geq 0,b_{i} \geq 0,p_{i} + b_{i} \leq C_{i}} \right\}\).
-Kaspi et al. (2017) proposed a method for determining a convex polyhedral function that has nearly
+\citet{kaspiBikesharingSystemsUser2017} proposed a method for determining a convex polyhedral function that has nearly
 identical values to the EUDF values in its range, enabling the integration of the EUDF into the
 subsequent linear optimization model. Specifically, for each
 \(\left( {p_{i},b_{i}} \right) \in \Theta_{i},\) a plane
@@ -136,27 +136,26 @@ that passes as close as possible to \(F_{i}\left( {p_{i},b_{i}} \right)\) can be
 \(\alpha_{p_{i},b_{i}}^{i},\beta_{p_{i},b_{i}}^{i},\) and \(\gamma_{p_{i},b_{i}}^{i}\) are the
 coefficients of the plane that can be computed for every
 \(\left( {p_{i},b_{i}} \right) \in \theta_{i}\). The computation details of the coefficients of the
-fitted plane are given in Appendix A. Due to limited space, we omit the lengthy details on
-generating the station EUDF values. Interested readers can consult Kaspi et al. (2017) for
-generating them.
+fitted plane are given in Appendix A. Interested readers can consult \citet{kaspiBikesharingSystemsUser2017} for
+generating the station EUDF values.
 
 The second component requires the calculation of the CO\textsubscript{2} emissions of a
-repositioning truck as it moves. Wang and Szeto (2021) used the following emission model to
+repositioning truck as it moves. \citet{wangEnhancedArtificialBee2021} used the following emission model to
 calculate the amount of CO\textsubscript{2} emissions \emph{e} produced by a truck when it carries
 bikes over a
 distance:\begin{equation}
 \label{ch4:eq:1}
 e = CER \cdot \left( {\rho_{0} + \frac{\rho^{\ast} - \rho_{0}}{Q}\psi} \right) \cdot d
 \end{equation}where
-\emph{CER} is the CO\textsubscript{2} emission rate, \(\rho^{\ast}\) and \(\rho_{0}\) are the fuel
-consumption rates when the vehicle is empty and fully loaded, respectively, \emph{Q} is the vehicle
+\emph{CER} is the CO\textsubscript{2} emission rate, \(\rho_{0}\) and \(\rho^{\ast}\) are the
+empty-load and full-load fuel-consumption rates, respectively, \emph{Q} is the vehicle
 capacity, \(\psi\) is the number of bikes carried by the truck, and \emph{d} is the distance
 traveled by the truck. Given the similarities between their and our research context, we chose to
 adopt this emission model for the calculation in the second component.
 
 As aforementioned, each station can be visited by each truck an arbitrary number of times. Hence,
-the classic arc-indexed formulation is not suitable for our problem. As proposed by Raviv et al.
-(2013), the time-indexed formulation requires the whole time budget \emph{T} to be discretized into
+the classic arc-indexed formulation is not suitable for our problem. As proposed by
+\citet{ravivStaticRepositioningBikesharing2013}, the time-indexed formulation requires the whole time budget \emph{T} to be discretized into
 multiple periods with equal length, which allows us to keep track of each visit to a station and the
 inventory of bikes on each truck and at each station during every period, thereby enabling the
 formulation (1) for multiple visits to a station and the depot by vehicles and repairers and (2) to
@@ -166,23 +165,13 @@ time-indexed formulation.
 
 \subsection{Notations}\label{ch4:subsec:notations}
 
-\begingroup
-\begin{longtable}{@{}L{0.17\linewidth}L{0.77\linewidth}@{}}
-\caption{Notation used in the problem formulation.}\label{ch4:tab:notations}\\
-\toprule
-\endfirsthead
-\toprule
-\endhead
-\bottomrule
-\endlastfoot
-\multicolumn{2}{@{}l@{}}{%
-\textbf{Sets}} \\
+\begin{notationlist}[@{}L{0.17\linewidth}L{0.77\linewidth}@{}]
+\notationheading{Sets}
 \emph{S} & The set of stations, indexed by \emph{i~=}~1, \ldots, \textbar{}\emph{S}\textbar{} \\
 \emph{S}\textsubscript{0} & The set of nodes, including the stations and the depot (denoted by 0) \\
 \emph{K} & The set of rebalancing trucks \\
-\emph{R} & The set of repairers \\
-\multicolumn{2}{@{}l@{}}{%
-\textbf{Parameters}} \\
+\emph{R} & The set of repairers \\[0.8\baselineskip]
+\notationheading{Parameters}
 \emph{p\textsubscript{i}}\textsuperscript{0} & The initial inventory of usable bikes at node
 \(i \in S_{0}\) \\
 \emph{b\textsubscript{i}}\textsuperscript{0} & The initial quantity of broken bikes at node
@@ -222,8 +211,8 @@ bike inventory level of \emph{b\textsubscript{i}} \\
 \(T' = \left\lfloor T/\tau \right\rfloor\) \\
 \(c^{\text{p}}\) & The penalty cost for a user unable to rent/return a bike (CNY) \\
 \(c^{\text{e}}\) & The unit carbon trading cost (CNY/kg) \\
-\multicolumn{2}{@{}l@{}}{%
-\textbf{Decision variables}} \\
+\(\theta\) & Small positive coefficient of the operational-time tie-breaking or redundant-operation penalty term in the objective \\[0.8\baselineskip]
+\notationheading{Decision variables}
 \(x_{i,j,t,k}^{\text{v}}\) & If truck \emph{k} travels directly from node \emph{i} to node \emph{j}
 during period \emph{t}, \(x_{i,j,t,k}^{\text{v}}\)~=~1, 0 otherwise \\
 \(x_{i,j,t,m}^{\text{r}}\) & If repairer \emph{m} travels directly from node \emph{i} to node
@@ -255,14 +244,12 @@ the end of the repositioning process, \(\varsigma_{t,k}^{\text{v}} = 1\), 0 othe
 \(\varsigma_{t,m}^{\text{r}}\) & If repairer \emph{m} remains stationary at the depot from period \emph{t}
 to the end of the repositioning process, \(\varsigma_{t,m}^{\text{r}} = 1\), 0 otherwise \\
 \({\widehat{F}}_{i}\) & The auxiliary variable for the linearization of the EUDF of station
-\emph{i} \\
-\multicolumn{2}{@{}l@{}}{%
-Function} \\
+\emph{i} \\[0.8\baselineskip]
+\notationheading{Function}
 \(F_{i}\left( {p_{i},b_{i}} \right)\) & The EUDF defined over the usable bike inventory level
 \emph{p\textsubscript{i}} and broken bike inventory level \emph{b\textsubscript{i}} at station
 \emph{i} \\
-\end{longtable}
-\endgroup
+\end{notationlist}
 
 \subsection{Time-indexed formulation}\label{ch4:subsec:time-indexed-formulation}
 
@@ -277,7 +264,7 @@ The time-indexed formulation of the BRP separating the routes of trucks and repa
     \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}
       \sum\nolimits_{k \in K} t_{i,j}^{\mathrm{v}} x_{i,j,t - t_{i,j}',k}^{\mathrm{v}} \\
   &\qquad\quad
-    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}\sum\nolimits_{k \in K}
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = 1}^{T'}\sum\nolimits_{k \in K}
       t^{\mathrm{load}}\bigl( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
       \\
   &\qquad\qquad{}
@@ -286,17 +273,15 @@ The time-indexed formulation of the BRP separating the routes of trucks and repa
     + \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}
       \sum\nolimits_{m \in R} t_{i,j}^{\mathrm{r}} x_{i,j,t - t_{i,j}'',m}^{\mathrm{r}} \\
   &\qquad\quad
-    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}\sum\nolimits_{m \in R}
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = 1}^{T'}\sum\nolimits_{m \in R}
       t^{\mathrm{repair}} g_{i,t,m}
     \Bigg)
 		  \end{aligned}
  \label{ch4:eq:2}\displaybreak[2]\\
 \text{s.t.}\quad
-& p_{i,1} = \begin{aligned}[t]
-      &p_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{u}^{-}}
-      + \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{u}^{+}}\\
-      &{} + \sum\limits_{m \in R}g_{i,1,m}
-      \end{aligned},
+& p_{i,1} = p_{i}^{0} - \sum_{k \in K}y_{i,1,k}^{\mathrm{u}^{-}}
+      + \sum_{k \in K}y_{i,1,k}^{\mathrm{u}^{+}}
+      + \sum_{m \in R}g_{i,1,m},
 && \forall i \in S_{0} \label{ch4:eq:3}\\
 & p_{i,t} = \begin{aligned}[t]
       &p_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\mathrm{u}^{-}}
@@ -304,11 +289,9 @@ The time-indexed formulation of the BRP separating the routes of trucks and repa
       &{} + \sum\limits_{m \in R}g_{i,t,m}
       \end{aligned},
 && \forall i \in S_{0},t = 2,\ldots,T' \label{ch4:eq:4}\\
-& b_{i,1} = \begin{aligned}[t]
-      &b_{i}^{0} - \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{b}^{-}}
-      + \sum\limits_{k \in K}y_{i,1,k}^{\mathrm{b}^{+}}\\
-      &{} - \sum\limits_{m \in R}g_{i,1,m}
-      \end{aligned},
+& b_{i,1} = b_{i}^{0} - \sum_{k \in K}y_{i,1,k}^{\mathrm{b}^{-}}
+      + \sum_{k \in K}y_{i,1,k}^{\mathrm{b}^{+}}
+      - \sum_{m \in R}g_{i,1,m},
 && \forall i \in S_{0} \label{ch4:eq:5}\\
 & b_{i,t} = \begin{aligned}[t]
       &b_{i,t - 1} - \sum\limits_{k \in K}y_{i,t,k}^{\mathrm{b}^{-}}
@@ -404,7 +387,7 @@ The time-indexed formulation of the BRP separating the routes of trucks and repa
 & \begin{aligned}[t]
   &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > t_{ij}^{'}}
   t_{i,j}^{\mathrm{v}} x_{i,j,t - t_{ij}^{'},k}^{\mathrm{v}} \\
-  &+ \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\mathrm{load}}
+  &\; + \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\mathrm{load}}
   \left( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
   + y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}} \right) \le w \cdot \tau
   \end{aligned}
@@ -412,7 +395,7 @@ The time-indexed formulation of the BRP separating the routes of trucks and repa
 & \begin{aligned}[t]
   &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > 0}
   t_{i,j}^{\mathrm{v}} x_{i,j,t,k}^{\mathrm{v}} \\
-  &+ \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\mathrm{load}}
+  &\; + \sum\limits_{i \in S_{0}}\sum\limits_{t \leq w}t^{\mathrm{load}}
   \left( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
   + y_{i,t,k}^{\mathrm{b}^{+}} + y_{i,t,k}^{\mathrm{b}^{-}} \right)\\
   &\ge \left( w - 2 \right)\tau - \varsigma_{w,k}^{\mathrm{v}}T
@@ -421,14 +404,14 @@ The time-indexed formulation of the BRP separating the routes of trucks and repa
 & \begin{aligned}[t]
   &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > t_{\mathit{ij}}^{''}}
   t_{i,j}^{\mathrm{r}} x_{i,j,t - t_{\mathit{ij}}^{''},m}^{\mathrm{r}} \\
-  &+ \sum\limits_{i \in S}\sum\limits_{t \leq w}t^{\mathrm{repair}}g_{i,t,m}
+  &\; + \sum\limits_{i \in S}\sum\limits_{t \leq w}t^{\mathrm{repair}}g_{i,t,m}
   \le w \cdot \tau
   \end{aligned}
 && \forall w = 1,\ldots,T',\ m \in R \label{ch4:eq:38}\\
 & \begin{aligned}[t]
   &\sum\limits_{i,j \in S_{0}}\sum\limits_{t \leq w,t > 0}
   t_{i,j}^{\mathrm{r}} x_{i,j,t,m}^{\mathrm{r}} \\
-  &+ \sum\limits_{i \in S}\sum\limits_{t \leq w}t^{\mathrm{repair}}g_{i,t,m}\\
+  &\; + \sum\limits_{i \in S}\sum\limits_{t \leq w}t^{\mathrm{repair}}g_{i,t,m}\\
   &\ge \left( w - 2 \right)\tau - \varsigma_{w,m}^{\mathrm{r}}T
   \end{aligned}
 && \forall w = 1,\ldots,T',\ m \in R \label{ch4:eq:39}\displaybreak[2]\\
@@ -572,7 +555,7 @@ still at the depot from period \emph{t} to the end of the rebalancing process) t
 \(\partial_{k}^{\text{v}}\) (the period of the truck's or repairer's final return to the depot).
 
 Constraints~\eqref{ch4:eq:36}--\eqref{ch4:eq:39} restrict the upper and lower bounds of the operational time, and
-are modified from the study of Liu et al. (2018). Specifically, constraints~\eqref{ch4:eq:36} imply that up to
+are modified from the study of \citet{liuStaticFreefloatingBike2018}. Specifically, constraints~\eqref{ch4:eq:36} imply that up to
 each period, the sum of route travel time and the service time at each node cannot exceed the time
 from the start of repositioning to the end of that period, and constraints~\eqref{ch4:eq:37} imply that up to
 each period, the sum of route travel time and the service time at each node cannot be lower than the
@@ -590,19 +573,19 @@ Constraints~\eqref{ch4:eq:46} ensure that each station can be visited at most on
 whole repositioning horizon. Constraints~\eqref{ch4:eq:47} define the carbon emissions of each truck produced in
 each period when traveling between any two nodes. Constraints~\eqref{ch4:eq:48}--\eqref{ch4:eq:65} are the domain constraints.
 
-Following Kaspi (2015), the EUDF is linearized by introducing a new variable \({\widehat{F}}_{i}\)
+Following \citet{kaspiBikesharingSystemsParking2015}, the EUDF is linearized by introducing a new variable \({\widehat{F}}_{i}\)
 for each station \(i \in S\), and the following linear constraints are added to the
 formulation.
 \begin{modelalign}
-& {\hat{F}}_{i} \ge \begin{aligned}[t]
-        &\alpha_{p_{i},b_{i}}^{i} p_{i,T^{'}}
-        + \beta_{p_{i},b_{i}}^{i} b_{i,T^{'}}\\
-        &{} + \gamma_{p_{i},b_{i}}^{i}
-        \end{aligned},
+& {\hat{F}}_{i} \ge
+\alpha_{p_{i},b_{i}}^{i} p_{i,T^{'}}
++ \beta_{p_{i},b_{i}}^{i} b_{i,T^{'}}
++ \gamma_{p_{i},b_{i}}^{i},
 && \begin{aligned}[t]
         &\forall\left( p_{i},b_{i} \right)
         \in \left\{ \left( p_{i},b_{i} \right) \in {\mathbb{Z}}^{2}
-        \mid p_{i} \geq 0,\ b_{i} \geq 0,\ p_{i} + b_{i} \leq C_{i} \right\},\\
+        \mid p_{i} \geq 0,\ b_{i} \geq 0,\right.\\
+        &\left.\qquad p_{i} + b_{i} \leq C_{i} \right\},\\
         &\forall i \in S.
         \end{aligned}
 \label{ch4:eq:66}
@@ -619,7 +602,7 @@ The resultant objective is
     \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}
       \sum\nolimits_{k \in K} t_{i,j}^{\mathrm{v}} x_{i,j,t - t_{i,j}',k}^{\mathrm{v}} \\
   &\qquad\quad
-    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}' + 1}^{T'}\sum\nolimits_{k \in K}
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = 1}^{T'}\sum\nolimits_{k \in K}
       t^{\mathrm{load}}\bigl( y_{i,t,k}^{\mathrm{u}^{+}} + y_{i,t,k}^{\mathrm{u}^{-}}
       \\
   &\qquad\qquad{}
@@ -628,7 +611,7 @@ The resultant objective is
     + \sum\nolimits_{i,j \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}
       \sum\nolimits_{m \in R}t_{i,j}^{\mathrm{r}} x_{i,j,t - t_{i,j}'',m}^{\mathrm{r}} \\
   &\qquad\quad
-    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = t_{i,j}'' + 1}^{T'}\sum\nolimits_{m \in R}
+    + \sum\nolimits_{i \in S_{0}}\sum\nolimits_{t = 1}^{T'}\sum\nolimits_{m \in R}
       t^{\mathrm{repair}} g_{i,t,m}
 	\Bigg).
 \end{aligned}
@@ -815,9 +798,9 @@ and \emph{iter\_no\_imp}~=~0 \\
 \textbf{30} & & \textbf{return} \emph{current\_best\_sol}, \emph{current\_best\_value} \\
 \end{longtable}
 
-The algorithm structure follows the one given by Vidal et al., 2012, Vidal et al., 2013, Vidal et
-al., 2014). The route representation, crossover operator, and education operator are based on the
-study by Li et al. (2016) with some modifications, mostly on extending their methods to address the
+The algorithm structure follows the one given by
+\citet{vidalHybridGeneticAlgorithm2012,vidalHybridGeneticAlgorithm2013,vidalUnifiedSolutionFramework2014}. The route representation, crossover operator, and education operator are based on the
+study by \citet{liMultipleTypeBike2016} with some modifications, mostly on extending their methods to address the
 scenario of multiple routes for multiple trucks and repairers from the scenario of a single route
 for only one truck. Moreover, in this algorithm, the crossover and local search operations in
 education and the repair process are applied to the routes of the solutions. Once new routes are
@@ -1122,8 +1105,8 @@ carbon emissions during the rebalancing process. \(\varepsilon(\phi)\) is relate
 for solution infeasibility and \(\eta\) is the penalty coefficient of \(\varepsilon(\phi)\). If
 \(\varepsilon(\phi)\) is 0, then solution \(\phi\) is feasible.
 
-The infeasibility we consider here originates from the fact that the heuristic proposed in Section
-4.4 determines the quantities route by route separately, without considering the interdependencies
+The infeasibility we consider here originates from the fact that the heuristic proposed in
+Section~\ref{ch4:subsec:sbc-heuristic} determines the quantities route by route separately, without considering the interdependencies
 between different routes and their effects on station inventories. This strategy is used to make the
 decision-making process more straightforward and easier to implement. It assumes that the arrival
 times at stations follow the visiting order of stations in the route, with all visits by trucks with
@@ -1224,26 +1207,26 @@ solution in the corresponding subpopulation.
 In each iteration, two individuals are selected using a binary tournament, which randomly picks two
 individuals from the population and reserves the one with a better-biased fitness value. The
 crossover and local search strategies for routes in education and repair are basically the same as
-those proposed by Li et al. (2016). Therefore, we omit the details here. The only difference is that
+those proposed by \citet{liMultipleTypeBike2016}. Therefore, we omit the details here. The only difference is that
 in our solution, there can be multiple truck routes and multiple repairer routes. Hence, for each
 solution, the crossover, education, and repair are carried out route by route. For cases with more
 than one truck or repairer, we only consider the crossover of the routes with the same index. For
 example, the route of the first repairer in solution \(\phi_{1}\) only makes a crossover with the
 route of the first repairer in solution \(\phi_{2}\). The repair operation follows the method by
-Vidal (2022) except that the SBC heuristic is used after each new route is generated.
+\citet{vidalHybridGeneticSearch2022} except that the SBC heuristic is used after each new route is generated.
 
 \subsection{Population management and search guidance}\label{ch4:subsec:population-management-search-guidance}
 
 The population management mechanism works with selection, crossover, and education operators to help
 propagate the characteristics of excellent solutions, increase population diversity, and provide
 guidance for a more efficient search. At the beginning of the algorithm, \(4\mu\) individuals are
-initialized (Li et al., 2016), where \(\mu\) is the minimum subpopulation size. Each of them
+initialized \citep{liMultipleTypeBike2016}, where \(\mu\) is the minimum subpopulation size. Each of them
 directly goes through an education process using local search procedures and the SBC heuristic, and
 then falls into a feasible or infeasible subpopulation based on the feasibility of the solution. The
 repair operation is activated for infeasible individuals with a probability of
 \emph{P}\textsubscript{repair}. The repair operation runs local search procedures and the SBC
 heuristic under a penalty factor of 10 times the original one, aiming to convert an infeasible
-solution into a feasible one (Vidal, 2022). If the repair is successful, the resulting individual is
+solution into a feasible one \citep{vidalHybridGeneticSearch2022}. If the repair is successful, the resulting individual is
 added to the feasible subpopulation. Otherwise, the infeasible one before repair is preserved in the
 infeasible subpopulation. The algorithm keeps generating new individuals under the process of
 selection, crossover, education, and repair until the time limit or the maximum number of iterations
@@ -1255,7 +1238,7 @@ reaches \(\mu + \lambda\), where \(\lambda\) is the number of offspring in a gen
 selection is conducted to remove the \(\lambda\) solutions with the highest biased fitness values to
 ensure that the size equals \(\mu\).
 
-As in the study of Li et al. (2016), the penalty coefficient \(\eta\) in equation~\eqref{ch4:eq:70} is modified every
+As in the study of \citet{liMultipleTypeBike2016}, the penalty coefficient \(\eta\) in equation~\eqref{ch4:eq:70} is modified every
 100 iterations to adjust the proportion of feasible solutions. Let \(\xi^{\text{REF}}\) be the
 target proportion of feasible individuals. If the proportion of feasible individuals with respect to
 \(\varepsilon(\phi)\) is less than \(\xi^{\text{REF}} - 5\%\) or greater than
@@ -1264,7 +1247,7 @@ et al., 2016).
 
 The diversification operation is triggered if the best solution has not been improved for
 \emph{It}\textsubscript{div} iterations. In the diversification, the best \(\frac{\mu}{3}\)
-solutions of each subpopulation are preserved (Li et al., 2016), and \(4\mu\) new individuals are
+solutions of each subpopulation are preserved \citep{liMultipleTypeBike2016}, and \(4\mu\) new individuals are
 generated, followed by the survivor selection to adjust the size of each subpopulation to \(\mu\).
 
 \section{Computational experiments}\label{ch4:sec:computational-experiments}
@@ -1282,7 +1265,7 @@ performance on larger networks with multiple trucks and repairers. Section~\ref{
 of varying repair times on the cost-effectiveness of including a repairer through experiments on
 different proportions of broken bikes.
 
-The parameters regarding the network are from the dataset used by Ho and Szeto (2017), which is
+The parameters regarding the network are from the dataset used by \citet{hoHybridLargeNeighborhood2017}, which is
 available at \url{https://www.dropbox.com/s/jbsfefi2wqsssrr/hlns-set3.zip?dl=0}. The dataset contains the
 travel times between nodes, the capacity of each station, and the initial inventory of usable bikes
 at each station. The travel times used in the experiments are also from the dataset above, in which
@@ -1310,18 +1293,18 @@ Parameter} & Value & References \\
 \bottomrule
 \endlastfoot
 \emph{\(\rho\)}\textsubscript{0} & The empty-load fuel consumption rate of each truck (liters/km) & 0.252 &
-Franceschetti et al., 2013, Shui and Szeto, 2018 \\
-\emph{\(\rho\)*} & The full-load fuel consumption rate of each truck (liters/km) & 0.258 & Franceschetti et
-al., 2013, Shui and Szeto, 2018 \\
-\emph{CER} & The CO\textsubscript{2} emission rate (kg/liter) & 2.61 & Wang and Szeto (2018) \\
-\(Q_{k}\) & The capacity of truck \emph{k} (bikes) & 25 & Ho and Szeto (2017) \\
-\(t^{\text{load}}\) & Time for loading/unloading a bike (seconds) & 60 & Liu et al. (2018) \\
-\(t^{\text{repair}}\) & Time for repairing a bike on-site (seconds) & 300 & Jin et al. (2022) \\
+\citet{franceschettiTimedependentPollutionroutingProblem2013,shuiDynamicGreenBike2018} \\
+\emph{\(\rho\)*} & The full-load fuel consumption rate of each truck (liters/km) & 0.258 &
+\citet{franceschettiTimedependentPollutionroutingProblem2013,shuiDynamicGreenBike2018} \\
+\emph{CER} & The CO\textsubscript{2} emission rate (kg/liter) & 2.61 & \citet{wangStaticGreenRepositioning2018} \\
+\(Q_{k}\) & The capacity of truck \emph{k} (bikes) & 25 & \citet{hoHybridLargeNeighborhood2017} \\
+\(t^{\text{load}}\) & Time for loading/unloading a bike (seconds) & 60 & \citet{liuStaticFreefloatingBike2018} \\
+\(t^{\text{repair}}\) & Time for repairing a bike on-site (seconds) & 300 & \citet{jinSimulationFrameworkOptimizing2022} \\
 \(\frac{v^{\text{t}}}{v^{\text{m}}}\) & The ratio of speed between a truck and an electric tricycle
-& 1.68 & Wu, 2021, Fang et al., 2019 \\
+& 1.68 & \citet{wuDeterminationTortLiability2021,fangStabilityAnalysisArticulated2019} \\
 \(c^{\text{p}}\) & The penalty cost for a user unable to rent/return a bike (CNY) & 2 & Chen et al.
 (2020) \\
-\(c^{\text{e}}\) & The unit carbon trading cost (CNY/kg) & 0.06 & Y. Jia et al. (2020) \\
+\(c^{\text{e}}\) & The unit carbon trading cost (CNY/kg) & 0.06 & \citet{jiaBikeSharingRebalancingProblem2020} \\
 \(\theta\) & The penalty coefficient used to eliminate unnecessary loading or unloading operations &
 1e-8 & -- \\
 \end{longtable}
@@ -1363,14 +1346,14 @@ experiments were conducted under both two-hour and three-hour time budgets. In t
 discretization, we used 600~s as the length of each period \emph{\(\tau\)} for most experiments, except in
 Section~\ref{ch4:subsec:repairer-cost-effectiveness}, where repair times vary between 300 and 1200~s. To accommodate the largest repair time
 in these settings, in Section~\ref{ch4:subsec:repairer-cost-effectiveness}, we set the length of each period \emph{\(\tau\)} to 1200~s, ensuring
-that repair times do not exceed the period as defined in the parameter table in Table~\ref{ch4:tab:notations}. The codes
+that repair times do not exceed the period as defined in the notation list in Section~\ref{ch4:subsec:notations}. The codes
 and the generated datasets used in the experiments are available at
 https://github.com/rqhu1995/brpwr.
 
 \subsection{Parameter tuning and setting for the algorithm}\label{ch4:subsec:parameter-tuning-setting}
 
-The parameter setting mostly follows that of Li et al. (2016), who referred to the research
-conducted by Vidal et al., 2012, Vidal et al., 2013, Vidal et al., 2014). The only parameter that
+The parameter setting mostly follows that of \citet{liMultipleTypeBike2016}, who referred to the research
+conducted by \citet{vidalHybridGeneticAlgorithm2012,vidalHybridGeneticAlgorithm2013,vidalUnifiedSolutionFramework2014}. The only parameter that
 differs from theirs and requires tuning is \emph{\(\eta\)}, the one related to the penalty of infeasible
 solutions. \emph{\(\eta\)} was set to take values from the set \{10, 50, 100, 150, 200, 300, 400, 500\}. We
 ran the algorithm, setting \(\eta\) to be each value from the candidate set. The result of the

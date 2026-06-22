@@ -9,7 +9,7 @@ sum of the expected shortages of usable bikes and the expected shortages of lock
 bike-sharing station in a day. It is calculated based on the quantities of both usable and unusable
 bikes at the station. The calculation of the EUDF values follows a Markov process, which captures
 the dynamics of bicycle inventory levels over time. For detailed steps for how the EUDF values are
-calculated, readers can refer to the approach outlined in the paper of Kaspi et al. (2017).
+calculated, readers can refer to the approach outlined in \citet{kaspiBikesharingSystemsUser2017}.
 
 Let \(F_{i}\left( {p_{i}',b_{i}'} \right)\) be the EUDF, where \(p_{i}'\) and \(b_{i}'\) are the
 usable and broken inventory levels at the station, respectively. The domain of EUDF at each station
@@ -36,11 +36,11 @@ programming (LP) model which ensures that the polyhedral function
 \begin{equation}
 {\overset{\sim}{F}}_{i}\left( {p_{i}^{'},b_{i}^{'}} \right)
 =
-\max\limits_{{({p_{i},b_{i}})} \in \theta}
+\max\limits_{{({p_{i},b_{i}})} \in \Theta_i}
 \left( {\alpha_{p_{i},b_{i}}^{i} \cdot p_{i}' + \beta_{p_{i},b_{i}}^{i} \cdot b_{i}' + \gamma_{p_{i},b_{i}}^{i}} \right)
 \end{equation}
 remains below or equal to the EUDF values at all points except for
-\(\left( {p_{i},b_{i}} \right) \in \theta_{i}\), with the objective of minimizing the gap between
+\(\left( {p_{i},b_{i}} \right) \in \Theta_i\), with the objective of minimizing the gap between
 the fitted function and the actual EUDF at each point. The LP model is given as follows:
 
 \textbf{Decision variables:}
@@ -56,10 +56,10 @@ the fitted plane
 & s \tag{A.74}\\
 \text{s.t.}\quad
 & \alpha_{p_{i},b_{i}}^{i} \cdot p_{i}' + \beta_{p_{i},b_{i}}^{i} \cdot b_{i}' + \gamma_{p_{i},b_{i}}^{i}
-\leq F\left( {p_{i}',b_{i}'} \right),
-&& \forall\left( {p_{i}',b_{i}'} \right) \in \theta\setminus \left\{ \left( {p_{i},b_{i}} \right) \right\} \tag{A.75}\\
+\leq F_i\left( {p_{i}',b_{i}'} \right),
+&& \forall\left( {p_{i}',b_{i}'} \right) \in \Theta_i\setminus \left\{ \left( {p_{i},b_{i}} \right) \right\} \tag{A.75}\\
 & \alpha_{p_{i},b_{i}}^{i} \cdot p_{i} + \beta_{p_{i},b_{i}}^{i} \cdot b_{i} + \gamma_{p_{i},b_{i}}^{i}
-= F\left( {p_{i},b_{i}} \right) - s
+= F_i\left( {p_{i},b_{i}} \right) - s
 && \tag{A.76}\\
 & \alpha_{p_{i},b_{i}}^{i},\beta_{p_{i},b_{i}}^{i},\gamma_{p_{i},b_{i}}^{i}\ \text{free},
 && \tag{A.77}\\
@@ -78,15 +78,15 @@ each point \(\left( {p_{i},b_{i}} \right) \in \Theta_{i},\) we replace the EUDF
 \(F_{i}\left( {p_{i,T'},b_{i,T'}} \right)\) in the objective function with an auxiliary variable
  \({\widehat{F}}_{i}\) and add the following constraints to the model:
 \begin{modelalign}
-& {\hat{F}}_{i} \geq \begin{aligned}[t]
-        &\alpha_{p_{i},b_{i}}^{i} p_{i,T^{'}}
-        + \beta_{p_{i},b_{i}}^{i} b_{i,T^{'}}\\
-        &{} + \gamma_{p_{i},b_{i}}^{i}
-        \end{aligned},
+& {\hat{F}}_{i} \geq
+\alpha_{p_{i},b_{i}}^{i} p_{i,T^{'}}
++ \beta_{p_{i},b_{i}}^{i} b_{i,T^{'}}
++ \gamma_{p_{i},b_{i}}^{i},
 && \begin{aligned}[t]
         &\forall\left( p_{i},b_{i} \right)
         \in \left\{ \left( p_{i},b_{i} \right) \in {\mathbb{Z}}^{2}
-        \mid p_{i} \geq 0,\ b_{i} \geq 0,\ p_{i} + b_{i} \leq C_{i} \right\},\\
+        \mid p_{i} \geq 0,\ b_{i} \geq 0,\right.\\
+        &\left.\qquad p_{i} + b_{i} \leq C_{i} \right\},\\
         &\forall i \in S.
         \end{aligned}
 \tag{A.79}

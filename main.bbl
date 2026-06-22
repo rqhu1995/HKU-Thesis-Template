@@ -19,6 +19,240 @@
 
 \refsection{0}
   \datalist[entry]{nyt/apasortcite//global/global}
+    \entry{arthurKmeansAdvantagesCareful2007}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=9490d5d9532dc965f9f300a7a5c9fa13}{%
+           family={Arthur},
+           familyi={A\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b6fa64c3195f752823d0759db3cbca91}{%
+           family={Vassilvitskii},
+           familyi={V\bibinitperiod},
+           given={Sergei},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{2}{%
+        {Society for Industrial}%
+        {Applied Mathematics}%
+      }
+      \strng{namehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{fullhash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{bibnamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authorbibnamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authornamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authorfullhash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the Eighteenth Annual ACM-SIAM Symposium on Discrete Algorithms}
+      \field{title}{k-means++: The advantages of careful seeding}
+      \field{year}{2007}
+      \field{pages}{1027\bibrangedash 1035}
+      \range{pages}{9}
+    \endentry
+    \entry{dantzigSolutionLargescaleTravelingsalesman1954}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=eef51b560a6db730dd6f0455c9990b26}{%
+           family={Dantzig},
+           familyi={D\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ba1fea9115ddfe901b2488bf0b526451}{%
+           family={Fulkerson},
+           familyi={F\bibinitperiod},
+           given={Ray},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ee5a2d8afd7349eac6e3f922fbab969e}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Selmer},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0749a4bc0c2a5915ef3fab21fc30f694}
+      \strng{fullhash}{f329fb67c4677226f35205f21f58c19e}
+      \strng{bibnamehash}{f329fb67c4677226f35205f21f58c19e}
+      \strng{authorbibnamehash}{f329fb67c4677226f35205f21f58c19e}
+      \strng{authornamehash}{0749a4bc0c2a5915ef3fab21fc30f694}
+      \strng{authorfullhash}{f329fb67c4677226f35205f21f58c19e}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Operations Research Society of America}
+      \field{number}{4}
+      \field{title}{Solution of a large-scale traveling-salesman problem}
+      \field{volume}{2}
+      \field{year}{1954}
+      \field{pages}{393\bibrangedash 410}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1287/opre.2.4.393
+      \endverb
+    \endentry
+    \entry{fangStabilityAnalysisArticulated2019}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=15c863dbe602631bba0c3e58c00f359f}{%
+           family={Fang},
+           familyi={F\bibinitperiod},
+           given={Weiping},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=42f7c89c04e37a74d5faf10ae9cf58f4}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Xiaojun},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=58420e9f7c2fdf7f5dc3b13b9cdb2f4c}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Weijian},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=70894b7d5081d2258b344d182dc5e475}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Benchao},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{06996dfcb1816b9eb496d7bc1fe0a573}
+      \strng{fullhash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \strng{bibnamehash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \strng{authorbibnamehash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \strng{authornamehash}{06996dfcb1816b9eb496d7bc1fe0a573}
+      \strng{authorfullhash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IOP Conference Series: Materials Science and Engineering}
+      \field{number}{2}
+      \field{title}{Stability analysis of articulated dump truck based on eigenvalue method}
+      \field{volume}{688}
+      \field{year}{2019}
+      \field{pages}{022024}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1757-899X/688/2/022024
+      \endverb
+    \endentry
+    \entry{forma3stepMathHeuristic2015}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=5157ce3c64b6c4b10c7e65f6828966b7}{%
+           family={Forma},
+           familyi={F\bibinitperiod},
+           given={Iris\bibnamedelima A.},
+           giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c89c1ec00b87d8580fb76a03ad9859d3}{%
+           family={Raviv},
+           familyi={R\bibinitperiod},
+           given={Tal},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c33e57e7dbd7aff854b11b651d584f3a}{%
+           family={Tzur},
+           familyi={T\bibinitperiod},
+           given={Michal},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{542330bacb552a140308106b3f543b1d}
+      \strng{fullhash}{da845a7e4c06590e60651e1252a2e5b6}
+      \strng{bibnamehash}{da845a7e4c06590e60651e1252a2e5b6}
+      \strng{authorbibnamehash}{da845a7e4c06590e60651e1252a2e5b6}
+      \strng{authornamehash}{542330bacb552a140308106b3f543b1d}
+      \strng{authorfullhash}{da845a7e4c06590e60651e1252a2e5b6}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{A 3-step math heuristic for the static repositioning problem in bike-sharing systems}
+      \field{volume}{71}
+      \field{year}{2015}
+      \field{pages}{230\bibrangedash 247}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1016/j.trb.2014.10.003
+      \endverb
+    \endentry
+    \entry{franceschettiTimedependentPollutionroutingProblem2013}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=9e38ec0a9c2c6a3435179527b66e555e}{%
+           family={Franceschetti},
+           familyi={F\bibinitperiod},
+           given={Anna},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e6a00f87b3bd4b7900c1e069c4da6316}{%
+           family={Honhon},
+           familyi={H\bibinitperiod},
+           given={Dorothee},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b63aeb723d16eafda6952b3b6992d5b3}{%
+           family={Van\bibnamedelima Woensel},
+           familyi={V\bibinitperiod\bibinitdelim W\bibinitperiod},
+           given={Tom},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a75d924d258386b1a41bb38cc0000e0a}{%
+           family={Bektas},
+           familyi={B\bibinitperiod},
+           given={Tolga},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1d6e9fe0f2d8b8a132ebe0ace7645d51}{%
+           family={Laporte},
+           familyi={L\bibinitperiod},
+           given={Gilbert},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{cf12cfeb03f566488144024868bcf4f5}
+      \strng{fullhash}{ac495df368f95307c4a2f072dabecd0a}
+      \strng{bibnamehash}{ac495df368f95307c4a2f072dabecd0a}
+      \strng{authorbibnamehash}{ac495df368f95307c4a2f072dabecd0a}
+      \strng{authornamehash}{cf12cfeb03f566488144024868bcf4f5}
+      \strng{authorfullhash}{ac495df368f95307c4a2f072dabecd0a}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{The time-dependent pollution-routing problem}
+      \field{volume}{56}
+      \field{year}{2013}
+      \field{pages}{265\bibrangedash 293}
+      \range{pages}{29}
+      \verb{doi}
+      \verb 10.1016/j.trb.2013.08.008
+      \endverb
+    \endentry
     \entry{hoHybridLargeNeighborhood2017}{article}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=ce3d200e48885cdbeaca0d76752b5576}{%
@@ -55,6 +289,39 @@
       \range{pages}{24}
       \verb{doi}
       \verb 10.1016/j.trb.2016.11.003
+      \endverb
+    \endentry
+    \entry{hoeffdingProbabilityInequalitiesSums1963}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=26d3c01664dc4b0c60afbdf4153437e2}{%
+           family={Hoeffding},
+           familyi={H\bibinitperiod},
+           given={Wassily},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{fullhash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{bibnamehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{authorbibnamehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{authornamehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{authorfullhash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the American Statistical Association}
+      \field{number}{301}
+      \field{title}{Probability inequalities for sums of bounded random variables}
+      \field{volume}{58}
+      \field{year}{1963}
+      \field{pages}{13\bibrangedash 30}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1080/01621459.1963.10500830
       \endverb
     \endentry
     \entry{huRepositioningBikeSharing2025}{article}{}
@@ -97,6 +364,139 @@
       \field{year}{2025}
       \field{pages}{104155}
       \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.tre.2025.104155
+      \endverb
+    \endentry
+    \entry{jiaBikeSharingRebalancingProblem2020}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=af2c1e48e3bfea15396b48d41eb5c930}{%
+           family={Jia},
+           familyi={J\bibinitperiod},
+           given={Yongji},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7b0de6549efc7246bfb3435173e3cb35}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Zeng},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0e5451c75b8c3590f5de51e5471b372a}{%
+           family={Xing},
+           familyi={X\bibinitperiod},
+           given={Yanting},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=43bfecf0db835905ffe98dadaa0b057f}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Dong},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=508f0a4e80af71a1970f575437811489}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Jia},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1ee5572138ecf2d10e698a0dbcb086e7}
+      \strng{fullhash}{5aed6f04cd49e918c343b8156589adad}
+      \strng{bibnamehash}{5aed6f04cd49e918c343b8156589adad}
+      \strng{authorbibnamehash}{5aed6f04cd49e918c343b8156589adad}
+      \strng{authornamehash}{1ee5572138ecf2d10e698a0dbcb086e7}
+      \strng{authorfullhash}{5aed6f04cd49e918c343b8156589adad}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Sustainability}
+      \field{number}{1}
+      \field{title}{The bike-sharing rebalancing problem considering multi-energy mixed fleets and traffic restrictions}
+      \field{volume}{13}
+      \field{year}{2020}
+      \field{pages}{270}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3390/su13010270
+      \endverb
+    \endentry
+    \entry{jinSimulationFrameworkOptimizing2022}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=1be87e5d8d0d2f7c36a29e129c47216a}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=87833a338c0abc017700a9482d368c87}{%
+           family={Ruiz},
+           familyi={R\bibinitperiod},
+           given={Cesar},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6963b2f068b63f0a653c3cc40668300f}{%
+           family={Liao},
+           familyi={L\bibinitperiod},
+           given={Haitao},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f8104bb6f23f51e03bf7de8304f860df}
+      \strng{fullhash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \strng{bibnamehash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \strng{authorbibnamehash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \strng{authornamehash}{f8104bb6f23f51e03bf7de8304f860df}
+      \strng{authorfullhash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Simulation Modelling Practice and Theory}
+      \field{title}{A simulation framework for optimizing bike rebalancing and maintenance in large-scale bike-sharing systems}
+      \field{volume}{115}
+      \field{year}{2022}
+      \field{pages}{102422}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.simpat.2021.102422
+      \endverb
+    \endentry
+    \entry{kaspiBikesharingSystemsParking2015}{thesis}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=460bcd185d3364b18483dabb2940cdcb}{%
+           family={Kaspi},
+           familyi={K\bibinitperiod},
+           given={Mor},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Tel Aviv University}%
+      }
+      \strng{namehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{fullhash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{bibnamehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{authorbibnamehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{authornamehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{authorfullhash}{460bcd185d3364b18483dabb2940cdcb}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Bike-sharing systems: parking reservation policies and maintenance operations}
+      \field{type}{phdthesis}
+      \field{year}{2015}
     \endentry
     \entry{kaspiBikesharingSystemsUser2017}{article}{}
       \name{author}{3}{}{%
@@ -141,10 +541,867 @@
       \range{pages}{15}
       \verb{doi}
       \verb 10.1080/0740817X.2016.1224960
+      \endverb
+    \endentry
+    \entry{liMultipleTypeBike2016}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=cb5ae5985f91ad052992b85c3392ce45}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yanfeng},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2633e1b72f5d34c613ff698b7db1c368}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={Jiancheng},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7fa1d405c84f151d44a0bd3a81c490dc}{%
+           family={Shui},
+           familyi={S\bibinitperiod},
+           given={C.\bibnamedelimi S.},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{db569eae6dee34ac40e84de6107cbebf}
+      \strng{fullhash}{5ce0a90e516cd144b4625647f9478b2c}
+      \strng{bibnamehash}{5ce0a90e516cd144b4625647f9478b2c}
+      \strng{authorbibnamehash}{5ce0a90e516cd144b4625647f9478b2c}
+      \strng{authornamehash}{db569eae6dee34ac40e84de6107cbebf}
+      \strng{authorfullhash}{5ce0a90e516cd144b4625647f9478b2c}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{A multiple type bike repositioning problem}
+      \field{volume}{90}
+      \field{year}{2016}
+      \field{pages}{263\bibrangedash 278}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1016/j.trb.2016.05.010
+      \endverb
+    \endentry
+    \entry{liuStaticFreefloatingBike2018}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=d16056932a393b93367a5223974b55f6}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Ying},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ce3d200e48885cdbeaca0d76752b5576}{%
+           family={Ho},
+           familyi={H\bibinitperiod},
+           given={Sin\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4d687194429250da8e17636f0cdca4d8}
+      \strng{fullhash}{acb252921c0a8520d4239a6f84b84e93}
+      \strng{bibnamehash}{acb252921c0a8520d4239a6f84b84e93}
+      \strng{authorbibnamehash}{acb252921c0a8520d4239a6f84b84e93}
+      \strng{authornamehash}{4d687194429250da8e17636f0cdca4d8}
+      \strng{authorfullhash}{acb252921c0a8520d4239a6f84b84e93}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part C: Emerging Technologies}
+      \field{title}{A static free-floating bike repositioning problem with multiple heterogeneous vehicles, multiple depots, and multiple visits}
+      \field{volume}{92}
+      \field{year}{2018}
+      \field{pages}{208\bibrangedash 242}
+      \range{pages}{35}
+      \verb{doi}
+      \verb 10.1016/j.trc.2018.02.008
+      \endverb
+    \endentry
+    \entry{lvHybridAlgorithmStatic2020}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=c9d0ea846a13b209343441397586d925}{%
+           family={Lv},
+           familyi={L\bibinitperiod},
+           given={Chang},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b6a4c03e8a230fbd2ecf585df8839177}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Chaoyong},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=34775e19061c47e42edc4a1416ac0b60}{%
+           family={Lian},
+           familyi={L\bibinitperiod},
+           given={Kunlei},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2c6ab00ed154cc292c3c676f9ef4c8a5}{%
+           family={Ren},
+           familyi={R\bibinitperiod},
+           given={Yaping},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0564c4805ed43d1958aaeabff4e88c35}{%
+           family={Meng},
+           familyi={M\bibinitperiod},
+           given={Leilei},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1a74b3e48d9ab77a1cf099e85753e848}
+      \strng{fullhash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \strng{bibnamehash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \strng{authorbibnamehash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \strng{authornamehash}{1a74b3e48d9ab77a1cf099e85753e848}
+      \strng{authorfullhash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{A hybrid algorithm for the static bike-sharing re-positioning problem based on an effective clustering strategy}
+      \field{volume}{140}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 21}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.1016/j.trb.2020.07.004
+      \endverb
+    \endentry
+    \entry{ravivOptimalInventoryManagement2013}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=c89c1ec00b87d8580fb76a03ad9859d3}{%
+           family={Raviv},
+           familyi={R\bibinitperiod},
+           given={Tal},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=81c6b097db11adf322fe26b2dec76f4a}{%
+           family={Kolka},
+           familyi={K\bibinitperiod},
+           given={Ofer},
+           giveni={O\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{fullhash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{bibnamehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{authorbibnamehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{authornamehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{authorfullhash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IIE Transactions}
+      \field{number}{10}
+      \field{title}{Optimal inventory management of a bike-sharing station}
+      \field{volume}{45}
+      \field{year}{2013}
+      \field{pages}{1077\bibrangedash 1093}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1080/0740817X.2013.770186
+      \endverb
+    \endentry
+    \entry{ravivStaticRepositioningBikesharing2013}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=c89c1ec00b87d8580fb76a03ad9859d3}{%
+           family={Raviv},
+           familyi={R\bibinitperiod},
+           given={Tal},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c33e57e7dbd7aff854b11b651d584f3a}{%
+           family={Tzur},
+           familyi={T\bibinitperiod},
+           given={Michal},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5157ce3c64b6c4b10c7e65f6828966b7}{%
+           family={Forma},
+           familyi={F\bibinitperiod},
+           given={Iris\bibnamedelima A.},
+           giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7d817a50c731235080919b328352743e}
+      \strng{fullhash}{330e1edd5b571c11ba81756b3056306a}
+      \strng{bibnamehash}{330e1edd5b571c11ba81756b3056306a}
+      \strng{authorbibnamehash}{330e1edd5b571c11ba81756b3056306a}
+      \strng{authornamehash}{7d817a50c731235080919b328352743e}
+      \strng{authorfullhash}{330e1edd5b571c11ba81756b3056306a}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{EURO Journal on Transportation and Logistics}
+      \field{number}{3}
+      \field{title}{Static repositioning in a bike-sharing system: models and solution approaches}
+      \field{volume}{2}
+      \field{year}{2013}
+      \field{pages}{187\bibrangedash 229}
+      \range{pages}{43}
+      \verb{doi}
+      \verb 10.1007/s13676-012-0017-6
+      \endverb
+    \endentry
+    \entry{schuijbroekInventoryRebalancingVehicle2017}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=f6351a386f57d9a5da9b965a840bd3b9}{%
+           family={Schuijbroek},
+           familyi={S\bibinitperiod},
+           given={Jasper},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=16553af3b1fb5a0ce28a17b1490ee17e}{%
+           family={Hampshire},
+           familyi={H\bibinitperiod},
+           given={Robert\bibnamedelima C.},
+           giveni={R\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=eff3870bc5b01e23cc87608b73d73677}{%
+           family={Van\bibnamedelima Hoeve},
+           familyi={V\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Willem-Jan},
+           giveni={W\bibinithyphendelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4a1ddbfc335a364eecf82222836d9b4d}
+      \strng{fullhash}{d4381074d69378e7980a742b8b624727}
+      \strng{bibnamehash}{d4381074d69378e7980a742b8b624727}
+      \strng{authorbibnamehash}{d4381074d69378e7980a742b8b624727}
+      \strng{authornamehash}{4a1ddbfc335a364eecf82222836d9b4d}
+      \strng{authorfullhash}{d4381074d69378e7980a742b8b624727}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{European Journal of Operational Research}
+      \field{number}{3}
+      \field{title}{Inventory rebalancing and vehicle routing in bike sharing systems}
+      \field{volume}{257}
+      \field{year}{2017}
+      \field{pages}{992\bibrangedash 1004}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1016/j.ejor.2016.08.029
+      \endverb
+    \endentry
+    \entry{shuiDynamicGreenBike2018}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7fa1d405c84f151d44a0bd3a81c490dc}{%
+           family={Shui},
+           familyi={S\bibinitperiod},
+           given={C.\bibnamedelimi S.},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{fullhash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{bibnamehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{authorbibnamehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{authornamehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{authorfullhash}{135237c07e8497f6fd261ed2723ace48}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part D: Transport and Environment}
+      \field{title}{Dynamic green bike repositioning problem: a hybrid rolling horizon artificial bee colony algorithm approach}
+      \field{volume}{60}
+      \field{year}{2018}
+      \field{pages}{119\bibrangedash 136}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1016/j.trd.2017.06.023
+      \endverb
+    \endentry
+    \entry{vidalHybridGeneticSearch2022}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{fullhash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{bibnamehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{authorbibnamehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{authornamehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{authorfullhash}{f8b1fe2b57f8a82a140583738588869a}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers \& Operations Research}
+      \field{title}{Hybrid genetic search for the CVRP: open-source implementation and SWAP* neighborhood}
+      \field{volume}{140}
+      \field{year}{2022}
+      \field{pages}{105643}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.cor.2021.105643
+      \endverb
+    \endentry
+    \entry{vidalHybridGeneticAlgorithm2012}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5772cf70acb961bf6a0113d4f3df8706}{%
+           family={Crainic},
+           familyi={C\bibinitperiod},
+           given={Teodor\bibnamedelima Gabriel},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d4ebdd3fdc985c36f68c8295c5664c74}{%
+           family={Gendreau},
+           familyi={G\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8561858f0d2736da313c9affe67f82da}{%
+           family={Lahrichi},
+           familyi={L\bibinitperiod},
+           given={Nadia},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=099ff78eddb034ef9ba28eefa0eaff76}{%
+           family={Rei},
+           familyi={R\bibinitperiod},
+           given={Walter},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{fullhash}{6da7e9846c673ded90f753259d22b545}
+      \strng{bibnamehash}{6da7e9846c673ded90f753259d22b545}
+      \strng{authorbibnamehash}{6da7e9846c673ded90f753259d22b545}
+      \strng{authornamehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{authorfullhash}{6da7e9846c673ded90f753259d22b545}
+      \field{extraname}{1}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Operations Research}
+      \field{number}{3}
+      \field{title}{A hybrid genetic algorithm for multidepot and periodic vehicle routing problems}
+      \field{volume}{60}
+      \field{year}{2012}
+      \field{pages}{611\bibrangedash 624}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1287/opre.1120.1048
+      \endverb
+    \endentry
+    \entry{vidalHybridGeneticAlgorithm2013}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5772cf70acb961bf6a0113d4f3df8706}{%
+           family={Crainic},
+           familyi={C\bibinitperiod},
+           given={Teodor\bibnamedelima Gabriel},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d4ebdd3fdc985c36f68c8295c5664c74}{%
+           family={Gendreau},
+           familyi={G\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=900ff4eaee85acd9095309878df56e18}{%
+           family={Prins},
+           familyi={P\bibinitperiod},
+           given={Christian},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{fullhash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{bibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authorbibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authornamehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{authorfullhash}{a9774bb22568916a7f36433097d9ee69}
+      \field{extraname}{2}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers \& Operations Research}
+      \field{number}{1}
+      \field{title}{A hybrid genetic algorithm with adaptive diversity management for a large class of vehicle routing problems with time-windows}
+      \field{volume}{40}
+      \field{year}{2013}
+      \field{pages}{475\bibrangedash 489}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1016/j.cor.2012.07.018
+      \endverb
+    \endentry
+    \entry{vidalUnifiedSolutionFramework2014}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5772cf70acb961bf6a0113d4f3df8706}{%
+           family={Crainic},
+           familyi={C\bibinitperiod},
+           given={Teodor\bibnamedelima Gabriel},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d4ebdd3fdc985c36f68c8295c5664c74}{%
+           family={Gendreau},
+           familyi={G\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=900ff4eaee85acd9095309878df56e18}{%
+           family={Prins},
+           familyi={P\bibinitperiod},
+           given={Christian},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{fullhash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{bibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authorbibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authornamehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{authorfullhash}{a9774bb22568916a7f36433097d9ee69}
+      \field{extraname}{3}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{European Journal of Operational Research}
+      \field{number}{3}
+      \field{title}{A unified solution framework for multi-attribute vehicle routing problems}
+      \field{volume}{234}
+      \field{year}{2014}
+      \field{pages}{658\bibrangedash 673}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1016/j.ejor.2013.09.045
+      \endverb
+    \endentry
+    \entry{wangStaticGreenRepositioning2018}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=471e61c37bc3e62dbe8655e02a002343}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yue},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{fullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{bibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorbibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authornamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorfullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \field{extraname}{1}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part D: Transport and Environment}
+      \field{title}{Static green repositioning in bike sharing systems with broken bikes}
+      \field{volume}{65}
+      \field{year}{2018}
+      \field{pages}{438\bibrangedash 457}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1016/j.trd.2018.09.016
+      \endverb
+    \endentry
+    \entry{wangEnhancedArtificialBee2021}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=471e61c37bc3e62dbe8655e02a002343}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yue},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{fullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{bibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorbibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authornamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorfullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \field{extraname}{2}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part C: Emerging Technologies}
+      \field{title}{An enhanced artificial bee colony algorithm for the green bike repositioning problem with broken bikes}
+      \field{volume}{125}
+      \field{year}{2021}
+      \field{pages}{102895}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.trc.2020.102895
+      \endverb
+    \endentry
+    \entry{wuDeterminationTortLiability2021}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=98025535471926069a5bd93b0c05fb7d}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Chuyan},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{fullhash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{bibnamehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{authorbibnamehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{authornamehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{authorfullhash}{98025535471926069a5bd93b0c05fb7d}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 2021 2nd International Conference on Computers, Information Processing and Advanced Education}
+      \field{title}{Determination of tort liability in traffic accidents based on performance parameter standard of electric bicycle}
+      \field{year}{2021}
+      \field{pages}{1485\bibrangedash 1489}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1145/3456887.3459705
       \endverb
     \endentry
   \enddatalist
   \datalist[entry]{nyt/global//global/global}
+    \entry{arthurKmeansAdvantagesCareful2007}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=9490d5d9532dc965f9f300a7a5c9fa13}{%
+           family={Arthur},
+           familyi={A\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b6fa64c3195f752823d0759db3cbca91}{%
+           family={Vassilvitskii},
+           familyi={V\bibinitperiod},
+           given={Sergei},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{2}{%
+        {Society for Industrial}%
+        {Applied Mathematics}%
+      }
+      \strng{namehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{fullhash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{bibnamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authorbibnamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authornamehash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \strng{authorfullhash}{c59974bc84d7d18b3663c2ec2a4eaad7}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the Eighteenth Annual ACM-SIAM Symposium on Discrete Algorithms}
+      \field{title}{k-means++: The advantages of careful seeding}
+      \field{year}{2007}
+      \field{pages}{1027\bibrangedash 1035}
+      \range{pages}{9}
+    \endentry
+    \entry{dantzigSolutionLargescaleTravelingsalesman1954}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=eef51b560a6db730dd6f0455c9990b26}{%
+           family={Dantzig},
+           familyi={D\bibinitperiod},
+           given={George},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ba1fea9115ddfe901b2488bf0b526451}{%
+           family={Fulkerson},
+           familyi={F\bibinitperiod},
+           given={Ray},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ee5a2d8afd7349eac6e3f922fbab969e}{%
+           family={Johnson},
+           familyi={J\bibinitperiod},
+           given={Selmer},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0749a4bc0c2a5915ef3fab21fc30f694}
+      \strng{fullhash}{f329fb67c4677226f35205f21f58c19e}
+      \strng{bibnamehash}{f329fb67c4677226f35205f21f58c19e}
+      \strng{authorbibnamehash}{f329fb67c4677226f35205f21f58c19e}
+      \strng{authornamehash}{0749a4bc0c2a5915ef3fab21fc30f694}
+      \strng{authorfullhash}{f329fb67c4677226f35205f21f58c19e}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the Operations Research Society of America}
+      \field{number}{4}
+      \field{title}{Solution of a large-scale traveling-salesman problem}
+      \field{volume}{2}
+      \field{year}{1954}
+      \field{pages}{393\bibrangedash 410}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1287/opre.2.4.393
+      \endverb
+    \endentry
+    \entry{fangStabilityAnalysisArticulated2019}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=15c863dbe602631bba0c3e58c00f359f}{%
+           family={Fang},
+           familyi={F\bibinitperiod},
+           given={Weiping},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=42f7c89c04e37a74d5faf10ae9cf58f4}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Xiaojun},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=58420e9f7c2fdf7f5dc3b13b9cdb2f4c}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Weijian},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=70894b7d5081d2258b344d182dc5e475}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Benchao},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{06996dfcb1816b9eb496d7bc1fe0a573}
+      \strng{fullhash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \strng{bibnamehash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \strng{authorbibnamehash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \strng{authornamehash}{06996dfcb1816b9eb496d7bc1fe0a573}
+      \strng{authorfullhash}{0ff6ab0ae111360f2a11194c8a7b1537}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IOP Conference Series: Materials Science and Engineering}
+      \field{number}{2}
+      \field{title}{Stability analysis of articulated dump truck based on eigenvalue method}
+      \field{volume}{688}
+      \field{year}{2019}
+      \field{pages}{022024}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1757-899X/688/2/022024
+      \endverb
+    \endentry
+    \entry{forma3stepMathHeuristic2015}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=5157ce3c64b6c4b10c7e65f6828966b7}{%
+           family={Forma},
+           familyi={F\bibinitperiod},
+           given={Iris\bibnamedelima A.},
+           giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c89c1ec00b87d8580fb76a03ad9859d3}{%
+           family={Raviv},
+           familyi={R\bibinitperiod},
+           given={Tal},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c33e57e7dbd7aff854b11b651d584f3a}{%
+           family={Tzur},
+           familyi={T\bibinitperiod},
+           given={Michal},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{542330bacb552a140308106b3f543b1d}
+      \strng{fullhash}{da845a7e4c06590e60651e1252a2e5b6}
+      \strng{bibnamehash}{da845a7e4c06590e60651e1252a2e5b6}
+      \strng{authorbibnamehash}{da845a7e4c06590e60651e1252a2e5b6}
+      \strng{authornamehash}{542330bacb552a140308106b3f543b1d}
+      \strng{authorfullhash}{da845a7e4c06590e60651e1252a2e5b6}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{A 3-step math heuristic for the static repositioning problem in bike-sharing systems}
+      \field{volume}{71}
+      \field{year}{2015}
+      \field{pages}{230\bibrangedash 247}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1016/j.trb.2014.10.003
+      \endverb
+    \endentry
+    \entry{franceschettiTimedependentPollutionroutingProblem2013}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=9e38ec0a9c2c6a3435179527b66e555e}{%
+           family={Franceschetti},
+           familyi={F\bibinitperiod},
+           given={Anna},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e6a00f87b3bd4b7900c1e069c4da6316}{%
+           family={Honhon},
+           familyi={H\bibinitperiod},
+           given={Dorothee},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b63aeb723d16eafda6952b3b6992d5b3}{%
+           family={Van\bibnamedelima Woensel},
+           familyi={V\bibinitperiod\bibinitdelim W\bibinitperiod},
+           given={Tom},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a75d924d258386b1a41bb38cc0000e0a}{%
+           family={Bektas},
+           familyi={B\bibinitperiod},
+           given={Tolga},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1d6e9fe0f2d8b8a132ebe0ace7645d51}{%
+           family={Laporte},
+           familyi={L\bibinitperiod},
+           given={Gilbert},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{cf12cfeb03f566488144024868bcf4f5}
+      \strng{fullhash}{ac495df368f95307c4a2f072dabecd0a}
+      \strng{bibnamehash}{ac495df368f95307c4a2f072dabecd0a}
+      \strng{authorbibnamehash}{ac495df368f95307c4a2f072dabecd0a}
+      \strng{authornamehash}{cf12cfeb03f566488144024868bcf4f5}
+      \strng{authorfullhash}{ac495df368f95307c4a2f072dabecd0a}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{The time-dependent pollution-routing problem}
+      \field{volume}{56}
+      \field{year}{2013}
+      \field{pages}{265\bibrangedash 293}
+      \range{pages}{29}
+      \verb{doi}
+      \verb 10.1016/j.trb.2013.08.008
+      \endverb
+    \endentry
     \entry{hoHybridLargeNeighborhood2017}{article}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=ce3d200e48885cdbeaca0d76752b5576}{%
@@ -181,6 +1438,39 @@
       \range{pages}{24}
       \verb{doi}
       \verb 10.1016/j.trb.2016.11.003
+      \endverb
+    \endentry
+    \entry{hoeffdingProbabilityInequalitiesSums1963}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=26d3c01664dc4b0c60afbdf4153437e2}{%
+           family={Hoeffding},
+           familyi={H\bibinitperiod},
+           given={Wassily},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{fullhash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{bibnamehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{authorbibnamehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{authornamehash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \strng{authorfullhash}{26d3c01664dc4b0c60afbdf4153437e2}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the American Statistical Association}
+      \field{number}{301}
+      \field{title}{Probability inequalities for sums of bounded random variables}
+      \field{volume}{58}
+      \field{year}{1963}
+      \field{pages}{13\bibrangedash 30}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1080/01621459.1963.10500830
       \endverb
     \endentry
     \entry{huRepositioningBikeSharing2025}{article}{}
@@ -223,6 +1513,139 @@
       \field{year}{2025}
       \field{pages}{104155}
       \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.tre.2025.104155
+      \endverb
+    \endentry
+    \entry{jiaBikeSharingRebalancingProblem2020}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=af2c1e48e3bfea15396b48d41eb5c930}{%
+           family={Jia},
+           familyi={J\bibinitperiod},
+           given={Yongji},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7b0de6549efc7246bfb3435173e3cb35}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Zeng},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0e5451c75b8c3590f5de51e5471b372a}{%
+           family={Xing},
+           familyi={X\bibinitperiod},
+           given={Yanting},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=43bfecf0db835905ffe98dadaa0b057f}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Dong},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=508f0a4e80af71a1970f575437811489}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Jia},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1ee5572138ecf2d10e698a0dbcb086e7}
+      \strng{fullhash}{5aed6f04cd49e918c343b8156589adad}
+      \strng{bibnamehash}{5aed6f04cd49e918c343b8156589adad}
+      \strng{authorbibnamehash}{5aed6f04cd49e918c343b8156589adad}
+      \strng{authornamehash}{1ee5572138ecf2d10e698a0dbcb086e7}
+      \strng{authorfullhash}{5aed6f04cd49e918c343b8156589adad}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Sustainability}
+      \field{number}{1}
+      \field{title}{The bike-sharing rebalancing problem considering multi-energy mixed fleets and traffic restrictions}
+      \field{volume}{13}
+      \field{year}{2020}
+      \field{pages}{270}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3390/su13010270
+      \endverb
+    \endentry
+    \entry{jinSimulationFrameworkOptimizing2022}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=1be87e5d8d0d2f7c36a29e129c47216a}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=87833a338c0abc017700a9482d368c87}{%
+           family={Ruiz},
+           familyi={R\bibinitperiod},
+           given={Cesar},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6963b2f068b63f0a653c3cc40668300f}{%
+           family={Liao},
+           familyi={L\bibinitperiod},
+           given={Haitao},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f8104bb6f23f51e03bf7de8304f860df}
+      \strng{fullhash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \strng{bibnamehash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \strng{authorbibnamehash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \strng{authornamehash}{f8104bb6f23f51e03bf7de8304f860df}
+      \strng{authorfullhash}{a9df61b087eca08b0d5cfc4fc2bd5def}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Simulation Modelling Practice and Theory}
+      \field{title}{A simulation framework for optimizing bike rebalancing and maintenance in large-scale bike-sharing systems}
+      \field{volume}{115}
+      \field{year}{2022}
+      \field{pages}{102422}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.simpat.2021.102422
+      \endverb
+    \endentry
+    \entry{kaspiBikesharingSystemsParking2015}{thesis}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=460bcd185d3364b18483dabb2940cdcb}{%
+           family={Kaspi},
+           familyi={K\bibinitperiod},
+           given={Mor},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Tel Aviv University}%
+      }
+      \strng{namehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{fullhash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{bibnamehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{authorbibnamehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{authornamehash}{460bcd185d3364b18483dabb2940cdcb}
+      \strng{authorfullhash}{460bcd185d3364b18483dabb2940cdcb}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Bike-sharing systems: parking reservation policies and maintenance operations}
+      \field{type}{phdthesis}
+      \field{year}{2015}
     \endentry
     \entry{kaspiBikesharingSystemsUser2017}{article}{}
       \name{author}{3}{}{%
@@ -267,6 +1690,629 @@
       \range{pages}{15}
       \verb{doi}
       \verb 10.1080/0740817X.2016.1224960
+      \endverb
+    \endentry
+    \entry{liMultipleTypeBike2016}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=cb5ae5985f91ad052992b85c3392ce45}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yanfeng},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2633e1b72f5d34c613ff698b7db1c368}{%
+           family={Long},
+           familyi={L\bibinitperiod},
+           given={Jiancheng},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7fa1d405c84f151d44a0bd3a81c490dc}{%
+           family={Shui},
+           familyi={S\bibinitperiod},
+           given={C.\bibnamedelimi S.},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{db569eae6dee34ac40e84de6107cbebf}
+      \strng{fullhash}{5ce0a90e516cd144b4625647f9478b2c}
+      \strng{bibnamehash}{5ce0a90e516cd144b4625647f9478b2c}
+      \strng{authorbibnamehash}{5ce0a90e516cd144b4625647f9478b2c}
+      \strng{authornamehash}{db569eae6dee34ac40e84de6107cbebf}
+      \strng{authorfullhash}{5ce0a90e516cd144b4625647f9478b2c}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{A multiple type bike repositioning problem}
+      \field{volume}{90}
+      \field{year}{2016}
+      \field{pages}{263\bibrangedash 278}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1016/j.trb.2016.05.010
+      \endverb
+    \endentry
+    \entry{liuStaticFreefloatingBike2018}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=d16056932a393b93367a5223974b55f6}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Ying},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ce3d200e48885cdbeaca0d76752b5576}{%
+           family={Ho},
+           familyi={H\bibinitperiod},
+           given={Sin\bibnamedelima C.},
+           giveni={S\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4d687194429250da8e17636f0cdca4d8}
+      \strng{fullhash}{acb252921c0a8520d4239a6f84b84e93}
+      \strng{bibnamehash}{acb252921c0a8520d4239a6f84b84e93}
+      \strng{authorbibnamehash}{acb252921c0a8520d4239a6f84b84e93}
+      \strng{authornamehash}{4d687194429250da8e17636f0cdca4d8}
+      \strng{authorfullhash}{acb252921c0a8520d4239a6f84b84e93}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part C: Emerging Technologies}
+      \field{title}{A static free-floating bike repositioning problem with multiple heterogeneous vehicles, multiple depots, and multiple visits}
+      \field{volume}{92}
+      \field{year}{2018}
+      \field{pages}{208\bibrangedash 242}
+      \range{pages}{35}
+      \verb{doi}
+      \verb 10.1016/j.trc.2018.02.008
+      \endverb
+    \endentry
+    \entry{lvHybridAlgorithmStatic2020}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=c9d0ea846a13b209343441397586d925}{%
+           family={Lv},
+           familyi={L\bibinitperiod},
+           given={Chang},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b6a4c03e8a230fbd2ecf585df8839177}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Chaoyong},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=34775e19061c47e42edc4a1416ac0b60}{%
+           family={Lian},
+           familyi={L\bibinitperiod},
+           given={Kunlei},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2c6ab00ed154cc292c3c676f9ef4c8a5}{%
+           family={Ren},
+           familyi={R\bibinitperiod},
+           given={Yaping},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0564c4805ed43d1958aaeabff4e88c35}{%
+           family={Meng},
+           familyi={M\bibinitperiod},
+           given={Leilei},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1a74b3e48d9ab77a1cf099e85753e848}
+      \strng{fullhash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \strng{bibnamehash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \strng{authorbibnamehash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \strng{authornamehash}{1a74b3e48d9ab77a1cf099e85753e848}
+      \strng{authorfullhash}{1a1bfc8a13425a02cb90551fb5eef415}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part B: Methodological}
+      \field{title}{A hybrid algorithm for the static bike-sharing re-positioning problem based on an effective clustering strategy}
+      \field{volume}{140}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 21}
+      \range{pages}{21}
+      \verb{doi}
+      \verb 10.1016/j.trb.2020.07.004
+      \endverb
+    \endentry
+    \entry{ravivOptimalInventoryManagement2013}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=c89c1ec00b87d8580fb76a03ad9859d3}{%
+           family={Raviv},
+           familyi={R\bibinitperiod},
+           given={Tal},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=81c6b097db11adf322fe26b2dec76f4a}{%
+           family={Kolka},
+           familyi={K\bibinitperiod},
+           given={Ofer},
+           giveni={O\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{fullhash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{bibnamehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{authorbibnamehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{authornamehash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \strng{authorfullhash}{9e18dbc5ef1e7b9dff9d4901eae3473b}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IIE Transactions}
+      \field{number}{10}
+      \field{title}{Optimal inventory management of a bike-sharing station}
+      \field{volume}{45}
+      \field{year}{2013}
+      \field{pages}{1077\bibrangedash 1093}
+      \range{pages}{17}
+      \verb{doi}
+      \verb 10.1080/0740817X.2013.770186
+      \endverb
+    \endentry
+    \entry{ravivStaticRepositioningBikesharing2013}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=c89c1ec00b87d8580fb76a03ad9859d3}{%
+           family={Raviv},
+           familyi={R\bibinitperiod},
+           given={Tal},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c33e57e7dbd7aff854b11b651d584f3a}{%
+           family={Tzur},
+           familyi={T\bibinitperiod},
+           given={Michal},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5157ce3c64b6c4b10c7e65f6828966b7}{%
+           family={Forma},
+           familyi={F\bibinitperiod},
+           given={Iris\bibnamedelima A.},
+           giveni={I\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7d817a50c731235080919b328352743e}
+      \strng{fullhash}{330e1edd5b571c11ba81756b3056306a}
+      \strng{bibnamehash}{330e1edd5b571c11ba81756b3056306a}
+      \strng{authorbibnamehash}{330e1edd5b571c11ba81756b3056306a}
+      \strng{authornamehash}{7d817a50c731235080919b328352743e}
+      \strng{authorfullhash}{330e1edd5b571c11ba81756b3056306a}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{EURO Journal on Transportation and Logistics}
+      \field{number}{3}
+      \field{title}{Static repositioning in a bike-sharing system: models and solution approaches}
+      \field{volume}{2}
+      \field{year}{2013}
+      \field{pages}{187\bibrangedash 229}
+      \range{pages}{43}
+      \verb{doi}
+      \verb 10.1007/s13676-012-0017-6
+      \endverb
+    \endentry
+    \entry{schuijbroekInventoryRebalancingVehicle2017}{article}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=f6351a386f57d9a5da9b965a840bd3b9}{%
+           family={Schuijbroek},
+           familyi={S\bibinitperiod},
+           given={Jasper},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=16553af3b1fb5a0ce28a17b1490ee17e}{%
+           family={Hampshire},
+           familyi={H\bibinitperiod},
+           given={Robert\bibnamedelima C.},
+           giveni={R\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=eff3870bc5b01e23cc87608b73d73677}{%
+           family={Van\bibnamedelima Hoeve},
+           familyi={V\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Willem-Jan},
+           giveni={W\bibinithyphendelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{4a1ddbfc335a364eecf82222836d9b4d}
+      \strng{fullhash}{d4381074d69378e7980a742b8b624727}
+      \strng{bibnamehash}{d4381074d69378e7980a742b8b624727}
+      \strng{authorbibnamehash}{d4381074d69378e7980a742b8b624727}
+      \strng{authornamehash}{4a1ddbfc335a364eecf82222836d9b4d}
+      \strng{authorfullhash}{d4381074d69378e7980a742b8b624727}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{European Journal of Operational Research}
+      \field{number}{3}
+      \field{title}{Inventory rebalancing and vehicle routing in bike sharing systems}
+      \field{volume}{257}
+      \field{year}{2017}
+      \field{pages}{992\bibrangedash 1004}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1016/j.ejor.2016.08.029
+      \endverb
+    \endentry
+    \entry{shuiDynamicGreenBike2018}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7fa1d405c84f151d44a0bd3a81c490dc}{%
+           family={Shui},
+           familyi={S\bibinitperiod},
+           given={C.\bibnamedelimi S.},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{fullhash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{bibnamehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{authorbibnamehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{authornamehash}{135237c07e8497f6fd261ed2723ace48}
+      \strng{authorfullhash}{135237c07e8497f6fd261ed2723ace48}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part D: Transport and Environment}
+      \field{title}{Dynamic green bike repositioning problem: a hybrid rolling horizon artificial bee colony algorithm approach}
+      \field{volume}{60}
+      \field{year}{2018}
+      \field{pages}{119\bibrangedash 136}
+      \range{pages}{18}
+      \verb{doi}
+      \verb 10.1016/j.trd.2017.06.023
+      \endverb
+    \endentry
+    \entry{vidalHybridGeneticSearch2022}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{fullhash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{bibnamehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{authorbibnamehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{authornamehash}{f8b1fe2b57f8a82a140583738588869a}
+      \strng{authorfullhash}{f8b1fe2b57f8a82a140583738588869a}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers \& Operations Research}
+      \field{title}{Hybrid genetic search for the CVRP: open-source implementation and SWAP* neighborhood}
+      \field{volume}{140}
+      \field{year}{2022}
+      \field{pages}{105643}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.cor.2021.105643
+      \endverb
+    \endentry
+    \entry{vidalHybridGeneticAlgorithm2012}{article}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5772cf70acb961bf6a0113d4f3df8706}{%
+           family={Crainic},
+           familyi={C\bibinitperiod},
+           given={Teodor\bibnamedelima Gabriel},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d4ebdd3fdc985c36f68c8295c5664c74}{%
+           family={Gendreau},
+           familyi={G\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8561858f0d2736da313c9affe67f82da}{%
+           family={Lahrichi},
+           familyi={L\bibinitperiod},
+           given={Nadia},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=099ff78eddb034ef9ba28eefa0eaff76}{%
+           family={Rei},
+           familyi={R\bibinitperiod},
+           given={Walter},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{fullhash}{6da7e9846c673ded90f753259d22b545}
+      \strng{bibnamehash}{6da7e9846c673ded90f753259d22b545}
+      \strng{authorbibnamehash}{6da7e9846c673ded90f753259d22b545}
+      \strng{authornamehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{authorfullhash}{6da7e9846c673ded90f753259d22b545}
+      \field{extraname}{1}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Operations Research}
+      \field{number}{3}
+      \field{title}{A hybrid genetic algorithm for multidepot and periodic vehicle routing problems}
+      \field{volume}{60}
+      \field{year}{2012}
+      \field{pages}{611\bibrangedash 624}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1287/opre.1120.1048
+      \endverb
+    \endentry
+    \entry{vidalHybridGeneticAlgorithm2013}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5772cf70acb961bf6a0113d4f3df8706}{%
+           family={Crainic},
+           familyi={C\bibinitperiod},
+           given={Teodor\bibnamedelima Gabriel},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d4ebdd3fdc985c36f68c8295c5664c74}{%
+           family={Gendreau},
+           familyi={G\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=900ff4eaee85acd9095309878df56e18}{%
+           family={Prins},
+           familyi={P\bibinitperiod},
+           given={Christian},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{fullhash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{bibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authorbibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authornamehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{authorfullhash}{a9774bb22568916a7f36433097d9ee69}
+      \field{extraname}{2}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers \& Operations Research}
+      \field{number}{1}
+      \field{title}{A hybrid genetic algorithm with adaptive diversity management for a large class of vehicle routing problems with time-windows}
+      \field{volume}{40}
+      \field{year}{2013}
+      \field{pages}{475\bibrangedash 489}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1016/j.cor.2012.07.018
+      \endverb
+    \endentry
+    \entry{vidalUnifiedSolutionFramework2014}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=f8b1fe2b57f8a82a140583738588869a}{%
+           family={Vidal},
+           familyi={V\bibinitperiod},
+           given={Thibaut},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5772cf70acb961bf6a0113d4f3df8706}{%
+           family={Crainic},
+           familyi={C\bibinitperiod},
+           given={Teodor\bibnamedelima Gabriel},
+           giveni={T\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d4ebdd3fdc985c36f68c8295c5664c74}{%
+           family={Gendreau},
+           familyi={G\bibinitperiod},
+           given={Michel},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=900ff4eaee85acd9095309878df56e18}{%
+           family={Prins},
+           familyi={P\bibinitperiod},
+           given={Christian},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{fullhash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{bibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authorbibnamehash}{a9774bb22568916a7f36433097d9ee69}
+      \strng{authornamehash}{f14b4d033960169db8e536b480066b9f}
+      \strng{authorfullhash}{a9774bb22568916a7f36433097d9ee69}
+      \field{extraname}{3}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{European Journal of Operational Research}
+      \field{number}{3}
+      \field{title}{A unified solution framework for multi-attribute vehicle routing problems}
+      \field{volume}{234}
+      \field{year}{2014}
+      \field{pages}{658\bibrangedash 673}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1016/j.ejor.2013.09.045
+      \endverb
+    \endentry
+    \entry{wangStaticGreenRepositioning2018}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=471e61c37bc3e62dbe8655e02a002343}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yue},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{fullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{bibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorbibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authornamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorfullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \field{extraname}{1}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part D: Transport and Environment}
+      \field{title}{Static green repositioning in bike sharing systems with broken bikes}
+      \field{volume}{65}
+      \field{year}{2018}
+      \field{pages}{438\bibrangedash 457}
+      \range{pages}{20}
+      \verb{doi}
+      \verb 10.1016/j.trd.2018.09.016
+      \endverb
+    \endentry
+    \entry{wangEnhancedArtificialBee2021}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=471e61c37bc3e62dbe8655e02a002343}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yue},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc843a2437aac842e638d32f2900c88f}{%
+           family={Szeto},
+           familyi={S\bibinitperiod},
+           given={W.\bibnamedelimi Y.},
+           giveni={W\bibinitperiod\bibinitdelim Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{fullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{bibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorbibnamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authornamehash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \strng{authorfullhash}{7677aa9c20a793eeff8e10a17213d8e4}
+      \field{extraname}{2}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part C: Emerging Technologies}
+      \field{title}{An enhanced artificial bee colony algorithm for the green bike repositioning problem with broken bikes}
+      \field{volume}{125}
+      \field{year}{2021}
+      \field{pages}{102895}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.trc.2020.102895
+      \endverb
+    \endentry
+    \entry{wuDeterminationTortLiability2021}{article}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=98025535471926069a5bd93b0c05fb7d}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Chuyan},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{fullhash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{bibnamehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{authorbibnamehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{authornamehash}{98025535471926069a5bd93b0c05fb7d}
+      \strng{authorfullhash}{98025535471926069a5bd93b0c05fb7d}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the 2021 2nd International Conference on Computers, Information Processing and Advanced Education}
+      \field{title}{Determination of tort liability in traffic accidents based on performance parameter standard of electric bicycle}
+      \field{year}{2021}
+      \field{pages}{1485\bibrangedash 1489}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1145/3456887.3459705
       \endverb
     \endentry
   \enddatalist

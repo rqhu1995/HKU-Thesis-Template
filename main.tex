@@ -111,6 +111,19 @@ toctotoc, % Add the main table of contents to the table of contents
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newenvironment{notationlist}[1][@{}L{0.18\linewidth}L{0.76\linewidth}@{}]{%
+	\begingroup
+	\setlength{\LTpre}{0.35\baselineskip}%
+	\setlength{\LTpost}{0.7\baselineskip}%
+	\begin{longtable}{#1}%
+}{%
+	\end{longtable}%
+	\addtocounter{table}{-1}%
+	\endgroup
+}
+\newcommand{\notationheading}[1]{%
+	\multicolumn{2}{@{}l}{\normalfont\underline{#1}}\\[0.25\baselineskip]%
+}
 \newif\ifHKUAbbreviationsTable
 \setlength\parindent{24pt}
 \setlength\parskip{18pt}

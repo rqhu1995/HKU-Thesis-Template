@@ -54,24 +54,16 @@ The following notation is used throughout the formulation. The model keeps the
 time-indexed representation of truck movements, repairer movements, station
 inventories, truck loads, and station-level actions from
 \citet{huRepositioningBikeSharing2025}, but omits all emission-related
-parameters, variables, and objective terms. Table~\ref{ch5:tab:notation} lists the
-sets, parameters, and decision variables retained in the formulation.
+parameters, variables, and objective terms. Table~\ref{ch5:tab:notation} summarizes the sets,
+parameters, and decision variables retained in the formulation.
 
-{\vspace{0.8\baselineskip}
-\setlength{\LTpre}{0.4\baselineskip}
-\setlength{\LTpost}{0.4\baselineskip}
-\refstepcounter{table}\label{ch5:tab:notation}
-\noindent\textbf{Table~\thetable}\\
-\noindent Notation for the BRP-BR-OSR formulation.
-
-\medskip
-\noindent\textit{Sets and indices}
-\smallskip
-\begin{longtable}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
+\begin{longtable}{@{}L{0.25\linewidth}L{0.67\linewidth}@{}}
+\caption{Notation for the BRP-BR-OSR formulation.}\label{ch5:tab:notation}\\
 \toprule
 Symbol & Description \\
 \midrule
 \endfirsthead
+\multicolumn{2}{@{}l}{\textbf{Table~\thetable} (continued)}\\
 \toprule
 Symbol & Description \\
 \midrule
@@ -81,6 +73,7 @@ Symbol & Description \\
 \endfoot
 \bottomrule
 \endlastfoot
+\multicolumn{2}{@{}l}{\textit{Sets and indices}} \\[0.4\baselineskip]
 $S=\{1,\ldots,|S|\}$ & The set of stations. \\
 $S_0=S\cup\{0\}$ & The set of nodes, including depot $0$. \\
 $K$ & The set of rebalancing trucks. \\
@@ -88,26 +81,8 @@ $R$ & The set of repairers. \\
 $i,j$ & The node indices; $i,j\in S$ for station-only quantities and $i,j\in S_0$ for routing quantities. \\
 $k$ & The truck index, $k\in K$. \\
 $m$ & The repairer index, $m\in R$. \\
-$t,w$ & The time-period indices, $t,w=1,\ldots,T'$. \\
-\end{longtable}
-
-\medskip
-\noindent\textit{Parameters}
-\smallskip
-\begin{longtable}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
-\toprule
-Symbol & Description \\
-\midrule
-\endfirsthead
-\toprule
-Symbol & Description \\
-\midrule
-\endhead
-\midrule
-\multicolumn{2}{r}{Continued on next page}\\
-\endfoot
-\bottomrule
-\endlastfoot
+$t,w$ & The time-period indices, $t,w=1,\ldots,T'$. \\[0.8\baselineskip]
+\multicolumn{2}{@{}l}{\textit{Parameters}} \\[0.4\baselineskip]
 $p_i^0$ & The initial number of usable bikes at node $i$. \\
 $b_i^0$ & The initial number of broken bikes at node $i$. \\
 $C_i$ & The capacity of node $i$. \\
@@ -123,26 +98,8 @@ $t^{\mathrm{load}}$ & The time required to load or unload one bike. \\
 $t^{\mathrm{repair}}$ & The time required to repair one broken bike on site. \\
 $F_i(p_i,b_i)$ & The Extended User Dissatisfaction Function (EUDF) value at station $i$ when its usable-bike and broken-bike inventories are $p_i$ and $b_i$. \\
 $\Theta_i$ & The set of feasible bivariate inventory states at station $i$. \\
-$\alpha^i_{p_i,b_i},\beta^i_{p_i,b_i},\gamma^i_{p_i,b_i}$ & The coefficients of the fitted plane associated with state $(p_i,b_i)$ in the EUDF linearization for station $i$. \\
-\end{longtable}
-
-\medskip
-\noindent\textit{Decision variables}
-\smallskip
-\begin{longtable}{@{}p{0.25\linewidth}p{0.67\linewidth}@{}}
-\toprule
-Symbol & Description \\
-\midrule
-\endfirsthead
-\toprule
-Symbol & Description \\
-\midrule
-\endhead
-\midrule
-\multicolumn{2}{r}{Continued on next page}\\
-\endfoot
-\bottomrule
-\endlastfoot
+$\alpha^i_{p_i,b_i},\beta^i_{p_i,b_i},\gamma^i_{p_i,b_i}$ & The coefficients of the fitted plane associated with state $(p_i,b_i)$ in the EUDF linearization for station $i$. \\[0.8\baselineskip]
+\multicolumn{2}{@{}l}{\textit{Decision variables}} \\[0.4\baselineskip]
 $x_{i,j,t,k}^{\mathrm{v}}$ & The binary variable equal to 1 if truck $k$ departs from node $i$ to node $j$ in period $t$, and 0 otherwise. \\
 $x_{i,j,t,m}^{\mathrm{r}}$ & The binary variable equal to 1 if repairer $m$ departs from node $i$ to node $j$ in period $t$, and 0 otherwise. \\
 $p_{i,t}$ & The number of usable bikes at node $i$ at the end of period $t$. \\
@@ -160,7 +117,6 @@ $\varsigma_{t,k}^{\mathrm{v}}$ & The binary variable equal to 1 if truck $k$ sta
 $\varsigma_{t,m}^{\mathrm{r}}$ & The binary variable equal to 1 if repairer $m$ stays at the depot from period $t$ to the end of the horizon, and 0 otherwise. \\
 $\hat F_i$ & The auxiliary variable representing the linearized EUDF value at station $i$. \\
 \end{longtable}
-}
 
 Travel times and the rebalancing budget $T$ are measured in the same units.
 To use them in the time-indexed formulation, we divide the horizon into periods
@@ -382,7 +338,7 @@ x_{j,i,t-t''_{j,i},m}^{\mathrm{r}}
 & \begin{aligned}[t]
   &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t'_{ij}}}
   t_{ij}^{\mathrm{v}}x_{i,j,t-t'_{ij},k}^{\mathrm{v}} \\
-  &+\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
+  &\quad +\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
   \left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
   +y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right) \le w\tau
   \end{aligned}
@@ -391,7 +347,7 @@ x_{j,i,t-t''_{j,i},m}^{\mathrm{r}}
 & \begin{aligned}[t]
   &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
   t_{ij}^{\mathrm{v}}x_{i,j,t,k}^{\mathrm{v}} \\
-  &+\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
+  &\quad +\sum_{i\in S_0}\sum_{t\le w}t^{\mathrm{load}}
   \left(y_{i,t,k}^{\mathrm{u}^{+}}+y_{i,t,k}^{\mathrm{u}^{-}}
   +y_{i,t,k}^{\mathrm{b}^{+}}+y_{i,t,k}^{\mathrm{b}^{-}}\right)\\
   &\ge (w-2)\tau-\varsigma_{w,k}^{\mathrm{v}}T
@@ -401,14 +357,14 @@ x_{j,i,t-t''_{j,i},m}^{\mathrm{r}}
 & \begin{aligned}[t]
   &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>t''_{ij}}}
   t_{ij}^{\mathrm{r}}x_{i,j,t-t''_{ij},m}^{\mathrm{r}} \\
-  &+\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m} \le w\tau
+  &\quad +\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m} \le w\tau
   \end{aligned}
 && \forall w=1,\ldots,T',\ m\in R,
 \label{ch5:eq:repairer-time-upper}\\
 & \begin{aligned}[t]
   &\sum_{i,j\in S_0}\sum_{\substack{t\le w:\\ t>0}}
   t_{ij}^{\mathrm{r}}x_{i,j,t,m}^{\mathrm{r}} \\
-  &+\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}\\
+  &\quad +\sum_{i\in S}\sum_{t\le w}t^{\mathrm{repair}}g_{i,t,m}\\
   &\ge (w-2)\tau-\varsigma_{w,m}^{\mathrm{r}}T
   \end{aligned}
 && \forall w=1,\ldots,T',\ m\in R.
@@ -730,6 +686,8 @@ and
 +t^{\mathrm{repair}}Q_R.
 \label{ch5:eq:eats-repairer-time}
 \end{equation}
+Here, $\rho$ is the repairer-to-truck travel-time multiplier used to convert the truck-based
+travel-time proxy into the repairer travel-time proxy.
 For any active set $A\subseteq B$, define
 \begin{equation}
 \bar t_{ij}=\max\{t_{ij}^{\mathrm v},t_{ji}^{\mathrm v}\},
@@ -945,10 +903,10 @@ The cluster-level planning phase receives the best-found partition
 For each selected cluster
 $B_m^\star$, the adapter constructs the cluster-level node set
 \begin{equation}
-V_m^0=B_m^\star\cup\{0\},
+S_{0m}=B_m^\star\cup\{0\},
 \label{ch5:eq:cfrs-cluster-node-set}
 \end{equation}
-where node $0$ is the shared depot of the original network. The adapter reindexes
+where $S_{0m}$ contains node $0$, the shared depot of the original network. The adapter reindexes
 the stations in $B_m^\star$ as local station nodes, extracts the corresponding
 travel-time, station-state, capacity, and EUDF data from the full instance, and
 forms an independent cluster-level BRP-BR-OSR instance.

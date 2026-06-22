@@ -165,7 +165,7 @@
 					\addcontentsline{toc}{chapter}{APPENDIXES}%
 				\fi
 				\ifdef{\phantomsection}{\phantomsection}{}%
-				\addcontentsline{toc}{section}{Appendix \thechapter}%
+					\addcontentsline{toc}{section}{Appendix \thechapter\texorpdfstring{\quad}{ }#1}%
 			\else
 				\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
 			\fi

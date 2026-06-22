@@ -2,30 +2,28 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3-1}{\ignorespaces Notation for the MV-BRP model.}}{6}{table.30}%
-\contentsline {table}{\numberline {3-2}{\ignorespaces Additional notation for the clustering model.}}{10}{table.60}%
-\contentsline {table}{\numberline {3-3}{\ignorespaces HGS-UC parameter setting.}}{26}{table.caption.178}%
-\contentsline {table}{\numberline {3-4}{\ignorespaces Three-way benchmark comparison results, $\mid V\mid =50$ and $\left | K \right |=2$.}}{28}{table.184}%
-\contentsline {table}{\numberline {3-5}{\ignorespaces Three-way benchmark comparison results, $\mid V\mid =100$ and $\left | K \right |=4$.}}{30}{table.185}%
-\contentsline {table}{\numberline {3-6}{\ignorespaces Baseline comparison results ($T=120$ min, $Q=20$, 20 seeds per stochastic method).}}{34}{table.187}%
-\contentsline {table}{\numberline {3-7}{\ignorespaces Baseline comparison results under varying time budgets ($Q=20$, 20 seeds per stochastic method).}}{38}{table.188}%
-\contentsline {table}{\numberline {3-8}{\ignorespaces Baseline comparison results under varying vehicle capacities ($T=120$ min, 20 seeds per stochastic method).}}{41}{table.189}%
+\contentsline {table}{\numberline {3-1}{\ignorespaces HGS-UC parameter setting.}}{26}{table.caption.176}%
+\contentsline {table}{\numberline {3-2}{\ignorespaces Three-way benchmark comparison results, $\mid V\mid =50$ and $\left | K \right |=2$.}}{28}{table.182}%
+\contentsline {table}{\numberline {3-3}{\ignorespaces Three-way benchmark comparison results, $\mid V\mid =100$ and $\left | K \right |=4$.}}{30}{table.183}%
+\contentsline {table}{\numberline {3-4}{\ignorespaces Baseline comparison results ($T=120$ min, $Q=20$, 20 seeds per stochastic method).}}{34}{table.185}%
+\contentsline {table}{\numberline {3-5}{\ignorespaces Baseline comparison results under varying time budgets ($Q=20$, 20 seeds per stochastic method).}}{38}{table.186}%
+\contentsline {table}{\numberline {3-6}{\ignorespaces Baseline comparison results under varying vehicle capacities ($T=120$ min, 20 seeds per stochastic method).}}{41}{table.187}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4-1}{\ignorespaces Notation used in the problem formulation.}}{50}{table.197}%
-\contentsline {table}{\numberline {4-2}{\ignorespaces Algorithmic procedure for HGSADC-SBC.}}{61}{table.274}%
-\contentsline {table}{\numberline {4-3}{\ignorespaces Parameter setting of the numerical experiments.}}{73}{table.295}%
-\contentsline {table}{\numberline {4-4}{\ignorespaces Parameter setting for HGSADC-SBC.}}{75}{table.298}%
-\contentsline {table}{\numberline {4-5}{\ignorespaces Comparison between the CPU times (s) of Gurobi and HGSADC-SBC on small networks (repositioning time budget $T=2$ h, $|K|=|R|=1$, $\mittau =600$ s).}}{76}{table.300}%
-\contentsline {table}{\numberline {4-6}{\ignorespaces Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=2$ h, $\mittau =600$ s).}}{78}{table.302}%
-\contentsline {table}{\numberline {4-7}{\ignorespaces Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=3$ h, $\mittau =600$ s).}}{81}{table.303}%
+\contentsline {table}{\numberline {4-1}{\ignorespaces Algorithmic procedure for HGSADC-SBC.}}{61}{table.272}%
+\contentsline {table}{\numberline {4-2}{\ignorespaces Parameter setting of the numerical experiments.}}{73}{table.293}%
+\contentsline {table}{\numberline {4-3}{\ignorespaces Parameter setting for HGSADC-SBC.}}{75}{table.296}%
+\contentsline {table}{\numberline {4-4}{\ignorespaces Comparison between the CPU times (s) of Gurobi and HGSADC-SBC on small networks (repositioning time budget $T=2$ h, $|K|=|R|=1$, $\mittau =600$ s).}}{76}{table.298}%
+\contentsline {table}{\numberline {4-5}{\ignorespaces Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=2$ h, $\mittau =600$ s).}}{78}{table.300}%
+\contentsline {table}{\numberline {4-6}{\ignorespaces Comparison between the results of Gurobi and HGSADC-SBC on larger networks (repositioning time budget $T=3$ h, $\mittau =600$ s).}}{81}{table.301}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5-5}{\ignorespaces Selected HGS-EUC parameters used in the computational experiments.}}{106}{table.caption.484}%
-\contentsline {table}{\numberline {5-6}{\ignorespaces Small-scale benchmark comparison. Method~A is Gurobi applied to the time-indexed MILP; Methods~B and~C are the monolithic HGSADC-SBC and the proposed CFRS method, respectively.}}{108}{table.486}%
-\contentsline {table}{\numberline {5-7}{\ignorespaces Large-scale comparison between Method~B and Method~C.}}{110}{table.488}%
-\contentsline {table}{\numberline {5-8}{\ignorespaces Comparison under vehicle-capacity configurations.}}{112}{table.491}%
-\contentsline {table}{\numberline {5-9}{\ignorespaces Comparison under time-budget configurations.}}{116}{table.493}%
-\contentsline {table}{\numberline {5-10}{\ignorespaces Comparison under target-cluster-size configurations. Method~B has no cluster-size parameter; therefore its objective values are shown once within each instance block.}}{121}{table.495}%
-\contentsline {table}{\numberline {5-11}{\ignorespaces Comparison under broken-bike-rate configurations.}}{125}{table.498}%
+\contentsline {table}{\numberline {5-1}{\ignorespaces Notation for the BRP-BR-OSR formulation.}}{89}{table.310}%
+\contentsline {table}{\numberline {5-2}{\ignorespaces Selected HGS-EUC parameters used in the computational experiments.}}{107}{table.caption.479}%
+\contentsline {table}{\numberline {5-3}{\ignorespaces Small-scale benchmark comparison. Method~A is Gurobi applied to the time-indexed MILP; Methods~B and~C are the monolithic HGSADC-SBC and the proposed CFRS method, respectively.}}{108}{table.481}%
+\contentsline {table}{\numberline {5-4}{\ignorespaces Large-scale comparison between Method~B and Method~C.}}{110}{table.483}%
+\contentsline {table}{\numberline {5-5}{\ignorespaces Comparison under vehicle-capacity configurations.}}{112}{table.486}%
+\contentsline {table}{\numberline {5-6}{\ignorespaces Comparison under time-budget configurations.}}{116}{table.488}%
+\contentsline {table}{\numberline {5-7}{\ignorespaces Comparison under target-cluster-size configurations. Method~B has no cluster-size parameter; therefore its objective values are shown once within each instance block.}}{121}{table.490}%
+\contentsline {table}{\numberline {5-8}{\ignorespaces Comparison under broken-bike-rate configurations.}}{125}{table.493}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
