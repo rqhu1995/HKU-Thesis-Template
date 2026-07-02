@@ -1,0 +1,77 @@
+CITEKEY: datnerSettingInventoryLevels2019
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IGWJZTEA/Datner et al. - 2019 - Setting inventory levels in a bike sharing network.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: 63
+SECTION: Introduction
+RELATED CE IDS: CE-006, CE-012
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                                                                                                                                          Datner et al.: Setting Inventory Levels in a Bike Sharing Network
+                                                                                                                         2                                                                  Transportation Science, Articles in Advance, pp. 1–15, © 2017 INFORMS
+
+
+                                                                                                                         station before renting a bicycle, thereby diminishing       and assumed that unsatisfied customers would wait
+                                                                                                                         uncertainty and redirecting that user’s demand to an        at a station rather than abandoning the system. All of
+                                                                                                                         available station. A different kind of policy was pre-      these studies considered models based on a single sta-
+                                                                                                                         sented by Fricker and Gast (2016). Their policy encour-     tion, meaning that each station’s inventory target level
+                                                                                                                         ages users to choose two destination stations instead       was calculated independently of the others, and the
+                                                                                                                         of one, and the system then directs them to the station     interactions among stations were neglected. In Vogel,
+                                                                                                                         with more vacant lockers.                                   Neumann Saavedra, and Mattfeld (2014), the inventory
+
+
+
+
+Downloaded from informs.org by [223.3.92.233] on 26 April 2018, at 19:50 . For personal use only, all rights reserved.
+                                                                                                                            In practice, the most common approach taken by           levels of all stations were set simultaneously, but these
+                                                                                                                         operators to cope with the difficulties posed by short-     authors also ignored the influence of interaction on
+                                                                                                                         ages of bicycles or lockers is to reposition bicycles to    the system because they treated shortages of bicycles
+                                                                                                                         rebalance the inventory levels at the different stations.   and lockers as lost sales. They determined the stations’
+                                                                                                                         This repositioning is typically performed using a fleet     inventory levels to minimize the total expected opera-
+                                                                                                                         of trucks, each of which carries several bicycles. Two      tion costs of the system due to relocation while satisfy-
+                                                                                                                         types of repositioning can be distinguished: dynamic        ing a minimal level of service.
+                                                                                                                         repositioning and static repositioning. Dynamic repo-          The interactions among the inventory levels at dif-
+                                                                                                                         sitioning is performed when the system is active to         ferent stations are an inherent attribute of a BSS. When
+                                                                                                                         react to the current system state and unexpected            a customer arrives at an empty station (or when she
+                                                                                                                         events; see Contardo, Morency, and Rousseau (2012);         observes this status online), she can choose between
+                                                                                                                         Kloimüllner et al. (2014); and Pessach (2013). Static       searching for an available bicycle at a neighboring sta-
+                                                                                                                         repositioning occurs during the night, when traffic is      tion (referred to as roaming) or abandoning the system
+                                                                                                                         low and the BSS is idle. The various models and solu-       to use other means of transportation. Thus, an empty
+                                                                                                                         tion methods proposed to address the static reposition-     station can create a spillover of demand to nearby sta-
+                                                                                                                         ing problem include those in Nair and Miller-Hooks          tions. In addition, if the customer decides not to use
+                                                                                                                         (2011); Benchimol et al. (2011); Chemla, Meunier,           the system, a future demand for a locker at the des-
+                                                                                                                         and Wolfler Calvo (2013a); Raviv, Tzur, and Forma           tination station is eliminated. Such interactions occur
+                                                                                                                         (2013); Erdoğan, Laporte, and Wolfler Calvo (2014);         between stations that are a distance from one another.
+                                                                                                                         Angeloudis, Hu, and Bell (2014); and Forma, Raviv, and      Moreover, when a customer wishes to return her bicy-
+                                                                                                                         Tzur (2015).                                                cle, she may arrive at a full station and then be obliged
+                                                                                                                            Most static repositioning studies assume that a target   to find an available space at another station nearby
+                                                                                                                         inventory level or range of inventory levels is known       (also referred to as roaming), meaning that a full sta-
+                                                                                                                         for each station. Only a few studies have addressed         tion will always create locker demand at neighboring
+                                                                                                                         the issue of how to determine these target levels for       stations. In accordance with this concept, Rudloff and
+                                                                                                                         static repositioning. Nair and Miller-Hooks (2011) for-     Lackner (2013) presented different count demand mod-
+                                                                                                                         mulated the problem as a stochastic mixed integer pro-      els for BSSs and demonstrated that full/empty stations
+                                                                                                                         gram with the objective of minimizing the cost of the       have an influence on neighboring stations’ demand.
+                                                                                                                         redistribution operation for a required service level.      George and Xia (2011) addressed the problem of deter-
+                                                                                                                         They defined a shortage as a net difference between the     mining the optimal fleet size for a vehicle rental com-
+                                                                                                                         total demand over the planning horizon and the total        pany and derived analytical results for its relation-
+                                                                                                                         inventory, ignoring the sequence of events occurring in     ship to vehicle availability at each rental station in the
+                                                                                                                         the system. Raviv and Kolka (2013) and Schuĳbroek,          network.
+                                                                                                                         Hampshire, and van Hoeve (2017) presented a Markov             This paper is the first to consider the interactions
+                                                                                                                         chain–based model in which the inventory level is           among stations in BSSs for the purpose of setting tar-
+                                                                                                                         tracked continuously throughout the day. Renters who        get inventory levels. Our contributions are as follows:
+                                                                                                                         arrive at an empty station and returners who arrive         First, we present a formal definition and mathematical
+                                                                                                                         at a full station are assumed to abandon the system         formulation of the BSS inventory problem with station
+                                                                                                                         and are considered to be lost sales. Raviv and Kolka        interactions (BSIP-SI). Second, we develop a guided
+                                                                                                                         (2013) suggested a user dissatisfaction function that       local search algorithm to set the initial inventory level
+                                                                                                                         measures the performance of a station in terms of the       at each station (the target level). This search uses a sim-
+                                                                                                                         expected penalty due to abandonment by returners            ulation model in which a user behavior model is imple-
+                                                                                                                         and renters as a function of the initial inventory at a     mented. This model includes the roaming between sta-
+                                                                                                                         single station. Schuĳbroek, Hampshire, and van Hoeve        tions (that is, seeking an alternative station) that occurs
+                                                                                                                         (2017) used dual-bounded service level constraints pre-     upon a shortage of bicycles or lockers. Third, we use
+                                                                                                                         sented by Nair and Miller-Hooks (2011). Another study       real data to test our algorithm and compare our results
+                                                                                                                         that addressed the issue of target inventory levels         with the common practice of operators and with the
+                                                                                                                         was conducted by Leurent (2012), who modeled bike           results of the model presented in Raviv and Kolka
+                                                                                                                         sharing stations as a dual Markovian waiting system         (2013), which ignores these interactions. We show that
+

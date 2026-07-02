@@ -1,0 +1,92 @@
+CITEKEY: schuijbroekInventoryRebalancingVehicle2017
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/LHR38YZU/Schuijbroek et al. - 2017 - Inventory rebalancing and vehicle routing in bike sharing systems.pdf
+PDF PAGE INDEX: 0
+PDFTOTEXT PAGE NUMBER: 1
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-028
+RELATED CE IDS: CE-028
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                       European Journal of Operational Research 257 (2017) 992–1004
+
+
+
+                                                               Contents lists available at ScienceDirect
+
+
+                                          European Journal of Operational Research
+                                                         journal homepage: www.elsevier.com/locate/ejor
+
+
+Innovative Applications of O.R.
+
+Inventory rebalancing and vehicle routing in bike sharing systems
+J. Schuijbroek a,∗, R. C. Hampshire b,1, W.-J. van Hoeve c
+a
+  School of Industrial Engineering, Eindhoven University of Technology, PO Box 513, Eindhoven 5600 MB, Netherlands
+b
+  University of Michigan Transportation Research Institute, 2901 Baxter Road, Ann Arbor, MI 48109-2150, USA
+c
+  Tepper School of Business, Carnegie Mellon University, 5000 Forbes Ave, Pittsburgh, PA 15213, USA
+
+
+
+
+a r t i c l e         i n f o                          a b s t r a c t
+
+Article history:                                       Bike sharing systems have been installed in many cities around the world and are increasing in pop-
+Received 9 April 2016                                  ularity. A major operational cost driver in these systems is rebalancing the bikes over time such that
+Accepted 10 August 2016
+                                                       the appropriate number of bikes and open docks are available to users. We combine two aspects that
+Available online 17 August 2016
+                                                       have previously been handled separately in the literature: determining service level requirements at each
+Keywords:                                              bike sharing station, and designing (near-)optimal vehicle routes to rebalance the inventory. Since ﬁnding
+Bike sharing                                           provably optimal solutions is practically intractable, we propose a new cluster-ﬁrst route-second heuris-
+Routing                                                tic, in which a polynomial-size Clustering Problem simultaneously considers the service level feasibility
+Inventory                                              and approximate routing costs. Extensive computational results on real-world data from Hubway (Boston,
+Integer programming                                    MA) and Capital Bikeshare (Washington, DC) are provided, which show that our heuristic outperforms a
+Constraint programming                                 pure mixed-integer programming formulation and a constraint programming approach.
+Markov processes
+                                                                                                                           © 2016 Elsevier B.V. All rights reserved.
+
+
+
+1. Introduction                                                                            activity during repositioning), as well as continuous rebalancing
+                                                                                           during the daytime (the dynamic case). Finding (near-)optimal so-
+    Bike sharing systems are experiencing wide-spread adoption in                          lutions to these routing problems may take several hours even
+major cities around the world, with over 10 0 0 active systems and                         for the most advanced optimization models available (Contardo,
+more than 300 in planning or under construction (Meddin & De-                              Morency, & Rousseau, 2012; Raviv, Tzur, & Forma, 2013).
+Maio, 2016). In these systems, users can pickup and return bikes at                            We present a rigorous cluster-ﬁrst route-second heuristic for
+designated bike sharing stations with a ﬁnite number of docks. Un-                         the static non-stationary case that combines inventory ﬂexibility
+fortunately, user behavior results in spatial imbalance of the bike                        and routing decisions. These aspects have mostly been considered
+inventory over time. The system equilibrium is often characterized                         separately in literature (see Section 2 for a literature review). Com-
+by unacceptably low availability of bikes or open docks, for pickups                       bining routing and inventory ﬂexibility may lead to more eﬃcient
+or returns respectively (Fricker, Gast, and Mohamed, 2012, p. 375).                        solutions, and allows operators to implement the tradeoff between
+    Therefore, operators deploy a ﬂeet of trucks to rebalance the                          user satisfaction and the cost of rebalancing, which is often faced
+bike inventory. We focus on the eﬃciency of these rebalancing op-                          in practice.
+erations, a major cost driver for operators (DeMaio, 2009, p. 50).                             Our approach relies on target inventory bounds at each bike
+This problem consists of two main components. First, determining                           station that represent service level requirements. In particular, we
+the desired inventory level at each bike station, which is typically                       model the stochastic demand by viewing the inventory at each sta-
+done by an analysis of historic user data. Second, designing truck                         tion as a non-stationary queuing system with ﬁnite capacity, and
+routes that will perform the necessary pickups and deliveries in                           derive service level requirements using the transient distribution
+order to reach the target inventory levels.                                                of the availability of bikes and docks (Section 3). We recognize that
+    In practice, operators may perform a major rebalancing oper-                           service level requirements can be met when the inventory is be-
+ation during the night (the static case, assuming negligible user                          tween a lower and upper bound. Any other suitable uncertainty
+                                                                                           model could be used for this purpose.
+                                                                                               Our proposed clustering heuristic proceeds by grouping to-
+    ∗
+    Corresponding author.                                                                  gether bike stations such that each cluster is ‘self-suﬃcient’, i.e.
+    E-mail     addresses:     jasper.schuijbroek@gmail.com    (J.    Schuijbroek),
+                                                                                           the target inventory bounds can be satisﬁed by only perform-
+hamp@umich.edu (R.C. Hampshire), vanhoeve@andrew.cmu.edu (W.-J. van Ho-
+eve).
+                                                                                           ing within-cluster pickups and deliveries. The novelty in our ap-
+  1
+    This material is based upon work supported by the National Science Foundation          proach is that we estimate the routing cost of each cluster by a
+under Grant No. SES #1055832.                                                              new Maximum Spanning Star approximation. A major beneﬁt of the
+
+http://dx.doi.org/10.1016/j.ejor.2016.08.029
+0377-2217/© 2016 Elsevier B.V. All rights reserved.
+

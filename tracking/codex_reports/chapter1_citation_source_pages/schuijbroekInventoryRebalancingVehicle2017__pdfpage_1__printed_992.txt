@@ -1,0 +1,97 @@
+CITEKEY: schuijbroekInventoryRebalancingVehicle2017
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/LHR38YZU/Schuijbroek et al. - 2017 - Inventory rebalancing and vehicle routing in bike sharing systems.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 992
+SECTION: Abstract / Introduction
+RELATED CE IDS: CE-028
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                       J. Schuijbroek et al. / European Journal of Operational Research 257 (2017) 992–1004                          993
+
+
+Maximum Spanning Star approximation is that it can be formu-                        2.3. Service level analysis
+lated using a linear2 number of constraints only. The resulting
+mixed-integer program (MIP) for our Clustering Problem can be                           Several studies focus on service levels in bike sharing systems.
+solved optimally within seconds for realistic problem sizes. For                    We recall that service level requirements are typically two-sided:
+each cluster an optimal route can be computed easily using a stan-                  for available bikes and docks. Most notably, Nair and Miller-Hooks
+dard MIP formulation.                                                               (2011) and Nair, Miller-Hooks, Hampshire, and Bušić (2013) de-
+    We also present a Constraint Programming (CP) formulation in                    compose system-wide reliability into a set of dual-bounded chance
+Section 6, acting both as an effective (exact) solution method for                  constraints for each station. We adapt their dual-bounded service
+smaller instances and a benchmark for our dedicated clustered                       level constraints, but use a more realistic Markov chain to model
+routing heuristics.                                                                 the station inventory over time, as opposed to observing the to-
+    We compare our approach to an exact MIP model based on ex-                      tal net demand (see Section 3). Raviv and Kolka (2013) present
+isting literature, as well as our CP model. Computational experi-                   a queuing system with ﬁnite capacity to model expected user
+ments (Section 7) using data from Hubway (Boston, MA) and Cap-                      dissatisfaction at each station, similar to our approach. Leurent
+ital Bikeshare (Washington, DC) show that our heuristics strongly                   (2012) models bike sharing stations as a dual Markovian waiting
+outperform the classical MIP model. Within seconds, we identify a                   system, but contrary to their assumption of waiting customers, we
+feasible solution with a reasonable optimality gap. In a minute, we                 assume immediate lost sales.
+ﬁnd better solutions for almost all instances than the best MIP so-                     George and Xia (2011) develop a method to determine ﬂeet siz-
+lution after 2 hours. Moreover, our dedicated Clustered MIP heuris-                 ing given a desired service level. This is accomplished by model-
+tic outperforms constraint programming on larger instances.                         ing the number of bikes at each station and their movements as
+                                                                                    a closed queuing network. Their results follow from a steady state
+2. Related work                                                                     analysis of the queuing network. The work does not take the ca-
+                                                                                    pacity of stations into account, and their service level is measured
+    The study of bike sharing systems is increasing in popular-                     in terms of the availability of bikes as opposed to unmet demand
+ity. DeMaio (2009) and Shaheen, Guzman, and Zhang (2010) pro-                       for pickups/returns. Our paper addresses these two limitations in
+vide a history of bicycle sharing, starting with the ﬁrst genera-                   the non-steady state (transient) regime. Additionally, we consider
+tion ‘white bikes’ in Amsterdam as early as 1965. From 1995 on-                     the related routing problem, which George and Xia (2011) do not
+wards, the third generation IT-based systems incorporate ‘advanced                  consider.
+technologies for bicycle reservations, pickup, drop-off, and infor-
+mation tracking’ (Shaheen et al., 2010, p. 7). For the interested                   2.4. Rebalancing operations
+reader (Laporte, Meunier, & Calvo, 2015) provides a comprehensive
+survey of the vehicle/bike sharing literature. We identify four re-                     Using mean ﬁeld analysis, Fricker et al. (2012) conclude that
+search substreams in bike sharing literature: strategic design, de-                 the equilibrium system performance collapses under heterogene-
+mand analysis, service level analysis, and rebalancing operations.                  ity of user behavior and that a pressing need for rebalancing op-
+                                                                                    erations exists. Vogel and Mattfeld (2010) motivate rebalancing ac-
+2.1. Strategic design                                                               tivities using a system dynamics model. Shu, Chou, Liu, Teo, and
+                                                                                    Wang (2013) estimate rebalancing operations can lead to an addi-
+    Since most major cities have planned or considered implemen-                    tional 15–20% of trips supported system-wide.
+tation of bike sharing systems, and existing systems are often ex-                      We identify two modes of rebalancing: providing user incen-
+panded, several studies present models dedicated to strategic de-                   tives and deploying a truck ﬂeet. While Fricker and Gast (2016) and
+sign. Dell’Olio, Ibeas, and Moura (2011) develop a comprehensive                    Waserhole and Jost (2012) develop a pricing strategy, and some ac-
+methodology for implementation, from estimating potential de-                       tive systems have already implemented incentive schemes (e.g. V+
+mand to optimizing locations. Martinez, Caetano, Eiró, and Cruz                     for Vélib’, see Fricker & Gast, 2016), we observe that every bike
+(2012) and Prem Kumar and Bierlaire (2012) present MIP models                       sharing system still operates a vehicle ﬂeet for rebalancing. There-
+for the location problem. Lin and Yang (2011) create a model trad-                  fore, the underlying vehicle routing problem has received most at-
+ing off the interests of both users and investors. We note that none                tention.
+of the studies include a notion of expected inventory imbalance                         Most studies use an exact target inventory for each station,
+costs.                                                                              which implies their routing problem is more closely related to
+                                                                                    the One-Commodity Pickup-and-Delivery VRP (Hernández-Pérez &
+2.2. Demand analysis
+                                                                                    Salazar-González, 2003) than ours, which adds inventory ﬂexibil-
+                                                                                    ity. Routing costs to attain exact target inventories will always be
+    The purpose of demand analysis is twofold: forecasting future
+                                                                                    larger than or equal to the costs strictly necessary to maintain ap-
+demand (e.g. for service level requirements) and understanding the
+                                                                                    propriate service levels (see Section 3). We note that our models
+explaining factors for managerial decision making. Kaltenbrunner,
+                                                                                    can be parameterized to solve the target inventory problem.
+Meza, Grivolla, Codina, and Banchs (2010) predict the system
+                                                                                        Erdoğan, Laporte, and Calvo (2013) consider the pickup and
+inventory state and suggest making such information available
+                                                                                    delivery redistribution problem with one vehicle where the tar-
+to users. Froehlich and Oliver (2008), Borgnat and Abry (2009),
+                                                                                    get inventory at each station must lie in an interval. The inter-
+Borgnat et al. (2011), and Lathia, Ahmed, and Capra (2012) iden-
+                                                                                    vals are input to their problem. Our problem is a natural exten-
+tify a temporal demand pattern and forecast the number of rentals.
+                                                                                    sion of this setting in that we consider multiple vehicles and we
+Hampshire, Marla, and Eluru (2013) seek land use and socio-
+                                                                                    determine the target inventory intervals. Chemla, Meunier, and
+economic factors that explain the use of bike sharing systems.
+                                                                                    Calvo (2013) present a branch-and-cut algorithm for the static
+Vogel, Greiser, and Mattfeld (2011) construct clusters of stations
+                                                                                    single-vehicle problem, with results on instances of up to 100 sta-
+with similar demand patterns. These studies could provide insights
+                                                                                    tions. Approximation algorithms for the same problem are given
+that are helpful in improving the service level requirements devel-
+                                                                                    by Benchimol et al. (2011). Erdoğan, Battarra, and Calvo (2015) de-
+oped in this paper.
+                                                                                    velop an exact method to calculate the optimal route for the static
+                                                                                    single-vehicle rebalancing problem. Instances with up to 60 stations
+ 2
+     In the number of bike stations.                                                can be solved to optimality within 2 hours of computing time.
+

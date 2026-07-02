@@ -1,0 +1,84 @@
+CITEKEY: wangStaticGreenRepositioning2018
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/XR2IYSMV/Wang and Szeto - 2018 - Static green repositioning in bike sharing systems with broken bikes.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-034
+RELATED CE IDS: CE-034
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Y. Wang, W.Y. Szeto                                                                             Transportation Research Part D 65 (2018) 438–457
+
+
+BRPs. They minimized the weighted sum of total unmet demand and the fuel and CO2 emission cost of the operating vehicle as the
+objective of their study.
+    One may argue that using bike-trailers for bike repositioning (e.g., Citibike in New York City) are ideal for mitigating CO2
+emissions during the operation. Bike-trailers can carry 3–5 bikes at most at one time (e.g., O'Mahony and Shmoys, 2015; Ghosh and
+Varakantham, 2017). They are suitable for the case where stations are close to each other, the BSS is in high usage, and traffic is at its
+peak (O'Mahony and Shmoys, 2015). However, since static repositioning usually happens during nighttime, the system usage and
+congestion impact can be ignored. In addition, to redistribute bikes for the demand in the next morning, the capacity of bike trailers is
+far from enough, which makes the bike repositioning inefficient. Furthermore, the route length can be far beyond the capability of the
+staff on bikes with trailers. It is unavoidable to use trucks to perform bike repositioning for an even medium size BSS.
+
+
+2.2. Fuel consumption and CO2 emission modeling
+
+     Other than BRPs, environmental issues have been considered in many transport studies, including those about vehicle routing
+problems. Emissions can be reduced by optimizing vehicle routes. In vehicle routing problems that consider environmental objectives
+(called green vehicle routing problems), CO2 emissions or an approximate measure – fuel consumption – is usually considered as the
+model objective (e.g., Demir et al., 2012; Koç et al. 2014; Zhang et al., 2014; Ehmke et al., 2016; Xiao and Konak, 2016). Different
+CO2 emission or fuel consumption models have been used in green vehicle routing problems. The measurable factors adopted in most
+of these models mainly include vehicle speed, acceleration or deceleration, gradient, and the weight of vehicle loads for certain types
+of vehicle and fuel (Scott et al., 2010; Demir et al., 2011; Suzuki, 2011; Lin et al., 2014; Zhang et al., 2015; Hosseini-Nasab and
+Lotfalian, 2017). For static bike repositioning, which usually happens in urban cities during the nighttime, the speed can be treated as
+constant because the congestion and vehicle flow impacts on the speed are very minor. The road gradient can be reflected in the
+asymmetric distances between two nodes. In addition, emissions during waiting time can be omitted when a perfect balance is
+considered because they are proportional to loading and unloading quantities and are constant in the objective function. Therefore, as
+indicated in the study of Xiao et al. (2012), the fuel consumption rate can be treated as linear with respect to vehicle loads when
+having the previous assumptions in static bike repositioning.
+     Xiao et al. (2012) also presented a fuel consumption model in detail, which is composed of the empty-load fuel consumption rate
+ 0 , the full-load fuel consumption rate    , and the vehicle capacity Q0 . The full equation is given below:
+
+                            0
+         (q) =   0 +            q
+                       Q0                                                                                                                   (1)
+
+where q is the load on the vehicle. When the vehicle is empty, the vehicle has a fixed fuel consumption rate         0 , which relates to the
+vehicle type and the fuel type. The term       determines the quantity of fuel consumption induced by one unit increase in the vehicle
+                                                 0
+                                           Q0
+load. Therefore, the total fuel consumption per unit of distance is the sum of fixed consumption and additional load consumption. On
+the basis of Eq. (1), Zhang et al. (2014) developed a CO2 emission model, converting the fuel consumption into emissions through a
+conversion rate:
+
+                                     0
+       e (q) = CER     0 +               q   d
+                                Q0                                                                                                          (2)
+
+where CER is the CO2 emission rate and d is the travel distance with a load q .
+    A similar model has also been proposed in the study of Kopfer et al. (2014), where the CO2 emissions are proportional to the fuel
+consumption. Thus, the minimization of CO2 emissions and fuel consumption are equivalent. In their study, the following is adopted
+as the objective function:
+
+       F (q ) = a d + b q d                                                                                                                 (3)
+
+where a denotes the fuel consumption per unit of distance and b denotes the fuel consumption per unit of payload and distance.
+
+
+2.3. Broken bikes in BRPs
+
+    Other than environmental objectives, another important consideration in BSSs is broken bikes. It is almost unavoidable to have
+broken bikes in BSSs, due to careless use or accidents. The presence of broken bikes implies a waste of resources, as broken bikes take
+up the limited lockers in a station and are unusable (Kaspi et al., 2017). The numerical results of Kaspi et al. (2017) indicate that even
+a small fraction of unusable bikes can have a significant effect on user dissatisfaction. Therefore, the broken bikes need to be taken
+away from stations for repairs, which certainly consumes parts of the repositioning resources that are intentionally assigned to usable
+bikes. Therefore, when planning the repositioning works, broken bikes need to be considered together with usable bikes. However,
+most of the existing studies do not consider broken bikes. An exception is the study by Alvarez-Valdes et al. (2016) who studied bike
+repositioning with broken bikes, in which the vehicles transshipped usable bikes among stations, collected broken bikes at stations
+along the tours, and dropped the broken bikes off at the depot. Nevertheless, Alvarez-Valdes et al. (2016) did not consider vehicle
+emissions due to the repositioning.
+
+                                                                   440
+

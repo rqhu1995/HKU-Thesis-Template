@@ -1,0 +1,63 @@
+CITEKEY: ravivStaticRepositioningBikesharing2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/UAVMV85M/Raviv et al. - 2013 - Static repositioning in a bike-sharing system models and solution approaches.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: 188
+SECTION: Introduction
+RELATED CE IDS: CE-011, CE-019
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Static repositioning in a bike-sharing system: models and solution approaches            189
+
+
+temporary, e.g., high return rate in a suburban train station during the morning and a
+high renting rate during the afternoon, or persistent, e.g., relatively low return rates
+in stations located on top of hills. Therefore, a new modeling approach is required;
+one that will correctly represent a practical objective of the repositioning operation,
+related to the users’ satisfaction with the system. Toward that we define a penalty
+function, which represents the expected number of shortages at any inventory level
+at each station. The use of such an objective, combined with new model
+characteristics, is the essence of this paper.
+    The repositioning operation can be carried out in two different modes: one is
+during the night when the usage rate of the system is negligible; the other is during
+the day when the status of the system is rapidly changing. We refer to the former as
+the static bicycle repositioning problem (SBRP) and to the latter as the dynamic
+bicycle repositioning problem (DBRP). Some operators use static repositioning,
+some dynamic, and some use a combination of the two, Callé (2009).
+    In this paper, we focus on the static mode of operation which benefits from a
+practical advantage because it allows the repositioning fleet to travel swiftly in the
+city without contributing to traffic congestion and parking problems. Static
+repositioning is useful for arranging the inventory of bicycles in the system toward
+the next day. When combined with dynamic repositioning, it reduces the amount of
+work required in the latter mode. The static problem needs to be solved once at the
+beginning of every night, based on the status of the system at that time and the
+demand forecast for the next day. While the problem lies in the general domain of
+vehicle routing problems, it involves some unique characteristics that require
+appropriate modeling. The model we present in this paper generalizes existing
+routing models from the literature, as shown in the next section.
+    We formally define the SBRP as follows. The input of the problem is a set of stations,
+with one designated as the depot; initial inventory, capacity, and a convex penalty
+function for each station; a travel-time matrix between stations; and a set of non-
+identical capacitated repositioning vehicles. A solution is defined by a route for each
+vehicle and the quantity of bicycles to load or unload at each station along this route. The
+planned routes must satisfy a time constraint. The length of each route is calculated as
+the sum of the travel times between all pairs of consecutive stations along the route plus
+the time needed for loading and unloading at the stations, which depends on the
+quantities of bicycles handled. The goal is to minimize a weighted objective that consists
+of the sum of the stations’ penalty costs and the total operating costs of the vehicles. This
+problem definition generalizes our preliminary work, see Forma et al. (2010).
+    The penalty function at each station may represent any objective of the operator,
+as long as it is convex in the ending inventory of the station. We advocate the usage
+of penalty functions that represent the expected number of shortages in a station
+during the next day given its initial inventory, its capacity, and the stochastic
+characteristics of the demand process. Raviv and Kolka (2012) present an efficient
+procedure to calculate these functions and prove their convexity. For the sake of
+completeness, we summarized the relevant results from their paper in Appendix A.
+For more details, the reader is referred to that paper.
+    The contribution of this paper is in presenting a new and practical approach to
+modeling the SBRP. It involves defining a non-traditional objective function, which
+
+                                                                                  123
+

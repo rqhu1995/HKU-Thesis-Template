@@ -1,0 +1,78 @@
+CITEKEY: huRepositioningBikeSharing2025
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/2SQ8MACE/Hu et al. - 2025 - Repositioning in bike sharing systems with broken bikes considering on-site repairs.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: article number / not page-numbered in the PDF metadata used here
+SECTION: Introduction
+RELATED CE IDS: CE-032
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+R. Hu et al.                                                                                     Transportation Research Part E 201 (2025) 104155
+
+
+Section 3 presents a mathematical model for the studied problem. Section 4 introduces the proposed solution algorithm. Section 5
+describes the numerical studies and discusses the results. Finally, Section 6 concludes this paper.
+
+2. Literature review
+
+    In this section, we first briefly introduce existing research on BRPs. Then, we discuss how current research deals with broken bikes
+in BRPs. Finally, we summarize the above works and point out the research gaps.
+
+2.1. Categories, objectives, and algorithms in existing studies on BRPs
+
+    Existing approaches to dealing with bike demand–supply imbalance can be divided into two categories: user- and operator-based
+repositioning. User-based methods intend to motivate users to participate in the bike repositioning process by encouraging them to
+pick up or return bikes at designated stations in exchange for monetary incentives (Singla et al., 2015; Pan et al., 2019; Cheng et al.,
+2021; Wang and Wang, 2021). While this mechanism can help align supply and demand during system usage, leading to efficient
+resource allocation, its ability to increase social and economic surplus may be limited. For instance, if the pricing scheme is set too
+high, the system might achieve perfect balance but fail to generate societal benefits due to reduced participation. Moreover, the
+effectiveness of this method depends on the willingness of users to participate, which can become highly uncontrollable. As a result, the
+operator-based rebalancing approaches are adopted more extensively in current BSSs (Singla et al., 2015). In operator-based bike
+repositioning, vehicles depart from the depot with a load of bikes, pick up and drop off a certain number of bikes at surplus and deficit
+stations, respectively, and then return to the depot where they started (Lu et al., 2020). Specifically, as mentioned in the introduction,
+operator-based bike repositioning can be further divided into static repositioning (Raviv et al., 2013; Forma et al., 2015; Liu et al.,
+2018; Huang et al., 2020; Wang and Szeto, 2021) and dynamic repositioning (Caggiani and Ottomanelli, 2013; O’Mahony and Shmoys,
+2015; Caggiani et al., 2018; Brinkmann et al., 2019; Chiariotti et al., 2020; Hu et al., 2021; Chen et al., 2024; Guo et al., 2024). These
+two forms of operator-based repositioning have been extensively modeled in the BRP literature.
+    The objectives of existing BRP research were mainly developed according to the critical concerns of the bike-sharing operators,
+which could be generally categorized into operator- and user-oriented ones. From the operator-oriented perspective, the objectives
+were set to minimize the operational cost of repositioning, such as travel costs (Dell’Amico et al., 2016) and time costs (Lee et al.,
+2020). From the user-oriented perspective, the objectives related to user dissatisfaction were optimized, including minimizing the total
+unmet demand (Shui and Szeto, 2018; Huang et al., 2020; H. Jia et al., 2020), the sum of the absolute deviation of the usable bike
+inventory after repositioning from the target level at each station (Rainer-Harbach et al., 2015), and the sum of the penalty cost
+incurred at each station (Ho and Szeto, 2014). Apart from the above prevalent perspectives, some researchers also took environmental
+influence into account, e.g., total fuel and CO2 emission costs (Wang and Szeto, 2018), to minimize the impact of fossil-fueled vehicle
+repositioning. It is worth mentioning that a certain number of studies included more than one of the objectives from above in the
+problem formulations, which were often handled by the weighted sum approach (Caggiani and Ottomanelli, 2012; Regue and Recker,
+2014; Dell’Amico et al., 2018; Shui and Szeto, 2018; You, 2019; Chen and Szeto, 2023; Chen et al., 2024; Guo et al., 2024).
+    To solve the aforementioned models, different algorithms were designed. Generally, algorithms solving BRPs can be classified into
+exact and inexact methods. For exact algorithms, Contardo et al. (2012) solved a dynamic repositioning problem for BSSs using column
+generation combined with Benders decomposition. Caggiani and Ottomanelli (2012) solved the problem of minimizing the sum of the
+relocation costs and lost user costs with the branch-and-bound algorithm. However, as the scale of the problem grows, exact methods
+are intractable to provide optimal solutions within an acceptable time. Hence, heuristics, as one class of inexact methods, have become
+prevalent in solving such problems. For instance, You et al. (2019) adopted a two-phase heuristic, in which the first phase decided on
+the number of bikes to be picked up and dropped off for all stations, and the second phase decided on the bike redistribution using the
+repositioning trucks. Apart from heuristics, meta-heuristics have also been widely applied for BRPs, such as iterated tabu search (Ho
+and Szeto, 2014), chemical reaction optimization (Szeto et al., 2016), hybrid large neighborhood search (Ho and Szeto, 2017), arti­
+ficial bee colony algorithm (Shui and Szeto, 2018; H. Jia et al., 2020; Wang and Szeto, 2021), and genetic algorithm (Lee et al., 2020).
+Meanwhile, hybrid approaches combining exact and inexact methods have also been put forward to make a tradeoff between accuracy
+and efficiency, such as hybrid ant-colony optimization with Constraint Programming (CP) (Di Gaspero et al., 2013a), as well as hybrid
+Large Neighborhood Search (LNS) with CP (Di Gaspero et al., 2013b). In more recent years, the reinforcement learning framework has
+also been utilized to solve BRPs, particularly in dynamic cases, which can better handle the system’s dynamicity and facilitate prompt
+decision-making (Chen et al., 2024; Guo et al., 2024; Shi et al., 2024).
+
+2.2. Current research on the BRP with broken bikes
+
+   As reviewed above, BRPs have been well-studied with different model formulations and solution algorithms. Nevertheless, studies
+on BRPs considering broken bikes were relatively scarce. The first study was conducted by Kaspi et al. (2016), who proposed a
+probabilistic model for unusable bicycle detection. Later, a series of similar studies on BRPs with broken bikes came out with different
+problem characteristics.
+   In terms of the research scope, some studies focused on the collection of broken bikes only (Zhang et al., 2018; Lu et al., 2019,
+2022), and some considered both usable and broken bikes (Alvarez-Valdes et al., 2016; Chang et al., 2018, 2023; Wang and Szeto,
+2018, 2021; Du et al., 2020; Zhang et al., 2020; Cai et al., 2022; Jin et al., 2022). Among the above studies, most of the literature dealt
+with docked BSSs (Alvarez-Valdes et al., 2016; Wang and Szeto, 2018; Zhang et al., 2018, 2020; Du et al., 2020; Cai et al., 2022; Jin
+
+                                                                     3
+

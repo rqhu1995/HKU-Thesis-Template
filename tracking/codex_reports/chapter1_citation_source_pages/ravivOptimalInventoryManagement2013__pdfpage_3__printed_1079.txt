@@ -1,0 +1,74 @@
+CITEKEY: ravivOptimalInventoryManagement2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/FSWE4QY2/Raviv and Kolka - 2013 - Optimal inventory management of a bike-sharing station.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: 1079
+SECTION: Introduction and literature review
+RELATED CE IDS: CE-014
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Inventory management of a bike-sharing scheme                                                                                1079
+   The inventory model devised in this study is useful for        processes. In fact, the computational method introduced
+supporting operational tasks such as inventory routing of         in Section 4 assumes a non-homogenous Poisson arrival
+bicycles among stations: see Raviv et al. (2011). It can also     process, but the robustness of the model with respect to
+be used for strategic decision making regarding the system-       this assumption is demonstrated in Section 5. If the desired
+wide inventory of bicycles as well as station size decisions      service can be provided right away, the bicycle is rented
+(discussed in greater detail in the conclusion section). In       or returned and the inventory level is updated. If the ser-
+addition, we believe that our approach may be applicable          vice cannot be provided (i.e., empty station for a renter or
+for other closed-loop inventory systems.                          full station for a bicycle returned), the user abandons the
+   The bike-sharing station is modeled in this study as           station immediately. In the case of renters, abandonment
+a double-ended queuing system introduced by Kashyap               represents a decision of the user to either forgo using the
+(1966). It is similar to a taxi queue at an airport or train      system at this time or to seek an available bicycle at a dif-
+station: there are either taxis waiting for people (equiva-       ferent station. In the case of a returner, the bicycle must be
+lent of bicycles) or people waiting for taxis (equivalent of      returned to another station. In both cases, we neglect the
+renters). Only one side is queued at a time. A steady-state       effect of interactions between stations in the system as we
+analysis of such a system and its variants is discussed in the    focus on a single station. We assume that the inventory of
+queuing theory literature. For a discussion and references,       the station is not reviewed by a repositioning operation be-
+see Srivastava and Kashyap (1982). For more recent studies        fore time T. In Appendix B, we also discuss a more general
+that consider the effect of user impatience, see Conolly et al.   inventory model where the users may queue in the ware-
+(2002). Mendoza et al. (2009) used the double-ended queue         house when it is empty (for renters) or full (for returners).
+model to study a model that aims to balance production               There are two sources of user dissatisfaction in the system
+rate (supply) and demand. However, none of these studies          according to this model and the system is penalized for each
+considered controlling this queuing system by modifying its       of them:
+state; i.e., exogenously adding or removing items from the
+queues. Consequently, none of these studies analyzed the          p penalty charged for each potential renter who abandons
+transient dynamics of this model that are required to de-           due to a shortage of bicycles;
+scribe a bike-sharing station that faces a non-homogenous         h penalty charged for each returner who abandons due to
+demand process and the inventory of which is revised                a shortage of vacant lockers.
+periodically.
+   Notation and a formal definition of the model are pre-            The total number of lockers in a station is denoted by
+sented in Section 2. The convexity of the user dissatisfaction    C. We refer to this value as the station capacity. Next, we
+measure is proved in Section 3. In Section 4, a method to         present a notation that describes a particular realization of
+solve the model approximately under the assumption that           the demand over the given horizon. Let E R denote the set
+the arrival processes are Poisson is devised. The results         of epochs in which a demand for a bicycle occurs in given
+of numerical experiments that demonstrate the effective-          realization R where EiR denotes the ith occurrence. I0 is a
+ness and robustness of the approximation are presented            decision variable that represents the initial bicycle inventory
+in Section 5. In this section we also report on a simula-         of the station as set by the operator at the beginning of
+tion study conducted ahead of the implementation of the           the planning horizon. The state of the system at time t
+method presented in this study in a real BSS. We conclude         is denoted by ItR(I0 ), where ItR(I0 ) ∈ {0, . . . , C} represents
+with a discussion in Section 6 about possible applications        the number of bicycles currently in the station under a
+of the approximation method and convexity property pre-           given realization R and initial inventory I0 . Hereafter the
+sented in this article and some ideas for future research. In     realization and initial inventory arguments will be omitted
+Appendix A, we describe a simulation-based optimization           for the sake of conciseness where they are apparent from
+procedure used in the simulation study of Section 5 and           the context. We denote the net demand for bicycles at time
+in Appendix B we present an extension of our inventory            epoch t by dtR ∈ {−1, 0, 1}, where negative values represent
+model that allows customers to queue (or backlog) in the          a demand for lockers; i.e., users who wish to return bicycles
+system. In Appendix C, we present the detailed results of         at the station. Clearly dtR = 0 for all t ∈  / E R. The implicit
+our numerical experiment.                                         assumptions that at each demand point only one bicycle
+                                                                  is rented or returned causes no loss of generality since the
+                                                                  time between epochs can be arbitrarily short.
+2. Notation and problem formulation                                  The dynamics of the station in a given demand realization
+                                                                  is given by:
+We consider a single bike-sharing station over a finite hori-                      ⎧
+                                                                                   ⎪
+                                                                                   ⎪      0         IEiR−1 − d ERR < 0
+zon [0, T] with the following settings: at time 0 the inventory                    ⎨                              i
+
+level (number of bicycles) in the station is set. During the                IEiR =        C        IEiR−1 − d ERR > C .
+planning horizon, users that wish to rent or return bicy-                          ⎪
+                                                                                   ⎪                             i
+                                                                                   ⎩ I R − dR           otherwise
+cles arrive at the station according to arbitrary stochastic                           Ei −1   EiR
+

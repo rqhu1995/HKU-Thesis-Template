@@ -1,0 +1,97 @@
+CITEKEY: ravivOptimalInventoryManagement2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/FSWE4QY2/Raviv and Kolka - 2013 - Optimal inventory management of a bike-sharing station.pdf
+PDF PAGE INDEX: 6
+PDFTOTEXT PAGE NUMBER: 7
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-010
+RELATED CE IDS: CE-010
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+1082                                                                                                                                                                                                                                      Raviv and Kolka
+                                   Total Rentres:60.88       Total Returners:65.12 Discretization level:5 min.                                                                           Total Rentres:60.88   Total Returners:65.12 Discretization level:15 min.
+                          30                                                                                                                                                    30
+                                                                                                                                                                                                   Upper Bound
+                          28             Upper Bound                                                                                                                            28                 User Discomfort
+                                         User Discomfort                                                                                                                                           Lower Bound
+                                         Lower Bound                                                                                                                            26
+                          26
+
+
+
+
+                                                                                                                                                        User Discomfort / Day
+                                                                                                                                                                                24
+
+
+
+
+  User Discomfort / Day
+                          24
+                                                                                                                                                                                22
+                          22
+                                                                                                                                                                                20
+                          20
+                                                                                                                                                                                18
+                          18
+                                                                                                                                                                                16
+                          16
+                                                                                                                                                                                14
+
+                          14
+                                                                                                                                                                                12
+                                                                                                                                                                                     0                         5                           10                       15
+                          12                                                                                                                                                                                    Initial inventory level: X0
+                               0                         5                                  10                   15
+                                                              Initial inventory level: X0
+
+
+Fig. 2. UDF and bounds, assuming users with no patience with discretization levels of 5 and 15 minutes.
+
+
+   Inequalities (4) and (5) are valid due to the fact that                                                            the station to be almost empty. This is due to the fact that
+during each period θ, the accumulated expected number                                                                 most of the returners, in this particular station, arrive in
+of abandonments is monotonous, either non-increasing or                                                               the morning, while most of the renters arrive in the after-
+non-decreasing depending on the relation between μθ and                                                               noon, as can be observed in Fig. 3. Therefore, in order to
+λθ . If the renter arrival rate is greater than the returner                                                          reduce the chance that returners will arrive at a full station,
+arrival rate, μθ > λθ , the probability of the station being                                                          it is better to start with few bicycles at the station. During
+empty, π I0 ,0 (t), increases during the period, while the prob-                                                      the morning hours the number of bicycles in the station
+ability of the station being full, π I0 ,C (t), decreases. Calcu-                                                     will gradually increase due to a higher rate of return than
+lating the number of abandonments based on the lower                                                                  rentals and the station will be ready for the high rental rate
+bound between the probability of the station being empty                                                              expected during the afternoon. This is a typical situation
+(respectively, full) at the beginning of the period and the                                                           for many stations that are located in city centers.
+probability of the station being empty (respectively, full)                                                              Note that the computationally demanding part of Mod-
+at the end of the period, min(π I0 ,0 (θδ), π I0 ,0 ((θ + 1)δ)) (re-                                                  els (3) to (5) is the approximation of π (t). This calcula-
+spectively, min(π I0 ,C (θδ), π I0 ,C ((θ + 1)δ))), results in a lower                                                tion requires numerous matrix multiplications that can be
+bound while using the higher probability results in an upper
+bound.
+   In Fig. 2, we illustrate the effectiveness of the described                                                                                     14
+bounds. The UDF presented in the figure is for a 20-hour                                                                                                                                                                                          Returners (λ)
+period (6 am–2 am) at one of the busiest stations of Capital                                                                                                                                                                                      Renters (μ)
+                                                                                                                                                   12
+Bikeshare in Washington, D.C., a station with 15 lock-
+ers. The arrival rate of users was estimated based on data
+                                                                                                                                                   10
+collected in the station during weekdays in the winter of
+
+
+
+                                                                                                                       Renters, Returners / hour
+2010–2011. The average number of arrivals and returners
+                                                                                                                                                   8
+per day during this period was 60.88 and 65.12, respec-
+tively. The computation was based on time discretization
+of 15 and 5 minutes. The penalty per abandoment of both                                                                                            6
+
+types was set to one ( p = h = 1); accordingly, the y-axis
+represents the expected number of user abandoments per                                                                                             4
+day. It is apparent from the graphs that while the approx-
+imation error can be bounded much more tightly with the                                                                                            2
+finer discretization, both discretization levels produce very
+similar approximated UDFs.                                                                                                                         0
+                                                                                                                                                    6                            8            10      12       14     16        18        20     22      24         26
+   One interesting observation from the graphs is that al-                                                                                                                                                           Time
+though the station faces, on average, a similar number of
+renters and returners, it is best to set the initial inventory of                                                     Fig. 3. Renters and returners arrival rate at a station.
+

@@ -1,0 +1,62 @@
+CITEKEY: ravivStaticRepositioningBikesharing2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/UAVMV85M/Raviv et al. - 2013 - Static repositioning in a bike-sharing system models and solution approaches.pdf
+PDF PAGE INDEX: 7
+PDFTOTEXT PAGE NUMBER: 8
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-009
+RELATED CE IDS: CE-009
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+194                                                                        T. Raviv et al.
+
+
+the allowed set of routes and/or limitations on the quantity of bicycles loaded/
+unloaded at each station. Such limitations may result from operational consider-
+ations or from computational limitations. We describe and discuss these limitations
+in detail later in this section, when presenting our mathematical formulations.
+Table 1 at the end of this section summarizes the capabilities and assumptions of the
+formulations presented.
+   In the static version of the problem studied here, repositioning is performed while
+the demand for bicycles and vacant lockers is assumed to be zero. Indeed, in reality
+the demand during the night is negligible. A given length of time (say, 5 h, from 1
+am to 6 am every night) is allotted to the repositioning operation, and its purpose is
+to improve the starting conditions (bicycle initial inventory levels at the stations) of
+the next day.
+   Next, we present notation that is common to all our formulations.
+
+Notation
+
+The static repositioning problem is described by the following sets and parameters:
+N        Set of stations, indexed by i ¼ 1; . . .; jN j
+N0       Set of nodes, including the stations and the depot (denoted by i ¼ 0),
+         i ¼ 0; . . .; jN j
+V        Set of vehicles, v ¼ 1; . . .; jV j
+s0i      Number of bicycles at node i before the repositioning operation starts
+ci       Number of lockers installed at station i 2 N0 , referred to as the station’s
+         capacity
+kv       Capacity (number of bicycles) of vehicle v 2 V
+fi ðsi Þ A convex penalty function for station i 2 N, the function is defined over the
+         integers si ¼ 0; . . .; ci
+tij      Traveling time from station i to station j
+a        Weight/scaling factor (in the objective function) of the operating costs
+         relative to the penalty costs
+T        Repositioning time, i.e., time allotted to the repositioning operation
+L        Time required to remove a bicycle from a station and load it onto the vehicle
+U        Time required to unload a bicycle from the vehicle and hook it to a locker in
+         a station
+   To further clarify the above notation recall that static repositioning occurs during
+the night, and it starts when the quantity of bicycles at node i is s0i . Due to the
+repositioning operation, a different inventory level, si , is reached at the end of it,
+which determines the penalty cost. The penalty functions, fi ðsi Þ, are calculated in a
+pre-processing step for every possible inventory level, i.e., from zero to the
+maximum capacity of each station i.
+   We suggest penalty functions fi ðsi Þ that represent the expected number of
+shortages during the next working day. Note that while the model is a deterministic
+mixed integer program, the stochastic nature of the demand is already incorporated
+via the above definition of the fi ðÞ functions. The shortages may be weighted
+
+
+123
+

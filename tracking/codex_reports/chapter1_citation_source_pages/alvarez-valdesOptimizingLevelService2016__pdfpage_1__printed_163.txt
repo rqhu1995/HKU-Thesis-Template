@@ -1,0 +1,93 @@
+CITEKEY: alvarez-valdesOptimizingLevelService2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/LR2TQNWN/Alvarez-Valdes et al. - 2016 - Optimizing the level of service quality of a bike-sharing system.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 163
+SECTION: Abstract / Introduction
+RELATED CE IDS: CE-001, CE-004
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+164                                                  R. Alvarez-Valdes et al. / Omega 62 (2016) 163–175
+
+
+every day from 07:00 until 24:00. Every night, when the system                  dissatisfaction for different replenishment periods, given an initial
+closes, the states of the stations do not correspond to the desired             inventory, the station size, and stochastic demand patterns.
+states for the next morning. Therefore the trucks of the reposi-                    Several types of heuristics have been proposed. For instance, a
+tioning system move some bicycles between stations in order to                  9.5 approximate algorithm [2], a cluster-ﬁrst, route-second algo-
+leave the system as close as possible to the ideal state when it                rithm [9], tabu search [3,11], variable neighborhood search [6,7],
+opens in the morning.                                                           PILOT/GRASP [8], ant colony and constraint programming [15,16],
+    There are several features of the Palma system and of our approach          and matheuristics [18]. In three studies [4,5,19], MIP formulations
+that make this study different from previously published studies. First,        and/or relaxations of the problem are solved. To our knowledge,
+the desired state of each station is not given but calculated from the          only four exact methods have been proposed: one branch-and-
+system information. Most of the previous papers on the static repo-             prize [13] and three branch-and-cut algorithms [3,10,19].
+sitioning problem consider the desired or target state of each station
+as a given constant, assuming implicitly that these targets are attain-
+able. In our approach, the ideal state of each station is calculated from       3. Description of the problem and data analysis of the Palma
+the database in which the system has recorded every single bicycle              system
+move. Using these data, we can estimate the demands (in both
+directions, taking and returning bicycles) for every time interval and              A bike-sharing system is composed of a set of stations, from which
+compute the unsatisﬁed demand for each possible station state. Using            the bicycles are taken and to which they are returned. The registered
+these estimated unsatisﬁed demands and the number of available                  users can take a bicycle from any station at any time, use it, and return
+bicycles in the system we calculate the state of each station that              it to another station. Each city has its own rules of usage. In Palma de
+minimizes the overall cost of unsatisﬁed demands. If there are enough           Mallorca, the ﬁrst 30 min are free of charge and a small fee is paid for
+bicycles to attain for each station the state that minimizes its esti-          extra time. Each movement is recorded and stored in the system's
+mated unmet demand, that will be the solution. However, if the                  database. The quality of the service can be measured as the amount of
+number of available bicycles is lower than the sum of these individual          time a station remains empty or completely full, and either the
+optimal states, the available bicycles have to be placed at the stations        withdrawal demands cannot be satisﬁed or the bicycles cannot be
+where they minimize the overall unsatisﬁed demands.                             returned. Another alternative measure would be to count or estimate
+    A second special characteristic concerns the design of the truck            the number of unsatisﬁed demands of both types at each station. The
+routes. The city is not split beforehand into as many zones as there are        repositioning system includes one or several depots to which
+                                                                                damaged bicycles are brought to be repaired and from which repaired
+trucks available. In our proposal, all the trucks work jointly and the
+                                                                                or new bicycles are incorporated into the system, and a set of vehicles
+routes are constructed simultaneously, taking into account balance
+                                                                                that take bicycles from the depots or from the stations and carry them
+criteria such as the total distance or total time of each route. There is
+                                                                                to other stations in order to improve the quality of the service.
+also ﬂexibility about the initial and ﬁnal points of the truck routes and
+                                                                                    The system can be represented by a complete graph G ¼ ðV; EÞ,
+about the number of bicycles a truck can carry when it starts its route.
+                                                                                where V ¼ S [ D [ V contains a vertex for each depot, each sta-
+    A third distinctive characteristic of our proposal is the man-
+                                                                                tion, and each vehicle, representing its initial location.
+agement of damaged bicycles. These damaged, out-of-service
+                                                                                    For each station i A S (set of stations) we know:
+bicycles are detected by the system and we were asked to
+include their collection in the repositioning routes. In our system,
+                                                                                 Ci, capacity (number of lockers),
+when the trucks visit the stations these damaged bicycles are
+                                                                                 bsi, current number of bicycles ready to be used,
+collected, whenever possible, and taken to the depot. In this way,
+                                                                                 bsdam
+                                                                                     i  , current number of damaged bicycles.
+no special collection routes for damaged bicycles are needed.
+                                                                                    For each vehicle l A V (set of repositioning vehicles):
+
+2. Previous work                                                                 Pl, capacity (number of places),
+                                                                                 bvl, number of bicycles in good condition on the vehicle,
+    There are a number of existing papers in the literature about                bvdam
+                                                                                     l  , number of damaged bicycles on the vehicle.
+the static case [2–11], but very few on the dynamic case [12–14].
+Although all of them deal with the problem of repositioning, the                    For each depot k A D (set of depots):
+objectives, constraints, and solution techniques are different.
+    Among the different objectives considered, we ﬁnd minimiza-                  bdk, number of bicycles stored in the depot.
+tion of total traveling cost or time [2–4], total unmet demand [13],
+maximum tour length [9], the sum of travel time and holding cost                We also know:
+[10], the weighted sum of total time of the routes, deviation from
+the targeted number of bicycles at each station, and number of                   tij, travel time from location i to location j; i; j A S [ D [ V,
+moves between stations [8,15,16].                                                tpark, parking time,
+    The characteristics of the problem considered in each study are              tload, time to load/unload one bicycle.
+also different. For example, in some of them only one vehicle is
+available [2,10,11]. In others, a limit to the number of visits to the              As of November 2013, in bicipalma, the bike-sharing system of
+stations is imposed: only one [4,11], or a maximum ﬁxed number                  Palma de Mallorca (Spain), there were 28 stations and over 200
+[3]. In some cases, the perfect balance requirement is a hard                   bicycles. The capacity of each station varies from 10 to 30 bicycles.
+constraint [2,3] but in most of them the imbalances are penalized.              Fig. 1 shows the distribution of the stations on the Palma map.
+A key question is how the target state for each station is computed.                The usage of each station is neither uniform nor correlated with
+In most of the studies, this quantity is ﬁxed, generally at half the            its capacity. Fig. 2 shows the capacity and the average number of
+station capacity, as in Rainer-Harbach et al. [6], Raidl et al. [7], and        movements on working days. The horizontal axis shows the stations'
+Papazek et al. [8]. Schuijbroek et al. [9] compute a lower and upper            capacities (10, 15, 20, 30 lockers) and the vertical axis the average
+bound on the service level requirement of each station by using a               daily movements at each station. A large variability can be observed.
+queuing system and Raviv and Kolka [17] compute a measure of                    Small stations with 10 lockers may have up to 60 movements, while
+

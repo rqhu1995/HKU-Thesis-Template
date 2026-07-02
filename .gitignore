@@ -1,0 +1,28 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.toc
+*.xdv
+*.synctex.gz
+*-SAVE-ERROR
+
+# Local/generated working directories
+/output/
+/tmp/
+
+# macOS
+.DS_Store
+
+# Temporary editor files
+*.swp
+*.swo
+*~

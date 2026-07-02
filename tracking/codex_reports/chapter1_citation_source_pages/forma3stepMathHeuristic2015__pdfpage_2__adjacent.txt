@@ -1,0 +1,76 @@
+CITEKEY: forma3stepMathHeuristic2015
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/BNZBQK4T/Forma et al. - 2015 - A 3-step math heuristic for the static repositioning problem in bike-sharing systems.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-027
+RELATED CE IDS: CE-027
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+232                                  I.A. Forma et al. / Transportation Research Part B 71 (2015) 230–247
+
+
+Rudloff and Lackner (2014). Lin and Yang (2011) address the combined problem of selecting optimal locations for bike-shar-
+ing stations and designing the bicycle paths network in a city so as to minimize the total travel costs of all users in the city.
+Romero et al. (2012) propose a bi-level optimization model for the optimal location of bike-sharing stations where the goal is
+to maximize the number of travelers that use the system. Chow and Sayarshad (2014) proposed a new framework to design
+transportation networks in the presence of coexisting networks. The framework was applied to a bike-sharing system in the
+presence of a coexisting transit system and was shown to result in a capacitated multicommodity ﬂow problem. Shu et al.
+(2005) study the design and management of a stochastic vehicle-sharing system. Shu et al. (2013) develop a network ﬂow
+model for a system in which the ﬂow is determined by the random demand of the travelers. They examine the effect of redis-
+tribution of bicycles in the network and the capacity of the stations on the ﬂow in the system. Nair et al. (2013) studied the
+Vélib’ system in Paris from several aspects, including system characteristics, utilization patterns, the connection between
+public transit and bicycle-sharing systems, and ﬂow imbalances between stations. Rudloff and Lackner (2014) build a sta-
+tistical model for the demand for bikes and lockers by studying the inﬂuence of weather and full/empty neighboring stations
+on demand.
+    In order to cope with the inherent asymmetry and stochasticity of trips in the system, two general methods were pro-
+posed for diverting the demand towards more balanced patterns. Waserhole and Jost (2015) present a dynamic pricing
+mechanism that forces a balanced demand and hence save the need for repositioning altogether. Such an approach clearly
+comes at the cost of reducing the level of service provided to the users of the system but nevertheless seems the only viable
+alternative to balancing a car sharing system where repositioning is too expensive. Fricker and Gast (2015) use mean-ﬁeld
+approximation to analyze the effect of a simple incentive mechanism on the service provided by the system and the optimal
+ﬂeet size. Kaspi et al. (2014a, 2014b) explore operational policies in which the users of the system reserve lockers at the
+destination upon the beginning of their journey. Trips can be denied or the destination can be slightly diverted if no vacant
+lockers are expected to be available at the true destination.
+    Many studies on bike-sharing systems deal with some variants of the static repositioning problem, which is also the topic
+of this work. Some authors refer to the same class of problems as rebalancing problems but since, as mentioned above, a
+balance in the system can also be achieved by pricing incentives and reservations, we prefer the term repositioning. Note
+that the static repositioning problem is not uniquely deﬁned since various studies make different modeling assumptions.
+Most of the authors viewed the problem as an extension of the single commodity many-to-many pickup and delivery prob-
+lem introduced by Hernández-Pérez and Salazar-González (2004). In particular, most studies consider the total distance
+traveled by the repositioning vehicles, as the objective function. Berbeglia et al. (2007) provide a survey and classiﬁcation
+of pickup and delivery problems; see also the discussion below regarding the differences between the problem considered
+here and pickup and delivery problems.
+    Chemla et al. (2013a) propose a math-heuristic for the single vehicle version of the problem, assuming each station can be
+visited more than once. Their algorithm is based on a solution of a relaxation of the problem that is solved by a branch-and-
+cut procedure. The objective function is to ﬁnd a route that minimizes the total traveling distance. Erdoğan et al. (2013)
+extend the pickup and delivery model to allow the ﬁnal inventory at each node to be within a prescribed interval instead
+of at a unique level. This model reﬂects the idea that there are some degrees of ﬂexibility in the desired number of bicycles
+at each station at the end of the static repositioning operation. They present a branch-and-cut algorithm and a Bender
+decomposition that allows solving instances with up to 50 stations. Schuijbroek et al. (2013) study the static repositioning
+problem with a service level constraint. Similarly to Erdoğan et al. (2013) they assume that the service level constraint is met
+when the desired inventory level at the end of the repositioning operation is within a given interval. They present a queuing
+model that allows calculating the required interval given the desired service level. Next, the paper introduces a cluster-ﬁrst
+route-second algorithm where the clustering problem is solved by a heuristic that is based on the maximum star approxi-
+mation of the TSP. The routing problem of each repositioning vehicle is then formulated as an integer program and solved by
+a commercial solver. Rainer-Harbach et al. (2013) and Raidl et al. (2013) present variable neighborhood search heuristics for
+a variant of the static repositioning problem that take the loading and unloading times into account.
+    Contrary to the approach of all the above studies, we believe that the desired number (or range) of bicycles at the stations
+after the static repositioning operation is completed should constitute a soft constraint, expressed as a penalty in the
+objective function. From the operator’s point of view, the target inventory levels of bicycles are only idealistic goals to aspire
+to.
+    Raviv et al. (2013), based on Forma et al. (2010) further extend the many-to-many pickup and delivery problem intro-
+duced by Hernández-Pérez and Salazar-González (2004) by including the following characteristics that are not considered
+by other studies: (a) the objective function incorporates a service level component directly, that is, the goal is to minimize
+a weighted sum of the expected number of un-served users (due to shortage of both bicycles and lockers) during the next
+working day, and the total traveling distance. The former part is calculated based on Raviv and Kolka (2013); (b) the planning
+horizon of the repositioning operation is limited in time; (c) the loading and unloading times of bicycles at the stations are
+taken into account. Near optimal solutions were reported for instances created based on the demand of actual systems with
+up to 104 stations and two vehicles, but as shown in this study, this marks the limits of the model size that can be solved
+with a reasonable optimality gap subject to a reasonable computing time constraint.
+    The solution method presented in this paper is built to solve the problem under the assumptions presented in Raviv et al.
+(2013) even though it can be easily adapted to the other optimization models presented in the literature. In the current study
+we signiﬁcantly increase the size of the problem instances that can be solved to near optimality.
+

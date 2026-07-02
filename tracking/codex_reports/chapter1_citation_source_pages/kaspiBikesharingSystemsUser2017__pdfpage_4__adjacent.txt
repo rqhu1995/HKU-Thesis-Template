@@ -1,0 +1,88 @@
+CITEKEY: kaspiBikesharingSystemsUser2017
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/W5I87Q6K/Kaspi et al. - 2017 - Bike-sharing systems user dissatisfaction in the presence of unusable bicycles.pdf
+PDF PAGE INDEX: 4
+PDFTOTEXT PAGE NUMBER: 5
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-022
+RELATED CE IDS: CE-022
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                                                                                            IISE TRANSACTIONS                  147
+
+
+Table . Shortage events in two settings with initial inventories (I 0 , B0 + 1) and (I 0 , B0 ).
+
+ Shortage        Usable bicycles before the shortage
+ event                         occurs                         Shortage type                (I0 , B0 + 1)           (I0 , B0 )      Usable bicycles after the shortage occurs
+
+               I                     
+                  j−1 (I0 , B0 + 1) = I j−1 (I0 , B0 ) − 1        Bicycle             j (I0 , B0 + 1) = 1   j (I0 , B0 ) = 0        I                  
+                                                                                                                                         j (I0 , B0 + 1) = I j (I0 , B0 )
+                  I                     
+                    j−1 (I0 , B0 + 1) = I j−1 (I0 , B0 )          Bicycle             j (I0 , B0 + 1) = 1   j (I0 , B0 ) = 1         I                   
+                                                                                                                                          j (I0 , B0 + 1) = I j (I0 , B0 )
+                                     
+                I j−1 (I0 , B0 + 1) = I j−1 (I0 , B0 ) − 1        Locker              j (I0 , B0 + 1) = 1   j (I0 , B0 ) = 1                          
+                                                                                                                                      I j (I0 , B0 + 1) = I j (I0 , B0 ) − 1
+                  I                     
+                    j−1 (I0 , B0 + 1) = I j−1 (I0 , B0 )          Locker              j (I0 , B0 + 1) = 1   j (I0 , B0 ) = 0      I                   
+                                                                                                                                        j (I0 , B0 + 1) = I j (I0 , B0 ) − 1
+
+
+
+under this sequence of demand occurrences. After analyzing                                  E R into sequences of demand occurrences, such that in each
+such sequences, we will extend our analysis to any demand                                   sequence there are no return attempts of unusable bicycles and
+realization.                                                                                the sequences are separated by return attempts of unusable bicy-
+Lemma 1. For any sequence of demand occurrences , the fol-                                 cles. Note that for the first sequence, the conditions are as in
+lowing inequality holds:                                                                    Lemma 1; i.e., the inequality holds. Following this sequence
+                                                                                            there are three different possibilities: (i) it is possible to return
+                      F  (I0 , B0 + 1) ≥ F  (I0 , B0 ).                                   the unusable bicycle under both settings; (ii) it is not possible
+                                                                                            to return the unusable bicycle under both settings; and (iii) it
+Proof. Consider two initial settings of a station: (I0 , B0 + 1) and                        is possible to return the unusable bicycle under setting (I0 , B0 )
+(I0 , B0 ); i.e., when the number of usable bicycles is identical but                       but not under (I0 , B0 + 1). When (i) or (ii) occurs, the differ-
+the number of unusable bicycles differs by one. We claim that                               ence in the total number of shortages up to this point between
+the number of usable bicycles under both settings may differ                                the two settings remains unchanged and the same analysis may
+by at most one at any time, namely, either I                j (I0 , B0 + 1) =              be repeated for the next sequence, since there is still a differ-
+                                           
+I j (I0 , B0 ) or I j (I0 , B0 + 1) = I j (I0 , B0 ) − 1. This will be                      ence of one unusable bicycle between the two. After (iii) occurs
+demonstrated using Table 1. In Table 1 we describe four different                           the numbers of usable and unusable bicycles are identical under
+shortage events that may occur in either of these settings. In the                          both settings; therefore, from this point on the station faces
+second column we present the relations between usable inven-                                exactly the same shortages under both initial settings. Now, since
+tory levels after the ( j − 1)st demand occurrence under settings                           this is true for any demand realization it is also true for the
+(I0 , B0 ) and (I0 , B0 + 1). In the third column we describe the                           expectation; thus we obtain F (I0 , B0 + 1) ≥ F (I0 , B0 ).        
+type of shortage, namely, bicycle or locker. In the fourth and fifth
+columns we denote under which setting this shortage occurs.                                  Remark 1: Since the EUDF F (I0 , B0 ) is non-decreasing in B0 ,
+Finally, in the sixth column we present the relations between                               the function is minimized at B0 = 0, as expected. However, due
+the inventory levels under the two settings that result from the                            to time and capacity constraints, the operator may not be able
+shortage event. Note that at time 0, the inventory levels of usable                         to remove all unusable bicycles (or even visit all stations where
+bicycles are identical under both settings, so that the first short-                        there are unusable bicycles); therefore, it is important to analyze
+age event may be either event 2 or event 4. The sixth column in                             the EUDF for all possible values of (I0 , B0 ).                  
+Table 1 demonstrates that the relation between the usable inven-
+                                                                                               Next, we prove the following three inequalities, which are
+tory levels under both settings may be either I              j (I0 , B0 + 1) =             needed for the convexity proof of the EUDF that will be pre-
+Ij (I0 , B 0 ) or I 
+                     j (I0 , B 0 + 1) = I 
+                                          j (I0 , B 0 ) − 1.  In the latter case,           sented in Section 3.2.
+the subsequent shortage event may be either event 1 or event 3.                                 • F (I0 , B0 + 2) − F (I0 , B0 + 1) − F (I0 , B0 + 1) +
+This again results in the same possible inventory relations.                                      F (I0 , B0 ) ≥ 0.
+    It is noticeable from the fourth and fifth columns of Table 1                               • F (I0 + 2, B0 ) − F (I0 + 1, B0 ) − F (I0 + 1, B0 ) +
+that whenever a shortage occurs under setting (I0 , B0 ) it also                                  F (I0 , B0 ) ≥ 0.
+occurs under setting (I0 , B0 + 1) but not the opposite. That                                   • F (I0 + 1, B0 + 1) − F (I0 + 1, B0 ) − F (I0 , B0 + 1) +
+is, for any occurrence of shortage, we have j (I0 , B0 + 1) ≥                                   F (I0 , B0 ) ≥ 0.
+j (I0 , B0 ) and j (I0 , B0 + 1) ≥ j (I0 , B0 ). In addition, for                        Observe that the first two inequalities mean that the EUDF
+any demand occurrence where no shortage occurs, all indica-                                 is convex in each of the variables (I0 , B0 ) independently. The
+tors equal zero and the inequalities hold trivially. By summing                             proofs for these inequalities are given under the following
+these inequalities for all demand occurrences and multiplying by                            assumption:
+the related penalties we obtain for the set : F  (I0 , B0 + 1) ≥                             Assumption 1: No unusable bicycles are returned to the sta-
+F  (I0 , B0 ).                                                                            tion during the given period.
+Theorem 1. The EUDF F (I0 , B0 ) is non-decreasing in the initial                              Although this assumption may seem restrictive, note that the
+inventory of unusable bicycles B0 .                                                         probability that a returned bicycle is unusable is low (see, for
+                                                                                            example, the discussion about the maintenance reports of NYC
+Proof. Consider the shortage occurrences given two initial                                  Bikeshare in Section 5). Hence, a major share of the effect of
+settings of a station: (I0 , B0 + 1) and (I0 , B0 ). We will show                           unusable bicycles is already captured by the unusable bicycles
+that F R (I0 , B0 + 1) ≥ F R (I0 , B0 ) for any demand realization R                        that are already parked in the station; i.e., in the initial state
+and thus claim that it holds for the expectation. For a given                               of the station. We note that without Assumption 1 it is possi-
+demand realization R, we divide the set of demand occurrences                               ble to “cook” an example in which the EUDF is non-convex; see
+

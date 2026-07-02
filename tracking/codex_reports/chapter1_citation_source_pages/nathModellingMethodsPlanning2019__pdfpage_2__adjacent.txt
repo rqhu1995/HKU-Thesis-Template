@@ -1,0 +1,60 @@
+CITEKEY: nathModellingMethodsPlanning2019
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IQP6BKAP/Nath and Rambha - 2019 - Modelling methods for planning and operation of bike-sharing systems.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-003
+RELATED CE IDS: CE-003
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+that could be accessed using a mobile app. The smart technology-based system provided real-time information on
+bike availability [19], [25]. Most BSSs in the recent past belong to the fifth generation in which dockless bikes are
+used in a free-floating or station-based set up. These systems have lower setup costs and hence have grown rapidly
+in many cities.
+By December 2016, about a thousand cities in the world had a bike-sharing program [26]. Mobike, a dockless BSS,
+is the world’s largest bike-sharing operator. As of 2018, Mobike operated in over 19 countries and 200 cities [27].
+One of the large-scale station-based BSSs is the Hangzhou Public Bicycle System in China, which comprises of 2,965
+stations and approximately 69,750 bicycles [28], with plans to expand to 175,000 bicycles by 2020 [29]. Bike-sharing
+programs have grown exponentially in the last decade, particularly in Asia. For instance, thirteen of the world’s
+fifteen largest BSSs are in China [30].
+Although BSSs have been encouraged by public agencies and users around the world, service providers such as
+Mobike, Ofo, and Pedl had to shut down operations in many cities due to high maintenance costs, low profits, theft,
+and vandalism [31], [32], [33]. Some of the new technologies like Global Positioning System (GPS), anti-theft alerts,
+and high-tech handlebars introduced in the fourth and fifth generation dockless bicycles have the potential to address
+these issues to a certain extent [34], [35].
+
+
+
+
+                Figure 3: Roadside dumping of bicycles in Xiamen, Fujian province, China (Source: [36])
+
+
+Also, cycling is not perceived as a safe commute mode, especially in mixed traffic, and the lack of dedicated bike
+lanes in most places proves to be a major hurdle for the success of BSSs. Further, while BSSs work well in controlled
+environments such as office and university campuses, scaling them to a city level can be extremely challenging
+especially for dockless free-floating systems. Often, bikes are left at remote locations where there is no demand,
+and this affects the utilization rates of cycles. As bicycles are fairly inexpensive, service providers tend to add more
+bikes to the system as a knee-jerk reaction, but the oversupply of bikes has resulted in many abandoned and broken
+bicycles, especially in China (see Figure 3). These observations strongly motivate the need for planning and operating
+BSSs in an efficient manner.
+
+
+
+3    Strategic Planning
+
+Strategic planning problems in the context of a BSS typically involve designing the bike path network and determining
+the number and locations of bike stations. These decisions must consider construction costs, the effect of terrain,
+customer service level (which can be measured by the coverage level, bicycle availability, and user out-of-pocket
+costs), and the impact on existing automobile traffic. For instance, station location decisions must make sure that
+cycles are at a convenient walking distance (roughly 300-500 m) from the actual trip origins and destinations [37].
+Geographical factors are crucial not only for bike lane design, but also for locating bike stations. For example, in
+Brisbane, it was observed that CityCycle users avoid returning bicycles to higher-elevation stations [38]. Stations
+must also be designed such that there is enough curb-side space to account for surges in pickups and dropoffs.
+A key input to these decisions is the knowledge of demand for bike sharing, which can be estimated using census
+data [39], stated-preference surveys, and by observing the travel patterns of commuters who might potentially shift
+
+
+                                                           3
+

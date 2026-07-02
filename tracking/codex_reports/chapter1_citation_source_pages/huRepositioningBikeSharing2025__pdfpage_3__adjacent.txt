@@ -1,0 +1,101 @@
+CITEKEY: huRepositioningBikeSharing2025
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/2SQ8MACE/Hu et al. - 2025 - Repositioning in bike sharing systems with broken bikes considering on-site repairs.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-032
+RELATED CE IDS: CE-032
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+R. Hu et al.                                                                                                                   Transportation Research Part E 201 (2025) 104155
+
+
+et al., 2022), with a few studies considering the dockless BSSs (Chang et al., 2018, 2023; Lu et al., 2019; Usama et al., 2019, 2020). The
+major difficulty in coping with broken bikes in dockless BSSs is the scatteration of the broken bikes due to the flexibility of parking in
+dockless BSSs (Usama et al., 2020).
+    Regarding the objectives of the existing models, a certain number of existing works set the minimization of the travel cost for usable
+bike repositioning and broken bike collection as the objective (Alvarez-Valdes et al., 2016; Chang et al., 2018; Zhang et al., 2018, 2020;
+Lu et al., 2019). One thing in common among the aforementioned studies is that they required a perfect balance for usable bikes and a
+complete collection of broken bikes at each station. However, given limited vehicle capacity, the perfect balance may require that
+trucks visit the depot and some stations multiple times to meet only a tiny fraction of demand, leading to possible waste of resources or
+even solution infeasibility, especially under the limited time budget. Therefore, some works allowed incomplete satisfaction by
+including minimizing the absolute deviations of the usable bikes from the target levels into the objective. Specifically, Usama et al.
+(2019) formulated user dissatisfaction as the sum of the absolute deviations of inventory levels after rebalancing from the corre­
+sponding target inventory levels at all the stations and minimized it. Wang and Szeto (2021) introduced the sum of absolute deviations
+from the target inventory level of usable bikes at each station and the penalty for the unhandled broken bikes at each station in their
+objective. Furthermore, some works also took the environmental issue into account and incorporated the emissions of CO2 into their
+objectives (Wang and Szeto, 2018, 2021; Chang et al., 2023).
+
+
+2.3. Research gaps
+
+   The existing research on BRPs with broken bikes is summarized in Table 2.1. It can be observed that the aforementioned studies
+mainly concentrated on obtaining the minimum absolute deviation of the inventory level from the target level at the minimum
+operational cost. Broken bikes were only regarded as another type of bike in need of collection. However, as mentioned before, some
+repairing work can be conducted on-site by repairers, who can handle the broken bikes and satisfy the usable bike demand simul­
+taneously without vehicle repositioning. To the best of our knowledge, no study has so far considered the combination of repairers and
+repositioning vehicles in an optimization model. We noticed one study on repairer scheduling in a BSS (Freund, 2018), which focused
+on broken dock repairs only.
+   Regarding the model objective, most researchers focus on minimizing unmet demand for usable bikes and the number of unhandled
+
+Table 2.1
+A summary of current studies on BRPs with broken bikes.
+  Reference                      Scenario                 Objectives                                                             Assumptions                            Repositioning
+                                                                                                                                                                        quantities
+                                                          1             3          4         5            6                      7        8        9                    10       11
+                                                                  AD/       EUDF    TC/TL/           MC           CE                 MD       MV           OR              UB       BB
+                                                          2
+                                                                  SD               TT
+                                                                                                                                                                        12
+  Kaspi (2015)                   Docked, static               ​             ✓      ✓             ​            ​            ​     ​        ​            ​            ​      DV    DV
+                                                                                                                                                                        13
+  Alvarez-Valdes et al. (2016)   Docked, static           ​             ​          ✓         ​            ​            ​         ✓        ✓        ​            ​          PB    PB
+                                                                                                                                                                        14
+  Chang et al. (2018)            Dockless, static         ​             ​          ✓         ✓            ​            ​         ​        ✓        ​            ​          NC    PB
+  Wang and Szeto (2018)          Docked, static           ​             ​          ​         ​            ✓            ​         ✓        ✓        ​            ​       DV       DV
+  Zhang et al. (2018)            Docked, static           ​             ​          ✓         ​            ​            ​         ​        ✓        ​            ​       NC       PB
+  Lu et al. (2019)               Dockless, static         ​             ​          ✓         ​            ​            ​         ​        ✓        ​            ​       NC       PB
+  Xu et al. (2019)               Docked, static           ✓             ​          ✓         ​            ​            ​         ​        ​        ​            ​       DV       DV
+  Du et al. (2020)               Docked, static           ​             ​          ✓         ​            ​            ​         ✓        ✓        ​            ​       PB       PB
+  Usama et al. (2020)            Dockless, static         ​             ​          ✓         ✓            ​            ​         ​        ​        ​            ​       PB       DV
+  Zhang et al. (2020)            Docked, static           ​             ​          ✓         ​            ​            ​         ​        ✓        ​            ​       PB       PB
+  Chang et al. (2021)            Dockless, dynamic        ✓             ​          ✓         ✓            ​            ​         ✓        ​        ​            ​       DV       DV
+  Wang and Szeto (2021)          Docked, static           ✓             ​          ​         ​            ✓            ​         ​        ​        ​            ​       DV       DV
+  Cai et al. (2022)              Docked, dynamic          ✓             ​          ​         ​            ​            ​         ​        ✓        ​            ​       DV       DV
+  Lu et al. (2022)               Dockless, static         ​             ​          ✓         ​            ​            ​         ​        ​        ​            ​       NC       PB
+  Jin et al. (2022)              Docked, static/dynamic   ​             ​          ✓         ✓            ​            ​         ​        ✓        ​            ​       DV       PB
+  Chang et al. (2023)            Dockless, dynamic        ✓             ​          ​         ✓            ✓            ​         ✓        ✓        ​            ​       PB       PB
+  This study                     Docked, static           ​             ✓          ​         ​            ✓            ​         ​        ✓        ✓            ​       DV       DV
+  1
+     AD: Absolute Deviation of the number of usable bikes from the target inventory level.
+  2
+     SD: Satisfied Demand.
+  3
+     EUDF: Extended User Dissatisfaction Function
+  4
+     TC/TL/TT: Travel Cost/Travel Length/Travel Time.
+  5
+     MC: Manual-handling Cost.
+  6
+     CE: Carbon Emissions.
+  7
+     MD: Multiple Depots.
+  8
+     MV: Multiple Vehicles.
+  9
+     OR: On-site Repairers.
+  10
+      UB: Usable Bikes.
+  11
+      BB: Broken Bikes.
+  12
+      DV: Decision Variable.
+  13
+      PB: Perfect Balance.
+  14
+      NC: Not Considered.
+
+                                                                                       4
+

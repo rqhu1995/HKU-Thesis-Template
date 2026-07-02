@@ -1,0 +1,78 @@
+CITEKEY: wangStaticGreenRepositioning2018
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/XR2IYSMV/Wang and Szeto - 2018 - Static green repositioning in bike sharing systems with broken bikes.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 438
+SECTION: Abstract / Introduction
+RELATED CE IDS: CE-034
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Y. Wang, W.Y. Szeto                                                                             Transportation Research Part D 65 (2018) 438–457
+
+
+usage and the congestion impact can be ignored. The target is to meet the demands in the next morning. Dynamic bike repositioning
+concerns with the daytime situation when the system is in high usage and the demand of each station will change during the
+repositioning period (e.g., Caggiani and Ottomanelli, 2012; Contardo et al., 2012; Kloimüllner et al., 2014; Ghosh et al., 2017;
+Caggiani et al., 2018; Shui and Szeto, 2018). Both types of repositioning can be found in practice.
+    Both types of bike repositioning are commonly performed by fossil-fueled vehicles. Using these vehicles for the operation may
+damage the environmental creditability of BSSs (Wiersma, 2010) because these vehicles emit pollutants and greenhouse gases. Other
+than the unmet demands for both lockers and bikes, environmental objectives should be duly considered in the repositioning op-
+eration. However, in the literature, except Shui and Szeto (2018), environmental objectives are rarely considered in bike re-
+positioning studies.
+    Another important consideration is broken bikes. Broken bikes are regularly found in BSSs (Kaspi et al., 2016, 2017). The pre-
+sence of broken bikes in the systems means not only a waste of resources but also causes user dissatisfaction. Broken bikes occupy
+lockers and reduce the parking spaces for users to return bikes. Moreover, broken bikes cannot be used to satisfy bike users’ demand.
+In addition, broken bikes are always transported back to depots for repairs and use up some of the capacity of repositioning vehicles
+for usable bikes, making the repositioning of usable bikes less effective. It is therefore important to consider the repositioning of both
+usable and broken bikes simultaneously. However, no studies, except Alvarez-Valdes et al. (2016), considered this type of re-
+positioning. Moreover, to the best of our knowledge, no studies simultaneously considered both broken bikes and an environmental
+objective at the time of this writing.
+    In this paper, we study a static green Bike Repositioning Problem (BRP) in the presence of broken bikes. This problem determines
+the route and the corresponding loading or unloading instructions for each repositioning vehicle to balance a BSS with broken bikes.
+The objective is to minimize the total CO2 emissions of all the vehicles. An MILP model is proposed to formulate the problem, which is
+then solved using a commercial solver. Numerical experiments are carried out on small example networks to clearly illustrate the
+problem characteristics and investigate the factors that affect the vehicle emissions. The real world instances of Citybike Vienna are
+also used to compare emission and distance minimization solutions and investigate the runtime complexity of the proposed model. A
+clustering method based on the nearest neighbor heuristic and a commercial solver is used to solve the large real-world instance with
+90 stations. The computational time required and solution quality obtained by this method are also demonstrated.
+    The contributions of this paper lie on the following:
+
+1. to introduce a new and practical BRP—a static green BRP with broken bikes;
+2. to present a model to formulate the problem, and;
+3. to illustrate the problem properties and point out critical factors that affect vehicle emissions.
+
+    The remainder of the paper is organized as follows. Section 2 reviews the literature on BRPs and fuel consumption and CO2
+emission modeling. Section 3 presents a mathematical model for the studied problem. Section 4 describes the numerical studies and
+discusses the results. Section 5 discusses different approaches to solving large-scale BRPs. Finally, Section 6 concludes this paper and
+gives future research directions.
+
+2. Literature review
+
+    In this section, we will first briefly introduce the objectives used in BRPs. Moreover, we will describe how current research
+addresses the fuel consumption and CO2 emissions, especially the factors considered in mathematical models. Afterward, we will
+discuss the literature about broken bikes and the modeling assumptions in BRPs. Finally, we will depict the existing formulation
+approaches to BRPs.
+
+2.1. Objective functions in BRPs
+
+    User satisfaction has been commonly considered as the primary objective in BRPs. It is mainly measured by the number of due
+date violations (e.g., Brinkmann et al., 2015), unsatisfied demand including both docks and bikes (e.g., Contardo et al., 2012),
+penalty costs (e.g., Ho and Szeto, 2014), and so on. Repositioning costs are also considered in most studies, such as travel costs
+including travel time or distance (e.g., Benchimol et al., 2011; Angeloudis et al., 2014; Dell’Amico et al., 2014, 2016; Cruz et al.,
+2017), maximum tour distance (e.g., Schuijbroek et al., 2017), total travel and handling costs (e.g., Erdoğan et al., 2014), total
+redistribution cost (e.g., Nair et al., 2013), and total relocation and lost user costs (e.g., Caggiani and Ottomanelli, 2012). Besides
+single objective optimization, some studies considered the weighted sum of various measures, including the cost of unsatisfied
+demand and the coefficient of variations of the duration of all routes (e.g, Alvarez-Valdes et al., 2016), the total absolute deviation
+from the target number of bikes, the total number of loading/unloading quantities, and the overall time required for all routes (e.g.,
+Di Gaspero et al., 2013, 2016; Raidl et al., 2013; Rainer-Harbach et al., 2013, 2015), total travel time and penalty cost (e.g., Ho and
+Szeto, 2017), total vehicle travel cost and the expected user dissatisfaction in the system (e.g., Zhang et al., 2017), the total number of
+unsatisfied customers and the vehicle’s total operational time (e.g., Szeto et al., 2016), and travel, imbalance, substitution, and
+occupancy costs (e.g., Li et al., 2016). However, existing objectives have rarely considered environmental objectives. Indeed, re-
+positioning operations are commonly carried out by fossil-fueled vehicles, which emit pollutants and greenhouse gases. These
+emissions can damage the environmental creditability of BSSs (Wiersma, 2010). It is therefore important to capture environmental
+objectives in BRPs. To the best of our knowledge, Shui and Szeto (2018) were the pioneers to capture an environmental objective in
+
+                                                                   439
+

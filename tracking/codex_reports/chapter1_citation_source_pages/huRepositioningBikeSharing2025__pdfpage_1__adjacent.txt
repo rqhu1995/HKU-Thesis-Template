@@ -1,0 +1,78 @@
+CITEKEY: huRepositioningBikeSharing2025
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/2SQ8MACE/Hu et al. - 2025 - Repositioning in bike sharing systems with broken bikes considering on-site repairs.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-032
+RELATED CE IDS: CE-032
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+R. Hu et al.                                                                                      Transportation Research Part E 201 (2025) 104155
+
+
+    Currently, there are two forms of bicycle repositioning: static and dynamic. For the static repositioning, the operation is carried out
+throughout the night, assuming that the demand for shared bicycles during that period is negligible. The purpose of this operation is to
+rearrange the bicycles to prepare for the next day. In contrast, the dynamic repositioning runs throughout the day and adjusts to the
+time-varying demand, and the planned scheme is altered frequently (Forma et al., 2015). These two forms of repositioning have gained
+the attention of researchers, and the corresponding static and dynamic BRPs have been well-studied. However, in addition to redis­
+tributing shared bikes between stations to meet user demand, the problem arising from broken bikes in BSSs is also non-negligible. For
+example, in Barcelona, the operator reported that about 12 % of shared bikes were severely damaged, and about 55 % were lightly
+damaged (Castro Fernández, 2011). In New York, 2 % of the total number of bikes in the BSS need major repairs every day (Kaspi et al.,
+2016). From users’ perspective, if a broken bike is found when renting a bike, time for seeking another usable bike is required. In a
+worse case, when all the bikes located at the station are broken, the users are required to go to another station. Meanwhile, a user may
+also encounter all docks being occupied when returning a bike, whereas some parked bikes might be damaged, taking up the space for
+returning usable bikes. As Kaspi et al. (2016) pointed out, even if the percentage of damaged bikes in a BSS is small, it can still seriously
+affect user satisfaction with the system. The decrease in user satisfaction and confidence in the system may lead to the abandonment of
+usage. Therefore, it is necessary to consider handling broken bicycles when solving BRPs.
+    There have been a few studies on BRPs with broken bikes, some of which focused on broken bikes only and formulated models for
+the optimal routes for broken bike collection (Zhang et al., 2018; Lu et al., 2019, 2022). The remainder considered both broken and
+usable bikes and designed the routes of repositioning vehicles and loading instructions for both usable and broken bikes at each station
+(Alvarez-Valdes et al., 2016; Chang et al., 2018; Wang and Szeto, 2018, 2021; Du et al., 2020; Zhang et al., 2020). All these studies on
+BRPs with broken bikes assumed that broken bikes were only repaired at depots (representing bike shops or repair centers) and
+required to be collected by repositioning trucks first. Nevertheless, in practical operations, broken bicycle repairs are not restricted to
+shops or repair centers. They are also conducted in the field by dispatching repairers to the respective locations. According to Citi
+Bike’s monthly operating report for June 2024 (Citi Bike, 2024), 21,637 unique bikes were checked or repaired by repairers in depots
+or the field during January. On-site repairs by repairers can handle the broken bikes and satisfy the usable bike demand simultaneously
+without vehicle repositioning. Therefore, it is essential to determine how to send repairers to the field (i.e., the routes of repairers for
+on-site repairs) and how many broken bikes should be handled by each repairer at each visited station in addition to the optimal
+strategy combining usable bike repositioning and broken bike collection. To the best of our knowledge, no studies have made such
+integration at the time of this writing. Moreover, as discussed above, user dissatisfaction is greatly influenced by the presence of broken
+bikes. However, most existing studies focus on minimizing the absolute deviations of the inventories from a desired level or maxi­
+mizing the satisfied demand for bikes (Xu et al., 2019; Chang et al., 2021; Wang and Szeto, 2021; Cai et al., 2022), which does not
+necessarily lead to the minimized user dissatisfaction. Therefore, it is vital to take user dissatisfaction into account when designing the
+optimization objectives.
+    As stated above, regular usable bike rebalancing in a BSS is required. However, frequent usable bike rebalancing can significantly
+increase the fuel consumption of rebalancing vehicles (Luo et al., 2020), which contradicts the original aim of running a BSS that offers
+an eco-friendly mode of transportation. For example, in London, due to the intensive repositioning work, the fossil-fueled vehicle usage
+for rebalancing has outweighed the environmental benefit of launching the BSS as the replacement for car trips (Fishman et al., 2014).
+Shui and Szeto (2018) pointed out that repositioning plans with long routes or heavy vehicle loads may produce more air pollutants.
+The problem is more severe if the collection of broken bikes is included, given that the collected broken bikes have to be carried all the
+way and cannot be unloaded until the vehicles arrive at depots. Hence, it is meaningful to take the environmental factors into account
+when designing the optimal rebalancing scheme.
+    In this paper, we propose a static BRP with broken bikes and on-site repairers. The problem is finding an effective scheme for
+repositioning trucks and repairers. This scheme encompasses the routes and the loading/unloading instructions of broken and usable
+bikes for the trucks, the routes for the repairers, and the number of broken bikes to be repaired by each repairer at each station. The
+objective is to minimize the sum of the penalty costs of the total user dissatisfaction at all stations and the cost of the total CO2
+emissions of the trucks. We consider the cost of total CO2 emissions as the environmental objective, as CO2 is one of the most severe
+threats to the environment through the greenhouse effect. Using a time-index formulation approach, a Mixed Integer Linear Pro­
+gramming (MILP) model is proposed for the problem. To solve the problem efficiently, we propose a hybrid algorithm, abbreviated as
+HGSADC-SBC, encapsulating Hybrid Genetic Search with Adaptive Dynamic Control (HGSADC) and a newly proposed Station Budget
+Constrained (SBC) heuristic. The algorithmic performance is demonstrated under the scenarios with different network sizes and
+numbers of repairers and trucks. Moreover, the cost-effectiveness of introducing a repairer under different repairing times and broken
+bike inventory levels was studied on a 15-station instance.
+    The contributions of this paper lie in the following:
+
+1. to introduce a new and practical BRP with broken bikes and on-site repairers;
+2. to propose a time-indexed MILP model for the problem and solve it;
+3. to present new findings and operational insights:
+ • We find that long repair times and a low proportion of broken bikes lead to the diminishment of the cost-effectiveness of intro­
+   ducing on-site repairers.
+ • We demonstrate that the cost-effectiveness of introducing on-site repairers changes dynamically with the proportion of broken
+   bikes, indicating the need for adaptable repairer allocation.
+
+    The remainder of the paper is organized as follows. Section 2 reviews the literature on BRPs and points out the research gaps.
+
+                                                                     2
+

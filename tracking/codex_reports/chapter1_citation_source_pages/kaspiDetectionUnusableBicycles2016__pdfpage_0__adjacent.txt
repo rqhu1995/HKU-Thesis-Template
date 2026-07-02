@@ -1,0 +1,95 @@
+CITEKEY: kaspiDetectionUnusableBicycles2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IJ2A4PHK/Kaspi et al. - 2016 - Detection of unusable bicycles in bike-sharing systems.pdf
+PDF PAGE INDEX: 0
+PDFTOTEXT PAGE NUMBER: 1
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-020
+RELATED CE IDS: CE-020
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                               Omega 65 (2016) 10–16
+
+
+
+                                                                Contents lists available at ScienceDirect
+
+
+                                                                                  Omega
+                                                   journal homepage: www.elsevier.com/locate/omega
+
+
+
+
+Detection of unusable bicycles in bike-sharing systems$
+Mor Kaspi, Tal Raviv n, Michal Tzur
+Department of Industrial Engineering, Faculty of Engineering, Tel-Aviv University, Tel-Aviv 69978, Israel
+
+
+
+
+art ic l e i nf o                                        a b s t r a c t
+
+Article history:                                         In bike-sharing systems, a small percentage of the bicycles become unusable every day. Currently, there
+Received 21 July 2015                                    is no reliable on-line information that indicates the usability of bicycles. We present a model that esti-
+Accepted 8 December 2015                                 mates the probability that a speciﬁc bicycle is unusable as well as the number of unusable bicycles in a
+Available online 17 December 2015
+                                                         station, based on available trip transaction data. Further on, we present some information based
+Keywords:                                                enhancements of the model and discuss an equivalent model for detecting locker failures.
+Bike-sharing                                                                                                                & 2015 Elsevier Ltd. All rights reserved.
+Maintenance
+Bayesian model
+
+
+
+
+1. Introduction                                                                              the information system stores a log of the transactions that were
+                                                                                             carried out. Each transaction is featured by its type (renting,
+    Bike-sharing systems have become a common sight in many                                  repositioning, maintenance), start time, end time, start station ID,
+cities around the world during the last decade. In some of the                               start locker ID, end station ID, end locker ID, bike ID, User ID
+major cities, this mode of transportation attracts a considerable                            (either a regular user of the system or a maintenance personnel),
+amount of commuters and tourists on a daily basis. For example,                              etc. Some operators share a subset of the ﬁelds in this log with the
+the bike-sharing system in New-York, CitiBike, reported on an                                public, see for example the CitiBike trip history: http://www.citi
+average of 34,176 rides per day during August 2014 [8].                                      bikenyc.com/system-data.
+    Bike-sharing systems are typically subsidized and regulated by                               In existing bike-sharing systems, information about unusable
+the local governments. Such systems should be designed and                                   bicycles is received either from users or from of repositioning
+operated in the most efﬁcient possible way. The two main com-                                workers when they service the stations. The probability that a user
+ponents of the operating costs are due to repositioning and                                  will report on an unusable bicycle is rather low if other bicycles
+maintenance activities. The planning of the repositioning activities                         that are parked in the station can be rented. That is, a user will
+has received substantial attention in the literature, see, for
+                                                                                             typically complain about an unusable bicycle when there is no
+example [2,3] and the references therein.
+                                                                                             alternative in the station. In addition, not all stations are serviced
+    Maintenance operations of bike-sharing systems have not been
+                                                                                             by repositioning workers on a daily basis. Therefore an unusable
+so far at the focus of Operation Research or Operations Manage-
+                                                                                             bicycle may be parked at a station for a long period of time before
+ment studies. We envision a framework for the planning of these
+                                                                                             being detected and collected.
+operations that includes three processes: (1) detection of unusable
+                                                                                                 In some systems, such as CitiBike, each locker is equipped with
+bicycles; (2) analysis of the effect of the presence of unusable
+                                                                                             a maintenance button that the users may push in order to signal to
+bicycles on the quality of service provided to the users; (3) col-
+                                                                                             the operator that the bicycle should be serviced. While through
+lection of unusable bicycles to maintenance shops or repairing
+them on-site. The ﬁrst process is at the focus of this note, while the                       this mechanism, more information about bicycles that should be
+following two are studied in [5,6], respectively.                                            repaired is obtained, this also generates a fair amount of false
+    The information systems installed in bike-sharing systems                                alarms. In the CitiBike system, about 36% of the reported bicycles
+present to the public on-line aggregated information about each                              are actually usable [7] and, more importantly, many unusable
+station. In particular, using smartphones or stations’ kiosks, users                         bicycles are not reported through this button by the users.
+may query the state of each station in terms of the number of                                    Undetected unusable bicycles appear in the information sys-
+available bicycles and the number of available lockers. Internally,                          tems as available ones. This inaccuracy may adversely affect user's
+                                                                                             route choices and result in an inferior service level. For example, a
+  ☆
+                                                                                             user may go to a station with such undetected unusable bicycles
+    This manuscript was processed by Associate Editor Pesch.
+  n                                                                                          only to ﬁnd out that there are actually no available usable bicycles
+    Corresponding author. Tel.: þ 972 3 6406977.
+     E-mail addresses: morkaspi@post.tau.ac.il (M. Kaspi),                                   in the station. If the system could provide her with accurate
+talraviv@eng.tau.ac.il (T. Raviv), tzur@eng.tau.ac.il (M. Tzur).                             information in advance she could save time by planning her trip
+
+http://dx.doi.org/10.1016/j.omega.2015.12.003
+0305-0483/& 2015 Elsevier Ltd. All rights reserved.
+

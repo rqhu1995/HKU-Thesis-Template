@@ -1,0 +1,88 @@
+CITEKEY: kaspiBikesharingSystemsUser2017
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/W5I87Q6K/Kaspi et al. - 2017 - Bike-sharing systems user dissatisfaction in the presence of unusable bicycles.pdf
+PDF PAGE INDEX: 5
+PDFTOTEXT PAGE NUMBER: 6
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-021
+RELATED CE IDS: CE-021
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+148           M. KASPI ET AL.
+
+
+Appendix A3. However, note that the approximation method of                           Table . Possible combinations of ﬁrst shortage occurrences.
+the EUDF presented in Section 4 does not rely on Assumption                             F R (I0 + 1, B0 + 1) − F R (I0 , B0 + 1)     F R (I0 + 1, B0 ) − F R (I0 , B0 )
+1. Moreover, in Section 5, we evaluate the EUDF using real-life
+demand data, including returns of unusable bicycles, and con-                          First shortage                                First shortage
+                                                                                       occurrence                    Diﬀerence         occurrence               Diﬀerence
+firm that the convexity conditions hold or, at worst, are violated
+with a negligible margin.                                                              Bicycle                          −p               Bicycle                    −p
+                                                                                       Locker                           h                Bicycle                    −p
+                                                                                       Locker                           h                Locker                     h
+Lemma 2. Under Assumption 1, the EUDF F (I0 , B0 ) is con-                             Locker                           h                 None                      0
+vex in the initial inventory of unusable bicycles B0 ; that is,                        None                                              None                       
+F (I0 , B0 + 2) − F (I0 , B0 + 1) ≥ F (I0 , B0 + 1) − F (I0 , B0 ).
+
+                                                                                      Lemma 4: Under Assumption 1, for the EUDF F (I0 , B0 ) the fol-
+   The proof of this Lemma is based on an approach similar to
+                                                                                      lowing inequality is maintained:
+the one used in the proof of Lemma 1. For brevity of the main
+text, we present the complete proof in Appendix A4.
+                                                                                      F (I0 +1, B0 +1)−F (I0 , B0 +1) ≥ F (I0 + 1, B0 ) − F (I0 , B0 ) .
+Lemma 3. Under Assumption 1, the EUDF F (I0 , B0 ) is convex in
+                                                                                      Proof: Observe again that on each side of the inequality
+the initial inventory of usable bicycles I0 ; that is, F (I0 + 2, B0 ) −
+                                                                                      the settings differ by one usable bicycle; therefore, we can
+F (I0 + 1, B0 ) ≥ F (I0 + 1, B0 ) − F (I0 , B0 ).
+                                                                                      again compare the first shortage events (as in the proof of
+    We remark that the convexity proof provided in Raviv and
+                                                                                      Lemma 3). In Table 3 we present the possible combinations
+Kolka (2013) can be used here, due to the effective capacity
+                                                                                      of first shortage occurrences for the two sides of the inequal-
+under all three settings being equal and remaining constant dur-
+                                                                                      ity. Note that the last combination presented in Table 2 is
+ing the entire given period. Here we prove this result through an
+                                                                                      not possible in this case and therefore does not appear in
+alternative approach that is later used in the proof of Lemma 4.
+                                                                                      Table 3. It is observable from Table 3 that for all possible com-
+                                                                                      binations we obtain F R (I0 + 1, B0 + 1) − F R (I0 , B0 + 1) ≥
+Proof. Note that for each side of the inequality the station’s                        F R (I0 + 1, B0 ) − F R (I0 , B0 ). Consequently, by summing
+initial setting varies only by the initial inventory of usable                        over all demand realizations we obtain F (I0 + 1, B0 + 1)
+bicycles. Under Assumption 1, the number of unusable bicycles                         − F (I0 , B0 + 1) ≥ F (I0 + 1, B0 ) − F (I0 , B0 ).            
+remains the same in all of these settings. Therefore, in a pair of
+settings, once a shortage occurs in one of the settings, either for
+a bicycle or for a locker, the number of usable bicycles equalizes                    3.2 Convexity analysis of the EUDF
+and from that point on the number of shortages are equal under
+both settings. For example, for settings (I0 + 1, B0 ) and (I0 , B0 )                 Recall that the EUDF is a bivariate discrete function. Although
+if the first shortage is for a bicycle, then the demand can be                        the concept and definition of the discrete convexity of univariate
+satisfied by setting (I0 + 1, B0 ) but not by setting (I0 , B0 ) so                   functions is quite similar to continuous convexity, this is not the
+that immediately after the shortage occurs, under both settings                       case for multivariate discrete functions. In fact, several different
+the station is empty. Similarly, if the first shortage is for a locker,               definitions of convexity are given in the literature for multivari-
+then the demand can be satisfied under setting (I0 , B0 ) but not                     ate discrete functions. In Murota and Shioura (2001), Murota
+under setting (I0 + 1, B0 ) so that immediately after the shortage                    (2009), and Moriguchi and Murota (2011), several classes of
+occurs, under both settings the station is full. That is, for a given                 multivariate discrete convex functions are defined and the rela-
+realization, the shortage difference between the two settings may                     tionship among these classes is presented. We next outline some
+be either −1, 0, or 1. In Table 2 we compare the two sides of the                     of these definitions and then prove that under Assumption 1, the
+inequality by exhibiting all possible combinations of first short-                    EUDF is contained in these classes.
+age occurrences for a given demand realization R. As can be                           Definition 1: Convex extensibility (Murota, 2009).
+seen, for all possible combinations we obtain F R (I0 + 2, B0 ) −                         A function f : Zn → R is said to be convex-extensible if there
+F R (I0 + 1, B0 ) ≥ F R (I0 + 1, B0 ) − F R (I0 , B0 ). Consequently,                 exists a convex function f¯ : Rn → R such that f¯ (x) = f (x) for
+by summing over all demand realizations we obtain                                     all x ∈ Zn .
+F (I0 + 2, B0 ) − F (I0 + 1, B0 ) ≥ F (I0 + 1, B0 ) − F (I0 , B0 ). 
+                                                                                      Definition 2: M  -convex (based on Moriguchi and Murota
+Table . Possible combinations of ﬁrst shortage occurrences.
+                                                                                      (2011)).
+
+      F R (I0 + 2, B0 ) − F R (I0 + 1, B0 )    F R (I0 + 1, B0 ) − F R (I0 , B0 )        Denote the ith unit vector by ei and e0 = 0, denote the
+ First shortage                                First shortage                         domain of f by dom f = {x ∈ Zn | f (x) < +∞}, and denote
+ occurrence                       Diﬀerence      occurrence               Diﬀerence   the positive and negative supports of a vector x by
+ Bicycle                             −p            Bicycle                    −p
+ Locker                              h             Bicycle                    −p                        supp+ (x) = {i ∈ {1, . . . , n} |xi > 0}
+ Locker                              h             Locker                     h                         supp− (x) = {i ∈ {1, . . . , n} |xi < 0} .
+ Locker                              h              None                      0
+ None                                              None                       
+ None                                             Bicycle                    −p         A function f : Zn → R is M  -convex if it satisfies the follow-
+                                                                                      ing exchange property:
+

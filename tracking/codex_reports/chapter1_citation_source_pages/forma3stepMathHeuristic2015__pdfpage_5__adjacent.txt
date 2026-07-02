@@ -1,0 +1,82 @@
+CITEKEY: forma3stepMathHeuristic2015
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/BNZBQK4T/Forma et al. - 2015 - A 3-step math heuristic for the static repositioning problem in bike-sharing systems.pdf
+PDF PAGE INDEX: 5
+PDFTOTEXT PAGE NUMBER: 6
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-026
+RELATED CE IDS: CE-026
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                         I.A. Forma et al. / Transportation Research Part B 71 (2015) 230–247                  235
+
+
+   s.t:
+          X
+           si ¼ S                                                                                                                              ð4Þ
+           i2I
+
+   In the above optimization problem, the decision variables are si ("i e I). The variable si denotes the inventory level at sta-
+tion i after distributing S bicycles among the stations of the cluster. Note that in the solution obtained, 0 6 si 6 ci"i since by
+deﬁnition, fi(si) = 1 for si > ci or si < 0. We also remark that this distribution is not actually performed, it is determined only
+for the sake of computing the value of FI(S). Later in this section we show how program (3), (4) can be efﬁciently solved.
+   We are now ready to formulate the clustering problem. A valid cluster has a diameter no larger than D. The objective func-
+tion, to be minimized, consists of two components: the number of clusters, and the sum of the expected costs of the clusters.
+Let I1, . . ., Im be a partition of the stations into m clusters. Then, ﬁnding the optimal partition is represented by the following
+mathematical program, where m and I1, . . ., Im are the decision variables:
+                        (                            )
+                                X
+                                m
+           min          mþb           F Ik ðS0Ik Þ                                                                                             ð5Þ
+          m;I1 ;::;Im
+                                k¼1
+
+   s.t:
+          tij 6 D 8i; j 2 Ik ; k ¼ 1; . . . ; m                                                                                                ð6Þ
+   Note that the two terms of the objective function (5) are expressed in different units: the ﬁrst is the number of clusters
+and the second is a cost. Therefore, we multiply the second term by a scaling parameter b. We explain later how to choose
+the value of b. Constraints (6) assure that the diameter constraint is satisﬁed, i.e., stations assigned to the same cluster are
+close geographically. It is possible to formulate (5), (6) as an integer programming model. However, solving it exactly is com-
+putationally intractable and hence we devised a saving heuristic to solve it.
+   Our saving algorithm is based on two observations presented and proved in Lemma 1 and Lemma 2 below. In Lemma 1,
+we show how the cost function FI(S) can be efﬁciently evaluated and in Lemma 2 we prove that combining two clusters
+always saves costs.
+   The following lemma demonstrates that the optimization problem (3), (4) is easily solved to optimality by a greedy pro-
+cedure. Such a procedure assigns the S units one by one, where each unit is assigned to the station where its contribution to
+the objective function is minimal.
+
+Lemma 1. Problem (3), (4) that ﬁnds the cost of a cluster can be solved by the following recursive procedure:
+  Let ~si ðI; SÞ ("i e I) be the optimal solution of (3), (4) for given I and S. Then,
+                                                                     X
+          F I ðS þ 1Þ ¼         min ff j ð~sj ðI; SÞ þ 1Þ þ           f i ð~si ðI; SÞÞg                                                        ð7Þ
+                            j2I:s~j ðI;SÞ<cj
+                                                                     i–j
+
+
+          ~si ðI; 0Þ ¼ 0 8i; 8I                                                                                                                ð8Þ
+
+
+Proof. The proof is by induction on the value of S. Clearly (8) holds. For S = 1, the solution must assign one unit to one of the
+stations. According to (7), the unit would be assigned to the station whose contribution to the objective function is minimal
+(note that the contribution can be negative), which is clearly the optimal solution for this case.
+    Now, deﬁne Di (s)  fi(s)  fi(s  1). The convexity of the integer valued function fi(  ) implies that Di (1), Di (2), Di (3), . . .
+is increasing. The relation (7) can be rewritten as
+                                                               X
+          F I ðS þ 1Þ ¼ minfDj ð~sj ðI; SÞ þ 1Þg þ              f i ð~si ðI; SÞÞ                                                               ð9Þ
+                              j2I
+                                                                 i
+
+      Now, we assume that the optimal solution for S was obtained by recursively applying (9), and we claim that the optimal
+ solution for S + 1 is also obtained by (9). To prove that, let k ¼ argminj2I fDj ð~sj ðI; SÞ þ 1Þg. That is, Dk ð~sk ðI; SÞ þ 1Þ 6
+ Dj ð~sj ðI; SÞ þ 1Þ "j – k.
+      Next we will show that: (a) s~k ðI; S þ 1Þ 6 s~k ðI; SÞ þ 1; (b) ~sk ðI; S þ 1Þ P ~sk ðI; SÞ þ 1. (a) and (b) imply that
+~sk ðI; S þ 1Þ ¼ s~k ðI; SÞ þ 1 and therefore ~sj ðI; S þ 1Þ ¼ s~j ðI; SÞ 8 j – k.
+      Part (a) is true since any increase of ~sk ðI; S þ 1Þ beyond ~sk ðI; SÞ þ 1 would imply decreasing ~sk ðI; S þ 1Þ in some other
+ station(s) j – k. However, due to the convexity of all fj(.) functions and the procedure in (9) that imply
+ Dk ð~sk ðI; SÞ þ lÞ P Dj ðs~j ðI; SÞ  pÞ "j – k for any number of units l P 2 and p P 1, such a solution cannot be optimal.
+      Part (b) is true since if ~sk ðI; S þ 1Þ is not increased beyond s~k ðI; SÞ, then ~sj ðI; S þ 1Þ for at least one other station j – k must be
+ increased. However, Dk ð~sk ðI; SÞ þ 1Þ 6 Dj ð~sj ðI; SÞ þ pÞ for any number of units p P 1. Thus, such a solution cannot be optimal.
+      We conclude that ~sk ðI; S þ 1Þ ¼ s~k ðI; SÞ þ 1 and ~sj ðI; S þ 1Þ ¼ s~j ðI; SÞ "j – k, by the induction assumption. This implies that
+ (7) is satisﬁed. h
+

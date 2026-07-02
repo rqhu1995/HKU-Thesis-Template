@@ -1,0 +1,72 @@
+CITEKEY: ravivStaticRepositioningBikesharing2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/UAVMV85M/Raviv et al. - 2013 - Static repositioning in a bike-sharing system models and solution approaches.pdf
+PDF PAGE INDEX: 9
+PDFTOTEXT PAGE NUMBER: 10
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-009
+RELATED CE IDS: CE-009
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+196                                                                                            T. Raviv et al.
+
+                                                X
+                            si ¼ s0i            ðyLiv  yU
+                                                          iv Þ 8i 2 N0                                   ð2Þ
+                                                v2V
+                                   X                     X
+                yLiv  yU
+                        iv ¼                yijv                   yjiv    8i 2 N0 ; 8v 2 V             ð3Þ
+                               j2N0 ;j6¼i              j2N0 ;j6¼i
+
+                        yijv  kv xijv 8i; j 2 N0 ; i 6¼ j; 8v 2 V                                       ð4Þ
+                        X              X
+                              xijv ¼         xjiv 8i 2 N0 ; 8v 2 V                                       ð5Þ
+                      j2N0 ;j6¼i            j2N0 ;j6¼i
+                                   X
+                                           xijv  1 8i 2 N; 8v 2 V                                       ð6Þ
+                             j2N0 ;j6¼i
+                                       X
+                                                yLiv  s0i    8i 2 N0                                    ð7Þ
+                                          v2V
+                                    X
+                                           yU          0
+                                            iv  ci  si            8i 2 N0                              ð8Þ
+                                    v2V
+                                   X           
+                                      yLiv  yU
+                                              iv ¼ 0                   8v 2 V                            ð9Þ
+                                   i2N0
+      X                 X                   X
+            LyLiv þ UyU
+                      iv þ ðLy0iv þ Uyi0v Þ þ   tij xijv  T                              8v 2 V        ð10Þ
+      i2N                    i2N                                    i;j2N0 :i6¼j
+                                       
+              qjv  qiv þ 1  M 1  xijv 8i 2 N0 ; j 2 N; i 6¼ j; 8v 2 V                                ð11Þ
+                        xijv 2 f0; 1g             8i; j 2 N0 : i 6¼ j; 8v 2 V                           ð12Þ
+                      yLiv  0; yU
+                                 iv  0; integer                    8i 2 N0 ; 8v 2 V                    ð13Þ
+                           yijv  0         8i; j 2 N0 : i 6¼ j; 8v 2 V                                 ð14Þ
+                                            si  0        8i 2 N0                                       ð15Þ
+                                    qiv  0           8i 2 N0 ; 8v 2 V                                  ð16Þ
+   The objective function (1) minimizes the total cost of the system, consisting of
+the sum of the penalties incurred at all stations and the total operating costs,
+appropriately weighted by a factor of a. Constraints (2) are inventory-balance
+constraints at the nodes (the stations and the depot). Constraints (3) represent the
+conservation of inventory on the vehicles, and constraints (4) limit the quantity
+carried on each vehicle to its capacity. These constraints also set the quantity carried
+on a vehicle to zero when it travels directly from i to j if the vehicle does not use that
+arc. Constraints (5) are vehicle flow-conservation equations. Constraints (6) insure
+that each station is visited at most once by each vehicle and constraints (7) (resp.,
+(8)) limit the quantity picked-up by all vehicles from a station (resp., delivered to a
+station) to the quantity available there initially (resp., the residual capacity of the
+station), see the ‘‘Discussion’’ below. Note that constraints (7) also imply non-
+negativity of the inventory variables, while constraints (8) also insure that the
+inventory at each station and at the depot is bounded by its capacity; therefore, these
+two restrictions are not written explicitly. Constraints (9) stipulate that all the
+
+
+
+123
+

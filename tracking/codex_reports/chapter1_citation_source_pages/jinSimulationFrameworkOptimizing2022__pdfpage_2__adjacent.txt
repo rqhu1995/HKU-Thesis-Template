@@ -1,0 +1,60 @@
+CITEKEY: jinSimulationFrameworkOptimizing2022
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/DWNF88AJ/Jin et al. - 2022 - A simulation framework for optimizing bike rebalancing and maintenance in large-scale bike-sharing s.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-024
+RELATED CE IDS: CE-024
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Y. Jin et al.                                                                                Simulation Modelling Practice and Theory 115 (2022) 102422
+
+
+
+
+                         Fig. 1. Proposed simulation framework for the rebalancing and maintenance optimization of BSS.
+
+
+
+
+2.2. Optimization of multi-vehicle BRP
+
+    The simulation framework proposed in this work is designed for evaluating the effect of new rebalancing strategies on the
+operations of a BSS. These strategies depend on the solutions of a multi-vehicle BRP to assign routes and a sequence of operational
+tasks (i.e., loading and unloading of bikes) to each vehicle. A BRP is usually modeled as a Mixed Integer Programming (MIP)
+problem, which in general is NP-hard. Several heuristics have been designed to efficiently obtain high-quality solutions [8,29–33].
+Other methods apply a clustering step to the stations and then solve a simpler multi-vehicle BRP for each cluster [7,19,34–36].
+However, all these studies ignored the impact of broken bikes on routing and operational decisions. Fu et al. [37] used a robust
+optimization approach to deal with demand uncertainty considering only the time to pick broken bikes when determining the
+time between rebalances. Ren et al. [38] considered the cost of maintenance for bikes and vehicles in the depot but ignored the
+occurrence of bike failures in the system. In the operation of BSSs, maintenance is performed in conjunction with bike repositioning.
+Only a few works have considered the impact of maintenance in the operation of BSS. Kaspi et al. [6] considered unusable bikes
+for evaluating the users’ dissatisfaction level using a Bayesian model. Wang et al. [7] and Wang et al. [39] considered broken bikes
+in a BRP to minimize the 𝐶𝑂2 emission of the vehicles used for rebalancing. Luo et al. [40] considered maintenance and disposal
+emissions in evaluating the life-cycle emissions of a bike sharing system, but their assumptions on the bike life-time are rather
+optimistic. The model proposed by Zhang et al. [8] considered the collection of damaged bikes in minimizing the total travel cost.
+The optimization models proposed in Du et al. [41] and Lu et al. [42] also considered the impact of malfunctioning bikes for a
+free-floating (i.e., dockless) BSS but might not be applicable for a BSS with docked stations.
+    In practice, it is valuable to assess the performance of heuristics via simulation before implementing them in the actual daily
+operations of BSSs. However, most of the studies on BSS optimization have not been validated using a simulation framework, and
+have failed to consider maintenance activities. The proposed simulation framework is integrated with one of such optimization
+models to evaluate the performance of different rebalancing strategies. The integrated optimization model is solved by a heuristic
+based on the proposed station clustering method and ACO algorithm. Although the heuristic method might not be the most advanced,
+it helps us demonstrate the compatibility of the proposed simulation model. In addition, useful managerial impacts are revealed when
+implementing this heuristic and other rebalancing strategies.
+
+3. Simulation framework
+
+3.1. Overview of the simulation framework for optimization
+
+    The framework consists of a simulation module and an optimization module. The overview of the proposed simulation framework for
+optimization is presented in Fig. 1. In the simulation module, a virtual BSS is constructed based on the given system configuration,
+regarding station, rebalancing, and maintenance as shown in Table 1, to mimic the daily bike inventory/status change at each
+station and the operation of the system. The basic structure of the simulated BSS have been illustrated by [9] which include three
+major processes: the bike borrowing and returning, bike rebalancing, and system maintenance. In this work, the simulation module
+is improved from the three perspectives with details provided in Section 3.2.
+
+                                                                       3
+

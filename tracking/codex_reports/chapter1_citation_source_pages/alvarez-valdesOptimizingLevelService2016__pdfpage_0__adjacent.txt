@@ -1,0 +1,88 @@
+CITEKEY: alvarez-valdesOptimizingLevelService2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/LR2TQNWN/Alvarez-Valdes et al. - 2016 - Optimizing the level of service quality of a bike-sharing system.pdf
+PDF PAGE INDEX: 0
+PDFTOTEXT PAGE NUMBER: 1
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-001
+RELATED CE IDS: CE-001
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                            Omega 62 (2016) 163–175
+
+
+
+                                                              Contents lists available at ScienceDirect
+
+
+                                                                                Omega
+                                                  journal homepage: www.elsevier.com/locate/omega
+
+
+
+
+Optimizing the level of service quality of a bike-sharing system$
+Ramon Alvarez-Valdes n, Jose M. Belenguer, Enrique Benavent, Jose D. Bermudez,
+Facundo Muñoz, Enriqueta Vercher, Francisco Verdejo
+Department of Stastistics and Operations Research, University of Valencia, Doctor Moliner 50, 46100 Burjassot, Spain
+
+
+
+
+art ic l e i nf o                                      a b s t r a c t
+
+Article history:                                       Public bike-sharing programs have been deployed in hundreds of cities worldwide, improving mobility
+Received 15 October 2014                               in a socially equitable and environmentally sustainable way. However, the quality of the service is
+Accepted 22 September 2015                             drastically affected by imbalances in the distribution of bicycles among stations. We address this problem
+Available online 21 October 2015
+                                                       in two stages. First, we estimate the unsatisﬁed demand (lack of free lockers or lack of bicycles) at each
+Keywords:                                              station for a given time period in the future and for each possible number of bicycles at the beginning of
+Bike-sharing systems                                   the period. In a second stage, we use these estimates to guide our redistribution algorithms. Computa-
+Demand forecasting                                     tional results using real data from the bike-sharing system in Palma de Mallorca (Spain) are reported.
+Routing                                                                                                                    & 2015 Elsevier Ltd. All rights reserved.
+Heuristics
+
+
+
+
+1. Introduction                                                                            those in which he/she arrives at the station to leave the bicycle and
+                                                                                           the station is completely full, have to be avoided as far as possible.
+    A public bike-sharing system consists of a set of stations scattered                   For the bike-sharing system to become a sensible alternative to
+over the city and a set of bicycles available to the system users. A user                  other modes of transportation, it has to be reliable. The everyday
+can take a bicycle at a station, use it for a short journey, and leave it at               users have to be conﬁdent that they will ﬁnd bicycles to start their
+the same or any other station. Since the ﬁrst system was established in                    trips and available lockers to leave them when the trips are ﬁnished
+Amsterdam in 1965, there has been a rapidly increasing number of                           wherever and whenever they need them. This can be achieved in
+cities providing their citizens with this type of service, which has                       the three phases of design and operation. First, at a strategic level,
+many advantages of various kinds: it is an environmentally sustainable                     the number of stations and their location and size have to be
+and socially equitable mode of transportation, it can be used as part of                   decided. Second, at a tactical level, the number of bicycles in the
+an intermodal public transport system, it reduces motorized trafﬁc and                     system has to be determined. Third, at an operational level, a bike-
+therefore emissions of contaminants, and it promotes a healthier way                       repositioning system has to be adopted for moving bicycles from
+of life. According to the consultancy company MetroBike LCC [1], in                        stations with an excess to stations with a shortage in order to satisfy
+July 2014, 721 cities had a public bike-sharing system, with a total of                    the demands forecast for the next periods.
+approximately 814,000 bicycles, and 228 were planned or under                                  Repositioning is done by means of light trucks based at one or
+construction. These systems range from less than one hundred                               several depots, that pick up bicycles from stations at which there
+bicycles in small towns to many thousands in cities like Paris (20,600),                   are too many and move them to stations where there are too few.
+Hangzhou (78,000), or Wuhan (90,000).                                                      Sometimes there are bicycles at the depots, for instance those that
+    The most important factor for the success of a public bike-                            were damaged and have been repaired, and these can also be used
+sharing system is its ability to satisfy the varying demands of the                        when constructing the repositioning routes.
+users. Underlying the random variations of everyday demands,                                   There are two types of repositioning systems. In the static case,
+there are patterns of demand that have to be identiﬁed and esti-                           the system is considered closed, so the users do not interact with it,
+mated and the system has to be planned and managed to maximize                             its initial state is considered known and ﬁxed, and the aim of the
+the level of customer satisfaction. Situations in which the user                           repositioning is to get the system to a desired, predeﬁned state. In
+arrives at a station to take a bicycle and ﬁnds the station empty, and                     the dynamic case, the repositioning system operates while the bike-
+                                                                                           sharing system is being used. Therefore, users are continuously
+                                                                                           taking and leaving bicycles at the stations, modifying their states.
+  ☆
+    This manuscript was processed by Associate Editor Singh.                               The dynamic repositioning system has to take these changes into
+  n
+    Corresponding author. Tel.: þ 34 96354308.                                             account and adapt its decisions to the actual state of the stations.
+    E-mail addresses: ramon.alvarez@uv.es (R. Alvarez-Valdes),
+jose.belenguer@uv.es (J.M. Belenguer), enrique.benavent@uv.es (E. Benavent),
+                                                                                               In this study we focus on the static repositioning system at the
+bermudez@uv.es (J.D. Bermudez), facundo.munoz@uv.es (F. Muñoz),                            operational level. In the city of Palma de Mallorca (Spain), whose
+enriqueta.vercher@uv.es (E. Vercher), francisco.verdejo@uv.es (F. Verdejo).                bike-sharing system gave rise to this study, the system operates
+
+http://dx.doi.org/10.1016/j.omega.2015.09.007
+0305-0483/& 2015 Elsevier Ltd. All rights reserved.
+

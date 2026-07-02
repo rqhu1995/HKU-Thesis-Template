@@ -1,0 +1,69 @@
+CITEKEY: nathModellingMethodsPlanning2019
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IQP6BKAP/Nath and Rambha - 2019 - Modelling methods for planning and operation of bike-sharing systems.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 621
+SECTION: Abstract / Introduction
+RELATED CE IDS: CE-003
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+     First                    Second                    Third                      Fourth                    Fifth
+     Generation               Generation                Generation                 Generation                Generation
+
+                                  Coin-deposit               Smart cards,             Smart Cards,
+      Free bike systems,        systems, locks,            distinct bicycles,      Docking stations, E-      Dockless systems,
+       distinct bicycles,    distinct bicycles, free        locks, docking         bicycles, Real-time         E-bicycles, Big
+      unlocked bikes, no      of charge, docking           stations, access         availability, GPS        data management
+            stations                stations                    booths                  tracking                possibilities
+
+
+
+
+                                              Figure 2: Generations of BSSs
+                   (Source: Midgley et al. [18], Chen et al. [19]; Picture source: [20], [21], [22], [23], [24])
+
+
+
+For station-based BSSs, it is important to determine the capacity of each station and distribute the fleet across
+stations, although these decisions can also be made at an operational level [9], [10], [11]. Within-day stochasticity
+in travel patterns often leads to imbalances in the availability of bikes and parking spots. Having stations that are
+full or empty can affect ridership and render the system ineffective. To address these situations, cycles are often
+repositioned from one station to another using trucks [12] or by providing price incentives to users for dropping off
+bikes at nearby high-demand locations [13].
+When bikes are repositioned using motor vehicles, one must decide how many cycles to move between stations and
+also determine optimal vehicle routes. Repositioning done during the day, in real-time, is classified as dynamic
+rebalancing [14], [15], while that carried out at the end of a day, when the system is inactive, is called static
+rebalancing [12], [16], [17]. Periodic maintenance of bikes, vandalism, and theft are some other common problems
+faced by a service provider of a BSS.
+The rest of this review article is structured as follows. In Section 2, we discuss the history of BSSs and motivate
+the need for developing decision support tools for studying planning and operational problems associated with BSSs.
+In Section 3, we discuss research on some of the strategic problems such as bike-lane design, station locations, and
+dock size selection. Section 4 details various repositioning mechanisms that can be used when operating a BSS.
+Technological aspects and some emerging phenomena are addressed in Section 5 and the conclusions of this study
+are presented in Section 6.
+
+
+
+2    Background and History
+
+The first BSS started in Amsterdam in 1965 (White bicycle plan) with just fifty bicycles [18]. However, a month
+later, all bikes were either stolen or dumped into canals. The white bicycle plan was a first-generation BSS in which
+bikes were free to use. Other first-generation BSS examples include Vélos Jaunes in La Rochelle, France (1974) and
+Green Bike Scheme in Cambridge, UK (1993). Since then, BSSs have undergone many changes. An infographic
+of the historical development of BSSs through the years is shown in Figure 2. The second generation of BSS saw
+the advent of coin deposit stations in which rides were free, but customers had to insert coins into a slot to unlock
+bikes and could retrieve them once the bikes were returned. The first coin deposit bike program called Bycyklen
+started in Copenhagen in 1991 [19]. In 1995, it also became the first large-scale BSS with around 1,100 bikes. This
+system was still vulnerable to theft due to anonymity of users. The use of automated docked stations with registered
+customers marked the beginning of the third generation of BSSs. This greatly reduced vandalism and theft issues
+associated with the previous generations of BSSs. Such a system first appeared in Portsmouth University, England
+(1996) and students had to pay for membership and bikes could be rented using a magnetic card. Other examples of
+third generation BSSs include LE Vélo STAR in Rennes (1998), Bicing in Barcelona (2007), Cycle Hire in London
+(2010), and Citi Bike in New York (2013). The fourth-generation bikes came into existence in 2005 with the Vélo’v
+program in France. This system was operated by an advertising firm JCDecaux and was equipped with smart bikes
+
+
+                                                                2
+

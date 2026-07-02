@@ -1,0 +1,63 @@
+CITEKEY: ravivStaticRepositioningBikesharing2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/UAVMV85M/Raviv et al. - 2013 - Static repositioning in a bike-sharing system models and solution approaches.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-011
+RELATED CE IDS: CE-011
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+190                                                                       T. Raviv et al.
+
+
+is related to the satisfaction of users in the system. It also includes other new
+characteristics such as loading and unloading times within a time constrained
+setting. Based on this approach we present two mixed integer linear program
+(MILP) formulations, which differ from each other in their modeling choices and
+underlying assumptions. On the methodological side, the above formulations are
+strengthened by some valid inequalities and dominance rules that are likely to be
+useful in other routing problems, especially those that are generalized by this work.
+Finally, we applied our methods on a variety of large instances based on real data
+and achieved small optimality gaps within a reasonable time.
+   The rest of this paper is organized as follows: in ‘‘Literature review’’, we review
+the literature, describe related work from several application areas and identify the
+gaps that should be addressed. In ‘‘Model formulation’’, we present our modeling
+approach by specifying the underlying assumptions, elaborating on the chosen
+objective function, and presenting our mathematical formulations. In ‘‘Algorithmic
+enhancements’’, we discuss algorithmic enhancements that are useful in solving the
+mathematical models effectively. In ‘‘Numerical experiments’’, we describe our
+numerical experiments, the results, and their analysis. Finally, in ‘‘Conclusions and
+discussion’’, we discuss possible extensions and directions for further research.
+
+
+Literature review
+
+In this section, we first review recent studies on bike-sharing systems and in
+particular on the repositioning operation in those systems. Then we discuss the
+relation of the repositioning problem to classical routing and inventory/routing
+problems from the literature.
+   Modern bike-sharing systems have become prevalent only in the last few years;
+therefore, the existing literature analyzing these systems is relatively new. There are
+various interesting research questions concerning the establishment, operation and
+analysis of bike-sharing systems. Indeed, some works study strategic problems, such
+as Shu et al. (2010) and Lin and Yang (2011) who address the question of bike
+rental stations’ capacity and locations. Others present empirical analysis, e.g.,
+DeMaio (2009) and Hampshire and Marla (2011). Fricker and Gast (2012) study the
+system’s behavior and the effect of various load-balancing strategies on their
+performances. They conclude that in asymmetric systems, repositioning of bicycles
+by trucks is necessary even when an incentive mechanism to self-balance it is put in
+place. Vogel and Mattfeld (2010) present a stylized model to assess the effect of
+dynamic repositioning efforts on service levels. Their model is useful for strategic
+planning but is not detailed enough to support repositioning operations.
+   Several approaches to modeling and optimizing the repositioning problem have
+recently been developed. There are essential differences between them in the
+underlying assumptions concerning the perceived system’s behavior and the
+problem’s objective, as we discuss next. Benchimol et al. (2011) and Chemla et al.
+(2011) address the static repositioning problem, assuming that a given target
+inventory level exists for each station in the system so that the objective of the
+repositioning operation is to achieve this target at minimum travel cost. The method
+
+123
+

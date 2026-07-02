@@ -1,0 +1,33 @@
+CITEKEY: huRepositioningBikeSharing2025
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/2SQ8MACE/Hu et al. - 2025 - Repositioning in bike sharing systems with broken bikes considering on-site repairs.pdf
+PDF PAGE INDEX: 6
+PDFTOTEXT PAGE NUMBER: 7
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-035
+RELATED CE IDS: CE-035
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+R. Hu et al.                                                                                        Transportation Research Part E 201 (2025) 104155
+
+
+
+
+                                                             Fig. 3.1. (continued).
+
+
+represents the truck inventory of A usable bikes and B broken bikes when it travels between the nodes. The round-cornered shapes
+show the variation of the user dissatisfaction under the inventories before and after the operations. Specifically, Truck 1 follows the
+route 0–4–6–9–0–2–0 as indicated above the time axis. It first visits Station 4 to collect two usable bikes and one broken bike, then
+travels to Station 6 to collect five usable and 17 broken bikes, reaching its full capacity of 25 bikes. Next, the truck travels to Station 9 to
+unload the seven usable bikes. Following that, it returns to the depot to unload all broken bikes, loads three usable bikes, and proceeds
+to Station 2 to deliver the three usable bikes and collect nine broken bikes. Finally, it returns to the depot, unloading all broken bikes
+and completing its operations in 7123 s, calculated by adding up the arrival time at the depot (6583 s) and the operational time for
+unloading the nine broken bikes (540 s). Meanwhile, Repairer 1 performs on-site repairs along the route 0–6–8–0, repairing four
+broken bikes at Station 6 and 12 at Station 8. It concludes its operations in 7180 s. Note that Station 6 is visited by both Truck 1 and
+Repairer 1, and all 21 broken bikes at the station are handled, with four repaired by the repairer before the truck arrives at the station
+
+
+                                                                       7
+

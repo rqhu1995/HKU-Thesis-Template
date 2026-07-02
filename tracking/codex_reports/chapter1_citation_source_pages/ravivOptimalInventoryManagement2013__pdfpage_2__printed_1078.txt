@@ -1,0 +1,68 @@
+CITEKEY: ravivOptimalInventoryManagement2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/FSWE4QY2/Raviv and Kolka - 2013 - Optimal inventory management of a bike-sharing station.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: 1078
+SECTION: Introduction and literature review
+RELATED CE IDS: CE-005, CE-008
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+1078                                                                                                        Raviv and Kolka
+suburban train stations are apt to face high return rates in     given an initial inventory, station capacity, length of the
+the morning as commuters into the city drop off their bikes      replenishment cycle, and the (stochastic) demand patterns.
+and high rental rates in the afternoon as commuters exit the        The inventory problem associated with a bike-sharing
+train and begin to make their way home. Satisfying user de-      rental station can be classified as a closed-loop inventory
+mand subject to such imbalances requires a dedicated fleet       problem. There is considerable literature on this topic. For
+of light trucks to regularly transfer bicycles among stations.   a comprehensive review, see Dekker (2004). However, the
+We refer to this activity as repositioning bicycles.             available models assume that the replenishment operations
+   There are two repositioning modes. Static repositioning       by new and used items occur periodically. These models
+is performed during the night, when the system is nearly         do not capture the minute-to-minute dynamics of a bike
+idle; dynamic repositioning takes place during the day in        rental station where replenishment by returned items occurs
+order to cope with looming shortages. In practice, many          at a much higher frequency than replenishment by new
+operators work in both modes.                                    items.
+   If one ignores the stochastic nature of the demand, the          The main contributions of this article are as follows: in-
+static bicycle-repositioning problem can be classified as a      troducing a user dissatisfaction function to measure the
+variation of the Pickup and Delivery Problem (PDP), a            performance of a station; presenting a dynamic inventory
+type of problem that has attracted considerable attention        model of a bike-sharing rental station; establishing the con-
+in recent years. Berbeglia et al. (2007) surveyed the litera-    vexity of this function; and devising an efficient and accu-
+ture on static PDP and classified these problems according       rate approximation method to estimate it. These results
+to various parameters. Benchimol et al. (2010) and Chemla        complement each other by providing practitioners and re-
+et al. (2013) studied a single-vehicle single-commodity PDP      searchers with a set of tools that can be used to analyze and
+without time constraints with the goal of minimizing the         optimize many operational and strategic aspects of BSSs.
+total travel distance of the vehicle as it completed a pre-      For some examples, see the discussion in Section 6.
+scribed repositioning task. These studies are motivated by          The work of Nair and Miller-Hooks (2011) is close to this
+BSSs. Chemla et al. (2013) presented a branch-and-cut al-        work in the sense that it also models the stochastic nature
+gorithm for solving a relaxation of the problem, from which      of the demand in a vehicle-sharing system. In their study,
+a feasible solution was obtained via tabu search. Both of        the shortage is modeled as the difference between the total
+these papers assumed a known target inventory level for          supply and the total demand over the planning horizon but
+each station in the system.                                      without considering the sequence of the events.
+   Nair and Miller-Hooks (2011) used a stochastic pro-              As an example, consider a station with a deterministic
+gramming approach to handle repositioning planning in            demand of 50 bicycles (rentals) per day and 40 lockers (re-
+shared mobility systems. Their model assumed that the            turns) per day and assume that the inventory of the station
+cost of moving vehicles between two given stations is            is reviewed every night. According to the model of Nair
+linear without considering the routing of the repositioning      and Miller-Hooks (2011) an initial inventory of 10 bicycles
+vehicles. This assumption was realistic for the one-way          is sufficient to provide perfect service at the station. How-
+car-sharing systems that motivated their work. Vogel and         ever, if most of the rentals are expected during the morning
+Mattfeld (2010) presented a stylized model to assess the         hours while most of the returns are expected during the af-
+effect of dynamic repositioning efforts on service levels.       ternoon, the station will face a high level of bicycle shortage
+Their model is useful for strategic planning but is not          during the morning.
+detailed enough to support repositioning operations.                Our hands-on experience with demand data from BSSs
+   Some authors have considered strategic decisions regard-      shows that such extremely non-homogenous demand pro-
+ing the capacity and locations of bike rental stations. Shu      cesses are common and in fact observed in most of the
+et al. (2010) proposed a stochastic network flow model to        stations. Therefore, this study presents a model that tracks
+support these decisions. They used their model to design a       the inventory level in the station continuously throughout
+BSS in Singapore based on demand forecasts derived from          the planning horizon.
+current usage of the mass transit system. Lin and Yang              As our model focuses on a single station, we omitted the
+(2011) considered a similar problem but formulated it as a       interaction between the demand processes of the stations.
+deterministic mathematical model. Their model is aware of        However, we note that such interactions occur when users
+the bike path network and mode sharing with other means          fail to realize their demand for bicycles or lockers at the
+of public transportation.                                        desirable origin or destination. Thus, in a well-operated
+   The static repositioning operation poses a new and chal-      system, the influence of these interactions on the optimal
+lenging inventory routing problem. In this article, we focus     inventory level of each station is negligible. In Section 5,
+on the inventory management part of this problem. Ac-            we report on a simulation study conducted using historical
+cordingly, we define a user dissatisfaction measure, model       data from operating BSSs to demonstrate the usability of
+user behavior when facing shortages, and devise an efficient     our model in supporting better decision making in real
+method of estimating the expected value of this measure          systems.
+

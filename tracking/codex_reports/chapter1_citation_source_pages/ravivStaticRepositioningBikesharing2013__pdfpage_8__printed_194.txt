@@ -1,0 +1,63 @@
+CITEKEY: ravivStaticRepositioningBikesharing2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/UAVMV85M/Raviv et al. - 2013 - Static repositioning in a bike-sharing system models and solution approaches.pdf
+PDF PAGE INDEX: 8
+PDFTOTEXT PAGE NUMBER: 9
+PRINTED PAGE: 194
+SECTION: Problem description
+RELATED CE IDS: CE-009, CE-016
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Static repositioning in a bike-sharing system: models and solution approaches         195
+
+
+according to whether they are incurred due to a lack of bicycles or a lack of vacant
+lockers, since each type of shortage represents a different level of users’
+dissatisfaction. This is a consideration, which can be incorporated in the pre-
+processing step, when employing the procedure of Raviv and Kolka (2012) and is
+part of our model’s input.
+   Finally, note that the parameters a; L and U may be vehicle dependent (i.e., av ; Lv
+and Uv ) with no change in the formulations below. Such generalization may
+represent a non-homogenous fleet of vehicles, where larger vehicles, e.g., incur
+higher operating costs and/or different loading and unloading times. For simplicity,
+we omit this generalized notation.
+
+Arc-indexed formulation
+
+Our first mathematical formulation of the problem is referred to as the arc-indexed
+(AI) formulation. Initially, the first term of the objective function is represented by a
+sum of (discrete) convex functions, while later these functions are linearized in an
+exact manner through a set of constraints. In this formulation, we assume that each
+station may be visited at most once by each vehicle, although a certain station may
+be visited by several vehicles. This assumption reduces the feasible solution set and
+may result in inferior solutions. However, it simplifies the problem significantly so
+that relatively large instances can be solved by a commercial solver. We discuss the
+implications of this assumption in the numerical study section. Let us define the
+following decision variables:
+xijv      Binary variable which equals one if vehicle v travels directly from node i to
+          node j, and zero otherwise
+yijv      Number of bicycles carried on vehicle v when it travels directly from node i to
+          node j. yijv is zero if the vehicle v does not travel directly from i to j
+yLiv      Number of bicycles loaded onto vehicle v at node i
+yUiv      Number of bicycles unloaded from vehicle v at node i
+qiv       Auxiliary variables used for sub-tour elimination constraints
+si        Inventory level at node i at the end of the repositioning operation
+   The following parameter needs to be defined and used specifically in this
+formulation:
+M         An upper bound on the number of arcs in a vehicle’s tour whose length is at
+          most T time units, where the vehicle visits each station at most once (M ¼ jN0 j
+          is a trivial such upper bound; it may be strengthened when T is small, by
+          solving a simple integer program).
+       We are ready to present the AI formulation,
+       (P1)—Arc-indexed (AI) formulation.
+                                X                XXX
+                           Min      fi ðsi Þ þ a     tij xijv                        ð1Þ
+                                   i2N             i2N0 j2N0 v2V
+
+       s.t.
+
+
+
+                                                                                123
+

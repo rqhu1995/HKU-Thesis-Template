@@ -1,0 +1,54 @@
+CITEKEY: demaioBikesharingHistoryImpacts2009
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/N9GV5YKS/DeMaio - 2009 - Bike-sharing history, impacts, models of provision, and future.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 41
+SECTION: Introduction
+RELATED CE IDS: CE-002
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Journal of Public Transportation, Vol. 12, No. 4, 2009
+
+
+
+examination of models of provision with benefits and detriments of each, exam-
+ines capital and operating expenses, and concludes with a look into the future
+of bike-sharing through a discussion about what a 4th generation bike-sharing
+program could be.
+
+
+History of Bike-sharing
+There have been three generations of bike-sharing systems over the past 45 years
+(DeMaio 2003, 2004). The 1st generation of bike-sharing programs began on July
+28, 1965, in Amsterdam with the Witte Fietsen, or White Bikes (Schimmelpennick
+2009). Ordinary bikes, painted white, were provided for public use. One could find
+a bike, ride it to his or her destination, and leave it for the next user. Things did not
+go as planned, as bikes were thrown into the canals or appropriated for private use.
+The program collapsed within days.
+In 1991, a 2nd generation of bike-sharing program was born in Farsø and Grenå,
+Denmark, and in 1993 in Nakskov, Denmark (Nielse 1993). These programs were
+small; Nakskov had 26 bikes at 4 stations. It was not until 1995 that the first
+large-scale 2nd generation bike-sharing program was launched in Copenhagen as
+Bycyklen, or City Bikes, with many improvements over the previous generation.
+The Copenhagen bikes were specially designed for intense utilitarian use with
+solid rubber tires and wheels with advertising plates, and could be picked up and
+returned at specific locations throughout the central city with a coin deposit.
+While more formalized than the previous generation, with stations and a non-
+profit organization to operate the program, the bikes still experienced theft due to
+the anonymity of the user. This gave rise to a new generation of bike-sharing with
+improved customer tracking.
+The first of this new breed of 3rd generation bike-sharing programs was Bikeabout
+in 1996 at Portsmouth University in England, where students could use a magnetic
+stripe card to rent a bike (Black and Potter undated). This and the following 3rd
+generation of bike-sharing systems were smartened with a variety of technologi-
+cal improvements, including electronically-locking racks or bike locks, telecom-
+munication systems, smartcards and fobs, mobile phone access, and on-board
+computers.
+Bike-sharing grew slowly in the following years, with one or two new programs
+launching annually, such as Rennes’ (France) Vélo à la Carte in 1998 and Munich’s
+Call a Bike in 2000, but it was not until 2005 when 3rd generation bike-sharing
+
+42
+

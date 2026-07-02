@@ -1,0 +1,1149 @@
+project:
+  name: "PhD Thesis Final Sprint — June 2026"
+  current_date: "2026-06-24"
+  current_stage: "内容整合"
+  content_freeze: "2026-06-28 23:00"
+  supervisor_ready: "2026-06-29 12:30"
+  final_buffer_end: "2026-06-30 12:00"
+source_import:
+  file: "tracking/archive/PhD_thesis_sprint_tracker_2026-06-24_1500_replan.xlsx"
+  mode: "one_time_import_only"
+  imported_sheets:
+    - "任务清单"
+    - "每日汇报"
+    - "里程碑"
+    - "问题清单"
+  do_not_use_as_long_term_source: true
+spine:
+  file: "tracking/thesis_spine_2026-06-23.md"
+  status: "frozen"
+  frozen_date: "2026-06-23"
+  chapter_logic:
+    chapter3: "methodological foundation"
+    chapter4: "operational pillar"
+    chapter5: "methodological and operational synthesis"
+metrics:
+  core_tasks_total: "34"
+  core_tasks_completed: "3"
+  overall_weighted_progress: 0.133142
+  p0_completion_rate: 0.068966
+  p0_blockers: "0"
+  figures_total: 13
+  figures_restored: 0
+  figure_placeholders_remaining: "13"
+  build_errors: "待确认"
+  undefined_citations: "待确认"
+  undefined_references: "待确认"
+  today_planned_blocks: "7"
+  today_completed_blocks: "1"
+  today_planned_hours: 8.16
+  today_actual_hours: 2.25
+  today_blockers: "0"
+  overdue_tasks: "2"
+blocks:
+  T1:
+    date: "2026-06-23"
+    weekday: "周二"
+    time: "19:00–19:35"
+    type: "核心"
+    module: "构建与基线"
+    priority: "P0"
+    title: "建立安全基线"
+    acceptance: "备份仓库、建立 integration 分支、完成 baseline build，并记录错误/警告/缺失文件。"
+    planned_hours: 0.58
+    status: "delayed"
+    status_label: "延期"
+    completion: 0.5
+    actual_hours: 0.35
+    weighted_completed_hours: 0.29
+    evidence:
+      - "安全基线/最终 build 状态待 06/24 验收"
+      - "今晚不再检查 Codex final output"
+    blockers:
+      - "Codex final writing output and final build status 未检查。"
+    next_step: "06/24 第一块只看 Codex report：files changed、citation plan、undefined citations、word count、build status。"
+    notes: "不标完成，避免把未验收 build 计入完成。"
+    timeliness: "逾期"
+  T2:
+    date: "2026-06-23"
+    weekday: "周二"
+    time: "19:35–20:50"
+    type: "核心"
+    module: "论文主线"
+    priority: "P0"
+    title: "冻结 thesis spine"
+    acceptance: "形成中央问题、RQ1–RQ3、三章递进关系、研究范围和三项主要贡献的一页说明。"
+    planned_hours: 1.25
+    status: "completed"
+    status_label: "已完成"
+    completion: "1"
+    actual_hours: 1.25
+    weighted_completed_hours: 1.25
+    evidence:
+      - "thesis spine completed and frozen"
+      - "已明确 Ch3 methodological foundation、Ch4 operational pillar、Ch5 synthesis"
+    blockers:
+      []
+    next_step: "后续所有章节按 frozen spine 审查，不再重开主线。"
+    notes: "Citation verification rule updated: PDF-first, metadata only for screening."
+    timeliness: null
+  T3:
+    date: "2026-06-23"
+    weekday: "周二"
+    time: "21:05–22:15"
+    type: "核心"
+    module: "Chapter 1"
+    priority: "P0"
+    title: "建立 Chapter 1 骨架"
+    acceptance: "建立六个实质性 section；将三篇 Introduction 的可用材料映射到各节。"
+    planned_hours: 1.17
+    status: "completed"
+    status_label: "已完成"
+    completion: "1"
+    actual_hours: 1.17
+    weighted_completed_hours: 1.17
+    evidence:
+      - "Chapter 1 six-section skeleton completed"
+      - "三篇 Introduction 的材料入口已确定"
+    blockers:
+      []
+    next_step: "06/24 根据 Codex 输出决定：继续 Chapter 1 polish 或进入 Chapter 2。"
+    notes: "骨架完成，正文质量待 Codex 输出验收。"
+    timeliness: null
+  T4:
+    date: "2026-06-23"
+    weekday: "周二"
+    time: "22:15–23:00"
+    type: "核心"
+    module: "Chapter 1"
+    priority: "P0"
+    title: "开始 Chapter 1 正文"
+    acceptance: "完成 Background 与 practical context 700–1,000 词；编译并 commit。"
+    planned_hours: 0.75
+    status: "in_progress"
+    status_label: "进行中"
+    completion: 0.5
+    actual_hours: 1.05
+    weighted_completed_hours: 0.375
+    evidence:
+      - "Zotero-assisted Chapter 1 Introduction drafting delegated to Codex"
+      - "已要求 PDF-first citation verification"
+    blockers:
+      - "Codex final writing output 未检查"
+      - "Chapter 1 word count、undefined citations、build status 待验收"
+    next_step: "06/24 review Codex report only, not 全文重写；之后再决定 polish/Chapter 2。"
+    notes: "不标完成，等待人工验收与 build 结果。"
+    timeliness: "逾期"
+  W1:
+    date: "2026-06-24"
+    weekday: "周三"
+    time: "09:45–12:00"
+    type: "核心"
+    module: "工作流同步"
+    priority: "P1"
+    title: "工作流重构与 tracker 初始化准备"
+    acceptance: "完成 Project/Codex/tracker 同步方案；准备新的 tracker xlsx 供 Codex 初始化；不进入正文重写。"
+    planned_hours: 2.25
+    status: "completed"
+    status_label: "已完成"
+    completion: "1"
+    actual_hours: 2.25
+    weighted_completed_hours: 2.25
+    evidence:
+      - "完成 ChatGPT Project / Codex / tracker 工作流重排"
+      - "明确 repo-based source of truth"
+      - "准备新的 xlsx 给 Codex 初始化"
+    blockers:
+      []
+    next_step: "15:00 开始回到论文：先验收 Chapter 1 Codex 输出。"
+    notes: "上午工作流占用原写作计划；已冻结，不继续扩大工作流范围。"
+    timeliness: null
+  W2:
+    date: "2026-06-24"
+    weekday: "周三"
+    time: "15:00–15:20"
+    type: "核心"
+    module: "Chapter 1 验收"
+    priority: "P0"
+    title: "快速读取 Codex report"
+    acceptance: "只确认 files changed、Chapter 1 word count、citation plan、undefined citations/references、build status。"
+    planned_hours: 0.33
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      - "Chapter 1 已写完但尚未 review"
+      - "build status 未确认"
+    next_step: "给出 Codex 输出：通过 / 小修 / 返工 的初步判断。"
+    notes: "15:00 准时开始；不要全文重写。"
+    timeliness: "今日"
+  W3:
+    date: "2026-06-24"
+    weekday: "周三"
+    time: "15:20–16:30"
+    type: "核心"
+    module: "Chapter 1 验收"
+    priority: "P0"
+    title: "验收 Chapter 1 Codex 输出"
+    acceptance: "检查是否符合 thesis spine、六节结构、RQ1–RQ3、citation plan；清除明显 this paper/novelty overclaim/AI 式结构问题。"
+    planned_hours: 1.17
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: "判定 Chapter 1：可接受 / 需小修 / 需返工。"
+    notes: "验收优先于润色；不逐句打磨。"
+    timeliness: "今日"
+  W4:
+    date: "2026-06-24"
+    weekday: "周三"
+    time: "16:30–17:20"
+    type: "核心"
+    module: "Chapter 1"
+    priority: "P0"
+    title: "Chapter 1 最小 polish 或返工 prompt"
+    acceptance: "若输出可接受，只修 thesis-spine 偏离、重复、citation 不自然和明显 AI 味；若偏离大，生成 Codex 返工 prompt。"
+    planned_hours: 0.83
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: "让 Chapter 1 进入可接受初稿，或启动明确返工任务。"
+    notes: "只做最小必要修改，不扩大到全文重写。"
+    timeliness: "今日"
+  W5:
+    date: "2026-06-24"
+    weekday: "周三"
+    time: "17:20–17:40"
+    type: "核心"
+    module: "编译与记录"
+    priority: "P0"
+    title: "Chapter 1 编译与状态记录"
+    acceptance: "运行或验收一次编译；记录 Chapter 1 status、word count、errors、undefined citations/references、remaining TODO。"
+    planned_hours: 0.33
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: "如果 Chapter 1 通过，晚上进入 Chapter 2；若不通过，明确返工阻塞。"
+    notes: "17:40 后吃饭/休息/简单活动，不继续硬拖。"
+    timeliness: "今日"
+  W6:
+    date: "2026-06-24"
+    weekday: "周三"
+    time: "19:00–20:30"
+    type: "核心"
+    module: "Chapter 2"
+    priority: "P0"
+    title: "建立 Chapter 2 文献矩阵"
+    acceptance: "按 Theme / Existing literature / Limitation / Thesis response 整理 static BRP、UDF/EUDF、broken bikes、on-site repair、CFRS/decomposition。"
+    planned_hours: 1.5
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: "Chapter 2 每一节知道写什么，不再是空白大纲。"
+    notes: "今天只要求启动 Chapter 2，不追求完成前半。"
+    timeliness: "今日"
+  W7:
+    date: "2026-06-24"
+    weekday: "周三"
+    time: "20:45–22:30"
+    type: "核心"
+    module: "Chapter 2 + 日终"
+    priority: "P0"
+    title: "写 Chapter 2 开头并日终检查"
+    acceptance: "完成 Literature Review 开场、static BRP overview、service-level/UDF/EUDF 开头 600–1,000 词；随后编译、更新 tracker 和日终汇报。"
+    planned_hours: 1.75
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: "发出 06/24 日终汇报：Chapter 1 status、Chapter 2 status、build、citations、下一步。"
+    notes: "22:30 后只允许轻微收尾；不超过 23:15。"
+    timeliness: "今日"
+  H1:
+    date: "2026-06-25"
+    weekday: "周四"
+    time: "09:45–12:00"
+    type: "核心"
+    module: "Chapter 2"
+    priority: "P0"
+    title: "写服务质量文献"
+    acceptance: "完成 UDF、EUDF、target-deviation measures 以及一维到二维库存状态的关系。"
+    planned_hours: 2.25
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  H2:
+    date: "2026-06-25"
+    weekday: "周四"
+    time: "12:45–13:35"
+    type: "核心"
+    module: "Chapter 2"
+    priority: "P0"
+    title: "写维修相关文献"
+    acceptance: "完成 broken-bike collection、off-site maintenance、on-site repair，并连接 Chapter 4 gap。"
+    planned_hours: 0.83
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  H3:
+    date: "2026-06-25"
+    weekday: "周四"
+    time: "19:00–21:00"
+    type: "核心"
+    module: "Chapter 2"
+    priority: "P0"
+    title: "写 CFRS 综合综述"
+    acceptance: "按 clustering criterion、vehicle–cluster relationship、routing interface 分类综述。"
+    planned_hours: "2"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  H4:
+    date: "2026-06-25"
+    weekday: "周四"
+    time: "21:15–22:30"
+    type: "核心"
+    module: "Chapter 2"
+    priority: "P0"
+    title: "写综合 research gap"
+    acceptance: "每个 gap 映射到 RQ、Chapter 与 contribution；形成完整闭环。"
+    planned_hours: 1.25
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  H5:
+    date: "2026-06-25"
+    weekday: "周四"
+    time: "22:30–23:15"
+    type: "核心"
+    module: "质量检查"
+    priority: "P1"
+    title: "去拼接感并编译"
+    acceptance: "删除 paper-style 重复贡献声明；统一 citation 与术语；完成日终 commit。"
+    planned_hours: 0.75
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  F1:
+    date: "2026-06-26"
+    weekday: "周五"
+    time: "09:45–10:15"
+    type: "核心"
+    module: "技术审查"
+    priority: "P0"
+    title: "读取并分类 Codex 差异报告"
+    acceptance: "将差异分为排版、符号、可能改变模型含义三类；形成数学风险清单。"
+    planned_hours: 0.5
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  F2:
+    date: "2026-06-26"
+    weekday: "周五"
+    time: "10:15–12:15"
+    type: "核心"
+    module: "Chapter 3"
+    priority: "P0"
+    title: "Chapter 3 技术审查与过渡"
+    acceptance: "核对目标、约束、ATS、实验定义和表格；加入 Ch2→Ch3 与 Ch3→Ch4 过渡。"
+    planned_hours: "2"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  F3:
+    date: "2026-06-26"
+    weekday: "周五"
+    time: "12:45–13:35"
+    type: "核心"
+    module: "图件与编号"
+    priority: "P0"
+    title: "恢复 Chapter 3/5 图件"
+    acceptance: "清除相关 5 个占位符，或为无法恢复者形成明确且可执行的重建方案。"
+    planned_hours: 0.83
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  F4:
+    date: "2026-06-26"
+    weekday: "周五"
+    time: "19:00–20:45"
+    type: "核心"
+    module: "Chapter 4"
+    priority: "P0"
+    title: "Chapter 4 模型审查"
+    acceptance: "检查 EUDF、线性化、排放项、tie-breaking、库存守恒、时间离散、变量域和单位。"
+    planned_hours: 1.75
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  F5:
+    date: "2026-06-26"
+    weekday: "周五"
+    time: "21:00–22:15"
+    type: "核心"
+    module: "Chapter 4"
+    priority: "P1"
+    title: "清理 Chapter 4 论述"
+    acceptance: "重写章首/结论；清除 manuscript/paper/reviewer-defense 和过度宣传式语言。"
+    planned_hours: 1.25
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  F6:
+    date: "2026-06-26"
+    weekday: "周五"
+    time: "22:15–23:15"
+    type: "核心"
+    module: "附录与引用"
+    priority: "P0"
+    title: "稳定正文—附录接口"
+    acceptance: "将硬编码 Algorithm/Appendix/Chapter 编号改为稳定引用，并检查 Appendix A–E 调用关系。"
+    planned_hours: "1"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  B1:
+    date: "2026-06-27"
+    weekday: "周六"
+    time: "可选 10:30–12:00"
+    type: "可选"
+    module: "风险缓冲"
+    priority: "P1"
+    title: "恢复剩余图片"
+    acceptance: "仅在出游取消且状态良好时执行；优先清除所有剩余 figure placeholder。"
+    planned_hours: 1.5
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  B2:
+    date: "2026-06-27"
+    weekday: "周六"
+    time: "可选 19:00–20:30"
+    type: "可选"
+    module: "风险缓冲"
+    priority: "P1"
+    title: "Chapter 4 语言缓冲"
+    acceptance: "仅在需要时清理 Chapter 4 语言或关闭 P0 编译问题；不得启动新研究。"
+    planned_hours: 1.5
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  S1:
+    date: "2026-06-28"
+    weekday: "周日"
+    time: "09:30–10:30"
+    type: "核心"
+    module: "导师汇报"
+    priority: "P0"
+    title: "准备导师汇报包"
+    acceptance: "完成最新 PDF 与一页进度摘要：已完成、剩余 P0、预计提交节点。"
+    planned_hours: "1"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  S2:
+    date: "2026-06-28"
+    weekday: "周日"
+    time: "10:30–12:30"
+    type: "缓冲"
+    module: "导师汇报"
+    priority: "P1"
+    title: "导师会议/等待缓冲"
+    acceptance: "用于会议、准备或等待；无会议时转为 Chapter 4 与图片 P0 缓冲。"
+    planned_hours: "2"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  S3:
+    date: "2026-06-28"
+    weekday: "周日"
+    time: "13:30–15:30"
+    type: "核心"
+    module: "Chapter 4"
+    priority: "P0"
+    title: "Chapter 4 最终整合"
+    acceptance: "完成语言清理、8 幅图、算法叙述和附录接口；无 placeholder/paper 残留。"
+    planned_hours: "2"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  S4:
+    date: "2026-06-28"
+    weekday: "周日"
+    time: "15:45–17:30"
+    type: "核心"
+    module: "Chapter 5"
+    priority: "P0"
+    title: "Chapter 5 章际整合"
+    acceptance: "将外部自引优先改为 Chapter 4 内部承接；解释排放目标差异与 Ch3 方法继承。"
+    planned_hours: 1.75
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  S5:
+    date: "2026-06-28"
+    weekday: "周日"
+    time: "18:30–20:30"
+    type: "核心"
+    module: "Chapter 6"
+    priority: "P0"
+    title: "重写 Chapter 6"
+    acceptance: "按 RQ1–RQ3、跨章综合、贡献、局限和未来研究重构至约 1,800–2,500 词。"
+    planned_hours: "2"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  S6:
+    date: "2026-06-28"
+    weekday: "周日"
+    time: "20:45–22:00"
+    type: "核心"
+    module: "前置部分"
+    priority: "P0"
+    title: "完成摘要和前置部分"
+    acceptance: "摘要加入问题、方法、主要结果和统一意义；完成致谢与缩写核对。"
+    planned_hours: 1.25
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  S7:
+    date: "2026-06-28"
+    weekday: "周日"
+    time: "22:00–23:00"
+    type: "核心"
+    module: "内容冻结"
+    priority: "P0"
+    title: "执行内容冻结"
+    acceptance: "全文编译；清除 TODO/placeholder；检查目录、图表、引用、浮动体；生成冻结 commit。"
+    planned_hours: "1"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  M1:
+    date: "2026-06-29"
+    weekday: "周一"
+    time: "09:30–10:15"
+    type: "核心"
+    module: "最终质检"
+    priority: "P0"
+    title: "执行 clean build"
+    acceptance: "删除辅助文件后完整编译；无 undefined citation/reference、重复 label、missing image。"
+    planned_hours: 0.75
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  M2:
+    date: "2026-06-29"
+    weekday: "周一"
+    time: "10:15–11:15"
+    type: "核心"
+    module: "最终质检"
+    priority: "P0"
+    title: "核对结果一致性"
+    acceptance: "核对摘要与 Ch3–6 的百分比、规模、time limit、optimality claim，确保数字有唯一来源。"
+    planned_hours: "1"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  M3:
+    date: "2026-06-29"
+    weekday: "周一"
+    time: "11:15–12:00"
+    type: "核心"
+    module: "语言质检"
+    priority: "P0"
+    title: "扫描语言风险"
+    acceptance: "优先清理 Ch4 防御性/AI 式表达、无依据因果推断和宣传性措辞。"
+    planned_hours: 0.75
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  M4:
+    date: "2026-06-29"
+    weekday: "周一"
+    time: "12:00–12:30"
+    type: "核心"
+    module: "提交"
+    priority: "P0"
+    title: "生成并发送 supervisor-ready 包"
+    acceptance: "核对文件名、页码、目录、附录和图表；12:30 前发送 PDF 与源码快照。"
+    planned_hours: 0.5
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  M5:
+    date: "2026-06-29"
+    weekday: "周一"
+    time: "19:00–21:00"
+    type: "缓冲"
+    module: "反馈处理"
+    priority: "P0"
+    title: "处理 supervisor 反馈/严重错误"
+    acceptance: "仅处理反馈、编译故障或事实错误；无反馈则逐页视觉检查。"
+    planned_hours: "2"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  M6:
+    date: "2026-06-29"
+    weekday: "周一"
+    time: "21:15–22:30"
+    type: "核心"
+    module: "最终质检"
+    priority: "P1"
+    title: "最终视觉检查"
+    acceptance: "检查孤行、超宽表格、图分辨率、标题断行、空白页、算法跨页和附录编号。"
+    planned_hours: 1.25
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  M7:
+    date: "2026-06-29"
+    weekday: "周一"
+    time: "22:30–23:00"
+    type: "核心"
+    module: "归档"
+    priority: "P1"
+    title: "归档最终版本"
+    acceptance: "commit、tag、备份源码/PDF，并记录不影响提交的 P2 问题。"
+    planned_hours: 0.5
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  E1:
+    date: "2026-06-30"
+    weekday: "周二"
+    time: "09:30–11:30"
+    type: "缓冲"
+    module: "应急缓冲"
+    priority: "P0"
+    title: "处理明确反馈或致命问题"
+    acceptance: "只处理导师明确指出的错误、编译故障、格式要求或缺失材料。"
+    planned_hours: "2"
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+  E2:
+    date: "2026-06-30"
+    weekday: "周二"
+    time: "11:30–12:00"
+    type: "缓冲"
+    module: "最终提交"
+    priority: "P0"
+    title: "最终 clean build 与提交"
+    acceptance: "核对最终 PDF 并提交；12:00 后停止自行开启新修改。"
+    planned_hours: 0.5
+    status: "not_started"
+    status_label: "未开始"
+    completion: "0"
+    actual_hours: null
+    weighted_completed_hours: "0"
+    evidence:
+      []
+    blockers:
+      []
+    next_step: null
+    notes: null
+    timeliness: "待办"
+milestones:
+  -
+    id: "MS-01"
+    due: "2026-06-23 23:00"
+    title: "论文主线冻结"
+    acceptance: "thesis spine 冻结；Chapter 1 已开始；baseline build 或阻塞原因明确。"
+    priority: "P0"
+    status: "in_progress"
+    status_label: "进行中"
+    completed_at: null
+    evidence:
+      - "T2 spine frozen"
+      - "Chapter 1 skeleton completed"
+      - "Chapter 1 drafting delegated to Codex"
+    notes: "baseline/final build status still pending review on 06/24, so MS-01 is not marked completed yet."
+  -
+    id: "MS-02"
+    due: "2026-06-24 23:00"
+    title: "Chapter 1 验收 + Chapter 2 启动"
+    acceptance: "由于 6/24 上午用于工作流重构，且 15:00 才正式回到论文，本日里程碑降级为：Chapter 1 已验收并进入可接受初稿或明确返工；Chapter 2 完成文献矩阵，并尽量写出开头 600–1,000 词；tracker 新工作流可用于 Codex 初始化。"
+    priority: "P0"
+    status: "in_progress"
+    status_label: "进行中"
+    completed_at: null
+    evidence:
+      - "6/24 15:00 重排版任务已写入 tracker"
+      - "Chapter 1 review pending"
+      - "Chapter 2 尚未启动"
+    notes: "原 Chapter 2 30% 目标降级；6/25 需重点补 Chapter 2 完整初稿。"
+  -
+    id: "MS-03"
+    due: "2026-06-25 23:15"
+    title: "Chapter 1–2 完整"
+    acceptance: "两章均有完整初稿；research gaps 与 RQ 对齐。"
+    priority: "P0"
+    status: "not_started"
+    status_label: "未开始"
+    completed_at: null
+    evidence:
+      []
+    notes: null
+  -
+    id: "MS-04"
+    due: "2026-06-26 23:15"
+    title: "技术风险受控"
+    acceptance: "Chapter 3 整合完成；Chapter 4 数学风险受控；主要编号/引用修复。"
+    priority: "P0"
+    status: "not_started"
+    status_label: "未开始"
+    completed_at: null
+    evidence:
+      []
+    notes: null
+  -
+    id: "MS-05"
+    due: "2026-06-28 23:00"
+    title: "内容冻结"
+    acceptance: "所有章节、图、摘要和前置部分完整；无 TODO/placeholder；生成冻结 PDF。"
+    priority: "P0"
+    status: "not_started"
+    status_label: "未开始"
+    completed_at: null
+    evidence:
+      []
+    notes: null
+  -
+    id: "MS-06"
+    due: "2026-06-29 12:30"
+    title: "Supervisor-ready 提交"
+    acceptance: "干净编译、结果一致、视觉检查通过；PDF 已发送 supervisor。"
+    priority: "P0"
+    status: "not_started"
+    status_label: "未开始"
+    completed_at: null
+    evidence:
+      []
+    notes: null
+  -
+    id: "MS-07"
+    due: "2026-06-30 12:00"
+    title: "最终应急截止"
+    acceptance: "仅修复明确错误；最终 clean build 和提交完成。"
+    priority: "P0"
+    status: "not_started"
+    status_label: "未开始"
+    completed_at: null
+    evidence:
+      []
+    notes: null
+daily_summaries:
+  -
+    date: "2026-06-23"
+    planned_core_hours: 3.75
+    actual_hours: 3.85
+    planned_blocks: "4"
+    completed_blocks: "2"
+    completion_rate: 0.5
+    new_words: null
+    figure_placeholders_remaining: "13"
+    build_errors: "待确认"
+    undefined_citations_or_refs: "待确认"
+    status: "基本完成"
+    summary: "T2 thesis spine completed and frozen；Chapter 1 six-section skeleton completed；Zotero-assisted Chapter 1 Introduction drafting delegated to Codex；citation verification rule updated to PDF-first."
+    main_blocker: "Codex final writing output and final build status 未检查。"
+    next_priority: "Review Codex report only: files changed, citation plan, undefined citations, Chapter 1 word count, build status；then continue Chapter 1 polish or move to Chapter 2 according to tracker."
+    notes: "22:51 日终停止；今晚休息，不再进入全文重写。"
+  -
+    date: "2026-06-24"
+    planned_core_hours: 8.16
+    actual_hours: null
+    planned_blocks: "7"
+    completed_blocks: "1"
+    completion_rate: 0.142857
+    new_words: null
+    figure_placeholders_remaining: "13"
+    build_errors: "待确认"
+    undefined_citations_or_refs: "待确认"
+    status: "15:00 重排后执行中"
+    summary: "上午完成工作流重构与 tracker 初始化准备；15:00 才正式回到论文。今日目标进一步降级为：验收 Chapter 1、最小 polish、启动 Chapter 2。"
+    main_blocker: "上午写作时间被工作流占用；Chapter 1 Codex 输出和 build status 尚未验收；Chapter 2 尚未启动。"
+    next_priority: "15:00 起先验收 Codex report；下午让 Chapter 1 进入可接受初稿；晚上建立 Chapter 2 文献矩阵并写开头 600–1,000 词。"
+    notes: "若 Chapter 1 需要返工，则今晚 Chapter 2 只保留文献矩阵，不硬写正文。"
+  -
+    date: "2026-06-25"
+    planned_core_hours: 7.08
+    actual_hours: null
+    planned_blocks: "5"
+    completed_blocks: "0"
+    completion_rate: "0"
+    new_words: null
+    figure_placeholders_remaining: null
+    build_errors: null
+    undefined_citations_or_refs: null
+    status: "未开始"
+    summary: null
+    main_blocker: null
+    next_priority: null
+    notes: null
+  -
+    date: "2026-06-26"
+    planned_core_hours: 7.33
+    actual_hours: null
+    planned_blocks: "6"
+    completed_blocks: "0"
+    completion_rate: "0"
+    new_words: null
+    figure_placeholders_remaining: null
+    build_errors: null
+    undefined_citations_or_refs: null
+    status: "未开始"
+    summary: null
+    main_blocker: null
+    next_priority: null
+    notes: null
+  -
+    date: "2026-06-27"
+    planned_core_hours: "0"
+    actual_hours: null
+    planned_blocks: "0"
+    completed_blocks: "0"
+    completion_rate: "0"
+    new_words: null
+    figure_placeholders_remaining: null
+    build_errors: null
+    undefined_citations_or_refs: null
+    status: "未开始"
+    summary: null
+    main_blocker: null
+    next_priority: null
+    notes: null
+  -
+    date: "2026-06-28"
+    planned_core_hours: "9"
+    actual_hours: null
+    planned_blocks: "6"
+    completed_blocks: "0"
+    completion_rate: "0"
+    new_words: null
+    figure_placeholders_remaining: null
+    build_errors: null
+    undefined_citations_or_refs: null
+    status: "未开始"
+    summary: null
+    main_blocker: null
+    next_priority: null
+    notes: null
+  -
+    date: "2026-06-29"
+    planned_core_hours: 4.75
+    actual_hours: null
+    planned_blocks: "6"
+    completed_blocks: "0"
+    completion_rate: "0"
+    new_words: null
+    figure_placeholders_remaining: null
+    build_errors: null
+    undefined_citations_or_refs: null
+    status: "未开始"
+    summary: null
+    main_blocker: null
+    next_priority: null
+    notes: null
+  -
+    date: "2026-06-30"
+    planned_core_hours: "0"
+    actual_hours: null
+    planned_blocks: "0"
+    completed_blocks: "0"
+    completion_rate: "0"
+    new_words: null
+    figure_placeholders_remaining: null
+    build_errors: null
+    undefined_citations_or_refs: null
+    status: "未开始"
+    summary: null
+    main_blocker: null
+    next_priority: null
+    notes: null

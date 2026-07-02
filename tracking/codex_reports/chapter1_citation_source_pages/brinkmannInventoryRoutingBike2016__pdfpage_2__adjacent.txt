@@ -1,0 +1,66 @@
+CITEKEY: brinkmannInventoryRoutingBike2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/9JFQBWAN/Brinkmann et al. - 2016 - Inventory routing for bike sharing systems.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-013
+RELATED CE IDS: CE-013
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+318                                   Jan Brinkmann et al. / Transportation Research Procedia 19 (2016) 316 – 327
+
+
+         This article is structured as follows: In Section 2, we give a literature review of BSS related literature highlighting
+      the work considering IPR. In Section 3, the multi-periodic rebalancing problem in BSS is defined. The
+      decomposition approach is introduced in Section 4. Computational studies and their results are presented in Section
+      5. Finally, a conclusion is drawn in Section 6.
+
+      2. Literature Review
+
+          Generally, the goal is to install and maintain the functionality of a BSS in a cost efficient way (Benchimol et al.,
+      2011). This challenge can be handled on several management levels (Vogel, 2016). We first give a brief overview of
+      literature on the strategic and tactical management level. Then, we focus on the operational level where we
+      distinguish single-periodic and multi-periodic rebalancing.
+          On the strategic level, decisions about network design are made. Decisions contain the locations and capacities of
+      stations, and adaptions of the according infrastructure as well. Lin and Yang (2011) propose hub models to
+      determine locations and sizes of stations, and to identify the need for exclusive bike lanes. García-Palomares et al.
+      (2012) implement location allocation models to decide about station locations.
+          The tactical management addresses both data analysis and optimization. Request structure analysis has been done
+      by Borgnat et al. (2011) and Vogel et al. (2011). Additionally, Vogel et al. (2011) state that stations can be clustered
+      according to the request structure. E.g., stations in residential areas are indicated by a relatively high number of
+      rental requests and a relatively low number of return requests in the morning. Further, stations in working areas are
+      indicated by a relatively low number of rentals and a relatively high number of returns in the morning. In the course
+      of the day, the request structure inverts. This behavior exists since BSS are used by commuters. Vogel et al. (2014)
+      present a resource allocation problem (RAP) to determine suitable fill levels per station and hour. Here, decisions
+      about relocations are made using a transportation model. Thus, routing is simplified by single transportation flows.
+      The RAP's objective is to minimize costs for tours, relocations, and unserved requests. It is solved by a hybrid
+      metaheuristic. Initial fill levels, expected requests, and claimed relocation transports lead to suitable target fill levels
+      for upcoming time periods. These fill levels serve as anticipating input for operational planning. We state that
+      request can be served if target fill levels are realized.
+          The operational management faces vehicle routing problems with inventory decisions. These problems are well
+      known as IRPs (Dror et al., 1985). A comprehensive literature overview on IRPs is presented by Coelho et al.
+      (2014). Since in BSS two competing resources have to be balanced, namely bikes and free bike racks, IRPs for BSS
+      have to be studied separately. IRPs for BSS differ in objective function and constraints. Here, we further
+      differentiate between single-periodic and multi-periodic rebalancing.
+
+      2.1. Single-Periodic Rebalancing
+
+         In single-periodic rebalancing problems, bikes are relocated over night when the system is closed. Requests and
+      time-dependent fill levels are not considered. Therefore, the target fill levels represent suitable initial fill levels for
+      the next day. Usually, closed tours are generated, i.e., tours start and end at a depot. Chemla et al. (2013) and
+      Erdoğan et al. (2015) present problem settings in which a single vehicle has to realize target fill levels. Instead of
+      target fill levels, Erdoğan et al. (2014) aim on realizing target intervals. The objectives are to minimize the travel
+      distance or time respectively. Raviv et al. (2013) consider a fleet of vehicles and a limited time horizon. A service
+      time, i.e., the time a vehicle spends at a station to perform relocation operations, depends on the exact number of
+      relocated bikes. Due to the time limit, the realization of all target fill levels may not be possible. The deviation of
+      realized fill levels and target fill levels is called gap. The objective is to minimize the overall gap, the total travel
+      time, and service times. Two models using arc-index and time-index formulation are defined. Similar problem
+      settings are introduced by Di Gaspero et al. (2013), Rainer-Harbach et al. (2013), and Papazek et al. (2014). The
+      objectives are the minimization of gaps, the total time for traveling, and the number of relocation operations. The
+      authors consider static service times which represent the expected time to perform relocation operations. Di Gaspero
+      et al. (2013) implemente constraint programming and ant colony optimization. Rainer-Harbach et al. (2013) apply
+      variable neighborhood search (VNS) while Papazek et al. (2014) use a hybrid greedy randomized adaptive search
+      approach (GRASP) combined with path relinking.
+

@@ -1,0 +1,64 @@
+CITEKEY: nathModellingMethodsPlanning2019
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IQP6BKAP/Nath and Rambha - 2019 - Modelling methods for planning and operation of bike-sharing systems.pdf
+PDF PAGE INDEX: 0
+PDFTOTEXT PAGE NUMBER: 1
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-003
+RELATED CE IDS: CE-003
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Modelling Methods for Planning and Operation of Bike-Sharing Systems
+                                       Rito Brata Nath1 and Tarun Rambha ∗1, 2
+                           1
+                             Department of Civil Engineering, Indian Institute of Science, Bangalore, India
+      2
+          Center for infrastructure, Sustainable Transportation and Urban Planning (CiSTUP), Indian Institute of Science,
+                                                          Bangalore, India
+
+                                                             Abstract
+
+              Bike-sharing systems (BSSs) are emerging as a popular type of shared vehicle platforms where users can
+          rent bicycles without having to own and maintain them. BSSs are ideal for short trips and for connecting
+          to public transit systems. Bicycle usage is associated with several unique characteristics which make planning
+          and operations of BSSs very different from traditional transportation modelling approaches or even car sharing
+          problems. In this paper, we summarize existing literature on strategic planning which involves selecting stations,
+          designing bike paths, and figuring out station capacity. Research on operational measures which include day-
+          to-day and within-day repositioning activities are also collated. Additionally, models for understanding demand,
+          pricing and incentives, maintenance, and other technological aspects are reviewed.
+
+          Keywords: bike sharing; strategic planning, facility location, operational planning, repositioning
+
+
+
+1         Introduction
+
+Automobile usage is on the rise in many parts of the world and cities are actively promoting eco-friendly transportation
+solutions to reduce traffic congestion and emissions. Bike-sharing systems (BSSs) is one such alternative which can
+not only serve short-distance trips but can also enhance connectivity to public transportation networks. In a BSS,
+customers can pick up and drop off cycles at specific locations or anywhere in the city depending on the type of
+bikes in the system, locking technology, and payment mechanisms. Most of the current generation BSSs are either
+free-floating or station-based (see Figure 1). Station-based BSSs may use both docked or geo-fenced dockless bikes.
+A few examples of BSSs include Capital Bikeshare (CaBi) in Washington, D.C., Citi Bike in New York, Blue Bikes
+in Boston, and Vélib’ in Paris.
+
+
+
+
+               Figure 1: Docked BSS: Capital Bikeshare, US [1] (left) and Dockless BSS: Mobike, China [2] (right)
+
+
+Like any other transportation system, planning and operation of BSSs require understanding the spatio-temporal
+demand for cycles in a city. Demand can either be inferred from extensive surveys or past data on traveller movements
+[3], [4]. This knowledge of demand can drive decisions on building dedicated bike lanes, setting up base stations [5],
+and choosing between pay-per-use and subscription-type services. Supply-side aspects can also in turn influence
+demand. For example, dedicated bike lanes make bike travel safer and has the potential to increase BSS usage [6],
+[7], [8].
+    ∗ B tarunrambha@iisc.ac.in
+
+
+
+
+                                                                  1
+

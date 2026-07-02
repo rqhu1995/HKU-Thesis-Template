@@ -26,26 +26,49 @@
 
 % !TeX program = xelatex
 \documentclass[
-11pt, % Shui (2016) uses an 11 pt Times New Roman body face
+12pt,
 oneside, % Conservative formal submission layout with symmetric margins
 english, % ngerman for German
-singlespacing, % Body leading is set explicitly below to match the sample thesis
+onehalfspacing, % Initial spacing option; body leading is set explicitly below
 % draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
 % nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
 liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
 toctotoc, % Add the main table of contents to the table of contents
 %nohyperref, % Uncomment to not load the hyperref package
 %headsepline, % Disabled for the formal submission style
-%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+chapterinoneline, % Place the chapter title next to the number on one line
 % consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
 	]{HKUThesis} % The class file specifying the document structure
 
 \raggedbottom % Avoid stretching vertical gaps to force every page to the same bottom edge
+\renewcommand{\abovechapterskip}{\vspace*{-57.26pt}}
+\renewcommand{\chapterbelowskip}{\vspace*{11.72pt}}
+\renewcommand{\mdtChapapp}{CHAPTER\space}
+\renewcommand{\chapterfont}{\normalfont\fontsize{18pt}{31pt}\selectfont\bfseries}
+\renewcommand{\chaptertitlefont}{\normalfont\fontsize{18pt}{31pt}\selectfont\bfseries}
+\renewcommand{\chapterprefixfont}{\normalfont\fontsize{18pt}{31pt}\selectfont\bfseries}
+\makeatletter
+\renewcommand{\HKU@sectionheading}[1]{%
+	\ifHKU@inappendix
+		{\appendixsectionheadingfont #1}%
+	\else
+		\hspace*{-\parindent}\raisebox{-10.24pt}{\sectionheadingfont\MakeUppercase{#1}}%
+	\fi
+}
+\renewcommand\@seccntformat[1]{%
+	\ifHKU@inappendix
+		\ifstrequal{#1}{section}{Appendix \csname the#1\endcsname\quad}{\csname the#1\endcsname.\quad}%
+	\else
+		\csname the#1\endcsname.\quad
+	\fi
+}
+\makeatother
 
 \usepackage{fontspec} % Native system fonts under XeLaTeX
 \setmainfont{Times New Roman}
 \setsansfont{Times New Roman}
 \setmonofont{Times New Roman}
+\defaultfontfeatures[FontAwesome]{Extension = .otf}
 \usepackage{fontawesome} % Awesome symbol for usage
 \usepackage{wrapfig} % Add enbedded figure in the text
 \usepackage{tikz} % Used by optional reference title-page elements
@@ -65,8 +88,8 @@ toctotoc, % Add the main table of contents to the table of contents
 	\endalign
 	\endgroup
 }
-\usepackage{unicode-math}
-\setmathfont{TeX Gyre Termes Math} % Times-compatible mathematics
+\usepackage[warnings-off={mathtools-overbracket,mathtools-colon}]{unicode-math}
+\setmathfont{texgyretermes-math.otf} % Times-compatible mathematics
 % \usepackage[labelformat=simple]{subcaption} % Add multiple subfigures in a figure environment
 % \renewcommand\thesubfigure{(\Alph{subfigure})} % change the image numbering and reference link to (A),(B),(C), ...... format
 \captionsetup[figure]{
@@ -79,7 +102,7 @@ toctotoc, % Add the main table of contents to the table of contents
 	width=0.90\textwidth,
 	skip=6pt
 }
-\captionsetup[table]{
+\captionsetup*[table]{
 	font=small,
 	labelfont=bf,
 	labelsep=period,
@@ -94,9 +117,11 @@ toctotoc, % Add the main table of contents to the table of contents
 % Shui (2016) uses an author-year reference list rather than numeric labels.
 \usepackage[backend=biber,style=apa,natbib=true,maxbibnames=99,giveninits=true,sorting=nyt,doi=false,url=false,isbn=false]{biblatex}
 \setlength{\bibhang}{22pt}
-\setlength{\bibitemsep}{0pt}
 \setlength{\bibparsep}{0pt}
-\AtBeginBibliography{\fontsize{11pt}{18pt}\selectfont}
+\AtBeginBibliography{%
+	\setstretch{1.435}%
+	\setlength{\bibitemsep}{\baselineskip}%
+} % Keep references at the same line spacing as the body text, with paragraph-like gaps between entries
 
 \addbibresource{thesis.bib} % The filename of the bibliography
 
@@ -127,8 +152,7 @@ toctotoc, % Add the main table of contents to the table of contents
 \newif\ifHKUAbbreviationsTable
 \setlength\parindent{24pt}
 \setlength\parskip{18pt}
-\setstretch{1}
-\AtBeginDocument{\setstretch{1}\fontsize{11pt}{18pt}\selectfont}
+\AtBeginDocument{\setstretch{1.435}\setlength{\parskip}{\baselineskip}\setlength{\bibitemsep}{\baselineskip}} % Match the Word-style 1.5 leading while preserving paragraph indentation
 %----------------------------------------------------------------------------------------
 %	MARGIN SETTINGS
 %----------------------------------------------------------------------------------------
@@ -136,16 +160,18 @@ toctotoc, % Add the main table of contents to the table of contents
 \geometry{
 		paper=a4paper,
 		left=35mm,
-		right=34mm,
-		top=25.15mm,
-		bottom=31.5mm,
-		headheight=14pt,
+		right=35mm, % HKU requires >= 35mm on both left and right edges
+		top=24.27mm,
+		bottom=29.9mm,
+		headheight=21pt,
 		headsep=0pt,
 		footskip=8.6mm,
 		ignorehead,
-		ignorefoot,
+		includefoot,
 		%showframe, % Uncomment to show how the type block is set on the page
 	}
+\setlength{\footheight}{21pt}
+\ofoot*{\normalfont\fontsize{12pt}{12pt}\selectfont\pagemark}
 
 
 %----------------------------------------------------------------------------------------
@@ -226,17 +252,17 @@ toctotoc, % Add the main table of contents to the table of contents
 \newif\ifincludeLibraryTitlePage
 \includeLibraryTitlePagefalse
 \newif\ifincludeListOfFigures
-\includeListOfFigurestrue
+\includeListOfFiguresfalse
 \newif\ifincludeListOfTables
-\includeListOfTablestrue
+\includeListOfTablesfalse
 \newif\ifincludeListOfAlgorithms
 \includeListOfAlgorithmsfalse
 \newif\ifincludeAbbreviations
-\includeAbbreviationstrue
+\includeAbbreviationsfalse
 \newif\ifincludeSymbols
 \includeSymbolsfalse
 \newif\ifincludeAppendices
-\includeAppendicestrue
+\includeAppendicesfalse
 
 % ======================================================================================== %
 %                                        START DOCUMENT
@@ -255,7 +281,7 @@ toctotoc, % Add the main table of contents to the table of contents
 		\input{Titlepage/library_titlepage.tex}
 \fi
 
-\input{Covers/cover.tex}
+%\input{Covers/cover.tex}
 
 
 %----------------------------------------------------------------------------------------
@@ -263,36 +289,36 @@ toctotoc, % Add the main table of contents to the table of contents
 %----------------------------------------------------------------------------------------
 
 
-\input{Abstract/abstract.tex}
+%\input{Abstract/abstract.tex}
 
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
-\input{Titlepage/titlepage.tex}
+%\input{Titlepage/titlepage.tex}
 
-\frontmatter
-\pagestyle{thesis}
-\setcounter{page}{1}
+%\frontmatter
+%\pagestyle{thesis}
+%\setcounter{page}{1}
 
 
 %----------------------------------------------------------------------------------------
 %	DECLARATION PAGE
 %----------------------------------------------------------------------------------------
 
-\input{Declaration/declaration.tex}
+%\input{Declaration/declaration.tex}
 
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
 %----------------------------------------------------------------------------------------
-\input{Acknowledgments/acknowledgments.tex}
+%\input{Acknowledgments/acknowledgments.tex}
 
 %----------------------------------------------------------------------------------------
 %	LIST OF CONTENTS/FIGURES/TABLES PAGES
 %----------------------------------------------------------------------------------------
 
-\tableofcontents % Prints the main table of contents
+%\tableofcontents % Prints the main table of contents
 
 \ifincludeListOfTables
 	\listoftables % Prints the list of tables
@@ -333,21 +359,21 @@ toctotoc, % Add the main table of contents to the table of contents
 
 \include{Chapters/Chapter1}
 \include{Chapters/Chapter2}
-\include{Chapters/Chapter3}
-\include{Chapters/Chapter4}
-\include{Chapters/Chapter5}
-\include{Chapters/Chapter6}
+%\include{Chapters/Chapter3}
+%\include{Chapters/Chapter4}
+%\include{Chapters/Chapter5}
+%\include{Chapters/Chapter6}
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-\cleardoublepage
-\phantomsection
-\chapter*{REFERENCES}
-\addcontentsline{toc}{chapter}{REFERENCES}
-\vspace*{12pt}
-\printbibliography[heading=none]
+%\cleardoublepage
+%\phantomsection
+%\chapter*{REFERENCES}
+%\addcontentsline{toc}{chapter}{REFERENCES}
+%\vspace*{12pt}
+%\printbibliography[heading=none]
 
 %----------------------------------------------------------------------------------------
 %	THESIS CONTENT - APPENDICES

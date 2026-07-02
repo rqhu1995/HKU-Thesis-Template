@@ -1,0 +1,81 @@
+CITEKEY: forma3stepMathHeuristic2015
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/BNZBQK4T/Forma et al. - 2015 - A 3-step math heuristic for the static repositioning problem in bike-sharing systems.pdf
+PDF PAGE INDEX: 4
+PDFTOTEXT PAGE NUMBER: 5
+PRINTED PAGE: 233
+SECTION: Literature review / methodology overview
+RELATED CE IDS: CE-026
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+234                                    I.A. Forma et al. / Transportation Research Part B 71 (2015) 230–247
+
+
+      In addition, the input consists of:
+
+  A set of vehicles V. Each vehicle has capacity kv.
+  The total time allocated for static repositioning, T. Typically, 5–6 h during the night.
+  The time L (resp., U) needed for the loading (resp., unloading) operation of each bicycle to (resp., from) the vehicle,
+   typically 1–2 min.
+  Vehicle driving time matrix, with elements tij between each pair of stations i and j, including the depot.
+  A weight, a, of the travel cost per time unit in the objective function. Without loss of generality, the weight of the
+   expected number of unserved users in the objective function is set to one.
+
+   In particular, the goal is to minimize a weighted sum of the expected number of unserved users (due to shortage of both
+bicycles and lockers) during the next working day, and the total traveling distance. A solution of the problem constitute a
+route for each vehicle that starts and ends at the depot, along with decisions on the number of bicycles to load/unload at
+each station along the route, while satisfying the time constraint. The objective is to minimize a weighted sum of the penalty
+function over all stations and the total travel cost of all the vehicles.
+                                                                             P
+   Let si be the inventory level at station i that minimizes fi(s). Clearly, i f i ðsi Þ is a lower bound on the value of the objective
+function of the above problem. We refer to si as the ideal inventory level of station i and to a solution that achieves the ideal
+inventory level at all stations as an ideal solution. Due to the time limitation, T, it is generally infeasible to achieve an ideal
+solution. Moreover, even if an ideal solution is feasible, it is generally sub-optimal due to the travel cost component in the
+objective function. Therefore, in general, the optimal solution differs from the ideal solution.
+
+4. A 3-step heuristic approach
+
+    Our proposed algorithm is composed of three steps: ﬁrst, stations are clustered according to geographic and inventory
+considerations. Then, the vehicles are routed through the clusters while inventory decisions are made for each individual
+station separately. Finally, the original static repositioning problem is solved for all stations, but traversal of the vehicles
+is allowed only between stations of the same cluster or stations that belong to two consecutive clusters, according to the
+decisions made in the previous step. These steps are described next.
+    In this section we use the following deﬁnitions: Given a cluster of stations I, let its initial inventory, denoted by S0I , be the
+sum of its stations’ initial inventories (i.e., before repositioning), and its capacity, denoted by CI, be the sum of its stations’
+capacities. That is:
+                 X
+         S0I ¼    s0i                                                                                                                ð1Þ
+                 i2I
+              X
+         CI ¼  ci                                                                                                                    ð2Þ
+                 i2I
+
+
+4.1. Step 1: A saving heuristic for building the clusters
+
+    The purpose of the ﬁrst step is to create clusters of stations in order to solve a repositioning problem on the reduced net-
+work, whose nodes would refer to clusters. Each cluster may include several stations, although a cluster of a single station is
+also possible.
+    To create clusters such that the repositioning solution on the reduced network will serve the objective of the original
+problem, two issues need to be considered: the geographic location and the initial inventory. Since in the next steps of
+the algorithm, the stations are visited cluster by cluster, we would like the stations in a given cluster to be geographically
+close to each other. Therefore, we limit the diameter of each cluster, i.e., the maximal distance (in terms of travel time)
+between stations that belong to the cluster. The maximal diameter allowed is denoted by D. Since as D decreases, we expect
+the number of clusters to increase, the value of D is determined to be as low as possible such that the repositioning problem
+on the reduced network can still be solved in Step 2 in a reasonable amount of time.
+    The second issue to consider is the initial inventory of the clusters, which determine their costs. We deﬁne the total cost
+of a cluster, FI(S), as the expected number of shortages that will be incurred in its stations when an inventory of S bicycles is
+arranged in the stations of cluster I in the best possible way, i.e., so as to minimize the sum of the expected number of short-
+ages in all of its stations. This deﬁnition is motivated by the fact that the stations of a cluster are visited by the same vehicle,
+which can easily transfer bicycles between them. For example, if we include in a certain cluster only stations in which the
+inventory level is lower than their ideal levels, transferring bicycles between these stations can not improve the service pro-
+vided by these stations signiﬁcantly. On the other hand, if the inventory of some stations is higher than their ideal level, and
+of others is lower, then transferring bicycles between stations within this cluster can be more beneﬁcial. In the former (lat-
+ter) case the cluster’s cost would be high (low).
+    FI(S) is formally deﬁned by the following mathematical program:
+                      X
+         F I ðSÞ ¼ min f i ðsi Þ                                                                                                     ð3Þ
+                       si :i2I
+                                 i2I
+

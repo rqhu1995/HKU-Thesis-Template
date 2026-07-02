@@ -1,0 +1,82 @@
+CITEKEY: wangStaticGreenRepositioning2018
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/XR2IYSMV/Wang and Szeto - 2018 - Static green repositioning in bike sharing systems with broken bikes.pdf
+PDF PAGE INDEX: 0
+PDFTOTEXT PAGE NUMBER: 1
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-034
+RELATED CE IDS: CE-034
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                     Transportation Research Part D 65 (2018) 438–457
+
+
+                                                          Contents lists available at ScienceDirect
+
+
+                                                Transportation Research Part D
+                                                journal homepage: www.elsevier.com/locate/trd
+
+
+
+
+Static green repositioning in bike sharing systems with broken
+                                                                                                                                       T
+bikes
+Yue Wang, W.Y. Szeto
+                                     ⁎
+
+Department of Civil Engineering, The University of Hong Kong, Pokfulam Road, Hong Kong
+The University of Hong Kong, Shenzhen Institute of Research and Innovation, Shenzhen, China
+
+
+
+
+ABSTRACT
+
+Bike-Sharing Systems (BSSs) and environmental concerns have been receiving increasing popularity in transportation operations. In BSSs, the
+distribution of bike demand often mismatches with bike supply and there are broken bikes. Usable bikes are needed to redistribute between stations
+to satisfy the demand and all broken bikes need to be carried back to the depot for repairs. Both types of bikes are often transported by fossil-fueled
+vehicles but using these vehicles for the operation may damage the environmental creditability of BSSs. A methodology is needed to mitigate the
+environmental impact of this operation.
+   This study aims to propose a methodology to reposition both good and broken bikes in a bike-sharing network in order to achieve a perfect
+balance between bike demand and supply at each station and make sure that all broken bikes are moved back to the depot. The objective of this
+repositioning operation is to minimize the total CO2 emissions of all repositioning vehicles. A Mixed Integer Linear Program (MILP) model is
+presented to formulate the problem mentioned above and a commercial solver is used to solve it for small applications. Using example applications,
+problem characteristics and the factors that affect the CO2 emissions are discussed. The results indicate that allowing multiple visits can reduce
+vehicle emissions. Moreover, when the percentage of broken bikes in the system increases, the CO2 emissions increase. Furthermore, if there is a
+tolerance for meeting the demand target, when this tolerance increases, the CO2 emissions decrease. In addition, when the distance of a link in an
+optimal route increases, the resultant emissions may remain unchanged. Besides, when the vehicle capacity increases, the CO2 emissions decrease.
+The real world instances of Citybike Vienna are used to compare emission and distance minimization solutions and investigate the runtime com-
+plexity of the proposed model. The results demonstrate that a shorter distance may not necessarily lead to lower emissions. The results also show
+that as the number of vehicles increases, the total emissions and runtime increase. A clustering method based on the nearest neighbor heuristic
+together with a commercial solver is used to solve a large real-world instance. This result confirms the possibility of using the clustering approach to
+reduce the running time for large network instances with multiple vehicles.
+
+
+
+
+1. Introduction
+
+    Cycling is an environment-friendly and healthy transport mode. It has received increasing attention in recent years. To encourage
+cycling, many cities have introduced public BSSs such as Velib in Paris, Villo in Brussels, Citi-Bike in New York City, and Santander
+Cycles in London. As of 16 September 2018, public BSSs were available in about 1780 cities (Meddin and DeMaio, 2018). In a
+classical BSS, registered users can rent a bike at a bike station, ride the bike, and return it to any station. Due to the asymmetrical
+distribution of bike flows, the deficient supply of both lockers and bikes often occur in these systems. The former situation leads to
+extra travel distances for some bike users to find available lockers while the latter one causes unsatisfied demand. To cater to the
+demands for both lockers and bikes, bike repositioning is essential.
+    In general, there are two types of bike repositioning: static and dynamic. Static bike repositioning (e.g., Li et al., 2016; Cruz et al.,
+2017; Ho and Szeto, 2017; Schuijbroek et al., 2017) usually focuses on the nighttime repositioning because, during that time, system
+
+
+  ⁎
+      Corresponding author.
+      E-mail addresses: yuewhku@hku.hk (Y. Wang), ceszeto@hku.hk (W.Y. Szeto).
+
+https://doi.org/10.1016/j.trd.2018.09.016
+
+Available online 27 September 2018
+1361-9209/ © 2018 The Authors. Published by Elsevier Ltd. This is an open access article under the CC BY-NC-ND license
+(http://creativecommons.org/licenses/BY-NC-ND/4.0/).
+

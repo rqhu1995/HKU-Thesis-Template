@@ -1,0 +1,66 @@
+CITEKEY: brinkmannInventoryRoutingBike2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/9JFQBWAN/Brinkmann et al. - 2016 - Inventory routing for bike sharing systems.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 316
+SECTION: Abstract
+RELATED CE IDS: CE-007, CE-013
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                           Jan Brinkmann et al. / Transportation Research Procedia 19 (2016) 316 – 327                    317
+
+
+1. Introduction
+
+    Cities deal with a large volume of traffic resulting in traffic jams and environmental pollution, e.g., noise and
+carbon dioxide emission. One approach to tackle these inconveniences is the use of public bike sharing systems
+(BSS, Büttner et al., 2011). Most BSS consist of stations, where users can rent and return bikes ad hoc. Further,
+station-less systems exist, where bikes are parked anywhere in the city center while they are not rented (Shaheen et
+al., 2010). Regarding rental requests, station-based systems seem to be advantageous since users can always rent
+bikes at the same stations according to their habits. In station-less systems, every time a user wants to rent a bike, the
+nearest bike has to be located, e.g., via smart phone app. Regarding return requests, station-less systems seem to be
+advantageous since users can return bikes almost anywhere. In station-based systems, bikes have to be returned at
+stations.
+    To ensure that users can rent and return bikes anytime at any place, providers aim to provide sufficient numbers
+of bikes and free bike racks at all stations throughout the day in a cost efficient manner. Here, providers face several
+challenges. Due to the short trip duration, requests are uncertain. Further, bikes are not returned at the station they
+have been rented at and so stations may tend to either run full or out of bikes. Moreover, the structure of user request
+is subject to spatio-temporal variation. Thus, the request behavior for every station differs in the course of the day.
+To satisfy as many requests as possible, the BSS has to be designed and maintained to match these challenges.
+    For station-based BSS, the challenges can be proceed on the strategical (long-term), tactical (mid-term), and
+operational (short-term) management levels (Vogel, 2016). The strategic management decides about locations and
+capacities of stations. On the tactical level, optimal fill levels for each station and for (hourly) periods throughout the
+day are determined by analyzing recorded data on single trips. Each trip consists of a rental and a return request. For
+each request, the associated station and the time it takes place are given. The determined fill levels anticipate typical
+user behavior and serve as input for operational planning. To realize these target fill levels, we distinguish two
+options. An indirect option focuses on user-based relocation of bikes initiated by financial incentives. Here, users are
+granted a price reduction if they rent or return a bike in a defined area or at a defined station respectively (Ruch et
+al., 2014). A direct option draws on vehicles which are routed between stations to pick up and deliver bikes
+(Shaheen et al., 2010). We state the direct option suits station-based BSS well since stations allow relocating bulks
+of bikes with only one stop. In a station-less system, vehicles would have to stop for every bike to pick up. Thus, we
+assume vehicles in a station-based system to allow most efficient relocations to realize target fill levels.
+Nevertheless, ͵ͲΨ of the running costs (between 1,500 and 2,500€ per bike and year) are caused by relocations
+(Büttner et al., 2011). Thus, providers aim for efficient relocations. If not stated otherwise, from here on we focus on
+station-based BSS and direct relocations.
+    The target fill levels are real-valued and, therefore, not suitable for operation planning. Hence, fill levels are
+enlarged to fill intervals with integer bounds. Generally, not every target interval can be realized due to capacity and
+time constraints. The resulting deviations of realized fill levels and given target intervals are called gaps. We assume
+a high probability of unsatisfied rental or return requests in the presence of large gaps. Thus, the objective is to
+minimize the squared gaps over all stations. Then, large gaps are mostly avoided while small gaps are allowed.
+    In this article, we model the problem on realizing target intervals as a multi-periodic inventory routing problem
+(IRP). Within each period, decisions considering the served stations, the amount of transported bikes, and the
+according vehicle routing have to be made. For this problem, decisions impact the current and following periods.
+Due to the interval representation of fill levels, the model allows stations to be both source and sink, and even
+balanced stations to be used to reduce gaps of adjacent stations. Since this rich IRP cannot be solved to optimality
+within reasonable time, we apply a temporal and spatial decomposition approach. Temporal decomposition is
+applied using a rolling horizon, i.e., time periods are solved independently. Within each period, a spatial
+decomposition is applied. To this end, the set of stations is partitioned into disjoint subsets. Efficient subsets
+consider both short distances between stations and a balance in bike surpluses and shortages. The subsets are
+assigned to vehicles and evaluated by a cost-benefit routing algorithm. We test the approach with real-world data
+from Vienna's BSS "CityBike Wien" operating on 59 stations. The required target fill levels are provided by Vogel
+et al. (2014). We examine the results regarding the search operators, the local search algorithms, and the number of
+vehicles. Our results depict, that our approach offers suitable subsets where the target intervals can mostly be
+realized. Only in the rush hour a few stations remain imbalanced.
+

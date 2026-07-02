@@ -1,0 +1,78 @@
+CITEKEY: ravivOptimalInventoryManagement2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/FSWE4QY2/Raviv and Kolka - 2013 - Optimal inventory management of a bike-sharing station.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-005
+RELATED CE IDS: CE-005
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+IIE Transactions (2013) 45, 1077–1093
+Copyright 
+          C “IIE”
+
+ISSN: 0740-817X print / 1545-8830 online
+DOI: 10.1080/0740817X.2013.770186
+
+
+
+Optimal inventory management of a bike-sharing station
+
+TAL RAVIV1,* and OFER KOLKA1,2
+1
+ Industrial Engineering Department, Iby and Aladar Fleischman Faculty of Engineering, Tel Aviv University, Tel Aviv, Israel
+E-mail: talraviv@eng.tau.ac.il
+2
+ ClickSoftware Ltd, Tel Aviv, Israel
+
+Received September 2011 and accepted October 2012
+
+
+
+
+Bike-sharing systems allow people to rent a bicycle at one of many automatic rental stations scattered around a city, use them for
+a short journey, and return them at any other station in that city. A crucial factor in the success of such a system is its ability to
+meet the fluctuating demand for both bicycles and vacant lockers at each station. In order to meet the demand, the inventory of
+each station must be reviewed regularly. This article introduces an inventory model suited for the management of bike rental stations
+and a numerical solution method used to solve it. Moreover, a structural result about the convexity of the model is proved. The
+method may be applicable for other closed-loop inventory systems. An extensive numerical study based on real-life data is presented
+to demonstrate its effectiveness and efficiency.
+Keywords: Shared mobility systems, inventory management, double-ended queues
+
+                                                                    information can be used to support operational decisions
+1. Introduction and literature review                               and long-term planning.
+                                                                       A crucial factor for the success of a BSS is its ability to
+Bike-Sharing Systems (BSSs) allow individuals to rent a             cope reliably with fluctuating demand. Indeed, the main
+bicycle at automatic rental stations scattered around a city,       complaints voiced by BSS users relate to the unavailabil-
+use them for a short journey, and return them to any other          ity of bicycles at their point of origin and unavailability of
+station in that city. As of December 2010, some 238 cities          lockers at their destinations. For example, in order to im-
+around the world have deployed such systems and currently           prove Brussels’ bike-sharing program (Villo), a voluntary
+53 are in planning (MetroBike LLC, 2011). For a review of           group of users created a web service that gathers inven-
+the history of BSSs and current trends, see DeMaio (2009).          tory data from the city’s BSS website in order to monitor
+   Bike-sharing programs encourage residents to use bicy-           the service level and create public pressure on the opera-
+cles as an environmentally sustainable and socially equi-           tor to improve the system. According to the group’s web
+table mode of transportation. Such programs also serve to           site (http://www.wheresmyvillo.be/), they want to make
+complement other modes of mass transit systems by mode              “JCDecaux [the operator of Villo] drastically improve the
+sharing. In addition to these transportation functions, a           availability of bikes and parking spaces through better re-
+municipal BSS may yield revenue for a city in the frame-            allocation of bikes.”
+work of a compliance carbon offset market (Capoor and                  Meeting the demand for bicycles and vacant lockers is
+Ambrosi, 2009).                                                     a particularly challenging problem due to inherent imbal-
+   Modern BSSs are supported by information systems that            ances in the renting and return rates at the various stations.
+provide data about the state of the system (i.e., the number        While the flow of commuters is approximately balanced
+of bicycles and lockers available at each station). This infor-     over the course of a day, this is not the case for the flow
+mation is accessible online via the World Wide Web and in           of bicycles. This is because a BSS may be used as a partial
+data kiosks at the stations. In addition, since the automatic       substitute for other modes of transportation. For exam-
+rental stations identify the bicycles using radio frequency         ple, users may choose to ride a bicycle in one direction
+identification technology, operators can easily obtain de-          and take a bus on their way back for a variety of reasons:
+tailed statistics regarding trips undertaken by users. This         weather or traffic conditions, availability and frequency of
+                                                                    the bus service at the time of their journey, topography of
+                                                                    their route, etc. In some cases, the imbalance is persistent;
+                                                                    e.g., relatively low return rates at stations located at the top
+∗
+    Corresponding author                                            of a hill. In other cases, the imbalance is temporary; e.g.,
+
+           2013 “IIE”
+0740-817X C
+

@@ -1,0 +1,83 @@
+CITEKEY: wangStaticGreenRepositioning2018
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/XR2IYSMV/Wang and Szeto - 2018 - Static green repositioning in bike sharing systems with broken bikes.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-030
+RELATED CE IDS: CE-030
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Y. Wang, W.Y. Szeto                                                                                          Transportation Research Part D 65 (2018) 438–457
+
+
+Table 2.1
+Summary of the characteristics of bike repositioning problems.
+                                  Assumptions                                     Objective function
+
+ References                       No. of vehicles    MV      BB     Scenario      Dev     UD       DS    TT/ TD/ TC        CVD      PC      LQ/ HC       EI
+
+ Benchimol et al. (2011)          Single                            Static                               ✓
+ Contardo et al. (2012)           Multiple           ✓              Dynamic               ✓
+ Chemla et al. (2013)             Single             ✓              Static                               ✓
+ Di Gaspero et al. (2013)         Multiple                          Static        ✓                      ✓                                  ✓
+ Angeloudis et al. (2014)         Multiple                          Static                               ✓
+ Erdoğan et al. (2014)            Single                            Static                               ✓                                  ✓
+ Ho and Szeto (2014)              Single                            Static                                                          ✓
+ Rainer-Harbach et al. (2015)     Multiple           ✓              Static        ✓                      ✓                                  ✓
+ Alvarez-Valdes et al. (2016)     Multiple           ✓       ✓      Static                               ✓                 ✓
+ Dell’Amico et al. (2016)         Multiple                          Static                               ✓
+ Li et al. (2016)                 Single                            Static                               ✓                          ✓
+ Szeto et al. (2016)              Single                            Static                ✓              ✓
+ Cruz et al. (2017)               Single             ✓              Static                               ✓
+ Ho and Szeto (2017)              Multiple                          Static                               ✓                          ✓
+ Zhang et al. (2017)              Multiple                          Dynamic                        ✓     ✓
+ Shui and Szeto (2018)            Single             ✓              Dynamic               ✓                                                              ✓
+ Szeto and Shui (2018)            Multiple                          Static                ✓              ✓                                  ✓
+ This study                       Multiple           ✓       ✓      Static                                                                               ✓
+
+MV: multiple visits; BB: broken bikes; Dev: deviation from the target number of bikes; UD: total unmet demand; DS: user dissatisfaction; TT: total
+travel time; TD: total travel distance; TC: total travel cost; CVD: coefficient of variation of the duration of all routes; PC: penalty cost; LQ: the total
+number of loading/unloading quantities; HC: handling cost; EI: environmental issues.
+
+2.4. Modeling assumptions in BRPs
+
+    Existing BRPs, including those aforementioned, can be classified into different categories according to the characteristics of the
+target BSS and the availability of repositioning resources. In these problems, there could be more than one vehicle carrying out the
+repositioning work (e.g., Raviv et al., 2013; Alvarez-Valdes et al., 2016; Ho and Szeto, 2017). However, under some circumstances, a
+single vehicle could also handle the job (e.g., Benchimol et al., 2011; Chemla et al., 2013; Erdoğan et al., 2014). Some problems
+limited to at most a single visit of a vehicle to each station (e.g., Ho and Szeto, 2014; Szeto et al., 2016) while others considered
+multiple visits to stations (e.g., Chemla et al., 2013; Papazek et al., 2014; Rainer-Harbach et al., 2013, 2015). In fact, multiple visits to
+a station are required when the capacity of a single vehicle is insufficient to deal with the demand at that station. As demonstrated in
+the numerical studies of this paper, multiple visits can also reduce vehicle emissions.
+    Some of the studies discussed before are summarized in Table 2.1. Compared with other static bike repositioning studies, this
+study simultaneously considers broken bikes, an environmental objective, and multiple visits to depots/stations.
+
+
+2.5. Formulation approaches
+
+    To formulate BRPs, various approaches can be used. Raviv et al. (2013) presented three different MILP models in their study,
+including an Arc-Indexed (AI) Formulation, a Time-Indexed (TI) Formulation, and a Sequence-Indexed (SI) Formulation. The AI
+formulation is the most popular in BRPs and uses binary variables to indicate the consecutive visits of two nodes. Thus, the routing
+decision variables relate to two nodes, implying an arc in a route. The TI formulation adds a time index to the decision variables, so it
+can handle multiple periods in the planning horizon and broadens the feasible region compared to the AI formulation. Unlike the
+former two formulations focusing on arcs, the SI formulation pairs a station with its order in the visit sequence. Therefore, only one
+node index appears in the decision variables, which makes it capable of tackling multiple visit instances. The TI formulation can
+adapt to almost all situations as well as dynamic planning because of the time index introduced while the AI formulation cannot.
+Multiple visits to stations and transshipments can both be allowed in the TI formulation. However, time discretization might cause the
+loss of accuracy and also increase the problem complexity significantly compared with the AI formulation, especially when the
+problem can be modeled using the AI formulation. The SI formulation is not as flexible as the TI formulation but outperforms the AI
+formulation with more tolerances for assumptions. However, the SI formulation receives the least attention in the literature.
+
+
+2.6. Summary
+
+    It is important to capture environmental objectives in BRPs. Moreover, when the vehicle speed is constant, the fuel consumption
+rate is linear with respect to vehicle loads as shown in Eq. (1). Thus, for a certain type of fuel, the CO2 emissions are the product of the
+fuel-to-CO2 conversion rate, total travel distance, and fuel consumption rate, as shown in Eq. (2), which is equivalent to Eq. (3).
+Furthermore, broken bikes can be treated as another type of bike and should be tackled simultaneously. In addition, multiple visits
+may be necessary for bike repositioning. To model this, the SI formulation can be used and solved by commercial solvers.
+
+                                                                           441
+

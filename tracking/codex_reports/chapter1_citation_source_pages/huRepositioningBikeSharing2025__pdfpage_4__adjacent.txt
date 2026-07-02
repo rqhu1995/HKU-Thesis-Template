@@ -1,0 +1,78 @@
+CITEKEY: huRepositioningBikeSharing2025
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/2SQ8MACE/Hu et al. - 2025 - Repositioning in bike sharing systems with broken bikes considering on-site repairs.pdf
+PDF PAGE INDEX: 4
+PDFTOTEXT PAGE NUMBER: 5
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-035
+RELATED CE IDS: CE-035
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+R. Hu et al.                                                                                      Transportation Research Part E 201 (2025) 104155
+
+
+broken bikes when considering user-oriented objectives. However, this approach assumes that all unmet demand and broken bikes at
+every station and at any time have an equal impact on user dissatisfaction, which is not always the case in real-world scenarios. For
+some more frequently used stations during peak hours, user dissatisfaction should be more sensitive to unmet demand and unhandled
+broken bikes than others, and thus, higher priority should be given to these stations in repositioning. Raviv and Kolka (2013)
+introduced a User Dissatisfaction Function (UDF) to measure user dissatisfaction at each station as the expected weighted number of
+users who are unable to rent or return a bicycle during a specific period, given an initial inventory at each station. This measurement is
+station-based, and it captures both the shortage of bike rent/return demand and the timing of these events. Several subsequent BRP
+studies also incorporated the function into their optimization models (Raviv et al., 2013; Ho and Szeto, 2014, 2017; Forma et al., 2015;
+Zhang et al., 2017; Chen and Szeto, 2023). To address the limitation of assuming all the bikes are usable, Kaspi (2016) extended the
+UDF by considering the presence of broken bikes, creating an Extended User Dissatisfaction Function (EUDF). However, to the best of
+our knowledge, apart from the study by Kaspi (2015), which proposed a model to minimize the weighted sum of user dissatisfaction
+and routing costs, no other studies on BRPs with broken bikes have utilized the EUDF. Moreover, no study has simultaneously
+considered both user dissatisfaction and the cost of total carbon emissions in their models for BRPs with broken bikes, not to mention
+the corresponding solution algorithm.
+    Concerning the repositioning quantities, a few studies set the number of broken bikes to be handled at each station as decision
+variables and minimizing the unhandled broken bikes in the objective (Wang and Szeto, 2018, 2021; Usama et al., 2019; Chang et al.,
+2023). Nevertheless, none of these studies considered the effect of broken bikes on occupying the docks, which may lead to a potential
+failure in returning shared bicycles.
+    This study pioneers in filling these gaps by involving repairer routing and the number of broken bikes assigned for repairs at every
+visited station in the optimization model, aiming to minimize the sum of the penalty costs of the total user dissatisfaction at all stations
+in the network, and the cost of the total carbon emissions during the repositioning process. To illustrate the practicality and feasibility
+of the proposed model, we developed an effective hybrid algorithm called HGSADC-SBC, where HGSADC developed by Vidal et al.
+(2012, 2013, 2014) serves as the foundation of our method and has been successfully applied to solve a similar bike repositioning
+problem involving multiple bike types by Li et al. (2016). The SBC heuristic, newly proposed in this study, is based on a novel station
+budget concept that assigns time at each station by considering the Benefit-Cost Ratio Function (BCRF) for each station in the route.
+This allows for a more efficient loading, unloading, and repair quantity assignment across stations in the routes. Note that the model
+proposed by Li et al. (2016) focused on a single vehicle and did not consider repairers, so our method also extends it to handle multiple
+trucks and repairers.
+
+3. Model formulation
+
+    In this paper, we consider a BSS with one depot and a finite number of stations. Every station has a fixed capacity, an initial in­
+ventory of usable bikes, and an initial inventory of broken bikes. The numbers of usable bikes and empty docks at each station are
+assumed to be known as the current technology of BSSs provides the system operator with this information in real-time. Moreover, the
+number of broken bikes at each station is assumed to be known in this study, as we assume that users report the existence of broken bikes
+once they know in the daytime, and we only consider a nighttime bike repositioning problem.
+    A fleet of homogeneous repositioning trucks with the same capacity depart from the depot, then travel among selected stations in
+the system to deliver usable bikes to visited stations or pick up the usable bikes from visited stations, collect broken bikes at visited
+stations, and finally return to the depot to drop off usable and broken bikes within a given time budget. Throughout this process, the
+trucks can return to the depot to drop off usable and broken bikes when needed, but the number of bikes carried on each truck cannot
+exceed the truck capacity. Meanwhile, a set of repairers also depart from the depot, head to stations with broken bikes to conduct
+repairs directly on-site, and return to the depot within the same time budget. Loading, unloading, and repairing each bike take time,
+with a constant duration for each operation type. For each repositioning truck, every station and the depot can be visited multiple
+times. For each repairer, each station can be visited at most once. A station can be visited by at most one repairer. We assume the depot
+holds an infinite inventory of usable bikes and can store an infinite number of usable and broken bikes. Moreover, we assume that the
+repairers only repair broken bikes at stations but do not repair broken bikes at the depot. Broken bikes at the depot are repaired by the
+repairing staff there but these bikes have no urgency to be repaired within the repositioning period as we assume we have a sufficient
+number of usable bikes in the system. Furthermore, we assume that the repairing staff at the depot and the onsite repairers are hired at
+fixed daily salary rates. Therefore, the total repair staffing cost is constant daily, which is independent of the number of broken bikes
+repaired onsite or sent back to the depot within the repositioning period. In addition, we assume that the repositioning process involves
+no rental or returning behaviors from the users, and the final inventories after the repositioning set the starting inventories for the
+following day. Additionally, we assume the repairers travel on electric tricycles that generate no emissions during the repositioning
+process, and the travel speed of the electric tricycle is proportional to that of a truck. The objective of the BRP is to minimize the cost
+consisting of the following components:
+
+    (i) The sum of user dissatisfaction at all stations on the following day and;
+   (ii) The CO2 emissions of the repositioning trucks during the rebalancing process.
+
+   Note that the daily repair staffing cost is not included in our optimization objective as it does not affect the optimal repositioning
+decisions.
+   Fig. 3.1 illustrates an example of the problem. The BSS consists of one depot (represented by a red star and labeled with 0) and ten
+
+                                                                     5
+

@@ -1,0 +1,57 @@
+CITEKEY: jinSimulationFrameworkOptimizing2022
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/DWNF88AJ/Jin et al. - 2022 - A simulation framework for optimizing bike rebalancing and maintenance in large-scale bike-sharing s.pdf
+PDF PAGE INDEX: 4
+PDFTOTEXT PAGE NUMBER: 5
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-024
+RELATED CE IDS: CE-024
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Y. Jin et al.                                                                                   Simulation Modelling Practice and Theory 115 (2022) 102422
+
+
+
+
+                                        Fig. 2. Bike borrowing and returning process with valet service.
+
+
+
+
+                                             Fig. 3. Empirical and fitted trip duration distributions.
+
+
+
+
+are appended with a certain percentage of trips that have not been used for a long time. Kaspi et al. [4] and Jin et al. [9] used a
+similar rule. After identifying the failures in the historical trip records, the reliability of a bike can be estimated based on the total
+accumulative trip time 𝑡 between two failures using the Kaplan–Meier estimator [43] as:
+                     (      )
+               ∏         𝑑
+        ̂ =
+       𝑅(𝑡)           1− 𝑖 ,                                                                                                           (1)
+              𝑖∶𝑡 ≤𝑡
+                         𝑛𝑖
+                𝑖
+
+where 𝑑𝑖 is the number of failures by time 𝑡𝑖 , and 𝑛𝑖 is the total number of observations for 𝑡𝑖 < 𝑡. An example of the estimate based
+on the Citi Bike 2019 trip data is shown in Fig. 4.
+
+3.2.2. Bike rebalancing
+    For improving the rebalancing efficiency and optimizing the resource allocation, more flexible strategies, such as multiple types
+of rebalancing vehicles and dynamic rebalancing, are applied in some BSS [5]. However, the basic model proposed in [9] only
+allows static rebalancing at midnight with one type of vehicle. The improved simulation model assumes a fleet of vehicles with
+different capacities and travel speeds and allows dynamic rebalancing based on a user-defined schedule.
+    The major challenge for accommodating the simulation model to the dynamic rebalancing is the conflict of resources that
+arises when assigning the new tasks before the system completes the previous round of rebalancing. Moreover, the system should
+continuously update the bike inventory information during the rebalancing to avoid simulation errors when delivering or picking
+up bikes. After adding these new features, the improved rebalancing procedure is demonstrated in Fig. 5.
+    The depot holds a fleet of idle trucks that will accept new tasks from the rebalancing controller. The vehicles on-route will finish
+the current tasks. The rebalancing tasks including (1) the number of vehicles of each type, (2) the route, and (3) the number of
+bikes to be loaded/uploaded at each station on the route are generated from the optimization module by applying either a static
+or dynamic rebalancing. In practice, different types of vehicles might have varied traveling capabilities besides the capacity. For
+instance, the bike train applied in the Citi Bike can only handle short-distance transportation and does not allow long-distance travel
+
+                                                                        5
+

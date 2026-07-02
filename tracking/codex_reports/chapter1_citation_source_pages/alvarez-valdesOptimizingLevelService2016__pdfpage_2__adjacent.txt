@@ -1,0 +1,76 @@
+CITEKEY: alvarez-valdesOptimizingLevelService2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/LR2TQNWN/Alvarez-Valdes et al. - 2016 - Optimizing the level of service quality of a bike-sharing system.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-001
+RELATED CE IDS: CE-001
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                                         R. Alvarez-Valdes et al. / Omega 62 (2016) 163–175                                              165
+
+
+
+
+                                                                                                  Fig. 1. Map of Palma stations.
+
+
+                                 70                                                                                 speciﬁc day, as the differences between minimum and maximum
+                                                                                                                    values of the netﬂow at each station were lower than the station
+
+
+
+
+     Number of daily movements
+                                 60
+                                                                                                                    capacities (10 lockers at Stations 104 and 116; 20 lockers at Stations
+                                 50
+                                                                                                                    111 and 122), it would be possible to ﬁnd an initial state for which
+                                 40
+                                                                                                                    there would not be any unsatisﬁed demand.
+                                 30                                                                                     Figs. 2 and 3 clearly indicate that each station works in a different
+                                 20                                                                                 way and the analysis has to be done separately for each of them.
+                                 10
+                                                                                                                        Fig. 4 indicates another source of variability between working and
+                                                                                                                    weekend days. For each station the corresponding line in the ﬁgure
+                                 0
+                                      0    5        10          15         20       25       30       35            shows the average number of withdrawals and returns for each day of
+                                                         Capacity of the stations                                   the week. The behavior of the users at each station is very similar on
+                                                                                                                    weekdays, while it is clearly different on Saturdays and on Sundays.
+                                 Fig. 2. Capacity and average daily movements of the stations.
+                                                                                                                    Therefore, the analysis has to separate these three types of day.
+                                                                                                                        In this study we address the static repositioning problem and
+large stations with 30 lockers may have far fewer, less than one move                                               divide it into two phases. In the ﬁrst phase, described in Section 4,
+per locker. It could be argued that the system is not well designed,                                                using the data stored in the system's database, we estimate the
+but in this study we are only concerned with attaining the maximum                                                  demands for bicycles and lockers at every station for each hour of
+quality of service for a system in which the capacity of the stations is                                            each day of the week and use them to calculate the expected costs
+ﬁxed. Rather than the total number of daily moves, we are interested                                                of the unsatisﬁed demands for each initial state of each station. In
+in the distribution of withdrawals and returns over the course of the                                               a second phase, described in Section 5, we decide ﬁrst which is the
+day, because the difference between the two types of moves will                                                     best set of initial states attainable with the available bicycles and
+produce intervals in which the stations are empty or completely full.                                               then we construct the routes for the repositioning vehicles. In
+    Fig. 3 shows the average number of withdrawals and returns for                                                  Section 6 we present the computational experience and Section 7
+each hour of the working day at four selected stations. In November                                                 contains the conclusions.
+2013, when the data were taken, withdrawals were only allowed in
+the Palma system from 07:00 to 22:00 h on weekdays (07:00 to 24:00
+on weekends), while returns were possible at any time. The stations                                                 4. Forecasting unsatisﬁed demand
+have been chosen to show different behaviors. At Station 111 (top
+right) withdrawals and returns follow a very similar pattern and we                                                    The measure of service quality of the bike-sharing system
+could say that the station is self-regulating. Station 116 (bottom left)                                            considered in this study is a measure of cost that combines the two
+shows an imbalance only at the beginning of the day, which could                                                    possible situations of unsatisﬁed demand, namely:
+easily be offset by having the station full at opening time. Stations 104
+and 122 are more unbalanced. There is one period in the day in which                                                (a) A user wishing to withdraw a bicycle ﬁnds the station empty.
+there are many more returns than withdrawals and another in which                                                   (b) A user returning a bicycle ﬁnds the station full.
+the situation is just the opposite. As these two imbalances are not too
+different in magnitude, they can be offset if when the service starts in                                               Let ηw and ηr be the unknown number of thwarted with-
+the morning Station 104 is almost empty to allow many returns, while                                                drawals and returns within a temporal window ðt 0 ; t 0 þ HÞ, res-
+Station 122 should be full or almost full to satisfy the many with-                                                 pectively. We deﬁne the measure of service-quality of the bike-
+drawal demands. Note that if we deﬁne the netﬂow as the difference                                                  sharing system in that time interval as
+between the number of withdrawals and the number of returns, there
+is an initial state in which all unsatisﬁed demands would be avoided if
+                                                                                                                    κ ¼ ηw þ ληr
+the difference between the maximum and the minimum netﬂow                                                           where λ is a weighting parameter to balance the relative impor-
+values is lower than or equal to the station capacity. In the cases in                                              tance assigned to the undesired situations ðaÞ and ðbÞ. In what fol-
+Fig. 3, if instead of average values they represented the values for a                                              lows we have used λ ¼ 1, but the methodology allows for any λ Z 0.
+

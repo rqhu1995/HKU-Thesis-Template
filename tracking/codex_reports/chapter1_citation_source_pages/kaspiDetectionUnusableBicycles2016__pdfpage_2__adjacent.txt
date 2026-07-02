@@ -1,0 +1,108 @@
+CITEKEY: kaspiDetectionUnusableBicycles2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IJ2A4PHK/Kaspi et al. - 2016 - Detection of unusable bicycles in bike-sharing systems.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-020
+RELATED CE IDS: CE-020
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+12                                                                         M. Kaspi et al. / Omega 65 (2016) 10–16
+
+
+   In the following section we propose a method to approximate                                         expected number of unusable bicycles in the station, given in by:
+the PoU, based on the expected number of usable bicycles in the                                                          X e1
+                                                                                                       E~ unusables in Se ¼ p~ i                                    ð10Þ
+station.
+                                                                                                                            i A Se
+
+                                                                                                           We note that the value calculated in (10) can be used as a
+3. Approximating the probability of unusability                                                        reliable estimator for the actual number of unusable bicycles after
+                                                                                                       a sufﬁcient number of rent events. In the next section this will be
+    Henceforth, we denote the approximated PoU of bicycle i after                                      demonstrated numerically. The expected number of unusable
+rent event e by p~ ei . Recall that we assume that bicycles are selected                               bicycles is a more concise measure, compared to the PoU of each
+uniformly from the set of available usable bicycles in the station.                                    bicycle in the station. It can be used and understood by the
+We approximate the probability that bicycle j is rented, given that                                    operators and by the users.
+it is usable, by assuming that the number of usable bicycles in the                                        The approximation of the PoU and the expected number of
+station is known and equals its expectation. Speciﬁcally, given that                                   unusable bicycles in a station can be carried out after each rent
+bicycle j is usable, the expected number of usable bicycles in the                                     event in OðjCjÞ time, i.e., linearly in the station capacity. At each
+station is one plus the expected number of bicycles in the                                             rent event, these values can be updated in a fraction of a second.
+remaining set of available bicycles. Thus, Eq. (2) is approximated as                                  Therefore, the estimated number of unusable bicycles can be dis-
+follows:                                                                                               played on-line to the operators and the users. In the following
+                                     1                                          1                      section, we show that this is a very accurate approximation by
+P~ ðj rentedjj usableÞ ¼ 
+  e
+                                                    ¼    P                                          comparing it to the result of the exact calculation for small stations
+                        E~ usables in Se j j usable    1þ                   e        1  p~ ek  1
+                                                                       k A S nfjg
+                                                                                                       with up to 15 lockers.
+                                                                                                                                 Note that the complexity of the exact
+                                                                                               ð5Þ     method is O jCjU 2jCj for each rent event, which is impractical for
+where the expected number of usable bicycles in the station right                                      on-line usage.
+before rent event e is approximated by:
+                       X                 
+E~ usables in Se n fjg ¼      1  p~ ek  1                    ð6Þ
+                                                                                                       4. Numerical results
+                             k A Se nfjg
+
+    Similarly to the calculation of Eq. (3), we multiply Eq. (5) by the                                    In this section, we present the results of a numerical experi-
+probability that bicycle j is usable, to obtain the approximated                                       ment carried out to test our proposed detection model. To simu-
+probability that bicycle j is rented at rent event e:                                                  late the on-line calculation of the PoU, we have used CitiBike trip
+                                                            e                                        history transactions data from July–August 2014. Using this data,
+P~ ðj rentedÞ ¼ P~ ðj rented; j usableÞ ¼ P~ ðj usableÞ U P~ j rentedj usableÞ
+  e               e                         e
+
+                                                                                                       we estimated the renting/returning rates on weekdays in each
+                 1  p~ ej  1                                                                         station during 30 min periods along the day. We generated 100
+     ¼        P                                                                              ð7Þ     demand realizations per station. Each demand realization consists
+         1þ                    ~ e1
+              k A Se nfjg 1  p k                                                                      of a set of renting and returning events and their times of occur-
+   Next, given that bicycle i is unusable, the expected number of                                      rence along a 2-day period. Each return event is supplemented
+usable bicycles in the station is updated to exclude i and thus we                                     with a binary parameter that indicates whether the bicycle is
+obtain an approximation of the following conditional probability:                                      usable or not. For the experiment, we set the failure probability of
+                                                                                                       all bicycles to 0.01. That is, the unusability indicator value was
+                                              1  p~ ej  1                                            drawn from a Bernoulli distribution with parameter 0.01. In
+P~ ðj rentedji unusableÞ ¼
+  e
+                                      P                           
+                                1þ                           ~ e1
+                                           k A Se nfi;jg 1  p k
+                                                                                                       addition, we assume that at the initial state of the station all
+                                                                                                       bicycles parked at the station are usable, as if replenishment
+    And again, using Bayes' rule, we obtain an approximation of the                                    activities and collection of unusables were just executed. The
+joint probability:                                                                                     initial inventory level is set to the optimal level according to the
+                                                                                                     method of Kaspi et al. [5]. The demand realizations data used in
+                                1  p~ ej  1 U p~ ei  1
+~ e
+                                                                                                     the simulation can be downloaded from http://www.eng.tau.ac.il/
+P ðj rented; i unusableÞ ¼    P                                  ð8Þ
+                           1 þ k A Se nfi;jg 1  p~ ek  1                                              morkaspi/publications.html.
+                                                                                                           At a rent event, if there are available usable bicycles in the
+      Finally, by dividing Eq. (8) by Eq. (7) we obtain an approx-                                     station, one is selected uniformly and is removed from the set of
+imation of the updated PoU:                                                                            available bicycles. If there are no available usable bicycles in the
+                                                  P                                                  station the user is assumed to abandon the station. At return
+                                               1 þ k A Se nfjg 1  p~ ek  1
+p~ ei ¼ P~ ði unusablejj rentedÞ ¼ p~ ei  1 U
+          e                                                                                            events, if there are available lockers in the station, one is selected
+                                                  P                            ð9Þ
+                                               1 þ k A Se nfi;jg 1  p~ ek  1                         uniformly and the bicycle is returned to that locker. If there are no
+                                                                                                       available lockers in the station the user is assumed to abandon the
+      Using Eq. (6), we can rewrite Eq. (9) as:                                                        station. If an unusable bicycle is returned to the station, it “occu-
+                                                                              
+                                                    1 þ E~ usables in Se n fjg                         pies” a locker, but is not entered to the set of available usable
+~p ei  P~ ði unusablejj rentedÞ ¼ p~ ei  1 U
+          e
+                                                                                                     bicycles in a station (and therefore will never be selected at a rent
+                                               p~ ei  1 þ E~ usables in Se n fjg
+                                                                                                       event).
+   We observe that the PoU of a bicycle increases after every rent                                         We compare the approximated expected number of unusable
+event in which it is not selected. In addition, as the initial PoU of a                                bicycles (Eq. (10)) to a naïve approach for assessing the expected
+bicycle is its prior probability, it is easy to see that the PoU of a                                  number of unusable bicycles in a station. The naïve expectation is
+bicycle increases also as its prior probability increases.                                             obtained by summing the prior probabilities of the bicycles
+   So far, our focus was on calculating the PoU for each bicycle                                       returned to a station in a given time period. For example, assume
+separately. However, it is typically more interesting for the                                          that the prior probability of all bicycles is 0.01 and that in a given
+operators and the users to view all the bicycles in a station                                          time period 200 bicycles were returned to the station. The naïve
+aggregately. Similar to the above, our analysis also provides the                                      estimation of the number of unusable bicycles that were returned
+

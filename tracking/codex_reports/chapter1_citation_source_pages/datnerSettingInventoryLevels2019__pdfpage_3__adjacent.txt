@@ -1,0 +1,84 @@
+CITEKEY: datnerSettingInventoryLevels2019
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IGWJZTEA/Datner et al. - 2019 - Setting inventory levels in a bike sharing network.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-006
+RELATED CE IDS: CE-006
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                                                                         Datner et al.: Setting Inventory Levels in a Bike Sharing Network
+                                                                                                                         Transportation Science, Articles in Advance, pp. 1–15, © 2017 INFORMS                                                                           3
+
+                                                                                                                         our algorithm results in a better quality of service for                              • A journey dissatisfaction function (JDF) with respect
+                                                                                                                         all of the different instances tested. Our results indicate                        to the user. We define a journey to be the itinerary of
+                                                                                                                         that the interactions among stations’ inventory levels                             the user, which brings her from her origin to her desti-
+                                                                                                                         cannot be neglected. Specifically, they have an impact                             nation. A journey may include up to two walking seg-
+                                                                                                                         on the desired target inventory levels.                                            ments and up to one riding segment. The JDF function
+                                                                                                                            The remainder of this paper is organized as follows:                            maps any combination of a desired ride and a corre-
+                                                                                                                         in Section 2, we define the problem, the user behav-                               sponding actual journey to a nonnegative value. The
+
+
+
+
+Downloaded from informs.org by [223.3.92.233] on 26 April 2018, at 19:50 . For personal use only, all rights reserved.
+                                                                                                                         ior model, and related assumptions. In Section 3, we                               ideal journey from station A to station B is always the
+                                                                                                                         present a mathematical formulation of the problem. In                              one that proceeds via a direct bicycle ride from A to
+                                                                                                                         Section 4, we characterize the influence of the initial                            B, and therefore the JDF for this scenario is zero by
+                                                                                                                         inventory on the system performance and develop our                                definition. Otherwise, for example, if the user could
+                                                                                                                         guided local search algorithm accordingly. Section 5                               not find a bicycle at the desired origin and decided to
+                                                                                                                         presents the numerical study performed, the proper-                                abandon the system or roam to a neighboring station,
+                                                                                                                         ties of the data used, the results, and an analysis of the                         the JDF returns a larger value that represents the dis-
+                                                                                                                         robustness of the search algorithm. Section 6 presents                             satisfaction or disutility of the user arising from this
+                                                                                                                         a discussion and summary of the results.                                           occurrence. In the sequel and in our numerical study,
+                                                                                                                                                                                                            we address a special case of the JDF, namely, excess time.
+                                                                                                                         2. Problem Definition                                                                 • A user behavior model. This model characterizes the
+                                                                                                                         In this section, we provide a formal definition of the                             choices made by the users, particularly when there
+                                                                                                                         BSIP-SI. We start with a broad and general definition                              are no bicycles at the desired origin station (referred
+                                                                                                                         of the problem. Then, we illustrate some of the more                               to as a shortage) or when there are no vacant lockers
+                                                                                                                         abstract ideas through a more specific formulation that                            at the desired destination (referred to as a surplus).
+                                                                                                                         will be used in our numerical experiment in Section 5.                             In general, the user behavior model can be viewed
+                                                                                                                            An instance of the problem is defined by the follow-                            as a decision model that maps a user action to each
+                                                                                                                         ing:                                                                               origin–destination pair and state of the system. The
+                                                                                                                            • A set of bike sharing stations. Each station is char-                         decisions may include waiting for some amount of time
+                                                                                                                         acterized by its capacity, i.e., the number of lockers/                            at the origin or destination, roaming to a nearby station
+                                                                                                                         docking poles.                                                                     before renting a bicycle and/or returning it, or aban-
+                                                                                                                            • A general stochastic demand process for desired rides                         doning the system and using other modes of trans-
+                                                                                                                         for each origin–destination pair. A ride is a demand for a                         portation. The state of the system at each moment is
+                                                                                                                         travel using a bicycle from a certain origin to a certain                          described by the number of bicycles and (equivalently)
+                                                                                                                         destination. The origins and destinations are assumed                              the number of available lockers at each station. It is safe
+                                                                                                                         to coincide with the geographic locations of the sta-                              to assume that users will strive to minimize their JDF.
+                                                                                                                         tions. The process is defined for a finite planning hori-                          The general user behavior model is depicted in Fig-
+                                                                                                                         zon (typically a working day) and may be nonhomoge-                                ure 1. A detailed example of such a concrete model is
+                                                                                                                         neous in time and space.                                                           depicted in Figure 2.
+
+                                                                                                                         Figure 1. User Behavior Model
+
+
+                                                                                                                                                                Available
+                                                                                                                                                                                          Ride to             Vacant locker             Bicycle returned
+                                                                                                                             Enter                              bicycle in       Yes                                              Yes                       Yes   Exit
+                                                                                                                                                                                        destination            in station?              at destination?
+                                                                                                                                                                 station?
+
+
+                                                                                                                                                                   No                                              No
+
+
+
+                                                                                                                                                       Yes        Wait?                               Yes         Wait?
+                                                                                                                                                                                                                                              No
+
+
+                                                                                                                                                                                                                   No
+                                                                                                                                                                   No
+                                                                                                                                                                                                            Ride to a different
+                                                                                                                                                                                                                 station
+                                                                                                                                                                                                                                        Travel using an
+                                                                                                                                   Roam to a
+                                                                                                                                                    Yes          Roam?                                      No                          alternative mode
+                                                                                                                                different station
+                                                                                                                                                                                                                                        of transportation
+

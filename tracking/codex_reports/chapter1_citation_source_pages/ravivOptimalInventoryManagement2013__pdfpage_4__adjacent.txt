@@ -1,0 +1,83 @@
+CITEKEY: ravivOptimalInventoryManagement2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/FSWE4QY2/Raviv and Kolka - 2013 - Optimal inventory management of a bike-sharing station.pdf
+PDF PAGE INDEX: 4
+PDFTOTEXT PAGE NUMBER: 5
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-010
+RELATED CE IDS: CE-010
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+1080                                                                                                                 Raviv and Kolka
+The number of renters who abandon the station at time                Theorem 1. The UDF, F(I0 ), is a convex function of the
+epoch EiR is (−IEiR−1 − d ERR )+ and the number of return-           initial inventory I0 .
+                             i
+ers who abandon is (IEiR−1 − d ERR − C)+ , where (x)+ ≡
+                                      i
+max(0, x). The User Dissatisfaction Function (UDF) is the            Proof. The outline of our proof is as follows: first, note
+expected penalty due to the abandonments of returners and            that since the expected user dissatisfaction is obtained as
+renters as a function of the initial inventory I0 :                  a weighted sum of the user dissatisfaction over all possible
+                                                                     realizations, it is enough to show that the total user dissatis-
+                         ⎧ R
+                         ⎨|E |                                      faction is convex for any particular realization. Next, note
+                                                  +               that the total user dissatisfaction in a given demand real-
+            F(I0 ) ≡ E R         p −IEiR−1 − d ERR
+                         ⎩                       i                   ization is a weighted sum of two components, namely, the
+                           i =1
+                                               ⎫                     number of potential renters and the number of potential
+                                          + ⎬                     returners that abandon the station. Therefore, it is enough
+                     + IEiR−1 − d ERR − C          .   (1)           to show that each one of these components is a convex
+                                    i          ⎭
+                                                                     function.
+                                                                        For a fixed realization R, let us denote these two com-
+   The bike-sharing station inventory problem is to select           ponents by f1 (I0 ), f2 (I0 ), respectively. Consider the state of
+the optimal value of I0 ∈ {0, . . . , C} to minimize F(I0 ).         two hypothetical systems under the same demand realiza-
+   We point out that the value of the UDF is of interest             tion that differ in their initial inventory level by one unit.
+for all initial inventory levels I0 and not only for the one         Let us follow the process It (I0 − 1) and It (I0 ). If It (I0 ) > 0
+that minimizes the function. This is due to the fact that in         and It (I0 − 1) < C for all t ∈ [0, T], then there are no aban-
+many cases it is impossible or too costly to set the initial         donees in either systems and thus It (I0 ) − It (I0 − 1) = 1 for
+inventory levels of all stations at their ideal values. In order     all t. However, if at some time t  abandonment occurs in one
+to understand the trade-off between the number of bicycles           of the processes then from this time on, the two processes
+in the various stations, the cost of repositioning bicycles,         coincide; that is, It (I0 ) = It (I0 − 1) for all t ≥ t  . Conse-
+and the service level, a method to efficiently calculate the         quently, the difference between the numbers of abandonees
+UDF for all the stations in the system explicitly is required.       in both systems is at most one. We say that the process It (I0 )
+                                                                     “hits” some value k at time t  if the value of the process is
+                                                                     changed to k at time t  . For a given scenario there are three
+3. Convexity of the UDF                                              alternatives.
+
+Recall that the UDF (1) expresses our measure for the ex-            1. If It (x) hits zero before It (I0 − 1) hits C for the
+pected penalty caused by a shortage of bicycles and lockers             first time, then f1 (I0 ) = f1 (I0 − 1) − f1 (I0 ) = −1 and
+at a station. In this section, we prove that this function is            f2 (I0 ) = f2 (I0 − 1) − f2 (I0 ) = 0.
+convex with respect to the initial inventory I0 .                    2. If It (I0 − 1) hits C before It (I0 ) hits zero for the first time,
+   The convexity of the UDF is of interest mainly since it              then f1 (I0 ) = 0 and f2 (I0 ) = 1.
+allows optimizing the total UDF over all of the stations in          3. If It (I0 ) never hits zero and Iθ (I0 − 1) never hits C, then
+the system subject to some complicating constraints. This                f1 (I0 ) = 0 and f2 (I0 ) = 0.
+is necessary in order to solve system-wide operational and
+                                                                          Next, observe that f1 (I0 ) = −1 → f1 (I0 − 1) = −1. This
+strategic optimization problems. For discussion of possible
+                                                                     is due to the fact that It (I0 − 2) always hits zero before
+applications of such an optimization problem, see Section
+                                                                     It (I0 − 1) hits it. Note that it also possible that f1 (I0 ) = 0
+6. The convexity is also an indispensable property for opti-
+                                                                     and f1 (I0 − 1) = −1 or f1 (I0 ) = f1 (I0 − 1) = 0. That is,
+mization of the UDF by bisection when its evaluation for
+                                                                      f1 (I0 ) is a non-decreasing function and so f1 (I0 ) is con-
+each possible initial inventory is impossible or too costly;
+                                                                     vex. Similarly f2 (I0 − 1) = 1 → f2 (I0 ) = 1 and thus f2 (I0 )
+for example, when the Markovian assumptions underlying
+                                                                     is convex.                                                      
+the approximation procedure presented in Section 4 are
+violated and the only viable alternative is discrete-event
+simulation.
+   Let us define the marginal dissatisfaction function from          4. Approximation of the UDF
+additional units of initial inventory as
+                                                                     In this section, we present a method for calculating the
+                   
+                 F (I0 ) ≡ F(I0 ) − F(I0 − 1).                       UDF under some sound modeling assumptions as to the
+                                                                     nature of the stochastic process that governs the demand at
+   Clearly, this marginal value function is a discrete coun-         each rental station. In particular, we assume that the arrival
+terpart of the differential in a continuous function. Equiv-         processes of renters and returners are non-homogenous
+alently, if F  (I0 ) is a non-decreasing function, then F(I0 ) is   Poisson processes with rates denoted by μt and λt ,
+said to be convex.                                                   respectively.
+

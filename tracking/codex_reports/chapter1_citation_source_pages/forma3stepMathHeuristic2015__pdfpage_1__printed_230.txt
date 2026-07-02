@@ -1,0 +1,76 @@
+CITEKEY: forma3stepMathHeuristic2015
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/BNZBQK4T/Forma et al. - 2015 - A 3-step math heuristic for the static repositioning problem in bike-sharing systems.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 230
+SECTION: Abstract
+RELATED CE IDS: CE-015, CE-027
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                     I.A. Forma et al. / Transportation Research Part B 71 (2015) 230–247                      231
+
+
+as dynamic repositioning and when it is carried out during the night when the demand for bicycles is negligible it is referred
+to as static repositioning.
+    In this paper we consider the static repositioning problem (SBRP), as deﬁned in Raviv et al. (2013). In particular, the goal is
+to minimize a weighted sum of the expected number of unserved users (due to shortage of both bicycles and lockers) during
+the next working day, and the total traveling distance. The planning horizon of the repositioning operation is limited in time,
+typically ﬁve to six hours, to reﬂect the fact that it should be completed before dawn. Loading and unloading times of
+bicycles at the stations are taken into account; in practice, the loading and unloading operation amounts to most of the
+working time of the repositioning crew. Raviv et al. (2013) propose several Mixed Integer Linear Program formulations
+for the SBRP. Their numerical experiment shows that the formulation referred to as the arc-indexed (AI) is very effective
+for solving real life instances with up to 100 stations and two repositioning vehicles. In this paper we propose a 3-step math
+heuristic that is based on a new clustering concept and on the AI formulation. We show that our heuristic produces solutions
+with small optimality gaps for large instances.
+    In the ﬁrst step of our heuristic, stations are clustered according to geographic as well as inventory (of bicycles) consid-
+erations. In the second step the repositioning vehicles are routed through the clusters while tentative inventory decisions are
+made for each individual station. Finally, in the third step the exact routing of the repositioning vehicles is determined, along
+with the (possibly revised) number of bicycles to be loaded and unloaded at each station. The routing decisions are subject to
+restrictions imposed by the solution of the previous step.
+    The goal of the ﬁrst step is to create clusters of stations that are geographically close together and that are likely to be
+visited successively within the same route. Moreover, they are formed such that their requirements for loading and
+unloading bicycles are complementary. The purpose of the second step is to determine the set of clusters that are visited
+by each repositioning vehicle and the sequence in which they are visited. These routing decisions are made together with
+some preliminary inventory decisions that take into consideration the time needed for the loading and unloading operations.
+These inventory decisions are subject to reﬁnement in the third step, in which the original repositioning problem is solved
+with restrictions on the traversal of the repositioning vehicles. Namely, traversal is allowed only between stations that
+belong to consecutive clusters according to the routes determined in the previous step, or between stations of the same clus-
+ter. Since in this step the assignment of stations to repositioning vehicles is already ﬁxed, the repositioning problem is solved
+for each vehicle separately. The last two steps are formulated as Mixed Integer Linear Programs that are similar to the AI
+formulation introduced in Raviv et al. (2013), and solved using a commercial solver.
+    The applicability of the proposed method is numerically demonstrated by solving a variety of instances that are based on
+real data. The results indicate that near optimal solutions of real life instances with up to 200 stations and three repositioning
+vehicles can be obtained. These results signiﬁcantly outperform the results of applying the AI formulation on the original
+problem, in the same computational environment.
+    The contribution of this paper is in presenting a successful math-heuristic solution method to the SBRP, which is suitable
+for large real life instances of the problem. Although our heuristic is based on decomposing the problem into smaller
+sub-problems that are solved separately, our method is quite different from typical clustering approaches known in the lit-
+erature for vehicle routing problems, see Section 2. We believe that our new decomposition approach may be useful for other
+rich vehicle routing problems.
+    The rest of the paper is organized as follows: in Section 2, we review the literature, describing related work from several
+application areas. In Section 3, we formally state the SBRP and present some notation. In Section 4, we present our algorithm
+in detail, where a separate sub-section is dedicated to each of its three steps. In Section 5, we describe our numerical exper-
+iments, the results, and their analysis. Finally, in Section 6, we conclude and discuss possible extensions and directions for
+further research.
+
+
+2. Literature review
+
+   Bike sharing systems rapidly gained popularity during the last decade, ﬁrst in West Europe and East Asia and more
+recently in North America. DeMaio and Meddin (2014) maintain a geographical database that describes the location and
+the characteristic of all public bike-sharing systems around the world. Larsen (2013) reports that as of April 2013 more than
+500 cities host advanced bike-sharing systems with a combined ﬂeet of more than half a million bicycles. Many cities are in
+the process of planning and deploying new systems or extending existing ones.
+   Design and operation of bike sharing systems raised a set of new interesting problems to be addressed. First, the extent
+and the nature of the demand of a new bike-sharing system should be forecasted. Then, some strategic problems need to be
+addressed. These include the coverage, capacity and density of the system. Next, the actual location of the stations and their
+capacity should be designed. At a more tactical level, pricing and reservation policies should be determined by the operator.
+Finally, the day-to-day operation of the system requires rebalancing the system continuously in order to meet the demand
+for bicycles and vacant lockers at the location and times desired by the users. While practitioners in the bike-sharing indus-
+try are already dealing with these challenging problems, with various levels of success, the scientiﬁc literature on the above
+topics is still relatively sparse. Below we describe the state of the art in the scientiﬁc literature.
+   Several studies try to estimate and forecast the demand in existing bike-sharing systems using data mining and classical
+empirical methodologies. For some examples see Kaltenbrunner et al. (2010), Vogel et al. (2011), Côme et al. (2013) and
+

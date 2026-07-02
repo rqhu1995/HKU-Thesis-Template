@@ -1,0 +1,38 @@
+CITEKEY: huRepositioningBikeSharing2025
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/2SQ8MACE/Hu et al. - 2025 - Repositioning in bike sharing systems with broken bikes considering on-site repairs.pdf
+PDF PAGE INDEX: 5
+PDFTOTEXT PAGE NUMBER: 6
+PRINTED PAGE: article number / not page-numbered in the PDF metadata used here
+SECTION: Problem description
+RELATED CE IDS: CE-035
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+R. Hu et al.                                                                                       Transportation Research Part E 201 (2025) 104155
+
+
+stations (labeled from 1 to 10). The tables in Fig. 3.1 (a)-(d) show the number of usable and broken bikes loaded onto a truck and
+unloaded from a truck at each node, and the number of bikes repaired by repairers at each node. Two trucks (Truck 1 in Fig. 3.1 (a) and
+Truck 2 in Fig. 3.1 (b)) with the identical capacity of 25 bikes and two repairers (Repairer 1 in Fig. 3.1 (c) and Repairer 2 in Fig. 3.1 (d))
+depart from the depot to visit these stations. Specifically, Truck 1 follows the route 0–4–6–9–0–2–0, with one intermediate return to the
+depot to drop off 18 broken bikes and pick up three usable bikes. Truck 2 follows the route 0–5–4–0–7–5–9–0, with one intermediate
+return to the depot to drop off eight usable bikes and 13 broken bikes. Repairer 1 follows the route 0–6–8–0, performing on-site repairs
+before returning to the depot, while Repairer 2 follows the route 0–1–3–0. Node 5 is visited by Truck 2 twice because the total number
+of broken and surplus usable bikes to be loaded at the station (26) is more than the truck capacity (25). To reduce vehicle emissions, it
+is wise to drop off all broken bikes when Truck 2 visits the depot during the repositioning process. The travel times between nodes are
+labeled on the arcs in the figures, and the travel times between nodes are not assumed to be symmetric (e.g., the back-and-forth travel
+times for Truck 1 between nodes 0 to 2 are different). Note that Station 10 is not visited by both trucks and repairers.
+    Fig. 3.2 shows the repositioning and repair process of Truck 1 and Repairer 1 from the example in Fig. 3.1 from a temporal
+perspective. The repositioning time budget is 7200 s as marked on the time axis. The figure shows the routes taken, inventory vari­
+ations at the stations, and temporal aspects of the operations (e.g., loading and repairing times, arrival times). Loading or unloading
+one bike takes 60 s while repairing one broken bike takes 300 s. Note that (p, b) → (p’, b’) at each station represents the variations of
+usable bike inventory from p to p’ and broken bike inventory from b to b’ after the operations of trucks or repairers. < A, B > on the axis
+
+
+
+
+                                                        Fig. 3.1. Problem illustration
+
+                                                                      6
+

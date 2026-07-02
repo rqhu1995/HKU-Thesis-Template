@@ -1,0 +1,81 @@
+CITEKEY: ravivOptimalInventoryManagement2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/FSWE4QY2/Raviv and Kolka - 2013 - Optimal inventory management of a bike-sharing station.pdf
+PDF PAGE INDEX: 5
+PDFTOTEXT PAGE NUMBER: 6
+PRINTED PAGE: 1081
+SECTION: Model definition
+RELATED CE IDS: CE-010, CE-018
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Inventory management of a bike-sharing scheme                                                                                                    1081
+                                                                            homogenous over time, it is reasonable to assume that these
+                                                                            rates change in a finite number of steps over a planning
+            0       1               1                C                      horizon, say every 15 minutes. This modeling assumption
+                                                                            can be justified merely by the fact that it is typically im-
+                                                                            possible to estimate the arrival rates reliably for shorter
+                                                                            periods.
+                                                                               We discretize the planning horizon into short periods of
+Fig. 1. Continuous-time Markov chain that represents the dy-                length δ. For each such period θ, we evaluate the transition
+namics of the bicycle inventory level.                                      probability matrix from the beginning of the period until
+                                                                            its end. We denote this transition probability by Pθ . The
+                                                                            transition probability matrix from time 0 to time θδ may
+   The state of the station can be viewed as a non-time-                    be given as
+homogenous birth-and-death process depicted as a Markov
+                                                                                                                      θ
+chain, as seen in Fig. 1. The birth rate is λt and the death
+rate is μt .                                                                                          π (θδ) =               Pθ  .
+   Note that since the process It is controlled by setting its                                                      θ  =1
+initial state, we are interested in the transient dynamics of               Moreover, using the recursive relation π (t) = π (t − δ) ×
+the process rather than in its steady state. Let πij (t) denote             Pt/δ , one can calculate all of the transition matrices π (t)
+the probability of the station being at state j at time t given             for t = δ, 2δ, . . . , T in only T/δ matrix multiplication op-
+that its initial state at time 0 was i . We use the notation π (t)          erations once the values of Pθ are estimated. Recall that
+to refer to the whole transition probability matrix. For a                  since the arrival rates are constant during each period θ,
+Poisson demand process, it is possible to state the UDF (1),                Pθ = eRθ δ where Rθ is the transition rate matrix of the
+in terms of the transition probabilities as follows:                        Markov chain in Fig. 1 with transition rates that corre-
+                         T                                                  spond to the time [(θ − 1)δ, θδ]. An approximation of eRδ
+         F(I0 ) =            (π I0 ,0 (t)μt p + π I0 ,C (t)λt h)dt.   (2)   can be obtained by the identity:
+                     0                                                                                             
+                                                                                                                  R n
+The first term in the integral represents the expected user                                        eR = lim I +        ,
+                                                                                                         n→∞      n
+dissatisfaction accumulated when the station is empty. Dur-
+ing such a period, abandonments occur at a rate of μt and                   where I is the identity matrix and the power operation
+each bears a penalty of p. The second term represents the                   corresponds to the matrix multiplications. The limit can
+expected user dissatisfaction that accumulates when there                   now be well approximated by calculating (I + (R/n))n for
+are no vacant lockers at the station. During such a period                  some large n (see Ross (2010), Section 6.8, for example).
+of time, abandonments occur at a rate of λt and each bears                    Based on the approximate value of π(t), we can obtain
+a penalty of h.                                                             a reliable approximation of the UDF using the following
+   The computational challenge in the evaluation of Equa-                   discretization procedure:
+tion (2) is the calculation of the transition matrix π (t).
+                                                                                                        δ −1
+                                                                                                        T
+
+There is no closed-form solution for the dynamics of this                                               
+system. In addition, it is important to note that no insight                             F(I0 ) ≈ δ            (π I0 ,0 ((θ + 0.5)δ) pμθ
+                                                                                                        θ=0
+can be gained from a steady-state analysis of some simpli-
+fied version of the system, such as one with a homogenous                                             + π I0 ,C ((θ + 0.5)δ)hλθ ).                (3)
+arrival process. This is mainly because a properly operated                 Note that we use the transition probability to the midpoint,
+station never approaches a steady state. Instead, the oper-                 (θ + 0.5)δ, of each discretized period as it better represents
+ator regulates the inventory level and periodically sets it at              the typical state of the station during the period θ. The
+levels that may be far from the steady-state mean. Only if                  approximation procedure is parameterized by δ. Clearly,
+the station is left untouched will it deteriorate to its steady             as δ → 0 the approximate value approaches F(x) but the
+state. Moreover, unlike other service systems such as con-                  computational effort increases. The approximation error
+tact centers, bike-sharing stations typically operate under                 can be bounded as demonstrated below:
+low arrival rates. That is, the frequency with which the de-
+                                                                                            δ −1
+                                                                                              T
+mand intensity is changed is high relative to the frequency                                 
+of events in the system.                                                         F(I0 ) ≥ δ     (min(π I0 ,0 (θδ), π I0 ,0 ((θ + 1)δ)) pμθ
+   Next, we present a procedure to estimate Equation (2)                                      θ=0
+
+using a discretization of the Markov chain in Fig. 1. In                                   + min(π I0 ,C (θδ), π I0 ,C ((θ + 1)δ))hλθ ).          (4)
+                                                                                              δ −1
+                                                                                              T
+the next section, we validate this procedure by comparing                                     
+it to a simulation that requires numerous replications and                       F(I0 ) ≤ δ         (max(π I0 ,0 (θδ), π I0 ,0 ((θ + 1)δ)) pμθ
+is thus much more demanding computationally. We note                                          θ=0
+that while the arrival rates of renters and returners is non-                              + max(π I0 ,C (θδ), π I0 ,C ((θ + 1)δ))hλθ ).          (5)
+

@@ -1,0 +1,46 @@
+CITEKEY: demaioBikesharingHistoryImpacts2009
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/N9GV5YKS/DeMaio - 2009 - Bike-sharing history, impacts, models of provision, and future.pdf
+PDF PAGE INDEX: 0
+PDFTOTEXT PAGE NUMBER: 1
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-002
+RELATED CE IDS: CE-002
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                           Bike-sharing
+
+
+
+
+     Bike-sharing: History, Impacts,
+     Models of Provision, and Future
+                                   Paul DeMaio
+                                   MetroBike, LLC
+
+                                     Abstract
+
+This paper discusses the history of bike-sharing from the early 1st generation program
+to present day 3rd generation programs. Included are a detailed examination of
+models of provision, with benefits and detriments of each, and a description of capital
+and operating costs. The paper concludes with a look into the future through discus-
+sion about what a 4th generation bike-sharing program could be.
+
+
+Introduction
+Bike-sharing, or public bicycle programs, have received increasing attention in
+recent years with initiatives to increase cycle usage, improve the first mile/last
+mile connection to other modes of transit, and lessen the environmental impacts
+of our transport activities. Originally a concept from the revolutionary 1960s,
+bike-sharing’s growth had been slow until the development of better methods
+of tracking bikes with improved technology. This development gave birth to the
+rapid expansion of bike-sharing programs throughout Europe and now most
+other continents during this decade.
+Since the publication of “Will Smart Bikes Succeed as Public Transportation in
+the United States?” (DeMaio 2004), much has happened in the nascent field of
+bike-sharing. While the previous paper discussed the conditions for a success-
+ful program, this paper discusses the history of bike-sharing, provides a detailed
+
+                                                                                    41
+

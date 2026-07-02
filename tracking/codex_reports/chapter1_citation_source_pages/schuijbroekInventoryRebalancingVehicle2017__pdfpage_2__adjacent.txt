@@ -1,0 +1,84 @@
+CITEKEY: schuijbroekInventoryRebalancingVehicle2017
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/LHR38YZU/Schuijbroek et al. - 2017 - Inventory rebalancing and vehicle routing in bike sharing systems.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-028
+RELATED CE IDS: CE-028
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+994                                   J. Schuijbroek et al. / European Journal of Operational Research 257 (2017) 992–1004
+
+
+    Raviv et al. (2013) present an alternative static approach: ex-                3. Service level requirements
+pected system-wide user dissatisfaction is minimized subject to a
+time limit. Their arc-, time-, and sequence-indexed MIP models are                     In general, inventory rebalancing efforts are made in order to
+intractable for systems of reasonable size, however we use these                   improve customer service. Contrary to traditional inventory theory,
+models in Section 4 to present the Bike Sharing Rebalancing Prob-                  where the service level increases as inventory increases, bike shar-
+lem in its pure MIP form.                                                          ing systems are subject to a net demand process, with an empty
+    Di Gaspero, Rendl, and Urli (2013b) proposed a constraint pro-                 station preventing users from picking up bikes and a full station
+gramming formulation for the vehicle routing problem that mini-                    preventing returns. For the remainder of the paper, we let S rep-
+mizes user dissatisfaction based on the total deviation from ﬁxed                  resent the set of bike sharing stations. Let Ci denote the capacity
+target levels for each bike station. Then Di Gaspero, Rendl, and                   (i.e. number of docks) of station i ∈ S.
+Urli (2015) consider the design of optimal tours and operating in-                     Net demand implies that after a pickup and a return occur, the
+structions for relocating bikes among stations. The authors pro-                   inventory is unchanged. Previous studies (Nair et al., 2013) observe
+pose a constraint programming models with Large Neighborhood                       the total net demand (pickups minus returns during observation
+Search (LNS). However, their model formulation considers only                      period) at each station i ∈ S. However, we note that while observ-
+the routing problem and takes the target inventory levels as                       ing a net demand of zero, we often still need bikes or docks. We
+given.                                                                             view the net demand as a stochastic process which needs to be
+    Rainer-Harbach, Papazek, Raidl, Hu, and Kloimüllner (2014) also                satisﬁed during the entire observation period, not only at the end.
+consider the joint problem of inventory balancing and vehicle rout-
+ing, and propose dedicated (meta-)heuristic approaches. They ﬁrst                  3.1. Service level deﬁnition
+present several construction heuristics, which can be further im-
+proved by applying problem-speciﬁc local search moves, including                       We implement a type 2 service level: the fraction of demands
+the insertion or removal of stations in a route, or the swap of sta-               satisﬁed directly should be larger than βi− for pickups and larger
+tions within routes. Care must be taken that the proposed moves,                   than βi+ for returns. We assume no backorders, i.e., the effect of
+as well as the construction heuristics, are feasible. In addition, the             waiting customers is negligible.
+objective is to minimize the weighted sum of (a) the deviation
+from a given target inventory level for each station, (b) the num-                 Deﬁnition 1. The service level requirements at station i ∈ S are
+ber of (un)loading operations, and (c) total work time. The authors                E[Satisﬁed bike pickup demands]
+show that their heuristics are able to ﬁnd high-quality solutions in                                               ≥ βi−
+                                                                                     E[Total bike pickup demands]
+a reasonable time.
+                                                                                   E[Satisﬁed bike return demands]
+    Di Gaspero, Rendl, and Urli (2013a) combine a CP optimization                                                  ≥ βi+
+                                                                                     E[Total bike return demands]
+model with Ant Colony Optimization to solve a similar problem
+as (Rainer-Harbach et al., 2014), again minimizing a weighted sum                  for given βi− , βi+ ∈ [0, 1].
+of the deviation from target inventory levels and total work time.
+Their CP model uses a direct ‘successor’ formulation with integer                  3.2. Markov chain formulation
+variables, whereas the CP model we propose in Section 6 is based
+on constraint-based scheduling.                                                        We assume that user behavior during the observation period is
+    Kloimüllner, Papazek, Hu, and Raidl (2015) develop a cluster-                  non-stationary, i.e. rates depend on time. This allows us to imple-
+ﬁrst route-second approach. Their objective function is to maxi-                   ment the model over multiple time periods (e.g. morning 6–9 a.m.
+mize the number of stations visited over a ﬁxed time window.                       or evening 3–6 p.m.). The time-dependent rates allow the model
+Their algorithm is exact and utilizes a Benders composition. How-                  to capture the demand changes observed in practice. Our goal is
+ever, their routes must alternate between pickup and delivery sta-                 to select an initial number of bikes that achieve the service level
+tions. This is a major drawback of their approach.                                 requirements over the observation period for each station. While
+    The paper by Forma, Raviv, and Tzur (2015) proposes 3-step                     some users arrive in groups (compound Poisson process), we as-
+heuristic for the static repositioning problem. Step 1 clusters sta-               sume this effect is negligible.
+tions that are close to each other and have compatible demand                          The inventory at station i ∈ S can be modeled as an Mt /Mt /1/K
+structures. Step 2 routes the vehicles through the clusters and                    queuing system (Kendall, 1953), with the number of customers
+makes heuristic inventory targets for the stations in each cluster.                in the queue representing the inventory (see Fig. 1). This implies
+Step 3 uses the results of Steps 1 and 2 to determine both the                     that the customer inter-arrival times (for bike returns) and service
+routing within the clusters and the inventory levels for each sta-                 times (i.e. inter-arrival times for bike pickups) are exponentially
+tion. Their clusters are constructed to reduce the size of the net-                distributed with time dependent rates λi (t) and μi (t), respectively,
+work, and not to decompose the problem into many single vehi-                      at each station i ∈ S. There are K = Ci waiting spaces in the sys-
+cle routing problems. Additionally, their routing step allows ve-                  tem for station i ∈ S. The stationary M/M/1/K queue is well-studied
+hicles to travel between clusters. The proposed 3 step method is                   and closed-form expressions for the transient probabilities given a
+successfully applied to several real life instances. However, the au-              starting state are available. In the non-stationary case, Mt /Mt /1/K,
+thors provide no theoretical bounds or guarantees of the proposed                  the transient probabilities given a starting state are solutions to the
+method.                                                                            Kolmogorov forward equations (Morse, 1958).
+    The Ph.D. dissertation of O’Mahony (2015) at Cornell Univer-                       This method computes the service levels for each station sepa-
+sity builds on our paper. The models developed in the disserta-                    rately. The approach does not account for the interactions of sup-
+tion are currently implemented in the operations of Citi Bike Share                ply and demand between stations. To properly account for these
+in New Year City. The author departs from our model in that he                     interactions, a state dependent model of the ‘lost sales’ and ‘lost
+does not compute upper and lower inventory levels. By contrast,                    returns’ is needed. In order to jointly calculate service levels for
+he computes a convex cost function for each starting inventory                     all stations the resulting model would likely be a time dependent
+level. The corresponding routing problem is to minimize the ser-                   queuing network with a complex abandonment and routing struc-
+vice level ‘costs’ over a ﬁxed time interval. He argues that the min-              ture. Such a model is beyond the scope of this study.
+imal makespan is often much longer than the time interval of a                         Denote by {Si (t): t ≥ 0} the stochastic process on state space
+typical staff work shift.                                                          {0, . . . , Ci } representing the inventory of station i ∈ S at time t ≥ 0.
+

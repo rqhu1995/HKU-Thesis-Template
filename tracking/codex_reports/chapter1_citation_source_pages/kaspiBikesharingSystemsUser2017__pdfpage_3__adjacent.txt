@@ -1,0 +1,113 @@
+CITEKEY: kaspiBikesharingSystemsUser2017
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/W5I87Q6K/Kaspi et al. - 2017 - Bike-sharing systems user dissatisfaction in the presence of unusable bicycles.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-021
+RELATED CE IDS: CE-021
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+146          M. KASPI ET AL.
+
+
+the system is penalized by an amount that represents the dis-                         And the number of unusable bicycles in the station is given
+satisfaction caused due to this shortage. We denote by p the                       by the following:
+penalty for each user who faces a shortage of bicycles and by h
+the penalty for each user who faces a shortage of lockers. The                     BRj (I0 , B0 )
+                                                                                      
+total number of lockers in the station is denoted by C. We refer                           C−I Rj−1 (I0 , B0 )        BRj−1 (I0 , B0 )−d R,B
+                                                                                                                                         j >C−I j−1 (I0 , B0 )
+                                                                                                                                                R
+
+to this value as the capacity of the station.                                      =
+      In the EUDF, an additional dimension is introduced. The ini-                      BRj−1 (I0 , B0 ) − d R,B
+                                                                                                             j                       otherwise.
+tial inventory of bicycles is divided into two groups, namely,
+                                                                                      We refer to C − BRj (I0 , B0 ) as the effective capacity of the sta-
+usable and unusable (broken) bicycles, denoted by I0 and B0 ,
+                                                                                   tion. Since unusable bicycles cannot be rented, they block the
+respectively. This extension allows us to examine the effect of
+                                                                                   lockers in which they are parked.
+changes in the initial inventory level of each group on the ser-
+                                                                                      Let Rj (I0 , B0 ) and Rj (I0 , B0 ) be indicator func-
+vice level, given their joint station capacity. In particular, the
+                                                                                   tions that indicate whether a user faces a shortage of
+effect of the presence of unusable bicycles can be studied. How-
+                                                                                   a bicycle or a locker as the jth demand occurs. Let
+ever, the analysis of the EUDF becomes more difficult, as will be
+                                                                                   (x)+ = max{0, x}. Then, the bicycle shortage indicator is
+described in Section 3.                                                                                                                  +
+                                                                                   given by Rj (I0 , B0 ) = (−I Rj−1 (I0 , B0 ) + d R,I
+                                                                                                                                     j ) and the locker
+      We assume that during the given period, the inventory level
+is not externally altered; that is; until time T , no repositioning or             shortage indicator is given by  j (I0 , B0 ) = (I Rj−1 (I0 , B0 )
+                                                                                                                                 R
+
+repair activities are performed in the station. In particular, this                + BRj−1 (I0 , B0 ) − d R,I
+                                                                                                          j − dj
+                                                                                                                R,B
+                                                                                                                    − C)+ .
+implies that the number of unusable bicycles in the station can-                      We denote by F (I0 , B0 ) the total dissatisfaction of users
+                                                                                                           R
+
+not decrease during the given period, since it is assumed that                     under demand realization R. The total dissatisfaction is obtained
+unusable bicycles would not be rented by the users. However,                       by summing all of the shortages for bicycles and lockers and
+some bicycles may become unusable while being ridden; that is,                     multiplying each shortage by the related penalty:
+some bicycles may be returned to the station in an unusable con-
+                                                                                                        |E R | 
+                                                                                                        
+dition. Therefore, the number of unusable bicycles at a station
+may increase during the given period. Lastly, we assume that                           F (I0 , B0 ) =
+                                                                                         R
+                                                                                                                   p · Rj (I0 , B0 ) + h · Rj (I0 , B0 ) .
+                                                                                                         j=1
+there is no change in the condition of the bicycles while they
+are parked in the station. However, in some cases, bicycles are                        Then, we denote by F (I0 , B0 ) the expected penalty (over all
+damaged while they are parked in the station, due to vandal-                       realizations) due to shortages of bicycles and lockers during the
+ism or weather conditions. However, these occurrences are very                     given period as a discrete function of the initial inventory of
+rare and thus are neglected. In some systems, the collection of                    usable (I0 ) and unusable (B0 ) bicycles. We refer to this function
+unusable bicycles may be done separately from the reposition-                      as the EUDF and it is given by the following equation:
+ing activities. Therefore, the inventory level of unusable bicy-
+cles may decrease during the given period, due to the collection                          F (I0 , B0 ) ≡ ER F R (I0 , B0 )
+                                                                                                      ⎧ R                                             ⎫
+activity. In Appendix A2, we demonstrate how the EUDF can be                                          ⎨|E |                                         ⎬
+adapted to such scenarios.                                                                   = ER              p · Rj (I0 , B0 ) + h · Rj (I0 , B0 ) . (1)
+      Let E R denote the time epochs in which the demands for bicy-                                   ⎩                                               ⎭
+                                                                                                       j=1
+cles or lockers occur under demand realization R. We denote by
+I Rj (I0 , B0 ) the inventory level of usable bicycles right after the                Note that the UDF is a special case of this model where B0 =
+jth demand occurrence under realization R, given the inven-                        0 and there is no demand for lockers in order to return unusable
+tory of usable and unusable bicycles (I0 , B0 ) at time 0. For the                 bicycles.
+sake of brevity, we omit the conditioning on the initial inven-
+tory in subsequent notation. Similarly, the inventory level of
+                                                                                   3. Analysis of the EUDF
+unusable bicycles right after the jth demand occurrence under
+realization R is denoted by BRj (I0 , B0 ). The demand for bicy-                   In this section we analyze the EUDF (1) and study its convexity,
+cles or lockers at the jth occurrence is denoted by the pair                       which is helpful for optimization purposes. In Section 3.1 we
+(d R,I      R,B
+     j , d j ) ∈ {(1, 0), (−1, 0), (0, −1)}, where (1, 0) represents               prove several properties of the EUDF, which are later used in its
+a demand for a usable bicycle, (−1, 0) represents a demand for                     convexity analysis, presented in Section 3.2.
+a locker in order to return a usable bicycle, and (0, −1) repre-
+sents a demand for a locker in order to return an unusable bicy-
+                                                                                   3.1 Properties of the EUDF
+cle. Next, we present a recursive function, denoting the number
+of usable bicycles in the station after the occurrence of the jth                  We begin our analysis of the EUDF by proving that it is non-
+demand, given the inventory levels after the ( j − 1)st demand                     decreasing in the initial inventory of unusable bicycles. Intu-
+occurrence:                                                                        itively, this is true because an increase in the number of unusable
+I Rj (I0 , B0 )                                                                    bicycles decreases the effective capacity of the station. We next
+     ⎧                                                                             prove this observation formally.
+     ⎪
+     ⎪             0                      I Rj−1 (I0 , B0 ) − d R,I
+                                                                j <0                   We denote by  a sequence of demand occurrences that do
+     ⎨
+= C − BRj−1 (I0 , B0 )            I Rj−1 (I0 , B0 ) − d R,I                        not include the return of an unusable bicycle. It should be noted
+                                                        j > C − B j−1 (I0 , B0 )
+                                                                 R
+     ⎪
+     ⎪                                                                             that  can represent either an entire demand realization or a
+     ⎩R
+       I j−1 (I0 , B0 ) − d R,I
+                            j                     otherwise.                       subset of it. Thus, F  (I0 , B0 ) denotes the user dissatisfaction
+

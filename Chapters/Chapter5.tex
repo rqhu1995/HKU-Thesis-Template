@@ -10,11 +10,10 @@ The chapter first presents the EUDF-based formulation of the static bike reposit
 
 This section presents the Bike Repositioning Problem with Broken Bikes and
 On-Site Repair (BRP-BR-OSR), which is used as the reference problem in the
-subsequent methodology. The problem is adapted from
-\citet{huRepositioningBikeSharing2025}: it retains the operational setting and
-feasibility constraints of that model, removes the emission component, and
-evaluates a repositioning plan by the total user dissatisfaction at all stations
-on the following day.
+subsequent methodology. The reference problem retains the operational setting
+and feasibility constraints introduced in Chapter 4, removes the emission
+component, and evaluates a repositioning plan by the total user dissatisfaction
+at all stations on the following day.
 
 The setting has one depot and a finite set of stations over an overnight
 rebalancing horizon. Each station has a fixed capacity and known
@@ -36,8 +35,7 @@ storage capacity for usable and broken bikes. Repairers only perform repairs
 on-site at stations; the model does not decide how broken bikes returned to the
 depot are repaired afterward. During the rebalancing horizon, no rental or return
 demand occurs, and the inventories after repositioning become the starting
-inventories for the following day. Following
-\citet{huRepositioningBikeSharing2025}, we assume that repairers working at
+inventories for the following day. As in Chapter 4, repairers working at
 stations and any repair staff at the depot are paid fixed daily salaries.
 Therefore, total repair staffing cost is constant for the day and independent of
 the number of broken bikes repaired on site or sent back to the depot during the
@@ -52,9 +50,9 @@ to inventory, capacity, routing, and time-budget constraints.
 
 The following notation is used throughout the formulation. The model keeps the
 time-indexed representation of truck movements, repairer movements, station
-inventories, truck loads, and station-level actions from
-\citet{huRepositioningBikeSharing2025}, but omits all emission-related
-parameters, variables, and objective terms. Table~\ref{ch5:tab:notation} summarizes the sets,
+inventories, truck loads, and station-level actions from the Chapter 4 model,
+but omits all emission-related parameters, variables, and objective terms.
+Table~\ref{ch5:tab:notation} summarizes the sets,
 parameters, and decision variables retained in the formulation.
 
 \begin{longtable}{@{}L{0.25\linewidth}L{0.67\linewidth}@{}}
@@ -548,8 +546,7 @@ large-scale BRP-BR-OSR instances. CFRS decomposes the original network into two
 connected layers. In the clustering phase, the station set is partitioned into clusters whose
 internal inventory-adjustment potential is high. In the cluster-level planning
 phase, each selected cluster is converted into a cluster-level BRP-BR-OSR
-instance and solved with HGSADC-SBC, following
-\citet{huRepositioningBikeSharing2025}.
+instance and solved with HGSADC-SBC.
 
 The partition is the interface between the two layers. The partition search
 evaluates candidate partitions by Extended Activated Transfer Selection (EATS),
@@ -911,9 +908,9 @@ the stations in $B_m^\star$ as local station nodes, extracts the corresponding
 travel-time, station-state, capacity, and EUDF data from the full instance, and
 forms an independent cluster-level BRP-BR-OSR instance.
 
-Each cluster-level instance is solved with HGSADC-SBC following
-\citet{huRepositioningBikeSharing2025}. Let $Z^{\mathrm{dissat}}(B_m^\star)$
-be the total user dissatisfaction returned for cluster $B_m^\star$. The CFRS
+Each cluster-level instance is solved with HGSADC-SBC. Let
+$Z^{\mathrm{dissat}}(B_m^\star)$ be the total user dissatisfaction returned for
+cluster $B_m^\star$. The CFRS
 cluster-level planning dissatisfaction is
 \begin{equation}
 Z_{\mathrm{CFRS}}^{\mathrm{dissat}}
@@ -931,14 +928,14 @@ orchestrator. The experiments were carried out on two Linux workstations: a 13th
 Gen Intel Core i9-13900 workstation with 32 logical cores and 62~GiB RAM, and a
 12th Gen Intel Core i9-12900 workstation with 24 logical cores and 62~GiB RAM.
 Method~A uses Gurobi~13.0 to solve the time-indexed formulation in
-Section~\ref{ch5:sec:milp}; Methods~B and~C use the HGSADC-SBC implementation of
-\citet{huRepositioningBikeSharing2025}, with Method~C applying the CFRS
-decomposition proposed in Section~\ref{ch5:sec:methodology} before solving the
-cluster-level planning instances.
+Section~\ref{ch5:sec:milp}; Methods~B and~C use the HGSADC-SBC implementation,
+with Method~C applying the CFRS decomposition proposed in
+Section~\ref{ch5:sec:methodology} before solving the cluster-level planning
+instances.
 
 The test instances were prepared as follows. For network sizes up to 500
-stations, we use the instances of \citet{huRepositioningBikeSharing2025}, which
-are derived from the Citi Bike instances of \citet{hoHybridLargeNeighborhood2017}.
+stations, we use instances derived from the Citi Bike instances of
+\citet{hoHybridLargeNeighborhood2017}.
 For the 800-, 1000-, and 2000-station instances, we generate additional
 instances by sampling stations from a 2117-station Citi Bike pool covering
 Manhattan and Brooklyn and by recomputing asymmetric station-to-station travel
@@ -1021,10 +1018,10 @@ are fixed in the remainder of the computational study.
 \subsection{Benchmark comparison on small instances}\label{ch5:sec:exp-small-benchmark}\label{ch5:sec:exp-w2}
 
 This subsection compares three methods on Set~2. Method~A solves the
-time-indexed MILP with Gurobi. Method~B applies the HGSADC-SBC heuristic of
-\citet{huRepositioningBikeSharing2025} directly to the full instance. Method~C
-is the proposed CFRS method: HGS-EUC first partitions the station set, and
-HGSADC-SBC then solves the cluster-level planning instances.
+time-indexed MILP with Gurobi. Method~B applies the HGSADC-SBC heuristic
+directly to the full instance. Method~C is the proposed CFRS method: HGS-EUC
+first partitions the station set, and HGSADC-SBC then solves the cluster-level
+planning instances.
 
 \begin{landscape}
 {\vspace{0.8\baselineskip}

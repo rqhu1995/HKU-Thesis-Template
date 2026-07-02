@@ -1,0 +1,75 @@
+CITEKEY: forma3stepMathHeuristic2015
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/BNZBQK4T/Forma et al. - 2015 - A 3-step math heuristic for the static repositioning problem in bike-sharing systems.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-026
+RELATED CE IDS: CE-026
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                     I.A. Forma et al. / Transportation Research Part B 71 (2015) 230–247                      233
+
+
+    Dynamic repositioning is much more intricate to manage because it incorporates a scheduling component derived from
+the users’ activity during the operation, together with a routing component. Contardo et al. (2012) assume dynamic
+deterministic demand and formulate an optimization model to route a single vehicle that moves bicycles between stations
+so as to minimize the number of shortage events. They propose a decomposition scheme that allows obtaining a solution
+with a reasonable optimality gap for instances with up 100 stations and 60 discretized periods, in ten minutes. Pessach
+et al. (2014) use a formulation that is similar to the time-indexed formulation of Raviv et al. (2013) within a rolling horizon
+framework in order to heuristically solve the actual stochastic and dynamic repositioning problem. Their method was shown
+to outperform a variety of heuristic method based on dispatching rules, including some of those used by practitioners.
+Chemla et al. (2013b) and Pfrommer et al. (2014) propose methods for dynamic rebalancing of the system that utilize both
+pricing incentives and repositioning. Kloimüllner et al. (2014) suggest solving the dynamic balancing problem by greedy and
+PILOT construction heuristics, as well as variable neighborhood search and GRASP improvement heuristics.
+    As mentioned above, Schuijbroek et al. (2013) present a heuristic algorithm to the repositioning (rebalancing) problem
+that can be classiﬁed as a cluster-ﬁrst route-second approach, which is a quite prevalent approach in solving various
+multi-vehicle routing problems. It is based on the idea of building clusters of nodes/customers ﬁrst, and then solving a series
+of independent single-vehicle TSP (or other routing) problems, one for each cluster. Early algorithms in this class include, for
+example, the sweep heuristic by Gillett and Miller (1974) and the well-known heuristic of Fisher and Jaikumar (1981), which
+uses the generalized assignment problem to create the clusters. A review of classical heuristics approaches can be found in
+Laporte and Semet (2002).
+    While our heuristic also builds clusters ﬁrst and then constructs routes, it is quite different from the above literature. The
+main difference is that a vehicle/route according to our approach travels through a sequence of clusters, whereas a vehicle/
+route according to the cluster-ﬁrst route-second approach travels through a single cluster. The purpose of creating clusters in
+our heuristic is to reduce the network size, so that routing of multiple vehicles can be performed on the reduced network; in
+the cluster-ﬁrst route-second approach, the clusters are created in order to decompose the network so that a single vehicle
+serves each of them. We are not aware of other heuristic approaches that similarly to ours, reduce the network size in such a
+manner.
+    Battarra et al. (2014) studied the clustered vehicle routing problem (CluVRP), where the customers are clustered into pre-
+deﬁned clusters, so that a vehicle visiting one customer in the cluster must visit all the remaining customers in the cluster
+before leaving it. Although this is similar to our heuristic in the fact that a vehicle visits several clusters, there are two main
+differences between the routing decisions of the CluVRP problem and ours: (i) in the CluVRP problem, the clusters of cus-
+tomers are given as part of the problem’s input, while in our problem they are created as part of the solution procedure
+in order to reduce the complexity of the problem; (ii) in the CluVRP problem, all nodes must be visited, while in our problem
+it is not a requirement; Other differences between the problems clearly exist, as the operation performed in our reposition-
+ing problem is quite more involved than supplying a given quantity to the customers, as in the CluVRP. Baldacci et al. (2010)
+introduce the generalized vehicle routing problem (GVRP), in which the clusters are also pre-deﬁned. Each customer has a
+non-negative demand and a given number of vehicles must visit exactly one customer per cluster, such that the total cost
+is minimized, and the routes obey capacity and time constraints. It is demonstrated that the GVRP provides a useful
+modeling framework for a wide variety of routing applications.
+    In conclusion, our 3-step algorithm advances the literature on repositioning problems and forms a practical approach for
+medium-large bike-sharing systems. Moreover, it presents a new type of decomposition method for a variety of vehicle
+routing and inventory routing problems.
+
+
+3. Problem deﬁnition
+
+   The SBRP addressed in this paper was ﬁrst introduced by Raviv et al. (2013). For the sake of completeness we restate this
+problem here. Their arc-indexed formulation, which is used in this paper, is given in Appendix A.
+   The input of the SBRP consists of a set of stations, N, and a depot where all the repositioning vehicles are initially located.
+The set of the stations and the depot together are referred to as N0 where the depot is indexed by 0. Each station i e N is char-
+acterized by:
+
+  Capacity ci, which is the maximum possible number of bicycles that it may store.
+  Initial bicycle inventory, s0i .
+  Penalty function, fi(s), which represents the expected shortage of bicycles and lockers incurred by users in the station dur-
+   ing the next day as a function of the inventory at the station after the repositioning is carried out. Let fi(s) = 1 for values
+   out of the domain {0, . . ., ci}. Raviv and Kolka (2013) show how to calculate this function based on a demand forecast for
+   the station and prove its convexity. However any penalty function can be used as long as it is convex and separable
+   between stations.
+
+   The depot may have its own capacity and initial inventory but these are typically assumed to be non-binding. The depot
+faces no demand and hence incurs no penalty.
+

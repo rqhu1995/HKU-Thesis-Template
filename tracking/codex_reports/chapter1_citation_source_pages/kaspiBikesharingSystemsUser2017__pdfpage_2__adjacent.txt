@@ -1,0 +1,76 @@
+CITEKEY: kaspiBikesharingSystemsUser2017
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/W5I87Q6K/Kaspi et al. - 2017 - Bike-sharing systems user dissatisfaction in the presence of unusable bicycles.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-022
+RELATED CE IDS: CE-022
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                                                                IISE TRANSACTIONS       145
+
+
+performed by the city of Barcelona on its Bicing bike-sharing          be removed from the stations or be repaired as soon as possible.
+system reported that 12% of all its bicycles had major defects         However, since the transportation and maintenance resources of
+that prevented normal usage, and 55% had minor defects, such           the operator are limited, a method to estimate the expected effect
+as broken bells and lights (Castro, 2011). In 2014, the Hangzhou       of the unusable bicycles at each station can help in prioritizing
+bike-sharing system had 78 000 bicycles in its fleet and each day      these operations.
+nearly 2000 bicycles required maintenance (DeMaio and Med-                 The contributions of this article are as follows: we introduce
+din, 2014).                                                            an Extended User Dissatisfaction Function (EUDF) that repre-
+    Unfortunately, most operators of bike-sharing systems do           sents the expected weighted number of users who are unable to
+not publish (or even do not collect) data regarding unus-              rent or return a bicycle during a given period as a bivariate func-
+able bicycles. To the best of our knowledge, the only bike-            tion of the initial number of usable and unusable bicycles at the
+sharing operator that regularly publishes maintenance reports          station. This is an extension of the User Dissatisfaction Function
+is NYC Bikeshare, the operator of Citi Bike, the bike-sharing          (UDF) that was initially presented in Raviv and Kolka (2013),
+system in New York: https://www.citibikenyc.com/system-                which assumed that bicycles are always usable. We prove some
+data/operating-reports. During 2014, nearly 330 stations were          discrete convexity properties of the EUDF. In addition, we pro-
+operating in the system, and the average fleet size was 5137 bicy-     pose a method for calculating a convex polyhedral function that
+cles. In total, 8791 987 trips were executed, 528 319 bicycles were    has nearly identical values as the EUDF in its range. This poly-
+repositioned, and 34 806 bicycles were repaired in two desig-          hedral approximation can be used to optimize the initial bicy-
+nated workshops. That is, on average, 95 bicycles needed a major       cle inventories in the system subject to various constraints using
+repair every day, which constitutes almost 2% of the fleet. These      linear programming; see for example, Kaspi (2015).
+figures exclude many bicycles that were repaired in the field (the         The remainder of this article is structured as follows. In Sec-
+exact numbers of in-the-field repairs are not reported). Each          tion 2 a formulation of the EUDF for a single station is presented.
+bicycle that requires a major repair action is repositioned at least   Properties of the EUDF, including a convexity analysis, are pro-
+twice (to and from the workshop); that is, at least 13% of the         vided in Section 3. In Section 4, a method to approximate the
+repositioning efforts are due to maintenance operations. We sus-       EUDF by a convex polyhedral function is presented. Results of a
+pect that in many other systems, especially older ones or those        numerical experiment that examines the accuracy of the approx-
+that do not monitor or publish repair records, the maintenance         imation are reported in Section 5. Concluding remarks are given
+operations may require even more resources.                            in Section 6.
+    Unusable bicycles have several implications.
+     1. Until they are removed by repositioning workers or are
+         fixed at the stations, they block lockers and therefore
+                                                                       2. The EUDF
+         reduce the number of usable lockers in the stations.
+     2. In some cases the unusable bicycles must be removed            In this section we present an extension of the UDF that was
+         from the stations and moved to the workshop. These            introduced by Raviv and Kolka (2013). Assuming that a station is
+         bicycles require repositioning resources that otherwise       not visited by repositioning vehicles during a given period (say,
+         could be used to rebalance the system. This should            a day), the UDF represents the user dissatisfaction (a measure
+         be taken into account when planning repositioning             for the service level) as a discrete function of the initial num-
+         operations.                                                   ber of bicycles in the station. Specifically, the user dissatisfac-
+     3. Incomplete or inaccurate information regarding the             tion is expressed as a weighted sum of the expected shortages of
+         usability of bicycles may result in inferior decision mak-    bicycles and the expected shortages of lockers during the given
+         ing by both operators and users.                              period. In Raviv and Kolka (2013) it was proven that the UDF is
+    Detection of unusable bicycles (addressing point 3) and inte-      a convex function of the initial inventory of bicycles.
+gration of the collection of these bicycles with repositioning             We begin by describing some notation and modeling
+activities (addressing point 2) are the focus of two other studies     assumptions that were presented in Raviv and Kolka (2013),
+we carried out in parallel with the one reported in this article.      which are also a part of the extended model. Subsequently,
+In Kaspi et al. (2016b) we develop a probabilistic model for the       we present some revised notation and additional assumptions
+detection of unusable bicycles, which can be incorporated in the       needed for the extended model. A list of the notations presented
+online information system. In Kaspi et al. (2016a) we propose          here and henceforward is given in Appendix A1 (Table A1).
+an optimization model that integrates the collection of unusable           We model a single station during a finite period [0, T].
+bicycles with the repositioning activities, as well as a dynamic       Initially, at time 0, there are a certain number of bicycles in the
+programming model that allows updating decisions at each sta-          station. During this period, users who wish to rent or return a
+tion on the route, as the actual number of unusable bicycles is        bicycle arrive at the station based on an arbitrary stochastic pro-
+revealed.                                                              cess. If the demand for a bicycle/available locker can be satisfied,
+    The study described in the current article examines the effect     the bicycle is rented or returned and the station’s inventory level
+of unusable bicycles on the service level provided in a single         is updated accordingly. On the other hand, if the demand cannot
+station (addressing the implications of point 1). Obviously, the       be satisfied, we assume that the user immediately abandons the
+effect of the presence of unusable bicycles may differ between         station (she either goes to a nearby station or abandons the sys-
+stations, depending on their capacities and the demand pro-            tem). We note that the model does not take into account mutual
+cesses for bicycles and lockers. A better understanding of this        influences of neighboring stations on the demand process.
+effect will assist in better planning their collection. Clearly, in        There are two sources of user dissatisfaction, namely, short-
+order to maximize the service level, all unusable bicycles should      age of bicycles and shortage of lockers. For each type of shortage,
+

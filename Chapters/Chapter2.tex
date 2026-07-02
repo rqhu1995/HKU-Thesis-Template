@@ -1,31 +1,155 @@
 \chapter{LITERATURE REVIEW}
 
-\section{Overview of bike repositioning problems}
+\providecommand{\litYes}{\ensuremath{\surd}}
+\providecommand{\litPartial}{P}
 
-\subsection{Static and dynamic bike repositioning}
+\section{Categories and objectives in existing BRP studies}
 
-\subsection{Objectives and service-quality measures}
+\subsection{Problem categories and settings}
 
-\subsection{Modeling approaches}
+Existing approaches for reducing demand--supply imbalance in bike-sharing systems can be broadly classified into user-based and operator-based repositioning. User-based repositioning encourages users to participate in rebalancing by offering incentives for picking up or returning bicycles at selected locations \citep{singlaIncentivizingUsersBalancing2015,panDeepReinforcementLearning2019,chengUserbasedBikeRebalancing2021,wangTwostageIncentiveMechanism2021}. This mechanism can help shift part of the repositioning workload to users, but its effectiveness depends on user participation and on the design of the incentive scheme. Operator-based repositioning is therefore adopted more widely in the BRP literature. In this setting, vehicles are dispatched by the system operator to visit stations, pick up bicycles from surplus stations, deliver bicycles to deficit stations, and return to the depot after the repositioning operation \citep{ravivStaticRepositioningBikesharing2013,brinkmannInventoryRoutingBike2016}.
 
-\subsection{Solution methods}
+Operator-based BRPs are commonly divided into static and dynamic variants. In static BRPs, repositioning is performed during an off-peak period, usually when user activities are negligible, and station inventories change mainly through operator interventions \citep{ravivStaticRepositioningBikesharing2013,forma3stepMathHeuristic2015,schuijbroekInventoryRebalancingVehicle2017}. In dynamic BRPs, repositioning is performed while the system is operating, so user arrivals and repositioning actions change the station states simultaneously \citep{contardoBalancingDynamicPublic2012,caggianiDynamicSimulationBased2013,caggianiModelingFrameworkDynamic2018,brinkmannDynamicLookaheadPolicies2019}. The dynamic setting is useful for real-time response, whereas the static setting is central to overnight preparation for the following demand period. The studies reviewed in this chapter are therefore centered on static BRPs, with dynamic and free-floating studies discussed when they clarify objective design, broken-bicycle handling, or solution methodology.
 
-\section[User dissatisfaction in bike repositioning problems]{User dissatisfaction in bike\\ repositioning problems}
+BRPs also differ in several operational settings. Station-based systems require bicycles to be parked in lockers at designated stations, while free-floating systems allow bicycles to be parked more flexibly within a service area. A repositioning model may use a single vehicle or multiple vehicles, a single depot or multiple depots, homogeneous or heterogeneous fleets, and single-visit or multiple-visit routing assumptions \citep{alvarez-valdesOptimizingLevelService2016,liuStaticFreefloatingBike2018,duStaticRebalancingOptimization2020}. In most vehicle-based formulations, the key decisions include the route of each vehicle and the number of bicycles loaded or unloaded at each visited station. These routing and quantity decisions are strongly coupled: a route determines the sequence in which inventory can be moved, while the quantity decisions determine vehicle loads, station inventories, handling times, and the final service level.
 
-\subsection{User Dissatisfaction Function}
+\subsection{Objectives in BRP formulations}
 
-\subsection{Extended User Dissatisfaction Function}
+The objectives of existing BRP studies can be grouped according to operator-oriented and user-oriented concerns. Operator-oriented objectives typically minimize the operational effort of repositioning, such as total travel distance, travel time, routing cost, or vehicle operating cost \citep{benchimolBalancingStationsSelf2011,chemlaBikeSharingSystems2013,dellamicoDestroyRepairAlgorithm2016}. Some studies also consider loading and unloading time or handling cost because these activities can account for a substantial part of the repositioning duration, especially when many bicycles are moved \citep{ravivStaticRepositioningBikesharing2013,rainer-harbachPILOTGRASPVNS2015,szetoChemicalReactionOptimization2016}. Other operator-side measures include makespan, route balance, fleet utilization, fuel consumption, and emissions \citep{alvarez-valdesOptimizingLevelService2016,schuijbroekInventoryRebalancingVehicle2017,shuiDynamicGreenBike2018,wangStaticGreenRepositioning2018,chenStaticGreenBike2023}.
 
-\section[Bike repositioning problems with broken bikes]{Bike repositioning problems with\\ broken bikes}
+User-oriented objectives measure the service consequences of station imbalance. A common approach is to require each station to reach a target inventory level or fall within an acceptable inventory interval after repositioning. When such requirements are relaxed, service level is often represented in the objective by absolute deviations from target inventories, squared deviations, total unmet demand, satisfied demand, or station-level penalty costs \citep{contardoBalancingDynamicPublic2012,digasperoConstraintBasedApproachesBalancing2013,hoSolvingStaticRepositioning2014,rainer-harbachPILOTGRASPVNS2015,brinkmannInventoryRoutingBike2016}. These measures are useful because they produce simple station-level quantities that can be combined with routing decisions. They also allow the operator to trade off service level and repositioning cost through weighted-sum objectives \citep{ravivStaticRepositioningBikesharing2013,forma3stepMathHeuristic2015,hoHybridLargeNeighborhood2017,chenStaticGreenBike2023}.
 
-\subsection{Off-site handling of broken bikes}
+The limitation of target-based and deviation-based measures is that they do not directly evaluate the expected number of users who fail to rent a bicycle or fail to return one. The same absolute deviation from a target inventory can have different service effects at stations with different capacities, rental-return patterns, and demand intensities. A shortage at a high-demand station during a peak period can be more harmful than the same shortage at a low-demand station. This limitation led to a stream of studies that evaluate service quality through user dissatisfaction rather than through a uniform inventory deviation.
 
-\subsection{On-site repair operations}
+\subsection{User-dissatisfaction-based service evaluation}
 
-\clearpage
+\citet{ravivOptimalInventoryManagement2013} introduced the User Dissatisfaction Function (UDF) to evaluate the service quality of a bike-sharing station. A station is modeled as a finite-capacity queueing system with time-varying rental and return arrivals. Given a starting inventory, the UDF gives the expected number of users who fail to rent a bicycle or fail to return a bicycle over a planning horizon. The function is station-specific because it depends on station capacity and on the rental and return arrival processes at that station. It is also inventory-dependent, so changing the post-repositioning inventory of a station changes its expected service failures.
 
-\section[Cluster-first, route-second methods for bike repositioning problems]{Cluster-first, route-second methods for\\ bike repositioning problems}
+The UDF is well suited to static repositioning because the final inventory after overnight repositioning becomes the initial inventory for the following demand period. In a UDF-based static BRP, the operator does not only decide whether a station is close to a target level; it evaluates how a change in inventory affects expected rental and return failures. \citet{ravivOptimalInventoryManagement2013} also showed that the UDF is convex over feasible inventory levels, which provides useful structure for evaluating marginal changes in station inventories.
 
-\clearpage
+Several BRP studies have incorporated UDF-based service evaluation. \citet{ravivStaticRepositioningBikesharing2013} formulated static repositioning models that minimize a weighted combination of total UDF and vehicle travel time. \citet{forma3stepMathHeuristic2015} used the UDF in a three-step matheuristic in which clustering, routing, and restricted re-optimization are combined. \citet{hoHybridLargeNeighborhood2017} adopted UDF-based penalties in a hybrid large-neighborhood-search framework. In a dynamic setting, \citet{zhangTimespaceNetworkFlow2017} incorporated UDF into a time-space network flow model and a rolling-horizon solution framework. These studies show that UDF provides a direct service-oriented basis for comparing repositioning plans, but they also show that UDF-based BRPs are computationally demanding because the service objective depends on final station inventories that are jointly determined by routing, loading, unloading, time-budget, and vehicle-capacity constraints.
+
+\section{BRPs with broken bicycles and repair operations}
+
+\subsection{Broken-bicycle collection and off-site repair}
+
+Broken bicycles change the conventional BRP because they cannot satisfy rental demand and, in station-based systems, may occupy lockers needed for returns. The presence of broken bicycles therefore affects both usable-bicycle availability and locker availability. Early work on this topic focused on identifying unusable bicycles and evaluating their effect on service quality \citep{kaspiDetectionUnusableBicycles2016,kaspiBikesharingSystemsUser2017}. Subsequent optimization studies incorporated broken bicycles into routing and repositioning decisions.
+
+One group of studies focuses mainly on broken-bicycle collection or recycling. In such problems, the main task is to route vehicles to locations containing bicycles that require repair and to transport them to a depot, repair center, or bike shop \citep{luBrokenBikeRecycling2019,zhangBikeSharingStaticRebalancing2018}. Another group jointly considers usable-bicycle repositioning and broken-bicycle collection, so that the same truck fleet may redistribute usable bicycles and collect broken bicycles within the same planning horizon \citep{alvarez-valdesOptimizingLevelService2016,wangStaticGreenRepositioning2018,wangEnhancedArtificialBee2021,duStaticRebalancingOptimization2020,zhangAdaptiveTabuSearch2020,caiDynamicBicycleRelocation2022}. These models extend conventional BRPs by introducing a second bicycle type, additional loading or collection quantities, and the need to allocate truck capacity between usable bicycles and broken bicycles.
+
+The common operating assumption in this stream is that broken bicycles are repaired off site. Under this assumption, a broken bicycle must first be collected by a truck before it can be restored to service. Truck collection frees the locker occupied by the broken bicycle, but it does not increase the number of usable bicycles at the station where the broken bicycle was collected. The final station state is therefore determined by how many usable bicycles are delivered or picked up and how many broken bicycles are removed. This off-site repair logic captures an important maintenance operation, but it does not represent field repair as an operational decision.
+
+Broken-bicycle handling has also been studied in dockless and free-floating systems, where usable and faulty bicycles may be scattered over a service area rather than parked at fixed stations. These studies have considered relocation, collection, and recycling decisions under dispersed bicycle locations \citep{changInnovativeBikeSharingChina2018,usamaFreefloatingBikeRepositioning2019,usamaDocklessBikesharingSystem2020,changRelocatingOperationalDamaged2021,changSmartPredictthenoptimizeMethod2023a}. Although the physical setting differs from station-based systems, the same modeling issue remains: damaged bicycles are not only maintenance objects; they also affect the logistics of service recovery.
+
+\subsection{Objectives and service evaluation with broken bicycles}
+
+BRPs with broken bicycles have used several types of objectives. Some studies minimize travel cost, travel time, or routing cost while requiring usable bicycles to be balanced and broken bicycles to be collected \citep{alvarez-valdesOptimizingLevelService2016,luBrokenBikeRecycling2019,zhangBikeSharingStaticRebalancing2018,zhangAdaptiveTabuSearch2020}. Other studies relax perfect balance and introduce service-related objectives, such as deviations from target usable-bike inventories, satisfied demand, or penalties for unhandled broken bicycles \citep{xuBikeRepositioningProblem2019,wangEnhancedArtificialBee2021,caiDynamicBicycleRelocation2022}. Green BRP studies further include fuel consumption or carbon emissions, which become relevant when trucks carry usable and broken bicycles over long distances \citep{wangStaticGreenRepositioning2018,wangEnhancedArtificialBee2021,changSmartPredictthenoptimizeMethod2023a}.
+
+These objectives capture important aspects of cost and inventory balance, but many of them treat unmet usable-bike demand and unhandled broken bicycles through uniform deviations or penalties. This treatment does not fully reflect the station-specific effect of broken bicycles on user dissatisfaction. A broken bicycle at a low-demand station and a broken bicycle at a high-demand station may have different consequences. Similarly, removing a broken bicycle from a nearly full station can reduce return failures by freeing a locker, whereas removing one from a station with many vacant lockers may have a smaller immediate service effect.
+
+The Extended User Dissatisfaction Function (EUDF) addresses this issue by extending the UDF to a bivariate station state. \citet{kaspiBikesharingSystemsUser2017} modeled user dissatisfaction as a function of both usable-bicycle and broken-bicycle inventories. The usable-bicycle inventory affects rental availability, while the broken-bicycle inventory affects effective locker availability and thus return failures. The EUDF is therefore a natural service measure for station-based BRPs with broken bicycles. It links service evaluation to the joint final state of usable and broken bicycles rather than to one inventory type or to a uniform penalty for unhandled broken bicycles.
+
+\subsection{On-site repair and integrated operations}
+
+Off-site repair is not the only way to handle broken bicycles. Some repair work can be performed in the field by repairers who visit stations directly. On-site repair changes the operational role of broken bicycles: a repairer can convert a broken bicycle into a usable bicycle at its current station without using truck capacity to transport it to a depot. This action has a different inventory effect from broken-bicycle collection. Repair reduces the broken-bicycle inventory and increases the usable-bicycle inventory at the same station, whereas truck collection reduces the broken-bicycle inventory but does not create a usable bicycle at that station.
+
+Maintenance and repair decisions have been studied in related sharing-economy and bicycle-sharing contexts. \citet{freundModelsAlgorithmsTransportation2018} studied transportation models in the sharing economy, including repair-related operations, and \citet{luTaskAssignmentPredictive2022} considered predictive-maintenance task assignment in free-floating bicycle-sharing systems. These studies show that maintenance resources need to be assigned and scheduled, but they do not fully integrate repairer routing with truck-based usable-bicycle repositioning and broken-bicycle collection in a single static station-based BRP.
+
+An integrated static BRP with broken bicycles and on-site repair must coordinate two types of mobile resources. Trucks move usable bicycles and collect broken bicycles, subject to vehicle capacity, travel time, loading time, and unloading time. Repairers travel among stations and spend repair time converting broken bicycles into usable bicycles. The two resource types operate in parallel within the same repositioning horizon, and their actions interact through the final usable-bicycle and broken-bicycle inventories at each station. This integrated setting requires the model to determine truck routes, repairer routes, usable-bicycle loading and unloading quantities, broken-bicycle collection quantities, and on-site repair quantities together.
+
+\section{Solution methods and decomposition for BRPs}
+
+\subsection{Exact methods and mathematical programming approaches}
+
+BRPs are commonly formulated as mixed-integer optimization problems that combine routing decisions with station-level loading and unloading decisions. A solution determines which stations are visited by each vehicle, the visiting order, the quantity loaded or unloaded at each station, and the resulting vehicle loads and final station inventories. Exact methods and mathematical programming approaches are useful because they provide benchmark solutions, clarify the structure of the problem, and can solve small instances under selected formulations.
+
+Several exact or decomposition-based optimization approaches have been used in the BRP literature, including branch-and-bound, branch-and-cut, column generation, Benders decomposition, time-space network formulations, and mixed-integer programming solved by commercial solvers \citep{caggianiModularSoftComputing2012,contardoBalancingDynamicPublic2012,ravivStaticRepositioningBikesharing2013,dellamicoDestroyRepairAlgorithm2016,brinkmannInventoryRoutingBike2016}. These methods are valuable for small networks and for validating heuristic solutions. Their direct use, however, becomes difficult as the number of stations, vehicles, and time or route decisions increases. The computational difficulty is intensified when loading and unloading quantities are decision variables rather than fixed parameters, because the routing decision and the inventory transition along the route have to be optimized together.
+
+The difficulty is greater in UDF- and EUDF-based models. When the objective is a simple travel cost or target deviation, the contribution of a station can often be evaluated by a relatively simple inventory difference. When the objective is UDF, the value of a plan depends on the nonlinear expected service failures produced by the final usable-bicycle inventory at each station. When the objective is EUDF, the final state is bivariate and depends on both usable-bicycle and broken-bicycle inventories. This increases the cost of evaluating a route and makes large-scale exact optimization particularly challenging.
+
+\subsection{Heuristics, metaheuristics, and hybrid methods}
+
+Heuristics and metaheuristics have been widely developed to obtain high-quality BRP solutions within practical computing times. Existing methods include constructive heuristics, tabu search, variable neighborhood search, large neighborhood search, destroy-and-repair methods, chemical reaction optimization, artificial bee colony algorithms, memetic algorithms, genetic algorithms, and hybrid exact--heuristic frameworks \citep{hoSolvingStaticRepositioning2014,rainer-harbachPILOTGRASPVNS2015,szetoChemicalReactionOptimization2016,hoHybridLargeNeighborhood2017,liuStaticFreefloatingBike2018,luEffectiveMemeticAlgorithm2020,wangEnhancedArtificialBee2021}. Some methods solve routing and loading decisions together, while others decompose the problem into a routing subproblem and a quantity-assignment subproblem.
+
+Separating routing and quantity decisions can improve computational efficiency. Given a route, the loading and unloading quantities may be determined by linear programming, network-flow methods, dynamic programming, greedy rules, or tailor-made loading heuristics \citep{forma3stepMathHeuristic2015,rainer-harbachPILOTGRASPVNS2015,liMultipleTypeBike2016,zhangTimespaceNetworkFlow2017}. This route-first, quantity-second logic is useful because candidate routes can be searched by a metaheuristic while station-level quantities are evaluated by a more specialized procedure. The quality of the overall method, however, depends on whether the quantity evaluator is aligned with the objective. A loading rule designed for target deviations may not capture UDF-based service improvement, and a rule designed for usable bicycles alone may not capture the joint EUDF effect of usable-bicycle movement, broken-bicycle collection, and repair.
+
+Hybrid methods combine the strengths of exact and inexact procedures. For example, a heuristic may construct a route and then use an exact or approximate subroutine to determine loading quantities; a metaheuristic may explore routing structures while a problem-specific evaluator estimates the service improvement of a candidate solution. This pattern is especially relevant to large UDF- and EUDF-based BRPs, where exact optimization of the full model is usually impractical but exact or structured evaluation can still be useful within a heuristic framework.
+
+\subsection{Cluster-first, route-second decomposition}
+
+Cluster-first, route-second (CFRS) decomposition is a common strategy for improving scalability. The station network is first partitioned into smaller groups, and routing or repositioning subproblems are then solved at the cluster level. This strategy reduces the size of each routing problem and can allow cluster-level problems to be solved independently or in parallel. The main challenge is that clustering is not a neutral preprocessing step. A partition that is good for geographic compactness may not be good for inventory transfer, service improvement, or route feasibility.
+
+Existing CFRS and clustering-based studies have used different criteria to form station groups. \citet{schuijbroekInventoryRebalancingVehicle2017} derived inventory bounds from a queueing model and used them in a set-partitioning formulation that accounts for service-level feasibility and approximate routing cost. \citet{forma3stepMathHeuristic2015} proposed a three-step matheuristic in which clustering guides subsequent routing and repositioning decisions. Other studies have used hub or satellite structures, distance and inventory self-sufficiency, fuzzy correlation, feature correlation, or data-driven information to simplify the station network before detailed routing \citep{huangStaticBikeRepositioning2020,lvHybridAlgorithmStatic2020,lvFuzzyCorrelationBased2022,lvFeatureCorrelationReinforce2024,liuDataDrivenOptimizationFramework2025}.
+
+These clustering criteria address different aspects of the BRP. Geographic proximity reduces travel effort. Demand balance and inventory self-sufficiency help construct groups that may internally satisfy repositioning needs. Service-level bounds ensure that station inventories remain acceptable after repositioning. Approximate routing costs help prevent clusters from becoming too dispersed. However, these criteria do not fully evaluate how much user dissatisfaction can be reduced within a cluster under a vehicle time budget. This distinction is important for UDF-based repositioning because a promising cluster should contain not only nearby stations but also feasible usable-bicycle transfers that generate substantial UDF reduction.
+
+The requirement becomes more demanding in BRPs with broken bicycles and on-site repair. In that setting, a candidate cluster cannot be evaluated by one-dimensional usable-bicycle inventory changes alone. Its value depends on the joint changes in usable-bicycle and broken-bicycle inventories, on the different effects of usable-bicycle pickup and delivery, broken-bicycle collection, and on-site repair, and on whether the truck and repairer workloads can both be completed within the same operating horizon. Existing CFRS methods do not provide this bivariate service-evaluation and two-resource feasibility logic.
 
 \section{Summary of research gaps}
+
+Table~\ref{tab:lit-summary} summarizes representative BRP studies along the dimensions that are central to this thesis: service evaluation, broken-bicycle handling, repair operations, quantity decisions, and decomposition logic. The rows labelled by thesis chapters are included only to show how the present thesis addresses the gaps; they are not treated as prior literature.
+
+\clearpage
+\begin{landscape}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.86}
+\begin{longtable}{p{0.18\linewidth}p{0.055\linewidth}p{0.055\linewidth}ccccccccccccccccc}
+\caption{Summary of representative BRP studies by objectives, operations, quantities, and decomposition features}\label{tab:lit-summary}\\
+\hline
+Reference & Scen. & Sys. & \multicolumn{5}{c}{Objectives} & \multicolumn{3}{c}{Operations} & \multicolumn{3}{c}{Quantities} & \multicolumn{6}{c}{Methods/decomposition}\\
+\cline{4-8}\cline{9-11}\cline{12-14}\cline{15-20}
+ & & & OC & AD/UD & UDF & EUDF & CE & UB & BB & OR & qUB & qBB & qR & EX & H/M & CF & U-C & E-C & T-C\\
+\hline
+\endfirsthead
+\caption[]{Summary of representative BRP studies by objectives, operations, quantities, and decomposition features}\\
+\hline
+Reference & Scen. & Sys. & \multicolumn{5}{c}{Objectives} & \multicolumn{3}{c}{Operations} & \multicolumn{3}{c}{Quantities} & \multicolumn{6}{c}{Methods/decomposition}\\
+\cline{4-8}\cline{9-11}\cline{12-14}\cline{15-20}
+ & & & OC & AD/UD & UDF & EUDF & CE & UB & BB & OR & qUB & qBB & qR & EX & H/M & CF & U-C & E-C & T-C\\
+\hline
+\endhead
+\hline
+\multicolumn{20}{r}{Continued on next page}\\
+\endfoot
+\hline
+\endlastfoot
+\citet{benchimolBalancingStationsSelf2011} & Static & Docked & \litYes & \litYes & & & & \litYes & & & PB & & & \litYes & & & & & \\
+\citet{chemlaBikeSharingSystems2013} & Static & Docked & \litYes & & & & & \litYes & & & DV & & & \litYes & \litYes & & & & \\
+\citet{ravivStaticRepositioningBikesharing2013} & Static & Docked & \litYes & & \litYes & & & \litYes & & & DV & & & \litYes & & & & & \\
+\citet{forma3stepMathHeuristic2015} & Static & Docked & \litYes & & \litYes & & & \litYes & & & DV & & & & \litYes & \litYes & \litPartial & & \litPartial\\
+\citet{hoHybridLargeNeighborhood2017} & Static & Docked & \litYes & & \litYes & & & \litYes & & & DV & & & & \litYes & & & & \\
+\citet{schuijbroekInventoryRebalancingVehicle2017} & Static & Docked & \litYes & \litYes & & & & \litYes & & & DV & & & \litYes & \litYes & \litYes & & & V\\
+\citet{huangStaticBikeRepositioning2020} & Static & Docked & \litYes & \litYes & & & & \litYes & & & DV & & & & \litYes & \litYes & & & \\
+\citet{lvHybridAlgorithmStatic2020} & Static & Docked & \litYes & \litYes & & & & \litYes & & & DV & & & & \litYes & \litYes & & & \\
+\citet{lvFeatureCorrelationReinforce2024} & Static & Docked & \litYes & \litYes & & & \litYes & \litYes & & & DV & & & & \litYes & \litYes & & & \\
+\citet{kaspiBikesharingSystemsUser2017} & Static & Docked & & & & \litYes & & & & & & & & & & & & & \\
+\citet{alvarez-valdesOptimizingLevelService2016} & Static & Docked & \litYes & & & & & \litYes & \litYes & & PB & PB & & & \litYes & & & & \\
+\citet{wangStaticGreenRepositioning2018} & Static & Docked & & & & & \litYes & \litYes & \litYes & & DV & DV & & \litYes & \litYes & & & & \\
+\citet{zhangBikeSharingStaticRebalancing2018} & Static & Docked & \litYes & & & & & & \litYes & & NC & PB & & \litYes & \litYes & & & & \\
+\citet{luBrokenBikeRecycling2019} & Static & Dockless & \litYes & & & & & & \litYes & & NC & PB & & & \litYes & & & & \\
+\citet{usamaFreefloatingBikeRepositioning2019,usamaDocklessBikesharingSystem2020} & Static & Dockless & \litYes & \litYes & & & & \litYes & \litYes & & PB & DV & & \litYes & \litYes & & & & \\
+\citet{duStaticRebalancingOptimization2020} & Static & Dockless & \litYes & & & & & \litYes & \litYes & & PB & PB & & & \litYes & & & & \\
+\citet{zhangAdaptiveTabuSearch2020} & Static & Docked & \litYes & & & & & \litYes & \litYes & & PB & PB & & & \litYes & & & & \\
+\citet{wangEnhancedArtificialBee2021} & Static & Docked & & \litYes & & & \litYes & \litYes & \litYes & & DV & DV & & & \litYes & & & & \\
+\citet{caiDynamicBicycleRelocation2022} & Dynamic & Docked & \litYes & \litYes & & & & \litYes & \litYes & & DV & DV & & \litYes & \litYes & & & & \\
+\citet{changSmartPredictthenoptimizeMethod2023a} & Dynamic & Dockless & \litYes & \litYes & & & \litYes & \litYes & \litYes & & PB & PB & & & \litYes & & & & \\
+\hline
+Thesis Chapter~3 & Static & Docked & & & \litYes & & & \litYes & & & DV & & & \litYes & \litYes & \litYes & \litYes & & V\\
+Thesis Chapter~4 & Static & Docked & & & & \litYes & \litYes & \litYes & \litYes & \litYes & DV & DV & DV & \litYes & \litYes & & & & \\
+Thesis Chapter~5 & Static & Docked & & & & \litYes & & \litYes & \litYes & \litYes & DV & DV & DV & & \litYes & \litYes & & \litYes & T/R\\
+\end{longtable}
+\begin{flushleft}
+\footnotesize
+Notes: Scen. = scenario; Sys. = system type; OC = operator cost, including travel time, travel distance, routing cost, operating cost, or handling cost; AD/UD = absolute deviation, target-balance, satisfied-demand, or unmet-demand measure; UDF = User Dissatisfaction Function; EUDF = Extended User Dissatisfaction Function; CE = carbon emissions or fuel consumption; UB = usable-bicycle repositioning; BB = broken-bicycle collection or relocation; OR = on-site repairers; qUB, qBB, and qR = station-level quantities of usable-bicycle repositioning, broken-bicycle collection, and on-site repair, respectively; DV = decision variable; PB = perfect-balance or complete-collection requirement; NC = not considered; EX = exact or mathematical programming method; H/M = heuristic, metaheuristic, or hybrid method; CF = cluster-first or explicit clustering-based decomposition; U-C = UDF-aware cluster evaluation; E-C = EUDF-aware cluster evaluation; T-C = routing-time feasibility considered in clustering, with V for vehicle-route feasibility and T/R for both truck and repairer feasibility; P indicates partial consideration.
+\end{flushleft}
+\endgroup
+\end{landscape}
+\clearpage
+
+The review identifies three research gaps. First, UDF-based service evaluation and cluster-first decomposition have not been sufficiently integrated in static BRPs. UDF-based models evaluate service quality through expected rental and return failures, while CFRS methods improve scalability by partitioning large station networks before detailed routing. Existing clustering criteria are mainly based on geographic proximity, inventory balance, service-level feasibility, feature correlation, or approximate routing cost. They do not jointly evaluate the UDF reduction attainable within a candidate cluster and the routing-time feasibility of the vehicle assigned to that cluster. Chapter~3 addresses this gap by developing a UDF-aware CFRS framework in which clustering is guided by both estimated UDF reduction and vehicle time feasibility.
+
+Second, existing BRP studies with broken bicycles mainly treat broken bicycles as items to be detected, collected, relocated, or transported for off-site repair. Repair and maintenance tasks are often planned separately from usable-bicycle repositioning. This separation does not capture the static planning setting in which trucks redistribute usable bicycles, collect broken bicycles, and share vehicle capacity between these two tasks, while repairers simultaneously visit stations and repair broken bicycles on site. Existing models also do not jointly determine truck routes, repairer routes, usable-bicycle loading and unloading quantities, broken-bicycle collection quantities, and on-site repair quantities. Chapter~4 addresses this gap by formulating and solving an integrated static BRP that coordinates truck-based usable-bicycle repositioning, truck-based broken-bicycle collection, and repairer-based on-site repair.
+
+Third, the integrated problem with broken bicycles and on-site repair requires a new decomposition logic for large station networks. Cluster quality depends on both usable-bicycle and broken-bicycle inventories, on the combined effects of usable-bicycle movement, broken-bicycle collection, and on-site repair, and on whether truck and repairer workloads can both be completed within the same operating period. Existing CFRS methods do not evaluate clusters through bivariate EUDF changes while accounting for parallel truck and repairer time requirements. Chapter~5 addresses this gap by developing an EUDF-aware decomposition framework for large-scale static BRPs with broken bicycles and on-site repair.

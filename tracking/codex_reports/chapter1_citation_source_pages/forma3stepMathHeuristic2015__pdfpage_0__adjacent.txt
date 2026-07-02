@@ -1,0 +1,84 @@
+CITEKEY: forma3stepMathHeuristic2015
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/BNZBQK4T/Forma et al. - 2015 - A 3-step math heuristic for the static repositioning problem in bike-sharing systems.pdf
+PDF PAGE INDEX: 0
+PDFTOTEXT PAGE NUMBER: 1
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-027
+RELATED CE IDS: CE-027
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                        Transportation Research Part B 71 (2015) 230–247
+
+
+
+                                                         Contents lists available at ScienceDirect
+
+
+                                               Transportation Research Part B
+                                            journal homepage: www.elsevier.com/locate/trb
+
+
+
+
+A 3-step math heuristic for the static repositioning problem
+in bike-sharing systems
+Iris A. Forma a,b, Tal Raviv a,⇑, Michal Tzur a
+a
+    Industrial Engineering Department, Tel Aviv University, Tel Aviv, 6997801, Israel
+b
+    Afeka College of Engineering, Bnei Ephraim 218, Tel Aviv, 6910717, Israel
+
+
+
+a r t i c l e           i n f o                          a b s t r a c t
+
+Article history:                                         Over the last few years, bike-sharing systems have emerged as a new mode of transporta-
+Received 12 July 2014                                    tion in a large number of big cities worldwide. This new type of mobility mode is still
+Received in revised form 6 October 2014                  developing, and many challenges associated with its operation are not well addressed
+Accepted 7 October 2014
+                                                         yet. One such major challenge of bike-sharing systems is the need to respond to ﬂuctuating
+Available online 1 December 2014
+                                                         demands for bicycles and for vacant lockers at each station, which directly inﬂuences the
+                                                         service level provided to its users. This is done using dedicated repositioning vehicles (light
+Keywords:
+                                                         trucks) that are routed through the stations, loading and unloading bicycles to/from them.
+Bike sharing systems
+Math heuristics
+                                                         Performing this operation during the night when the demand in the system is negligible is
+Vehicle routing                                          referred to as the static repositioning problem. In this paper, we propose a 3-step mathemat-
+                                                         ical programming based heuristic for the static repositioning problem. In the ﬁrst step,
+                                                         stations are clustered according to geographic as well as inventory (of bicycles) consider-
+                                                         ations. In the second step the repositioning vehicles are routed through the clusters while
+                                                         tentative inventory decisions are made for each individual station. Finally, the original
+                                                         repositioning problem is solved with the restriction that traversal of the repositioning vehi-
+                                                         cles is allowed only between stations that belong to consecutive clusters according to the
+                                                         routes determined in the previous step, or between stations of the same cluster. In the ﬁrst
+                                                         step the clusters are formed using a specialized saving heuristic. The last two steps are for-
+                                                         mulated as Mixed Integer Linear Programs and solved by a commercial solver. The method
+                                                         was tested on instances of up to 200 stations and three repositioning vehicles, and was
+                                                         shown to outperform a previous method suggested in the literature for the same problem.
+                                                                                                                 2014 Elsevier Ltd. All rights reserved.
+
+
+
+
+1. Introduction
+
+   Bike-sharing systems offer a low cost and environmentally friendly mean of transportation for short travels. It can also be
+used as a complementary mode to other public transit such as buses, trams or subways. In order to provide high quality
+service, bicycles and vacant lockers should be available to the users of these systems when and where they are demanded.
+This can be achieved by repositioning the bicycles in the system according to forecasted demand rates for bicycles and lockers
+at the stations, using a dedicated ﬂeet of light trucks. These trucks, referred to as repositioning vehicles, travel among the
+stations, where bicycles are loaded or unloaded subject to bicycle availability and capacity limitations at the repositioning
+vehicles and at the stations. When the repositioning is carried out during the day when the system is active, it is referred to
+
+
+
+    ⇑ Corresponding author.
+      E-mail addresses: irisf@afeka.ac.il (I.A. Forma), talraviv@eng.tau.ac.il (T. Raviv), tzur@eng.tau.ac.il (M. Tzur).
+
+http://dx.doi.org/10.1016/j.trb.2014.10.003
+0191-2615/ 2014 Elsevier Ltd. All rights reserved.
+

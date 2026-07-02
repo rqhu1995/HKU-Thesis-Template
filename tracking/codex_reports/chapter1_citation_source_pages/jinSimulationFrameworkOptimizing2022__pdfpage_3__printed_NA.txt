@@ -1,0 +1,82 @@
+CITEKEY: jinSimulationFrameworkOptimizing2022
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/DWNF88AJ/Jin et al. - 2022 - A simulation framework for optimizing bike rebalancing and maintenance in large-scale bike-sharing s.pdf
+PDF PAGE INDEX: 3
+PDFTOTEXT PAGE NUMBER: 4
+PRINTED PAGE: article number / not page-numbered in the PDF metadata used here
+SECTION: Literature / operation of BSSs
+RELATED CE IDS: CE-024, CE-031
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+Y. Jin et al.                                                                                    Simulation Modelling Practice and Theory 115 (2022) 102422
+
+                    Table 1
+                    System Specifications and Data Types.
+                                                            Specifications                                      Data Type
+                                                            Station ID                                          Array (integer)
+                                                            Station location                                    Matrix (double)
+                                                            Station capacity                                    Array (integer)
+                                                            Valet service option                                Array (binary)
+                     Station Specification                  Bike ID                                             Array (integer)
+                                                            Bike reliability                                    Array (double)
+                                                            Trip duration distribution                          Matrix (double)
+                                                            Destination trip distribution                       Matrix (integer)
+                                                            Bike demand rate (per hour, seven days)             Matrix (double)
+                                                            Type of rebalancing vehicles                        Integer
+                                                            Rebalancing frequency                               Array (integer)
+                     Rebalancing Specification              Valet service capability                            Double
+                                                            Number of vehicle types for rebalancing             Integer
+                                                            Number of vehicles of each type                     Integer
+                                                            Repair speed                                        Double
+                     Maintenance Specification
+                                                            Number of repair technicians                        Double
+
+
+
+
+    Based on the user-defined rebalancing schedule (in rebalancing specifications), the current bike inventory and dock information
+of the system is passed to the optimization module by the rebalancing controller. The optimization module generates route and operation
+decisions for each vehicle to meet the user-defined service level requirements using the heuristic presented in Section 3.4. Then, all
+the rebalancing tasks are sent to the simulation module to execute the rebalancing and to continue mimicking the operation of the
+BSS until the next rebalancing starts. To evaluate the performance of the proposed heuristic, the simulation module calculates the
+true average ratio of satisfied demand over total demand (i.e., service level) for both bike pickup/return of the BSS at the end of
+each rebalancing.
+
+3.2. Simulation improvements
+
+3.2.1. Bike borrowing and returning
+    The bike borrowing and returning starts with creating bike pick-up demand using a non-homogeneous Poisson process (NHPP)
+with piece-wise constant arrival rates. Noted that the bike pick-up demand is time and station dependent. The time dependency is
+modeled by assuming a behavior that changes every hour and every day of a week. Specifically, the bike pick-up demand of each
+station is estimated by the average number of arrivals in any given hour in a week. Compared to the basic model provided in Jin
+et al. [9], this improved simulation model is able to provide valet service for the high-volume stations at peak hours. When a bike
+pick-up demand is generated at a start station, the user will first ask the valet for a bike before picking up one from the docks of
+the station. Then a bike will be assigned to the user if the start station or the valet at the start station has available bikes. The valet
+inventory capacity is based on a user-defined percentage of the station capacity. At the end of the valet’s shift, all the bikes that the
+valet holds are returned to the depot. The improved bike borrowing and the returning process is illustrated in Fig. 2.
+    After receiving a bike, the user selects a destination based on a discrete distribution over the identification numbers of the
+stations in the system. The probability of selecting a destination station 𝑗 is estimated as an empirical probability that a user goes
+from the start station 𝑖 to station 𝑗 at any given hour and day of a week (i.e., the number of trips from 𝑖 to 𝑗 over the total number
+of trips starting at 𝑖). After determining the destination station, the corresponding trip duration is modeled by a shifted Gamma
+distribution. Ideally, a unique Gamma distribution can be estimated based on the historical trips for each pair of stations. However,
+when the trip records of some stations are insufficient, the trip duration will be modeled by the Gamma distribution based on the
+system average. An example of such gamma distribution estimated by using the 2019 trip data is provided in Fig. 3.
+    Similar to the bike pick-up process, the user first asks the valet for returning a bike upon arrival at the destination station. If no
+docks are available, the user goes to the nearest station with available docks. After the bike is returned, the age (i.e., the cumulative
+usage) of the bike is updated based on the trip duration. The older the bike is, the higher the failure probability will be. Moreover,
+the bike’s age will be reset to zero after it gets repaired.
+    The bike condition is updated to fail if its current age is larger than the age of the next failure. The age of the next failure can be
+estimated based on the reliability function of bikes. Dock failures are generated by conducting a Bernoulli trial when the user tries
+to pick up a bike at the station. Currently published data sets lack information of broken bikes or docks [6]. For docks, we assume
+a small probability of failure. On the other hand, a bike failure can be reasonably identified by filtering trip record satisfying: (1)
+the trip starts and ends in the same station, and (2) the trip duration is extremely short (e.g., less than two minutes). In practice,
+customers might not notice that a bike is broken until they take it out of the dock and try to ride it. Therefore, in the historical trip
+data, many trips have shown the two features. Using the trip data of Citi Bike as an example, there are 12,007 records showing this
+pattern in August 2019, which accounts for 92% of the reported failures for the same period.
+    The discrepancy between the estimated and the real number of failures likely comes from failures not registered in the trip data.
+This situation can happen when a broken bike has not been used for a long period of time due to low bike demand at the station
+or the failure is reported by the user. Therefore, a bike is considered failed if it is identified by the above rule. The failure records
+
+                                                                             4
+

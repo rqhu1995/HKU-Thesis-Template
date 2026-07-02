@@ -1,0 +1,64 @@
+CITEKEY: ravivStaticRepositioningBikesharing2013
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/UAVMV85M/Raviv et al. - 2013 - Static repositioning in a bike-sharing system models and solution approaches.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-011
+RELATED CE IDS: CE-011
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+188                                                                          T. Raviv et al.
+
+
+Keywords      Bike-sharing systems  Static repositioning  Pickup and delivery
+problem
+
+
+Introduction and problem definition
+
+Bike-sharing systems allow people to rent a bicycle at one of the many automatic
+rental stations scattered around the city, use them for a short journey and return
+them at any station in the city. Recently many cities around the world established
+such systems in order to encourage their citizens to use bicycles as an
+environmentally sustainable and socially equitable mode of transportation, and as
+a good complement to other modes of mass transit systems (mode-sharing).
+   A rental station typically includes one terminal and several bicycle stands. The
+terminal is a device capable of communicating with the electronic lockers, which
+are attached to the bicycle stands. When a user rents a bicycle, a signal is sent to the
+terminal that the locker has been vacated. A user can return a bicycle to a station
+only when there is a vacant locker. All rental and return transactions are recorded
+and reported in real time to a central control facility. Thus, the state of the system, in
+terms of the number of bicycles and number of vacant lockers available at each
+station, is known to the operator in real time. Moreover, operators of bike-sharing
+systems make this information available to the users online.
+   A crucial factor in the success of a bike-sharing system is its ability to meet the
+fluctuating demand for bicycles at each station. In addition, the system should be
+able to provide enough vacant lockers to allow the users to return the bicycles at
+their destinations. Indeed, one of the main complaints heard from users of bike-
+sharing systems relates to unavailability of bicycles and (even worse) unavailability
+of lockers at their destination, see, e.g., Shaheen and Guzman (2011) and media
+reports Brussel Nieuws (2010) and Tusia-Cohen (2012). Persistent unavailability of
+bicycles and/or lockers engenders distrust among the system’s users and could
+eventually lead them to abandon it.
+   We measure user dissatisfaction with the system through the expected number of
+shortage events. Such an event occurs when a user who wishes to rent a bicycle
+arrives at an empty station or a user who wishes to return a bicycle arrives at a full
+station, with no vacant lockers. In order to reduce shortages, operators of bike-
+sharing systems are responsible to regularly remove bicycles from some stations and
+transfer them to other stations, using a dedicated fleet of light trucks. We refer to
+this activity as repositioning of bicycles. The goals of the operators are to minimize
+the number of shortages incurred in the system and the fleet’s operational costs.
+   Consequently, repositioning of bicycles in the system involves routing decisions
+concerning the vehicles, starting from and returning to the depot, and inventory
+decisions concerning bicycles in the rental stations. The latter involves determining
+the number of bicycles to be removed or placed in each station on each visit of the
+vehicles. Ideally, the outcome of this operation would be to meet all demand for
+bicycles and vacant lockers, but this may not be possible due to demand uncertainty,
+capacity constraints of the vehicles and the stations, and the inherent imbalances in
+the renting and return rates at the various stations. The imbalance is sometimes
+
+
+123
+

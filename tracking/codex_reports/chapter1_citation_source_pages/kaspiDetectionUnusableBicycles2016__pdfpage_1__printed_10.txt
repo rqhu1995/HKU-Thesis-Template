@@ -1,0 +1,115 @@
+CITEKEY: kaspiDetectionUnusableBicycles2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IJ2A4PHK/Kaspi et al. - 2016 - Detection of unusable bicycles in bike-sharing systems.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: 10
+SECTION: Abstract / Introduction
+RELATED CE IDS: CE-020
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                           M. Kaspi et al. / Omega 65 (2016) 10–16                                                                      11
+
+
+differently, e.g., start her trip at a neighboring station or select a
+different mode of transportation.
+    The contribution of this note is as follows: we propose using
+data that is already collected by existing bike sharing systems to
+estimate the probability that each bicycle is usable. We formulate a
+Bayesian model that makes use of on-line transactions data to
+constantly update these probabilities and propose a method to                                         Fig. 1. Updating the PoU at rent event e.
+approximate these probabilities in real-time. Subsequently, we
+present some possible extensions of the model and explain how
+additional information such as user complaints can be incorpo-
+                                                                                                                            P e ði unusable; j rentedÞ
+rated in the model. In addition, we discuss how an equivalent                    pei ¼ P e ði unusable j j rentedÞ ¼                                   8 i A Se n fjg   ð1Þ
+                                                                                                                                    P e ðj rentedÞ
+model can be used for detection of locker (dock) failures.
+                                                                                    Fig. 1 depicts the notation used right before, at and right after
+                                                                                 rent event e: The updating of the PoU is carried out for bicycles
+                                                                                 that are left parked in the station right after each rent.
+2. A Bayesian model
+                                                                                    To calculate (1), let us consider ﬁrst the denominator. Given
+                                                                                 that bicycle j is usable, the probability that it will be rented at rent
+    The goal of this study is to estimate the number of unusable
+                                                                                 event e is given by:
+bicycles in a station and to continuously update this estimation in
+                                                                                                                j SX
+                                                                                                                   e
+                                                                                                                     j 1
+real-time. We begin by focusing on each bicycle independently.                                                        1                  
+                                                                                 P e ðj rentedjj usableÞ ¼                Uqe m; Se n fjg                               ð2Þ
+We assign a Probability of Unusability (PoU) to each bicycle in the
+                                                                                                                m¼0
+                                                                                                                    1 þ m
+system and update it continuously. A good indication for unusa-
+bility of a bicycle is the fact that it was not rented for a long period.              This expression is obtained by conditioning on the number of
+                                                                                 usable bicycles in the station (mÞ, excluding bicycle j, and multi-
+However, this probability also depends on other factors such the                                                                                        
+number of renting transactions since the bicycle arrived at the                  plying the probability of having this number, qe m; Se n fjg , by the
+                                                                                 uniform probability that j will be selected from within m þ 1 usable
+station and the availability of other bicycles in the station when
+                                                                                 bicycles.
+these transactions occurred. The model that will be presented next
+                                                                                       Then, by deﬁnition: P e ðj usable j j rentedÞ ¼ 1, and equiva-
+makes use of the transaction data in order to estimate the PoU of
+                                                                                 lently: P e ðj rented; j usableÞ ¼ P e ðj rentedÞ. Using Bayes’ rule, we
+each bicycle in a single station.
+                                                                                 obtain the probability that bicycle j will be rented at event e:
+    We use the following notation:                                                                                                                       
+                                                                                 P e ðj rentedÞ ¼ P e ðj rented; j usableÞ ¼ P e ðj usableÞ U P e j rentedj usableÞ
+ i          Bicycle ID
+ e          Rent event                                                                            j SX
+                                                                                                       e
+                                                                                                         j 1
+                                                                                                              1              
+ C          Set of all lockers in the station, jCj is the capacity of the            ¼ 1  pej  1 U              Uqe m; Se n j                                         ð3Þ
+                                                                                                        m¼0
+                                                                                                            1 þ m
+            station
+ pi         Prior probability that bicycle i is returned to the sta-             where pej  1 denotes the PoU of bicycle j right before rent event e.
+            tion unusable                                                        Similarly to calculate nominator of (1) we condition in addition
+ Se         Set of bicycles that are parked in the station right                 over bicycle i and obtain the joint probability that bicycle i is
+            before rent event e                                                  unusable and bicycle j is rented at rent event e:
+ qe ðm; SÞ The probability that right before rent event e there are                                                                j Se j
+                                                                                                                                        X 2     1                      
+            m usable bicycles in the set S                                       P e ði unusable; j rentedÞ ¼ pei  1 U 1  pej  1 U                U qe m; Se n fi; jg
+                                                                                                                                               1 þ m
+ P e ðxÞ    The probability of scenario x at rent event e                                                                                  m¼0
+
+ P e ðx; yÞ The joint probability of scenarios x and y at rent event                                                                                                    ð4Þ
+            e                                                                         Eqs. (3) and (4) contain an expression for the probability of the
+ pei        The PoU of bicycle i right after the occurrence of rent              number of usable bicycles m, excluding i and j, that are parked in
+            event e                                                              the station right before rent event e. Note that each bicycle that is
+                                                                                 parked in the station has a different probability of being usable.
+      We assume that when a bicycle is rented, it is usable, that is, a          Therefore, this expression is the sum of Bernoulli variables with
+user never rents an unusable bicycle. Formally, we assume                        different success probabilities, which is a Poisson Binomial dis-
+                                                                                 tribution (see, for example, [4]), given by the following probability
+P e ði usablej i rentedÞ ¼ 1 and P e ði rentedj i unusableÞ ¼ 0. However,
+                                                                                 mass function:
+bicycle i may turn unusable during a ride, and therefore there is a                               X
+                                                                                                                        
+probability pi that the bicycle will be returned to the station                  qe m; Se ¼                   ∏ 1  pek  1 ∏ pek  1
+unusable. See discussion in Section 5.3 regarding the calculation of                           S A F m ðS e Þk A S           k A Se nS
+
+this probability.
+                                                                                 where F m ðSÞ denotes the collection of all subsets of set S with
+      For simplicity of the presentation, we initially assume that the
+                                                                                 cardinality m. Note that in Eqs. (3) and (4) this probability is cal-
+users have no preferences regarding the locker from which the
+                                                                                 culated for all possible values of m and therefore the calculation
+bicycle will be rented. That is, a user uniformly selects a bicycle from
+                                                                                 effort for evaluating (3) and (4) grows exponentially in Se . Thus,
+the usable bicycles that are parked in the station. In Section 5.1, we
+                                                                                 the exact on-line updating of the PoU is impractical for large bike
+discuss how user preferences regarding the lockers can be incorpo-
+                                                                                 sharing stations. However, we observe that a related quantity, the
+rated in the model.                                                              expected number of usable bicycles, is easier to calculate as it is
+      Our goal is to update the PoU of bicycles that are parked in the           merely the sum of the probabilities of usability of the bicycles in
+station. Given that at rent event e bicycle j was rented, we use                 the station:
+Bayes’ rule to calculate the probability that bicycle i ðia jÞ is
+                                                                                                X                
+unusable. This calculation is carried out for any bicycle that is left           E usables in Se ¼      1  pei  1
+parked at the station:                                                                                 i A Se
+

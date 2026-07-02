@@ -1,3 +1,163 @@
 {
-  "latex-workshop.view.pdf.viewer": "browser"
+  "workbench.colorTheme": "Quiet Light",
+  "breadcrumbs.enabled": false,
+
+  "editor.minimap.enabled": false,
+  "editor.stickyScroll.enabled": false,
+  "editor.renderWhitespace": "none",
+  "editor.renderControlCharacters": false,
+  "editor.renderLineHighlight": "none",
+  "editor.guides.indentation": false,
+  "editor.guides.bracketPairs": false,
+  "editor.bracketPairColorization.enabled": false,
+  "editor.overviewRulerBorder": false,
+  "editor.hideCursorInOverviewRuler": true,
+  "editor.scrollbar.verticalScrollbarSize": 8,
+  "editor.scrollbar.horizontalScrollbarSize": 8,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.smoothScrolling": true,
+  "editor.mouseWheelZoom": true,
+
+  "workbench.colorCustomizations": {
+    "editor.background": "#F8F4EA",
+    "editor.foreground": "#242424",
+
+    "sideBar.background": "#EFE8DC",
+    "activityBar.background": "#E9DFD2",
+    "statusBar.background": "#A78BC3",
+    "titleBar.activeBackground": "#C6B4D8",
+    "titleBar.inactiveBackground": "#D6C8E2",
+
+    "editorLineNumber.foreground": "#C2B8AA",
+    "editorLineNumber.activeForeground": "#8A7F72",
+
+    "editorCursor.foreground": "#111111",
+    "editor.selectionBackground": "#D8CDBA",
+    "editor.inactiveSelectionBackground": "#E7DED0",
+
+    "editor.findMatchBackground": "#E6C66A80",
+    "editor.findMatchHighlightBackground": "#E6C66A35",
+    "editor.wordHighlightBackground": "#D8CDBA45",
+    "editor.wordHighlightStrongBackground": "#D8CDBA75",
+
+    "scrollbarSlider.background": "#AFA79A55",
+    "scrollbarSlider.hoverBackground": "#AFA79A88",
+    "scrollbarSlider.activeBackground": "#8F867A99"
+  },
+
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": [
+          "text.tex.latex"
+        ],
+        "settings": {
+          "foreground": "#242424"
+        }
+      },
+      {
+        "scope": [
+          "keyword.control.latex",
+          "support.function.latex",
+          "storage.type.function.latex",
+          "punctuation.definition.function.latex"
+        ],
+        "settings": {
+          "foreground": "#9A4A3A",
+          "fontStyle": ""
+        }
+      },
+      {
+        "scope": [
+          "constant.other.reference.latex",
+          "entity.name.function.latex",
+          "variable.parameter.definition.label.latex"
+        ],
+        "settings": {
+          "foreground": "#6A5BA3",
+          "fontStyle": ""
+        }
+      },
+      {
+        "scope": [
+          "string.other.math.tex",
+          "meta.math.block.latex",
+          "meta.math.inline.latex"
+        ],
+        "settings": {
+          "foreground": "#4E6E5D",
+          "fontStyle": ""
+        }
+      },
+      {
+        "scope": [
+          "comment.line.percentage.tex"
+        ],
+        "settings": {
+          "foreground": "#9A948B",
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+
+  "[latex]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 82,
+    "editor.wrappingIndent": "same",
+    "editor.rulers": [],
+
+    "editor.fontFamily": "Georgia, Palatino, 'Times New Roman', serif",
+    "editor.fontSize": 17,
+    "editor.lineHeight": 32,
+    "editor.letterSpacing": 0.05,
+    "editor.fontWeight": "400",
+    "editor.fontLigatures": true,
+
+    "editor.lineNumbers": "interval",
+    "editor.glyphMargin": false,
+    "editor.folding": false,
+
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+
+    "editor.quickSuggestions": {
+      "other": false,
+      "comments": false,
+      "strings": false
+    },
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.parameterHints.enabled": false
+  },
+
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.message.error.show": true,
+  "latex-workshop.message.warning.show": false,
+  "latex-workshop.intellisense.citation.backend": "biblatex",
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.recipe.default": "thesis latexmk xelatex",
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "thesis latexmk xelatex",
+      "tools": [
+        "thesis-latexmk-xelatex"
+      ]
+    }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "thesis-latexmk-xelatex",
+      "command": "latexmk",
+      "args": [
+        "-xelatex",
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "-synctex=1",
+        "%DOC%"
+      ]
+    }
+  ]
 }

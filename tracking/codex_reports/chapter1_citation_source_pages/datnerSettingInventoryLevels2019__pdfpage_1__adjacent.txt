@@ -1,0 +1,82 @@
+CITEKEY: datnerSettingInventoryLevels2019
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/IGWJZTEA/Datner et al. - 2019 - Setting inventory levels in a bike sharing network.pdf
+PDF PAGE INDEX: 1
+PDFTOTEXT PAGE NUMBER: 2
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-006
+RELATED CE IDS: CE-006
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                                                                                                                                                                               TRANSPORTATION SCIENCE
+                                                                                                                                                                                                                                               Articles in Advance, pp. 1–15
+                                                                                                                         http://pubsonline.informs.org/journal/trsc/                                                          ISSN 0041-1655 (print), ISSN 1526-5447 (online)
+
+
+
+
+                                                                                                                         Setting Inventory Levels in a Bike Sharing Network
+                                                                                                                         Sharon Datner,a Tal Raviv,a Michal Tzur,a Daniel Chemlab, c, d
+                                                                                                                         a Industrial Engineering Department, Faculty of Engineering, Tel Aviv University, 69978 Tel Aviv, Israel; b Smart-Flows Ltd., 75003 Paris,
+
+                                                                                                                         France; c CERMICS, Université Paris-Est, 77455 Marne la Vallée Cedex 2, France; d Université Paris 13, 93430 Paris, France
+
+
+
+
+Downloaded from informs.org by [223.3.92.233] on 26 April 2018, at 19:50 . For personal use only, all rights reserved.
+                                                                                                                         Contact: sharondatner@gmail.com (SD); talraviv@eng.tau.ac.il,     http://orcid.org/0000-0002-5960-2386 (TR); tzur@eng.tau.ac.il,
+                                                                                                                             http://orcid.org/0000-0001-6931-8058 (MT); dchemla@smart-flows.com (DC)
+
+                                                                                                                         Received: December 31, 2015                   Abstract. Bike sharing systems (BSSs) allow customers to rent bicycles at automatic rental
+                                                                                                                         Revised: March 30, 2017; June 1, 2017         stations distributed throughout a city, use them for a short period of time, and return
+                                                                                                                         Accepted: June 16, 2017                       them to any station. One of the major issues that BSS operators must address is nonho-
+                                                                                                                         Published Online in Articles in Advance:      mogeneous asymmetric demand processes. These demand processes create an inherent
+                                                                                                                         September 28, 2017                            imbalance, thus leading to shortages either of bicycles when users are attempting to rent
+                                                                                                                         https://doi.org/10.1287/trsc.2017.0790        them and of vacant lockers when users are attempting to return them. The predominant
+                                                                                                                                                                       approach taken by operators to cope with this difficulty is to reposition bicycles to rebal-
+                                                                                                                         Copyright: © 2017 INFORMS                     ance the inventory levels at the different stations. Most repositioning studies assume that
+                                                                                                                                                                       a target inventory level or range of inventory levels is known for each station. In this
+                                                                                                                                                                       paper, we focus on determining the correct target level for repositioning according to a
+                                                                                                                                                                       well-defined objective. This is a challenging task because of the nature of the user behavior
+                                                                                                                                                                       that creates the interactions among the inventory levels at different stations. For example,
+                                                                                                                                                                       if bicycles are not available at the user’s origin, the user may abandon the system, use
+                                                                                                                                                                       other means of transportation, or look for available bicycles at a neighboring station. If, in
+                                                                                                                                                                       another case, a locker is not available at a user’s destination, then that user is obliged to
+                                                                                                                                                                       find a station with available space to return the bicycle to the system. Thus, an empty/full
+                                                                                                                                                                       station can create a spillover of demand to nearby stations. In addition, stations are related
+                                                                                                                                                                       by origin–destination pairing. In this paper, we take this effect into consideration for the
+                                                                                                                                                                       first time when setting target inventory levels and develop a robust guided local search
+                                                                                                                                                                       algorithm for that purpose. We show that neglecting the interactions among stations leads
+                                                                                                                                                                       to inferior decision making.
+                                                                                                                                                                       History: This paper has been accepted for the Transportation Science Special Issue on Recent Advances
+                                                                                                                                                                         in Urban Transportation Through Optimization and Analytics.
+
+                                                                                                                         Keywords: bike sharing systems • inventory management • simulation
+
+
+                                                                                                                         1. Introduction                                                                rides and wish to leave the system (returners). There-
+                                                                                                                         Bike sharing systems (BSSs) allow customers to                                 fore, basic inventory logic that dictates that a higher
+                                                                                                                         rent bicycles at automatic rental stations distributed                         inventory level can satisfy more customers is not suit-
+                                                                                                                         throughout a city, use them for a short period of time,                        able for addressing this problem. Because each station
+                                                                                                                         and then return them to any station. This is an envi-                          has a fixed capacity, a larger quantity of bicycles at a
+                                                                                                                         ronmentally sustainable mode of transportation and                             given station implies a smaller quantity of available
+                                                                                                                         one that can also be integrated with traditional means                         lockers. Because of the nonhomogeneous asymmet-
+                                                                                                                         of public transportation. A significant increase in the                        ric demand processes that typically characterize BSSs,
+                                                                                                                         number of BSSs and their popularity has recently been                          an inherent imbalance is created, leading to shortages
+                                                                                                                         seen worldwide (Shaheen, Guzman, and Zhang 2010).                              both of bicycles when users are attempting to rent them
+                                                                                                                         For a review of the history of BSSs and prospects                              and of vacant lockers when users are attempting to
+                                                                                                                         for their future, see DeMaio (2009) and Shaheen and                            return them.
+                                                                                                                         Guzman (2011).                                                                    To prevent such shortage events, several studies have
+                                                                                                                           One of the major aspects affecting the service quality                       suggested regulation schemes and policies that influ-
+                                                                                                                         of BSSs is the availability of bicycles and lockers at the                     ence customer demand to the benefit of the system. For
+                                                                                                                         different stations; see, for example, Laporte, Meunier,                        instance, several authors have presented pricing mech-
+                                                                                                                         and Wolfler Calvo (2015). Developing an inventory                              anisms that give customers incentives to change their
+                                                                                                                         model for a BSS involves unique challenges because                             origins and/or destinations, for example, Chemla et al.
+                                                                                                                         of the special features of these systems. A BSS experi-                        (2013b), Pfrommer et al. (2014), and Waserhole and Jost
+                                                                                                                         ences two types of demand: a demand for bicycles, by                           (2016). Kaspi, Raviv, and Tzur (2014), and Kaspi et al.
+                                                                                                                         customers who wish to enter the system (renters), and                          (2016) proposed a parking reservation policy in which
+                                                                                                                         a demand for lockers, by users who have finished their                         a user reserves a locker at the intended destination
+                                                                                                                                                                                                    1
+

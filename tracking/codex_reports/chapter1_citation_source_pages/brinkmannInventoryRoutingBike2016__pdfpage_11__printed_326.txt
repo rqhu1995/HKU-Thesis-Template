@@ -1,0 +1,46 @@
+CITEKEY: brinkmannInventoryRoutingBike2016
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/9JFQBWAN/Brinkmann et al. - 2016 - Inventory routing for bike sharing systems.pdf
+PDF PAGE INDEX: 11
+PDFTOTEXT PAGE NUMBER: 12
+PRINTED PAGE: 326
+SECTION: Conclusions
+RELATED CE IDS: CE-017
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                               Jan Brinkmann et al. / Transportation Research Procedia 19 (2016) 316 – 327                                  327
+
+
+García-Palomares JC, Gutiérrez J, Latorre M (2012) Optimizing the location of stations in bike-sharing programs: A GIS approach. Applied
+   Geography 35(1):235-246.
+Gewista Werbegesellschaft mbH (2014) CityBike Wien. http://www.citybikewien.at (2016-01-12).
+Kloimüllner C, Papazek P, Hu B, Raidl GR (2014) Balancing Bicycle Sharing Systems: An Approach for the Dynamic Case. Evolutionary
+   Computation in Combinatorial Optimization, Lecture Notes in Computer Science, 8600:73-84, Springer.
+Kloimüllner C, Papazek P, Hu B, Raidl GR (2015) A Cluster-First Route-Second Approach for Balancing Bicycle Sharing Systems. Computer
+   Aided Systems Theory – EUROCAST 2015, Lecture Notes in Computer Science, 9520:439-446, Springer.
+Lin JR, Yang TH (2011) Strategic design of public bicycle sharing systems with service level constraints. Transportation Research Part E:
+   Logistics and Transportation Review, 47(2):284-294.
+Mattfeld DC (1996) Evolutionary Search and the Job Shop: Investigations on Genetic Algorithms for Production Scheduling, Springer/Physica.
+Papazek P, Kloimüllner C, Hu B, Raidl GR (2014) Balancing Bicycle Sharing Systems: An Analysis of Path Relinking and Recombination
+   within a GRASP Hybrid. Parallel Problem Solving from Nature PPSN XIII, Lecture Notes in Computer Science, 8672:792-801, Springer.
+Rainer-Harbach M, Papazek P, Hu B, Raidl GR (2013) Balancing bicycle sharing systems: a variable neighborhood search approach.
+   Evolutionary Computation in Combinatorial Optimization, Lecture Notes in Computer Science, 7832:121-132, Springer.
+Raviv T, Tzur M, Forma IA (2013) Static repositioning in a bike-sharing system: models and solution approaches. EURO Journal on
+   Transportation and Logistics 2(3):187- 229.
+Rosenkrantz DJ, Stearns RE, Lewis PM (1977) An Analysis of Several Heuristics for the Traveling Salesman Problem, SIAM J. Comput.,
+   6(3):563-581.
+Rothlauf F (2011) Design of Modern Heuristics: Principles and Applications. Springer.
+Ruch C, Warrington J, Morari M (2014) Rule-based price control for bike sharing systems. European Control Conference (ECC), 708-713.
+Schuijbroek J, Hampshire R, van Hoeve WJ (2013) Inventory Rebalancing and Vehicle Routing in Bike Sharing Systems. Tepper School of
+   Business, Paper 1491.
+Shaheen SA, Guzman S, Zhang H (2010) Bikesharing in Europe, the Americas, and Asia: Past, Present, and Future. Transportation Research
+   Record: Journal of the Transportation Research Board, 2143:159-167.
+Ulmer MW, Brinkmann J, Mattfeld DC (2015) Anticipatory Planning for Courier, Express and Parcel Services. Logistics Management, Lecture
+   Notes in Logistics, Springer.
+Vogel P, Greiser T, Mattfeld DC (2011) Understanding bike-sharing systems using data mining: exploring activity patterns. Procedia-Social and
+   Behavioral Sciences, 20:514-523.
+Vogel P, Neumann Saavedra BA, Mattfeld DC (2014) A hybrid metaheuristic to solve the resource allocation problem in bike sharing systems.
+   Hybrid Metaheuristics. Lecture Notes in Computer Science, 8457:16-29, Springer.
+Vogel P (2016) Service Network Design of Bike Sharing Systems – Analysis and Optimization. Lecture Notes in Mobility, Springer.
+

@@ -1,0 +1,54 @@
+CITEKEY: demaioBikesharingHistoryImpacts2009
+SOURCE PDF: /Users/hurunqiu/Zotero/storage/N9GV5YKS/DeMaio - 2009 - Bike-sharing history, impacts, models of provision, and future.pdf
+PDF PAGE INDEX: 2
+PDFTOTEXT PAGE NUMBER: 3
+PRINTED PAGE: NA
+SECTION: Adjacent page for CE-002
+RELATED CE IDS: CE-002
+EXTRACTION TOOL: pdftotext version 26.06.0
+OCR USED: no
+LINE-BREAK HYPHENATION NORMALIZED: no
+------------------------------------------------------------
+                                                                            Bike-sharing
+
+
+
+took hold with the launch of Velo’v, with 1,500 bikes in Lyon by JCDecaux (Opti-
+mising Bike Sharing in European Cities 2009a, 2009b, 2009c). This was the largest
+3rd generation bike-sharing program to date and its impact was noticeable. With
+15,000 members and bikes being used an average of 6.5 times each day by late
+2005, Lyon’s big sister, Paris, took notice (Henley 2005).
+Two years later, Paris launched its own bike-sharing program, Vélib’, with about
+7,000 bikes, which has expanded to 23,600 bikes in the city and suburbs since. This
+massive undertaking and its better-than-expected success changed the course of
+bike-sharing history and generated enormous interest in this transit mode from
+around the world. Outside Europe, bike-sharing finally began to take hold in 2008,
+with new programs in Brazil, Chile, China, New Zealand, South Korea, Taiwan, and
+the U.S. Each was the first 3rd generation bike-sharing program for the countries.
+By the end of 2007, there were about 60 3rd generation programs globally (DeMaio
+2007). By the end of 2008, there were about 92 programs (DeMaio 2008a). Cur-
+rently, there are about 120 programs, as shown in Figure 1, with existing 3rd gen-
+eration programs shown with a cyclist icon and planned programs shown with a
+question mark icon (MetroBike 2009).
+
+
+Bike-sharing’s Impacts
+Bike-sharing has had profound affects on creating a larger cycling population,
+increasing transit use, decreasing greenhouse gases, and improving public health.
+It has had the affect of raising bike mode share between 1.0 - 1.5 percent in cities
+with pre-existing low cycling use. Cycle mode share in Barcelona was 0.75 per-
+cent in 2005 and increased to 1.76 percent in 2007, the year Bicing was launched
+(Romero 2008). In Paris, cycle mode share increased from about 1 percent in 2001
+to 2.5 percent in 2007, the year Vélib’ was launched (Nadal 2007; City of Paris
+2007). Cycle facility improvements were made in both cities during these time
+periods; however, it is difficult to extract the affects the new facilities had on cycle
+use.
+Transit use increases in cities with bike-sharing due to the new bike transit trips,
+improved connectivity to other modes of transit due to the first mile/last mile
+solution bike-sharing helps solve, and decreased personal vehicle trips. While bike-
+sharing trips do replace some trips previously made on other modes of transit (50
+percent in the case of Velo’v in Lyon), “[t]he loss of customers for public transport
+services is quite low as many users are still holders of a public transport pass”
+
+                                                                                     43
+

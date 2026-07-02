@@ -1,0 +1,222 @@
+issues:
+  -
+    id: "ISS-001"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "叙事完整性"
+    location: "Chapter 1"
+    description: "Chapter 1 当前基本为空，需要建立 thesis-level 总论与 RQ。"
+    status: "in_progress"
+    status_label: "处理中"
+    due: "2026-06-24 23:00"
+    resolution: "Chapter 1 six-section skeleton completed; Zotero-assisted Introduction drafting delegated to Codex; review output on 06/24 before polishing."
+    owner: "本人 / ChatGPT / Codex"
+    notes: "Do not rewrite full chapter before checking Codex report."
+  -
+    id: "ISS-002"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "文献综合"
+    location: "Chapter 2"
+    description: "Chapter 2 当前基本为空，必须形成综合综述而非三篇文献综述拼接。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-25 23:15"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-003"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "图件"
+    location: "Chapters 3–5"
+    description: "正文有 13 个 figure placeholders，需要恢复、重建或删除并重写相关叙述。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 17:30"
+    resolution: null
+    owner: "Codex / 本人"
+    notes: null
+  -
+    id: "ISS-004"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "写作一致性"
+    location: "Chapter 4"
+    description: "存在 manuscript/paper/reviewer-defense 痕迹及较明显期刊稿风格。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 15:30"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-005"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "LaTeX 引用"
+    location: "Ch4 + Appendices"
+    description: "硬编码 Algorithm 2–10、Appendix A–E 等编号可能随合并变化。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-26 23:15"
+    resolution: null
+    owner: "Codex"
+    notes: null
+  -
+    id: "ISS-006"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "章际关联"
+    location: "Chapter 5"
+    description: "多处把 Chapter 4 对应论文作为外部自引，需优先改为 thesis 内部承接。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 17:30"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-007"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "综合结论"
+    location: "Chapter 6"
+    description: "当前篇幅和功能更像章节摘要，需按 RQ 重写为跨章综合。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 20:30"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-008"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "前置部分"
+    location: "Front matter"
+    description: "摘要、致谢、缩写等需按最终论文内容完成与核对。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 22:00"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-009"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "内容安全"
+    location: "Publications"
+    description: "可选 Publications 文件含无关模板内容，不得误 include。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-23 23:00"
+    resolution: null
+    owner: "Codex / 本人"
+    notes: null
+  -
+    id: "ISS-010"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "构建"
+    location: "完整仓库"
+    description: "讨论 bundle 缺 main/preamble/bib/images；必须在完整仓库执行真实编译。"
+    status: "in_progress"
+    status_label: "处理中"
+    due: "2026-06-23 19:35"
+    resolution: "Final build status after Codex edit not checked at 06/23 end; verify first on 06/24 and update error/citation counts."
+    owner: "本人 / Codex"
+    notes: "Tracked as pending; not a reason to continue working tonight."
+  -
+    id: "ISS-011"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "逻辑接口"
+    location: "Chapters 3–5"
+    description: "需解释 UDF reduction maximization 与 final UDF/EUDF minimization 的关系。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 17:30"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-012"
+    found_date: "2026-06-23"
+    priority: "P0"
+    type: "逻辑接口"
+    location: "Chapters 4–5"
+    description: "需解释 Chapter 4 含排放成本而 Chapter 5 移除排放项的研究设计理由。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 17:30"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-013"
+    found_date: "2026-06-23"
+    priority: "P1"
+    type: "逻辑接口"
+    location: "Chapter 4"
+    description: "需区分固定 staffing 下的运营优化与 repairer 配置的事后经济评价。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-28 15:30"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-014"
+    found_date: "2026-06-23"
+    priority: "P1"
+    type: "语言风格"
+    location: "全文，优先 Ch4"
+    description: "清除防御性语言、AI 式泛化、宣传性措辞与无依据因果推断。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-29 12:00"
+    resolution: null
+    owner: "本人 / ChatGPT"
+    notes: null
+  -
+    id: "ISS-015"
+    found_date: "2026-06-23"
+    priority: "P1"
+    type: "术语一致性"
+    location: "全文"
+    description: "统一 on-site、repositioning/rebalancing、UDF/EUDF 等关键术语与大小写。"
+    status: "not_started"
+    status_label: "未开始"
+    due: "2026-06-29 12:00"
+    resolution: null
+    owner: "Codex / 本人"
+    notes: null
+  -
+    id: "ISS-016"
+    found_date: "2026-06-24"
+    priority: "P1"
+    type: "工作流同步"
+    location: "tracking / ChatGPT Project"
+    description: "Tracker、daily_log、issue_register、Codex reports 与 ChatGPT Project 文件之间可能出现版本漂移；需建立 repo-based source-of-truth。"
+    status: "in_progress"
+    status_label: "处理中"
+    due: "2026-06-24 23:00"
+    resolution: "建议新增 tracking/tracker_state.yml、daily_log.md、issue_register.yml，并由 Codex 生成 tracker.xlsx；ChatGPT 只读取最新摘要或必要文件。"
+    owner: "本人 / Codex / ChatGPT"
+    notes: "不占用 P0 写作时间；作为 W1 前后 20–30 分钟设置任务。"
+  -
+    id: "ISS-017"
+    found_date: "2026-06-24"
+    priority: "P0"
+    type: "计划重排"
+    location: "06/24 daily plan"
+    description: "6/24 上午用于工作流重构，15:00 才正式回到论文；Chapter 1 仍未 review，Chapter 2 启动延后；需执行 15:00 版降级日计划。"
+    status: "in_progress"
+    status_label: "处理中"
+    due: "2026-06-24 22:30"
+    resolution: "将 W2–W7 改为：15:00 起验收 Chapter 1；16:30 最小 polish；17:20 编译记录；19:00 Chapter 2 文献矩阵；20:45 Chapter 2 开头 + 日终检查。"
+    owner: "本人 / ChatGPT / Codex"
+    notes: "若 Chapter 1 返工，则今晚 Chapter 2 仅保留文献矩阵。"
